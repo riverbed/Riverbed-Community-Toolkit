@@ -1,2 +1,2 @@
 # se-toolkit
-Toolkit for solution engineering
+A public toolkit for solution engineering
