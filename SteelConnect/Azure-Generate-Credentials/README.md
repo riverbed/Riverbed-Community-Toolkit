@@ -5,11 +5,11 @@
 - Run the following bash commands to download and execute the script **azure_credentials_generate.sh**: 
 
 ```bash
-wget https://raw.githubusercontent.com/riverbed/se-toolkit/master/SteelConnect-Azure/azure_credentials_generate.sh
+wget https://raw.githubusercontent.com/riverbed/se-toolkit/master/SteelConnect/Azure-Generate-Credentials/azure_credentials_generate.sh
 
 chmod +x
 
 azure_credentials_generate.sh
 ```
 
-  About 2 min after you will get the output with all the paramters required to add the Azure account in SteelConnect SCM > Network Design > Azure.
+  About 2 min after you will get the output with all the parameters required to add the Azure account in SteelConnect SCM > Network Design > Azure.
