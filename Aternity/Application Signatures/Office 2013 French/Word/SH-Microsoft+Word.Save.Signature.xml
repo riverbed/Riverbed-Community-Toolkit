@@ -1,0 +1,533 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ActivityConfiguration xmlns:act="www.aternity.com/activity" xmlns:html="www.aternity.com/html" xmlns:http="www.aternity.com/http" xmlns:java="www.aternity.com/java" xmlns:js="www.aternity.com/js" xmlns:mobile="www.aternity.com/mobile" xmlns:net="www.aternity.com/network" xmlns:ora="www.aternity.com/oracle" xmlns:sys="www.aternity.com/sys" xmlns:ui="www.aternity.com/ui" xmlns:ux="www.aternity.com/ux" xmlns:xgen="www.aternity.com/xgen" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <act:Activity timeout="300" xmlns="www.aternity.com/activity">
+        <act:OR>
+            <sys:process act:id="oProcess1" act:idtype="redefine">
+                <sys:name value="winword"/>
+            </sys:process>
+            <sys:process act:id="oProcess2" act:idtype="referenceORdefine">
+                <sys:name value="system"/>
+            </sys:process>
+        </act:OR>
+        <act:States>
+            <act:State id="idle" type="start"/>
+            <act:State id="Start" measure="application">
+                <act:Literal act:cartridge="network">
+                    <act:AND>
+                        <net:traffic event="accumulate"/>
+                        <net:ipAddress from="0.0.0.0" to="255.255.255.255"/>
+                        <act:OR>
+                            <net:portRange from="80" to="80"/>
+                            <net:portRange from="445" to="445"/>
+                            <net:portRange from="443" to="443"/>
+                        </act:OR>
+                    </act:AND>
+                </act:Literal>
+            </act:State>
+            <act:State id="Complete" measure="user" type="endmatch">
+                <act:Action act:cartridge="sys">
+                    <act:setValue name="isAvailable" value="true"/>
+                </act:Action>
+            </act:State>
+            <act:State id="Incomplete" measure="user" type="endnomatch"/>
+        </act:States>
+        <act:Transitions>
+            <act:Transition from="idle" id="idle-Start" to="Start">
+                <act:ANY>
+                    <act:Literal act:cartridge="ux">
+                        <ux:uxevent type="LeftMouseClick">
+                            <act:AND>
+                                <ux:condition hasValue="push button" matchType="exact" property="accRole"/>
+                                <ux:condition hasValue="Enregistrer" matchType="exact" property="accName"/>
+                                <ux:condition hasValue="Enregistrer sous" matchType="exact" property="win32FirstNonChildWindowTitle"/>
+                                <ux:condition hasValue="Button" matchType="exact" property="win32EventWindowClass"/>
+                                <ux:condition hasValue="None" matchType="exact" property="Modifier"/>
+                            </act:AND>
+                        </ux:uxevent>
+                    </act:Literal>
+                    <act:Literal act:cartridge="ux">
+                        <ux:uxevent type="LeftMouseClick">
+                            <act:AND>
+                                <ux:condition hasValue="menu item" matchType="exact" property="accRole"/>
+                                <ux:condition hasValue="Enregistrer" matchType="exact" property="accName"/>
+                                <ux:relativeObject path="parent*1">
+                                    <act:AND>
+                                        <ux:condition hasValue="menu bar" matchType="exact" property="accRole"/>
+                                        <ux:condition hasValue="Fichier" matchType="exact" property="accName"/>
+                                    </act:AND>
+                                </ux:relativeObject>
+                                <ux:condition hasValue="NetUIHWND" matchType="exact" property="win32EventWindowClass"/>
+                                <ux:condition hasValue="None" matchType="exact" property="Modifier"/>
+                            </act:AND>
+                        </ux:uxevent>
+                    </act:Literal>
+                    <act:Literal act:cartridge="ux">
+                        <ux:uxevent type="LeftMouseClick">
+                            <act:AND>
+                                <ux:condition hasValue="push button" matchType="exact" property="accRole"/>
+                                <ux:condition hasValue="Enregistrer" matchType="exact" property="accName"/>
+                                <ux:relativeObject path="parent*1">
+                                    <act:AND>
+                                        <ux:condition hasValue="tool bar" matchType="exact" property="accRole"/>
+                                        <ux:condition hasValue="Barre d'outils Accès rapide" matchType="exact" property="accName"/>
+                                    </act:AND>
+                                </ux:relativeObject>
+                                <ux:condition hasValue="NetUIHWND" matchType="exact" property="win32EventWindowClass"/>
+                                <ux:condition hasValue="None" matchType="exact" property="Modifier"/>
+                            </act:AND>
+                        </ux:uxevent>
+                    </act:Literal>
+                    <act:Literal act:cartridge="ux">
+                        <ux:uxevent type="LeftMouseDoubleClick">
+                            <act:AND>
+                                <ux:condition hasValue="text" matchType="exact" property="accRole"/>
+                                <ux:condition hasValue="Nom" matchType="exact" property="accName"/>
+                                <ux:condition hasValue="Enregistrer sous" matchType="exact" property="win32FirstNonChildWindowTitle"/>
+                                <ux:relativeObject path="parent*1">
+                                    <ux:condition hasValue="list item" matchType="exact" property="accRole"/>
+                                </ux:relativeObject>
+                                <ux:condition hasValue="DirectUIHWND" matchType="exact" property="win32EventWindowClass"/>
+                                <ux:condition hasValue="None" matchType="exact" property="Modifier"/>
+                            </act:AND>
+                        </ux:uxevent>
+                    </act:Literal>
+                    <act:Literal act:cartridge="ux">
+                        <ux:uxevent type="KeyPress">
+                            <act:AND>
+                                <ux:condition hasValue="menu item" matchType="exact" property="accRole"/>
+                                <ux:condition hasValue="Enregistrer" matchType="exact" property="accName"/>
+                                <ux:relativeObject path="parent*1">
+                                    <act:AND>
+                                        <ux:condition hasValue="menu bar" matchType="exact" property="accRole"/>
+                                        <ux:condition hasValue="Fichier" matchType="exact" property="accName"/>
+                                    </act:AND>
+                                </ux:relativeObject>
+                                <ux:condition hasValue="NetUIHWND" matchType="exact" property="win32EventWindowClass"/>
+                                <ux:condition hasValue="13" matchType="exact" property="VKey"/>
+                                <ux:condition hasValue="None" matchType="exact" property="Modifier"/>
+                            </act:AND>
+                        </ux:uxevent>
+                    </act:Literal>
+                    <act:Literal act:cartridge="ux">
+                        <ux:uxevent type="KeyPress">
+                            <act:AND>
+                                <ux:condition hasValue="menu item" matchType="exact" property="accRole"/>
+                                <ux:condition hasValue="Enregistrer" matchType="exact" property="accName"/>
+                                <ux:relativeObject path="parent*1">
+                                    <act:AND>
+                                        <ux:condition hasValue="menu bar" matchType="exact" property="accRole"/>
+                                        <ux:condition hasValue="Fichier" matchType="exact" property="accName"/>
+                                    </act:AND>
+                                </ux:relativeObject>
+                                <ux:condition hasValue="NetUIHWND" matchType="exact" property="win32EventWindowClass"/>
+                                <ux:condition hasValue="32" matchType="exact" property="VKey"/>
+                                <ux:condition hasValue="None" matchType="exact" property="Modifier"/>
+                            </act:AND>
+                        </ux:uxevent>
+                    </act:Literal>
+                    <act:Literal act:cartridge="ux">
+                        <ux:uxevent type="KeyPress">
+                            <act:AND>
+                                <ux:condition hasValue="^.* - Word$" matchType="regex" property="win32FirstNonChildWindowTitle"/>
+                                <act:OR>
+                                    <ux:condition hasValue="_WwG" matchType="exact" property="win32EventWindowClass"/>
+                                    <ux:condition hasValue="NetUIHWND" matchType="exact" property="win32EventWindowClass"/>
+                                </act:OR>
+                                <ux:condition hasValue="83" matchType="exact" property="VKey"/>
+                                <ux:condition hasValue="Control" matchType="exact" property="Modifier"/>
+                            </act:AND>
+                        </ux:uxevent>
+                    </act:Literal>
+                    <act:Literal act:cartridge="ux">
+                        <ux:uxevent type="KeyPress">
+                            <act:AND>
+                                <ux:condition hasValue="Microsoft Word Document" matchType="exact" property="accName"/>
+                                <act:OR>
+                                    <ux:condition hasValue="_WwG" matchType="exact" property="win32EventWindowClass"/>
+                                    <ux:condition hasValue="NetUIHWND" matchType="exact" property="win32EventWindowClass"/>
+                                </act:OR>
+                                <ux:condition hasValue="123" matchType="exact" property="VKey"/>
+                                <ux:condition hasValue="Shift" matchType="exact" property="Modifier"/>
+                            </act:AND>
+                        </ux:uxevent>
+                    </act:Literal>
+                    <act:Literal act:cartridge="ux">
+                        <ux:uxevent type="KeyPress">
+                            <act:AND>
+                                <ux:condition hasValue="push button" matchType="exact" property="accRole"/>
+                                <ux:condition hasValue="Enregistrer" matchType="exact" property="accName"/>
+                                <ux:condition hasValue="Enregistrer sous" matchType="exact" property="win32FirstNonChildWindowTitle"/>
+                                <ux:condition hasValue="Button" matchType="exact" property="win32EventWindowClass"/>
+                                <ux:condition hasValue="13" matchType="exact" property="VKey"/>
+                                <ux:condition hasValue="None" matchType="exact" property="Modifier"/>
+                            </act:AND>
+                        </ux:uxevent>
+                    </act:Literal>
+                    <act:Literal act:cartridge="ux">
+                        <ux:uxevent type="KeyPress">
+                            <act:AND>
+                                <ux:condition hasValue="push button" matchType="exact" property="accRole"/>
+                                <ux:condition hasValue="Enregistrer" matchType="exact" property="accName"/>
+                                <ux:condition hasValue="Enregistrer sous" matchType="exact" property="win32FirstNonChildWindowTitle"/>
+                                <ux:condition hasValue="Button" matchType="exact" property="win32EventWindowClass"/>
+                                <ux:condition hasValue="32" matchType="exact" property="VKey"/>
+                                <ux:condition hasValue="None" matchType="exact" property="Modifier"/>
+                            </act:AND>
+                        </ux:uxevent>
+                    </act:Literal>
+                    <act:Literal act:cartridge="ux">
+                        <ux:uxevent type="KeyPress">
+                            <act:AND>
+                                <ux:condition hasValue=".*list.*" matchType="regex" property="accRole"/>
+                                <ux:condition hasValue="Enregistrer sous" matchType="exact" property="win32FirstNonChildWindowTitle"/>
+                                <ux:condition hasValue="DirectUIHWND" matchType="exact" property="win32EventWindowClass"/>
+                                <ux:relativeObject path="parent*1">
+                                    <ux:condition hasValue="Vue d’éléments" matchType="exact" property="accName"/>
+                                </ux:relativeObject>
+                                <ux:condition hasValue="13" matchType="exact" property="VKey"/>
+                                <ux:condition hasValue="None" matchType="exact" property="Modifier"/>
+                            </act:AND>
+                        </ux:uxevent>
+                    </act:Literal>
+                    <act:Literal act:cartridge="ux">
+                        <ux:uxevent type="KeyPress">
+                            <act:AND>
+                                <ux:condition hasValue="outline item" matchType="exact" property="accRole"/>
+                                <ux:condition hasValue="Enregistrer sous" matchType="exact" property="win32FirstNonChildWindowTitle"/>
+                                <ux:condition hasValue="SysTreeView32" matchType="exact" property="win32EventWindowClass"/>
+                                <ux:condition hasValue="13" matchType="exact" property="VKey"/>
+                                <ux:condition hasValue="None" matchType="exact" property="Modifier"/>
+                            </act:AND>
+                        </ux:uxevent>
+                    </act:Literal>
+                    <act:Literal act:cartridge="ux">
+                        <ux:uxevent type="KeyPress">
+                            <act:AND>
+                                <ux:condition hasValue="Nom de fichier :" matchType="exact" property="accName"/>
+                                <ux:condition hasValue="Enregistrer sous" matchType="exact" property="win32FirstNonChildWindowTitle"/>
+                                <ux:condition hasValue="DirectUIHWND" matchType="exact" property="win32EventWindowClass"/>
+                                <ux:condition hasValue="13" matchType="exact" property="VKey"/>
+                                <ux:condition hasValue="None" matchType="exact" property="Modifier"/>
+                            </act:AND>
+                        </ux:uxevent>
+                    </act:Literal>
+                    <act:Literal act:cartridge="ux">
+                        <ux:uxevent type="KeyPress">
+                            <act:AND>
+                                <ux:condition hasValue="Enregistrer sous" matchType="exact" property="win32FirstNonChildWindowTitle"/>
+                                <act:OR>
+                                    <ux:condition hasValue="DirectUIHWND" matchType="exact" property="win32EventWindowClass"/>
+                                    <ux:condition hasValue="SysTreeView32" matchType="exact" property="win32EventWindowClass"/>
+                                </act:OR>
+                                <ux:condition hasValue="83" matchType="exact" property="VKey"/>
+                                <ux:condition hasValue="Alt" matchType="exact" property="Modifier"/>
+                            </act:AND>
+                        </ux:uxevent>
+                    </act:Literal>
+                </act:ANY>
+            </act:Transition>
+            <act:Transition from="Start" id="Start-Complete" to="Complete">
+                <act:ANY>
+                    <act:Literal act:cartridge="ux">
+                        <ux:uxevent type="ObjectCreate">
+                            <act:AND>
+                                <ux:condition hasValue="window" matchType="exact" property="accRole"/>
+                                <ux:condition hasValue="Barre d'état" matchType="exact" property="accName"/>
+                                <ux:condition hasValue="MsoWorkPane" matchType="exact" property="win32EventWindowClass"/>
+                            </act:AND>
+                        </ux:uxevent>
+                    </act:Literal>
+                    <act:Literal act:cartridge="ux">
+                        <ux:uxevent type="ObjectNameChange">
+                            <act:AND>
+                                <ux:condition hasValue="window" matchType="exact" property="accRole"/>
+                                <ux:condition hasValue=".* - Word.*" matchType="regex" property="win32FirstNonChildWindowTitle"/>
+                                <ux:condition hasValue="OpusApp" matchType="exact" property="win32EventWindowClass"/>
+                            </act:AND>
+                        </ux:uxevent>
+                    </act:Literal>
+                    <act:Literal act:cartridge="ux">
+                        <ux:uxevent type="ObjectReorder">
+                            <act:AND>
+                                <ux:condition hasValue="property page" matchType="exact" property="accRole"/>
+                                <ux:condition hasValue="Barre d'état" matchType="exact" property="accName"/>
+                                <ux:condition hasValue="NetUIHWND" matchType="exact" property="win32EventWindowClass"/>
+                            </act:AND>
+                        </ux:uxevent>
+                    </act:Literal>
+                </act:ANY>
+            </act:Transition>
+            <act:Transition from="Start" id="Start-Incomplete1" to="Incomplete">
+                <act:ANY>
+                    <act:Literal act:cartridge="ux">
+                        <ux:uxevent type="ObjectNameChange">
+                            <act:AND>
+                                <ux:condition hasValue="window" matchType="exact" property="accRole"/>
+                                <ux:condition hasValue="Affichage Dossier Bureau" matchType="exact" property="accName"/>
+                                <ux:condition hasValue="Enregistrer sous" matchType="exact" property="win32FirstNonChildWindowTitle"/>
+                                <ux:condition hasValue="SHELLDLL_DefView" matchType="exact" property="win32EventWindowClass"/>
+                            </act:AND>
+                        </ux:uxevent>
+                    </act:Literal>
+                    <act:Literal act:cartridge="ux">
+                        <ux:uxevent type="ObjectNameChange">
+                            <act:AND>
+                                <ux:condition hasValue="pane" matchType="exact" property="accRole"/>
+                                <ux:condition hasValue="Enregistrer sous" matchType="exact" property="accName"/>
+                                <ux:condition hasValue="Enregistrer sous" matchType="exact" property="win32FirstNonChildWindowTitle"/>
+                                <ux:condition hasValue="NetUIHWND" matchType="exact" property="win32EventWindowClass"/>
+                            </act:AND>
+                        </ux:uxevent>
+                    </act:Literal>
+                    <act:Literal act:cartridge="ux">
+                        <ux:uxevent type="KeyPress">
+                            <act:AND>
+                                <ux:condition hasValue=".*" matchType="regex" property="VKey"/>
+                                <ux:condition hasValue="None" matchType="exact" property="Modifier"/>
+                            </act:AND>
+                        </ux:uxevent>
+                    </act:Literal>
+                    <act:Literal act:cartridge="ux">
+                        <ux:uxevent type="LeftMouseDown">
+                            <ux:condition hasValue="None" matchType="exact" property="Modifier"/>
+                        </ux:uxevent>
+                    </act:Literal>
+                    <act:Literal act:cartridge="ux">
+                        <ux:uxevent type="ObjectFocus">
+                            <act:AND>
+                                <ux:condition hasValue="radio button" matchType="exact" property="accRole"/>
+                                <ux:condition hasValue="Remplacer le fichier existant." matchType="exact" property="accName"/>
+                                <ux:condition hasValue="Microsoft Word" matchType="exact" property="win32FirstNonChildWindowTitle"/>
+                                <ux:condition hasValue="bosa_sdm_msword" matchType="exact" property="win32FirstNonChildWindowClass"/>
+                                <ux:condition hasValue="bosa_sdm_msword" matchType="exact" property="win32EventWindowClass"/>
+                            </act:AND>
+                        </ux:uxevent>
+                    </act:Literal>
+                    <act:Literal act:cartridge="ux">
+                        <ux:uxevent type="SystemProcessLostForeground"/>
+                    </act:Literal>
+                    <act:Literal act:cartridge="ux">
+                        <ux:uxevent type="LeftMouseClick">
+                            <act:AND>
+                                <ux:condition hasValue="push button" matchType="exact" property="accRole"/>
+                                <ux:condition hasValue="Enregistrer" matchType="exact" property="accName"/>
+                                <ux:condition hasValue="Enregistrer sous" matchType="exact" property="win32FirstNonChildWindowTitle"/>
+                                <ux:condition hasValue="Button" matchType="exact" property="win32EventWindowClass"/>
+                                <ux:condition hasValue="None" matchType="exact" property="Modifier"/>
+                            </act:AND>
+                        </ux:uxevent>
+                    </act:Literal>
+                    <act:Literal act:cartridge="ux">
+                        <ux:uxevent type="LeftMouseClick">
+                            <act:AND>
+                                <ux:condition hasValue="menu item" matchType="exact" property="accRole"/>
+                                <ux:condition hasValue="Enregistrer" matchType="exact" property="accName"/>
+                                <ux:relativeObject path="parent*1">
+                                    <act:AND>
+                                        <ux:condition hasValue="menu bar" matchType="exact" property="accRole"/>
+                                        <ux:condition hasValue="Fichier" matchType="exact" property="accName"/>
+                                    </act:AND>
+                                </ux:relativeObject>
+                                <ux:condition hasValue="NetUIHWND" matchType="exact" property="win32EventWindowClass"/>
+                                <ux:condition hasValue="None" matchType="exact" property="Modifier"/>
+                            </act:AND>
+                        </ux:uxevent>
+                    </act:Literal>
+                    <act:Literal act:cartridge="ux">
+                        <ux:uxevent type="LeftMouseClick">
+                            <act:AND>
+                                <ux:condition hasValue="push button" matchType="exact" property="accRole"/>
+                                <ux:condition hasValue="Enregistrer" matchType="exact" property="accName"/>
+                                <ux:relativeObject path="parent*1">
+                                    <act:AND>
+                                        <ux:condition hasValue="tool bar" matchType="exact" property="accRole"/>
+                                        <ux:condition hasValue="Barre d'outils Accès rapide" matchType="exact" property="accName"/>
+                                    </act:AND>
+                                </ux:relativeObject>
+                                <ux:condition hasValue="NetUIHWND" matchType="exact" property="win32EventWindowClass"/>
+                                <ux:condition hasValue="None" matchType="exact" property="Modifier"/>
+                            </act:AND>
+                        </ux:uxevent>
+                    </act:Literal>
+                    <act:Literal act:cartridge="ux">
+                        <ux:uxevent type="LeftMouseDoubleClick">
+                            <act:AND>
+                                <ux:condition hasValue="text" matchType="exact" property="accRole"/>
+                                <ux:condition hasValue="Nom" matchType="exact" property="accName"/>
+                                <ux:condition hasValue="Enregistrer sous" matchType="exact" property="win32FirstNonChildWindowTitle"/>
+                                <ux:relativeObject path="parent*1">
+                                    <ux:condition hasValue="list item" matchType="exact" property="accRole"/>
+                                </ux:relativeObject>
+                                <ux:condition hasValue="DirectUIHWND" matchType="exact" property="win32EventWindowClass"/>
+                                <ux:condition hasValue="None" matchType="exact" property="Modifier"/>
+                            </act:AND>
+                        </ux:uxevent>
+                    </act:Literal>
+                    <act:Literal act:cartridge="ux">
+                        <ux:uxevent type="KeyPress">
+                            <act:AND>
+                                <ux:condition hasValue="menu item" matchType="exact" property="accRole"/>
+                                <ux:condition hasValue="Enregistrer" matchType="exact" property="accName"/>
+                                <ux:relativeObject path="parent*1">
+                                    <act:AND>
+                                        <ux:condition hasValue="menu bar" matchType="exact" property="accRole"/>
+                                        <ux:condition hasValue="Fichier" matchType="exact" property="accName"/>
+                                    </act:AND>
+                                </ux:relativeObject>
+                                <ux:condition hasValue="NetUIHWND" matchType="exact" property="win32EventWindowClass"/>
+                                <ux:condition hasValue="13" matchType="exact" property="VKey"/>
+                                <ux:condition hasValue="None" matchType="exact" property="Modifier"/>
+                            </act:AND>
+                        </ux:uxevent>
+                    </act:Literal>
+                    <act:Literal act:cartridge="ux">
+                        <ux:uxevent type="KeyPress">
+                            <act:AND>
+                                <ux:condition hasValue="menu item" matchType="exact" property="accRole"/>
+                                <ux:condition hasValue="Enregistrer" matchType="exact" property="accName"/>
+                                <ux:relativeObject path="parent*1">
+                                    <act:AND>
+                                        <ux:condition hasValue="menu bar" matchType="exact" property="accRole"/>
+                                        <ux:condition hasValue="Fichier" matchType="exact" property="accName"/>
+                                    </act:AND>
+                                </ux:relativeObject>
+                                <ux:condition hasValue="NetUIHWND" matchType="exact" property="win32EventWindowClass"/>
+                                <ux:condition hasValue="32" matchType="exact" property="VKey"/>
+                                <ux:condition hasValue="None" matchType="exact" property="Modifier"/>
+                            </act:AND>
+                        </ux:uxevent>
+                    </act:Literal>
+                    <act:Literal act:cartridge="ux">
+                        <ux:uxevent type="KeyPress">
+                            <act:AND>
+                                <ux:condition hasValue="^.* - Word$" matchType="regex" property="win32FirstNonChildWindowTitle"/>
+                                <act:OR>
+                                    <ux:condition hasValue="_WwG" matchType="exact" property="win32EventWindowClass"/>
+                                    <ux:condition hasValue="NetUIHWND" matchType="exact" property="win32EventWindowClass"/>
+                                </act:OR>
+                                <ux:condition hasValue="83" matchType="exact" property="VKey"/>
+                                <ux:condition hasValue="Control" matchType="exact" property="Modifier"/>
+                            </act:AND>
+                        </ux:uxevent>
+                    </act:Literal>
+                    <act:Literal act:cartridge="ux">
+                        <ux:uxevent type="KeyPress">
+                            <act:AND>
+                                <ux:condition hasValue="Microsoft Word Document" matchType="exact" property="accName"/>
+                                <act:OR>
+                                    <ux:condition hasValue="_WwG" matchType="exact" property="win32EventWindowClass"/>
+                                    <ux:condition hasValue="NetUIHWND" matchType="exact" property="win32EventWindowClass"/>
+                                </act:OR>
+                                <ux:condition hasValue="123" matchType="exact" property="VKey"/>
+                                <ux:condition hasValue="Shift" matchType="exact" property="Modifier"/>
+                            </act:AND>
+                        </ux:uxevent>
+                    </act:Literal>
+                    <act:Literal act:cartridge="ux">
+                        <ux:uxevent type="KeyPress">
+                            <act:AND>
+                                <ux:condition hasValue="push button" matchType="exact" property="accRole"/>
+                                <ux:condition hasValue="Enregistrer" matchType="exact" property="accName"/>
+                                <ux:condition hasValue="Enregistrer sous" matchType="exact" property="win32FirstNonChildWindowTitle"/>
+                                <ux:condition hasValue="Button" matchType="exact" property="win32EventWindowClass"/>
+                                <ux:condition hasValue="13" matchType="exact" property="VKey"/>
+                                <ux:condition hasValue="None" matchType="exact" property="Modifier"/>
+                            </act:AND>
+                        </ux:uxevent>
+                    </act:Literal>
+                    <act:Literal act:cartridge="ux">
+                        <ux:uxevent type="KeyPress">
+                            <act:AND>
+                                <ux:condition hasValue="push button" matchType="exact" property="accRole"/>
+                                <ux:condition hasValue="Enregistrer" matchType="exact" property="accName"/>
+                                <ux:condition hasValue="Enregistrer sous" matchType="exact" property="win32FirstNonChildWindowTitle"/>
+                                <ux:condition hasValue="Button" matchType="exact" property="win32EventWindowClass"/>
+                                <ux:condition hasValue="32" matchType="exact" property="VKey"/>
+                                <ux:condition hasValue="None" matchType="exact" property="Modifier"/>
+                            </act:AND>
+                        </ux:uxevent>
+                    </act:Literal>
+                    <act:Literal act:cartridge="ux">
+                        <ux:uxevent type="KeyPress">
+                            <act:AND>
+                                <ux:condition hasValue=".*list.*" matchType="regex" property="accRole"/>
+                                <ux:condition hasValue="Enregistrer sous" matchType="exact" property="win32FirstNonChildWindowTitle"/>
+                                <ux:condition hasValue="DirectUIHWND" matchType="exact" property="win32EventWindowClass"/>
+                                <ux:relativeObject path="parent*1">
+                                    <ux:condition hasValue="Vue d’éléments" matchType="exact" property="accName"/>
+                                </ux:relativeObject>
+                                <ux:condition hasValue="13" matchType="exact" property="VKey"/>
+                                <ux:condition hasValue="None" matchType="exact" property="Modifier"/>
+                            </act:AND>
+                        </ux:uxevent>
+                    </act:Literal>
+                    <act:Literal act:cartridge="ux">
+                        <ux:uxevent type="KeyPress">
+                            <act:AND>
+                                <ux:condition hasValue="outline item" matchType="exact" property="accRole"/>
+                                <ux:condition hasValue="Enregistrer sous" matchType="exact" property="win32FirstNonChildWindowTitle"/>
+                                <ux:condition hasValue="SysTreeView32" matchType="exact" property="win32EventWindowClass"/>
+                                <ux:condition hasValue="13" matchType="exact" property="VKey"/>
+                                <ux:condition hasValue="None" matchType="exact" property="Modifier"/>
+                            </act:AND>
+                        </ux:uxevent>
+                    </act:Literal>
+                    <act:Literal act:cartridge="ux">
+                        <ux:uxevent type="KeyPress">
+                            <act:AND>
+                                <ux:condition hasValue="Nom de fichier :" matchType="exact" property="accName"/>
+                                <ux:condition hasValue="Enregistrer sous" matchType="exact" property="win32FirstNonChildWindowTitle"/>
+                                <ux:condition hasValue="DirectUIHWND" matchType="exact" property="win32EventWindowClass"/>
+                                <ux:condition hasValue="13" matchType="exact" property="VKey"/>
+                                <ux:condition hasValue="None" matchType="exact" property="Modifier"/>
+                            </act:AND>
+                        </ux:uxevent>
+                    </act:Literal>
+                    <act:Literal act:cartridge="ux">
+                        <ux:uxevent type="KeyPress">
+                            <act:AND>
+                                <ux:condition hasValue="Enregistrer sous" matchType="exact" property="win32FirstNonChildWindowTitle"/>
+                                <act:OR>
+                                    <ux:condition hasValue="DirectUIHWND" matchType="exact" property="win32EventWindowClass"/>
+                                    <ux:condition hasValue="SysTreeView32" matchType="exact" property="win32EventWindowClass"/>
+                                </act:OR>
+                                <ux:condition hasValue="83" matchType="exact" property="VKey"/>
+                                <ux:condition hasValue="Alt" matchType="exact" property="Modifier"/>
+                            </act:AND>
+                        </ux:uxevent>
+                    </act:Literal>
+                </act:ANY>
+            </act:Transition>
+        </act:Transitions>
+        <act:Measurements>
+            <act:monitoredAttribute enabled="true" maType="ActivityResponse"/>
+            <act:monitoredAttribute enabled="true" maType="NetworkLatency">
+                <act:Configuration minBytesIn="100" minBytesOut="100" xsi:type="TYPE_networkLatencyMonitoredAttributeConfiguration"/>
+            </act:monitoredAttribute>
+            <act:monitoredAttribute enabled="true" maType="TotalNetworkResponseTime"/>
+            <act:monitoredAttribute enabled="true" maType="ClientTime"/>
+            <act:monitoredAttribute enabled="true" maType="TotalNetworkIncomingTraffic"/>
+            <act:monitoredAttribute enabled="true" maType="TotalNetworkOutgoingTraffic"/>
+            <act:contextualAttribute saType="ServerID">
+                <act:Configuration/>
+            </act:contextualAttribute>
+            <act:contextualAttribute saType="ApplicationName">
+                <act:Configuration/>
+            </act:contextualAttribute>
+            <act:contextualAttribute saType="ApplicationVersion">
+                <act:Configuration/>
+            </act:contextualAttribute>
+            <act:monitoredAttribute enabled="true" maType="TotalNetworkServerTime"/>
+            <act:monitoredAttribute enabled="true" maType="AverageNetworkRtt"/>
+            <act:contextualAttribute saType="ServerIP">
+                <act:Configuration/>
+            </act:contextualAttribute>
+            <act:contextualAttribute saType="ServerName">
+                <act:Configuration/>
+            </act:contextualAttribute>
+            <act:contextualAttribute saType="ServerHostName">
+                <act:Configuration/>
+            </act:contextualAttribute>
+        </act:Measurements>
+    </act:Activity>
+</ActivityConfiguration>

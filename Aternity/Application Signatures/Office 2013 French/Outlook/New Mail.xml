@@ -1,0 +1,375 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ActivityConfiguration xmlns:act="www.aternity.com/activity" xmlns:html="www.aternity.com/html" xmlns:http="www.aternity.com/http" xmlns:java="www.aternity.com/java" xmlns:js="www.aternity.com/js" xmlns:mobile="www.aternity.com/mobile" xmlns:net="www.aternity.com/network" xmlns:ora="www.aternity.com/oracle" xmlns:sys="www.aternity.com/sys" xmlns:ui="www.aternity.com/ui" xmlns:ux="www.aternity.com/ux" xmlns:xgen="www.aternity.com/xgen" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <act:Activity timeout="180" xmlns="www.aternity.com/activity">
+        <sys:process act:id="oProcess1" act:idtype="referenceORdefine">
+            <sys:name value="outlook"/>
+        </sys:process>
+        <States>
+            <act:State id="idle" type="start"/>
+            <act:State id="Start" measure="application">
+                <act:Literal act:cartridge="network">
+                    <act:AND>
+                        <net:traffic event="accumulate"/>
+                        <net:ipAddress from="0.0.0.0" to="255.255.255.255"/>
+                    </act:AND>
+                </act:Literal>
+            </act:State>
+            <act:State id="Complete" measure="user" type="endmatch">
+                <act:Action act:cartridge="sys">
+                    <act:setValue name="isAvailable" value="true"/>
+                </act:Action>
+            </act:State>
+            <act:State id="Incomplete" measure="user" type="endnomatch"/>
+        </States>
+        <Transitions>
+            <act:Transition from="idle" id="idle-Start" to="Start">
+                <ANY>
+                    <Literal act:cartridge="ux">
+                        <ux:uxevent type="LeftMouseClick">
+                            <AND>
+                                <ux:condition hasValue="menu item" matchType="exact" property="accRole"/>
+                                <ux:condition hasValue="(?i).*message électronique.*" matchType="regex" property="accName"/>
+                                <ux:condition hasValue="NetUIHWND" matchType="exact" property="win32EventWindowClass"/>
+                                <ux:condition hasValue="None" matchType="exact" property="Modifier"/>
+                            </AND>
+                        </ux:uxevent>
+                    </Literal>
+                    <Literal act:cartridge="ux">
+                        <ux:uxevent type="LeftMouseClick">
+                            <AND>
+                                <ux:condition hasValue="menu item" matchType="exact" property="accRole"/>
+                                <OR>
+                                    <ux:condition hasValue="Texte brut" matchType="exact" property="accName"/>
+                                    <ux:condition hasValue="HTML" matchType="exact" property="accName"/>
+                                    <ux:condition hasValue="Texte enrichi" matchType="exact" property="accName"/>
+                                </OR>
+                                <ux:condition hasValue="NetUIHWND" matchType="exact" property="win32EventWindowClass"/>
+                                <ux:condition hasValue="None" matchType="exact" property="Modifier"/>
+                            </AND>
+                        </ux:uxevent>
+                    </Literal>
+                    <Literal act:cartridge="ux">
+                        <ux:uxevent type="LeftMouseClick">
+                            <AND>
+                                <ux:condition hasValue="push button" matchType="exact" property="accRole"/>
+                                <ux:condition hasValue="Nouveau message électronique" matchType="exact" property="accName"/>
+                                <ux:condition hasValue="NetUIHWND" matchType="exact" property="win32EventWindowClass"/>
+                                <ux:condition hasValue="None" matchType="exact" property="Modifier"/>
+                            </AND>
+                        </ux:uxevent>
+                    </Literal>
+                    <Literal act:cartridge="ux">
+                        <ux:uxevent type="LeftMouseClick">
+                            <AND>
+                                <ux:condition hasValue="^Envoyer un message électronique" matchType="regex" property="accName"/>
+                                <ux:condition hasValue="^Contacts.*Outlook" matchType="regex" property="win32FirstNonChildWindowTitle"/>
+                                <ux:condition hasValue="RICHEDIT60W" matchType="exact" property="win32EventWindowClass"/>
+                                <ux:condition hasValue="None" matchType="exact" property="Modifier"/>
+                            </AND>
+                        </ux:uxevent>
+                    </Literal>
+                    <Literal act:cartridge="ux">
+                        <ux:uxevent type="KeyPress">
+                            <AND>
+                                <AND>
+                                    <NOT>
+                                        <OR>
+                                            <ux:condition hasValue="^Calendrier" matchType="regex" property="win32FirstNonChildWindowTitle"/>
+                                            <ux:condition hasValue="^Contacts" matchType="regex" property="win32FirstNonChildWindowTitle"/>
+                                            <ux:condition hasValue="^Dossiers" matchType="regex" property="win32FirstNonChildWindowTitle"/>
+                                            <ux:condition hasValue="^Notes" matchType="regex" property="win32FirstNonChildWindowTitle"/>
+                                            <ux:condition hasValue="^Tâche" matchType="regex" property="win32FirstNonChildWindowTitle"/>
+                                            <ux:condition hasValue="^Personnes" matchType="regex" property="win32FirstNonChildWindowTitle"/>
+                                        </OR>
+                                    </NOT>
+                                    <ux:condition hasValue=".*Outlook.*" matchType="regex" property="win32FirstNonChildWindowTitle"/>
+                                </AND>
+                                <OR>
+                                    <ux:condition agentVersionFilter="*-7.1.7.*" hasValue="_WwG" matchType="exact" property="win32EventWindowClass"/>
+                                    <ux:condition agentVersionFilter="*-7.1.7.*" hasValue="OutlookGrid" matchType="exact" property="win32EventWindowClass"/>
+                                    <ux:condition agentVersionFilter="*-7.1.7.*" hasValue="NetUIHWND" matchType="exact" property="win32EventWindowClass"/>
+                                </OR>
+                                <ux:condition hasValue="78" matchType="exact" property="VKey"/>
+                                <ux:condition hasValue="Control" matchType="exact" property="Modifier"/>
+                            </AND>
+                        </ux:uxevent>
+                    </Literal>
+                    <Literal act:cartridge="ux">
+                        <ux:uxevent type="KeyPress">
+                            <AND>
+                                <ux:condition hasValue="(?i)^Carnet d&amp;apos;adresses" matchType="regex" property="win32FirstNonChildWindowTitle"/>
+                                <ux:condition agentVersionFilter="*-7.1.7.*" hasValue="OUTEXVLB" matchType="exact" property="win32EventWindowClass"/>
+                                <ux:condition hasValue="78" matchType="exact" property="VKey"/>
+                                <ux:condition hasValue="Control" matchType="exact" property="Modifier"/>
+                            </AND>
+                        </ux:uxevent>
+                    </Literal>
+                    <Literal act:cartridge="ux">
+                        <ux:uxevent type="KeyPress">
+                            <AND>
+                                <ux:condition hasValue="menu item" matchType="exact" property="accRole"/>
+                                <OR>
+                                    <ux:condition hasValue="HTML" matchType="exact" property="accName"/>
+                                    <ux:condition hasValue="Texte brut" matchType="exact" property="accName"/>
+                                    <ux:condition hasValue="Texte enrichi" matchType="exact" property="accName"/>
+                                </OR>
+                                <ux:condition hasValue="NetUIHWND" matchType="exact" property="win32EventWindowClass"/>
+                                <ux:condition hasValue="13" matchType="exact" property="VKey"/>
+                                <ux:condition hasValue="None" matchType="exact" property="Modifier"/>
+                            </AND>
+                        </ux:uxevent>
+                    </Literal>
+                    <Literal act:cartridge="ux">
+                        <ux:uxevent type="KeyPress">
+                            <AND>
+                                <ux:condition hasValue="menu item" matchType="exact" property="accRole"/>
+                                <ux:condition hasValue="(?i).*message électronique.*" matchType="regex" property="accName"/>
+                                <ux:condition hasValue="NetUIHWND" matchType="exact" property="win32EventWindowClass"/>
+                                <ux:condition hasValue="13" matchType="exact" property="VKey"/>
+                                <ux:condition hasValue="None" matchType="exact" property="Modifier"/>
+                            </AND>
+                        </ux:uxevent>
+                    </Literal>
+                    <Literal act:cartridge="ux">
+                        <ux:uxevent type="KeyPress">
+                            <AND>
+                                <ux:condition hasValue="menu item" matchType="exact" property="accRole"/>
+                                <ux:condition hasValue="(?i).*message électronique.*" matchType="regex" property="accName"/>
+                                <ux:condition hasValue="NetUIHWND" matchType="exact" property="win32EventWindowClass"/>
+                                <ux:condition hasValue="32" matchType="exact" property="VKey"/>
+                                <ux:condition hasValue="None" matchType="exact" property="Modifier"/>
+                            </AND>
+                        </ux:uxevent>
+                    </Literal>
+                    <Literal act:cartridge="ux">
+                        <ux:uxevent type="KeyPress">
+                            <AND>
+                                <AND>
+                                    <NOT>
+                                        <OR>
+                                            <ux:condition hasValue="^Calendrier" matchType="regex" property="win32FirstNonChildWindowTitle"/>
+                                            <ux:condition hasValue="^Contacts" matchType="regex" property="win32FirstNonChildWindowTitle"/>
+                                            <ux:condition hasValue="^Dossiers" matchType="regex" property="win32FirstNonChildWindowTitle"/>
+                                            <ux:condition hasValue="^Notes" matchType="regex" property="win32FirstNonChildWindowTitle"/>
+                                            <ux:condition hasValue="^Tâche" matchType="regex" property="win32FirstNonChildWindowTitle"/>
+                                            <ux:condition hasValue="^Personnes" matchType="regex" property="win32FirstNonChildWindowTitle"/>
+                                        </OR>
+                                    </NOT>
+                                    <ux:condition hasValue=".*Outlook.*" matchType="regex" property="win32FirstNonChildWindowTitle"/>
+                                </AND>
+                                <OR>
+                                    <ux:condition agentVersionFilter="*-7.1.7.*" hasValue="_WwG" matchType="exact" property="win32EventWindowClass"/>
+                                    <ux:condition agentVersionFilter="*-7.1.7.*" hasValue="OutlookGrid" matchType="exact" property="win32EventWindowClass"/>
+                                    <ux:condition agentVersionFilter="*-7.1.7.*" hasValue="NetUIHWND" matchType="exact" property="win32EventWindowClass"/>
+                                </OR>
+                                <ux:condition hasValue="77" matchType="exact" property="VKey"/>
+                                <ux:condition hasValue="Shift, Control" matchType="exact" property="Modifier"/>
+                            </AND>
+                        </ux:uxevent>
+                    </Literal>
+                </ANY>
+            </act:Transition>
+            <act:Transition from="Start" id="Start-Complete" to="Complete">
+                <Literal act:cartridge="ux">
+                    <ux:uxevent type="ObjectShow">
+                        <AND>
+                            <ux:condition hasValue="window" matchType="exact" property="accRole"/>
+                            <ux:condition hasValue=".*Sans titre - Message \(.*" matchType="regex" property="accName"/>
+                            <ux:condition hasValue="rctrl_renwnd32" matchType="exact" property="win32EventWindowClass"/>
+                        </AND>
+                    </ux:uxevent>
+                </Literal>
+            </act:Transition>
+            <act:Transition from="Start" id="Start-Incomplete1" to="Incomplete">
+                <ANY>
+                    <Literal act:cartridge="ux">
+                        <ux:uxevent type="ObjectShow">
+                            <AND>
+                                <ux:condition hasValue="window" matchType="exact" property="accRole"/>
+                                <OR>
+                                    <ux:condition hasValue=".*Untitled - Termin.*" matchType="regex" property="accName"/>
+                                    <ux:condition hasValue=".*Untitled - Contact.*" matchType="regex" property="accName"/>
+                                    <ux:condition hasValue=".*Untitled - Task.*" matchType="regex" property="accName"/>
+                                    <ux:condition hasValue=".*Untitled - Note.*" matchType="regex" property="accName"/>
+                                </OR>
+                                <ux:condition hasValue="rctrl_renwnd32" matchType="exact" property="win32EventWindowClass"/>
+                            </AND>
+                        </ux:uxevent>
+                    </Literal>
+                    <Literal act:cartridge="ux">
+                        <ux:uxevent type="KeyPress">
+                            <AND>
+                                <ux:condition hasValue=".*" matchType="regex" property="VKey"/>
+                                <ux:condition hasValue="None" matchType="exact" property="Modifier"/>
+                            </AND>
+                        </ux:uxevent>
+                    </Literal>
+                    <Literal act:cartridge="ux">
+                        <ux:uxevent type="LeftMouseDown">
+                            <ux:condition hasValue="None" matchType="exact" property="Modifier"/>
+                        </ux:uxevent>
+                    </Literal>
+                    <Literal act:cartridge="ux">
+                        <ux:uxevent type="SystemProcessLostForeground"/>
+                    </Literal>
+                    <Literal act:cartridge="ux">
+                        <ux:uxevent type="LeftMouseClick">
+                            <AND>
+                                <ux:condition hasValue="menu item" matchType="exact" property="accRole"/>
+                                <ux:condition hasValue="(?i).*message électronique.*" matchType="regex" property="accName"/>
+                                <ux:condition hasValue="NetUIHWND" matchType="exact" property="win32EventWindowClass"/>
+                                <ux:condition hasValue="None" matchType="exact" property="Modifier"/>
+                            </AND>
+                        </ux:uxevent>
+                    </Literal>
+                    <Literal act:cartridge="ux">
+                        <ux:uxevent type="LeftMouseClick">
+                            <AND>
+                                <ux:condition hasValue="menu item" matchType="exact" property="accRole"/>
+                                <OR>
+                                    <ux:condition hasValue="Texte brut" matchType="exact" property="accName"/>
+                                    <ux:condition hasValue="HTML" matchType="exact" property="accName"/>
+                                    <ux:condition hasValue="Texte enrichi" matchType="exact" property="accName"/>
+                                </OR>
+                                <ux:condition hasValue="NetUIHWND" matchType="exact" property="win32EventWindowClass"/>
+                                <ux:condition hasValue="None" matchType="exact" property="Modifier"/>
+                            </AND>
+                        </ux:uxevent>
+                    </Literal>
+                    <Literal act:cartridge="ux">
+                        <ux:uxevent type="LeftMouseClick">
+                            <AND>
+                                <ux:condition hasValue="push button" matchType="exact" property="accRole"/>
+                                <ux:condition hasValue="Nouveau message électronique" matchType="exact" property="accName"/>
+                                <ux:condition hasValue="NetUIHWND" matchType="exact" property="win32EventWindowClass"/>
+                                <ux:condition hasValue="None" matchType="exact" property="Modifier"/>
+                            </AND>
+                        </ux:uxevent>
+                    </Literal>
+                    <Literal act:cartridge="ux">
+                        <ux:uxevent type="LeftMouseClick">
+                            <AND>
+                                <ux:condition hasValue="^Envoyer un message électronique" matchType="regex" property="accName"/>
+                                <ux:condition hasValue="^Contacts.*Outlook" matchType="regex" property="win32FirstNonChildWindowTitle"/>
+                                <ux:condition hasValue="RICHEDIT60W" matchType="exact" property="win32EventWindowClass"/>
+                                <ux:condition hasValue="None" matchType="exact" property="Modifier"/>
+                            </AND>
+                        </ux:uxevent>
+                    </Literal>
+                    <Literal act:cartridge="ux">
+                        <ux:uxevent type="KeyPress">
+                            <AND>
+                                <AND>
+                                    <NOT>
+                                        <OR>
+                                            <ux:condition hasValue="^Calendrier" matchType="regex" property="win32FirstNonChildWindowTitle"/>
+                                            <ux:condition hasValue="^Contacts" matchType="regex" property="win32FirstNonChildWindowTitle"/>
+                                            <ux:condition hasValue="^Dossiers" matchType="regex" property="win32FirstNonChildWindowTitle"/>
+                                            <ux:condition hasValue="^Notes" matchType="regex" property="win32FirstNonChildWindowTitle"/>
+                                            <ux:condition hasValue="^Tâche" matchType="regex" property="win32FirstNonChildWindowTitle"/>
+                                            <ux:condition hasValue="^Personnes" matchType="regex" property="win32FirstNonChildWindowTitle"/>
+                                        </OR>
+                                    </NOT>
+                                    <ux:condition hasValue=".*Outlook.*" matchType="regex" property="win32FirstNonChildWindowTitle"/>
+                                </AND>
+                                <OR>
+                                    <ux:condition agentVersionFilter="*-7.1.7.*" hasValue="_WwG" matchType="exact" property="win32EventWindowClass"/>
+                                    <ux:condition agentVersionFilter="*-7.1.7.*" hasValue="OutlookGrid" matchType="exact" property="win32EventWindowClass"/>
+                                    <ux:condition agentVersionFilter="*-7.1.7.*" hasValue="NetUIHWND" matchType="exact" property="win32EventWindowClass"/>
+                                </OR>
+                                <ux:condition hasValue="78" matchType="exact" property="VKey"/>
+                                <ux:condition hasValue="Control" matchType="exact" property="Modifier"/>
+                            </AND>
+                        </ux:uxevent>
+                    </Literal>
+                    <Literal act:cartridge="ux">
+                        <ux:uxevent type="KeyPress">
+                            <AND>
+                                <ux:condition hasValue="(?i)^Carnet d&amp;apos;adresses" matchType="regex" property="win32FirstNonChildWindowTitle"/>
+                                <ux:condition agentVersionFilter="*-7.1.7.*" hasValue="OUTEXVLB" matchType="exact" property="win32EventWindowClass"/>
+                                <ux:condition hasValue="78" matchType="exact" property="VKey"/>
+                                <ux:condition hasValue="Control" matchType="exact" property="Modifier"/>
+                            </AND>
+                        </ux:uxevent>
+                    </Literal>
+                    <Literal act:cartridge="ux">
+                        <ux:uxevent type="KeyPress">
+                            <AND>
+                                <ux:condition hasValue="menu item" matchType="exact" property="accRole"/>
+                                <OR>
+                                    <ux:condition hasValue="HTML" matchType="exact" property="accName"/>
+                                    <ux:condition hasValue="Texte brut" matchType="exact" property="accName"/>
+                                    <ux:condition hasValue="Texte enrichi" matchType="exact" property="accName"/>
+                                </OR>
+                                <ux:condition hasValue="NetUIHWND" matchType="exact" property="win32EventWindowClass"/>
+                                <ux:condition hasValue="13" matchType="exact" property="VKey"/>
+                                <ux:condition hasValue="None" matchType="exact" property="Modifier"/>
+                            </AND>
+                        </ux:uxevent>
+                    </Literal>
+                    <Literal act:cartridge="ux">
+                        <ux:uxevent type="KeyPress">
+                            <AND>
+                                <ux:condition hasValue="menu item" matchType="exact" property="accRole"/>
+                                <ux:condition hasValue="(?i).*message électronique.*" matchType="regex" property="accName"/>
+                                <ux:condition hasValue="NetUIHWND" matchType="exact" property="win32EventWindowClass"/>
+                                <ux:condition hasValue="13" matchType="exact" property="VKey"/>
+                                <ux:condition hasValue="None" matchType="exact" property="Modifier"/>
+                            </AND>
+                        </ux:uxevent>
+                    </Literal>
+                    <Literal act:cartridge="ux">
+                        <ux:uxevent type="KeyPress">
+                            <AND>
+                                <ux:condition hasValue="menu item" matchType="exact" property="accRole"/>
+                                <ux:condition hasValue="(?i).*message électronique.*" matchType="regex" property="accName"/>
+                                <ux:condition hasValue="NetUIHWND" matchType="exact" property="win32EventWindowClass"/>
+                                <ux:condition hasValue="32" matchType="exact" property="VKey"/>
+                                <ux:condition hasValue="None" matchType="exact" property="Modifier"/>
+                            </AND>
+                        </ux:uxevent>
+                    </Literal>
+                    <Literal act:cartridge="ux">
+                        <ux:uxevent type="KeyPress">
+                            <AND>
+                                <AND>
+                                    <NOT>
+                                        <OR>
+                                            <ux:condition hasValue="^Calendrier" matchType="regex" property="win32FirstNonChildWindowTitle"/>
+                                            <ux:condition hasValue="^Contacts" matchType="regex" property="win32FirstNonChildWindowTitle"/>
+                                            <ux:condition hasValue="^Dossiers" matchType="regex" property="win32FirstNonChildWindowTitle"/>
+                                            <ux:condition hasValue="^Notes" matchType="regex" property="win32FirstNonChildWindowTitle"/>
+                                            <ux:condition hasValue="^Tâche" matchType="regex" property="win32FirstNonChildWindowTitle"/>
+                                            <ux:condition hasValue="^Personnes" matchType="regex" property="win32FirstNonChildWindowTitle"/>
+                                        </OR>
+                                    </NOT>
+                                    <ux:condition hasValue=".*Outlook.*" matchType="regex" property="win32FirstNonChildWindowTitle"/>
+                                </AND>
+                                <OR>
+                                    <ux:condition agentVersionFilter="*-7.1.7.*" hasValue="_WwG" matchType="exact" property="win32EventWindowClass"/>
+                                    <ux:condition agentVersionFilter="*-7.1.7.*" hasValue="OutlookGrid" matchType="exact" property="win32EventWindowClass"/>
+                                    <ux:condition agentVersionFilter="*-7.1.7.*" hasValue="NetUIHWND" matchType="exact" property="win32EventWindowClass"/>
+                                </OR>
+                                <ux:condition hasValue="77" matchType="exact" property="VKey"/>
+                                <ux:condition hasValue="Shift, Control" matchType="exact" property="Modifier"/>
+                            </AND>
+                        </ux:uxevent>
+                    </Literal>
+                </ANY>
+            </act:Transition>
+        </Transitions>
+        <Measurements>
+            <act:monitoredAttribute enabled="true" maType="ActivityResponse"/>
+            <act:monitoredAttribute enabled="true" maType="NetworkLatency">
+                <act:Configuration minBytesIn="100" minBytesOut="100" xsi:type="TYPE_networkLatencyMonitoredAttributeConfiguration"/>
+            </act:monitoredAttribute>
+            <act:monitoredAttribute enabled="true" maType="TotalNetworkResponseTime"/>
+            <act:monitoredAttribute enabled="true" maType="ClientTime"/>
+            <act:monitoredAttribute enabled="true" maType="TotalNetworkIncomingTraffic"/>
+            <act:monitoredAttribute enabled="true" maType="TotalNetworkOutgoingTraffic"/>
+            <contextualAttribute saType="ServerID">
+                <act:Configuration/>
+            </contextualAttribute>
+        </Measurements>
+    </act:Activity>
+</ActivityConfiguration>
