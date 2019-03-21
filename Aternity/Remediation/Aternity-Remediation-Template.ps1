@@ -11,7 +11,8 @@
 .EXAMPLE
    Deploy in Aternity (Configuration > Remediation > Add Action) 
    Action Name: {{action}}
-   Description: {{description}}   
+   Description: {{description}}
+   Run the script in the System account: checked/unchecked}}
 #>
 
 #region Remediation action logic
