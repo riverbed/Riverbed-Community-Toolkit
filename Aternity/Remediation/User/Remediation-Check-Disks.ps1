@@ -1,17 +1,17 @@
 <#
 .Synopsis
-   Aternity - Remediation Script: Remediation-Repair-Volumes-offline
+   Aternity - Remediation Script: Remediation-Check-Disks
 .DESCRIPTION
-	If possible perform an offline scan and fix of volumes, or schedule at next reboot (ex. system disk).
-		
+	Perform a Repair Volume scan and fix errors online
+	
 	Aternity References:
 	* https://www.riverbed.com
 	* https://help.aternity.com/search?facetreset=yes&q=remediation
 
 .EXAMPLE
    Deploy in Aternity (Configuration > Remediation > Add Action) 
-   Action Name: Repair Volumes offline
-   Description: Perform an offline scan and fix of volumes or schedule at next reboot
+   Action Name: Check Disks - spotFix
+   Description: Perform a check disk diagnostic and fix errors
    Run the script in the System account: checked
    
 #>
@@ -19,10 +19,11 @@
 #region Remediation action logic
 
 $all_repairStatus=@()
-Get-Volume | % { 
+Get-Volume | % {
 	$driveLetter=$_.DriveLetter
 	if ($driveLetter) {
-		$repairStatus=(Repair-Volume $driveLetter -OfflineScanAndFix)
+		$scanStatus=Repair-Volume $driveLetter -Scan
+		$repairStatus=(Repair-Volume $driveLetter -SpotFix)
 		$all_repairStatus += "$driveLetter $repairStatus"		
 	}
 }
@@ -33,9 +34,6 @@ $result = $all_repairStatus -join ";"
 #region Aternity remediation status monitoring 
 try
 {
-	# Set the path of the Agent on user device
-	$env:STEELCENTRAL_ATERNITY_AGENT_HOME="C:\Program Files (x86)\Aternity Information Systems\Agent"
-
 	# Load Agent Module
     Add-Type -Path $env:STEELCENTRAL_ATERNITY_AGENT_HOME\ActionExtensionsMethods.dll
 	

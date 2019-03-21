@@ -38,9 +38,6 @@
 #region Aternity remediation status monitoring 
 try
 {
-	# Set the path of the Agent on user device
-	$env:STEELCENTRAL_ATERNITY_AGENT_HOME="C:\Program Files (x86)\Aternity Information Systems\Agent"
-
 	# Load Agent Module
     Add-Type -Path $env:STEELCENTRAL_ATERNITY_AGENT_HOME\ActionExtensionsMethods.dll
 	

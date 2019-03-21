@@ -1,8 +1,8 @@
-<#
+﻿<#
 .Synopsis
-   Aternity - Remediation Script: {{Action Name}}
+   Aternity - Remediation Script: Check-Filehash-Powerpoint
 .DESCRIPTION
-	{{Remediation Description}}
+	Check the MD5 file hash of powerpoint
 	
 	References:
 	* https://www.riverbed.com
@@ -10,17 +10,21 @@
 
 .EXAMPLE
    Deploy in Aternity (Configuration > Remediation > Add Action) 
-   Action Name: {{action}}
-   Description: {{description}}   
+   Action Name: Check-Filehash-Powerpoint
+   Description: Check the MD5 file hash of powerpoint
 #>
 
 #region Remediation action logic
 
-	# Add your remediation code here and set the variable $result with the Output Message to be visible visible in Aternity's dashboards.
-	#
-	# For example:
-	# 	Clear-DnsClientCache
-	# 	$result="DNS Cache Cleared"
+	#Set the path of the binary to check
+	$app_executable_path = "C:\Program Files\Microsoft Office\root\Office16\POWERPNT.EXE" 
+	try{
+		$result = (Get-FileHash -Path $app_executable_path  -Algorithm  MD5).Hash
+	}
+	catch {
+		$result = "Exception"
+		
+	}
 
 #endregion
 
