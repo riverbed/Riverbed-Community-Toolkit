@@ -14,6 +14,11 @@
    Description: Check the MD5 file hash of powerpoint
 #>
 
+try
+{
+	# Load Agent Module
+    Add-Type -Path $env:STEELCENTRAL_ATERNITY_AGENT_HOME\ActionExtensionsMethods.dll
+	
 #region Remediation action logic
 
 	#Set the path of the binary to check
@@ -28,12 +33,6 @@
 
 #endregion
 
-#region Aternity remediation status monitoring 
-try
-{
-	# Load Agent Module
-    Add-Type -Path $env:STEELCENTRAL_ATERNITY_AGENT_HOME\ActionExtensionsMethods.dll
-	
 	# Set Output message
     [ActionExtensionsMethods.ActionExtensionsMethods]::SetScriptOutput($result)
 }
@@ -41,4 +40,3 @@ catch
 {
     [ActionExtensionsMethods.ActionExtensionsMethods]::SetFailed($_.Exception.Message)
 }
-#endregion

@@ -12,9 +12,13 @@
    Deploy in Aternity (Configuration > Remediation > Add Action) 
    Action Name: Check Disks - spotFix
    Description: Perform a check disk diagnostic and fix errors
-   Run the script in the System account: checked
-   
+   Run the script in the System account: checked   
 #>
+
+try
+{
+	# Load Agent Module
+    Add-Type -Path $env:STEELCENTRAL_ATERNITY_AGENT_HOME\ActionExtensionsMethods.dll
 
 #region Remediation action logic
 
@@ -31,12 +35,6 @@ $result = $all_repairStatus -join ";"
  
 #endregion
 
-#region Aternity remediation status monitoring 
-try
-{
-	# Load Agent Module
-    Add-Type -Path $env:STEELCENTRAL_ATERNITY_AGENT_HOME\ActionExtensionsMethods.dll
-	
 	# Set Output message
     [ActionExtensionsMethods.ActionExtensionsMethods]::SetScriptOutput($result)
 }
@@ -44,4 +42,3 @@ catch
 {
     [ActionExtensionsMethods.ActionExtensionsMethods]::SetFailed($_.Exception.Message)
 }
-#endregion

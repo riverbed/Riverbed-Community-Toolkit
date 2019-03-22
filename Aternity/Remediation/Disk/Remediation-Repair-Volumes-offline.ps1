@@ -16,6 +16,11 @@
    
 #>
 
+try
+{
+	# Load Agent Module
+    Add-Type -Path $env:STEELCENTRAL_ATERNITY_AGENT_HOME\ActionExtensionsMethods.dll
+
 #region Remediation action logic
 
 $all_repairStatus=@()
@@ -30,12 +35,6 @@ $result = $all_repairStatus -join ";"
  
 #endregion
 
-#region Aternity remediation status monitoring 
-try
-{
-	# Load Agent Module
-    Add-Type -Path $env:STEELCENTRAL_ATERNITY_AGENT_HOME\ActionExtensionsMethods.dll
-	
 	# Set Output message
     [ActionExtensionsMethods.ActionExtensionsMethods]::SetScriptOutput($result)
 }
@@ -43,4 +42,3 @@ catch
 {
     [ActionExtensionsMethods.ActionExtensionsMethods]::SetFailed($_.Exception.Message)
 }
-#endregion
