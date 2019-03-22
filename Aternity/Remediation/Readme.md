@@ -13,7 +13,7 @@ Related links:
 ## How to contribute?
 
 The community website is currently the best place to start: https://community.riverbed.com.
-There you can create questions, attach draft of script, discuss about it,... You can put the words "remediation" in the title or somewhere in your post to ease finding it.
+There you can create questions, attach draft of script, discuss about it,... You can put the word "remediation" in the title or somewhere in your post to find easily.
 
 And if you are already familair with github, please do not hesitate to submit pull requests. More details are coming on this topic.
 
