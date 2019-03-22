@@ -45,9 +45,10 @@ Here is how to setup a quick test environment:
 # on the machine where you code Remediation script
 $cert=New-SelfSignedCertificate -Subject "Aternity Remediation Code Signing" -Type CodeSigningCert -CertStoreLocation cert:\CurrentUser\My
 Export-Certificate -Cert $cert -FilePath  .\Aternity-Remediation-Certificate.cer
+Move-Item -Path $cert.PSPath -Destination "Cert:\CurrentUser\Root"
 ```
 
-- Step 2: on the user test machine, copy the certificate file and import the certificate to cert stores. The following need to be run with administrator privileges (i.e. Powershell Run as Administrator):
+- Step 2: on the user test machine, copy the certificate file and import the certificate to the certs stores to setup the trust. The following need to be run with administrator privileges (i.e. Powershell Run as Administrator):
 ```powershell
 # on the test user device
 Import-Certificate -FilePath .\Aternity-Remediation-Certificate.cer -CertStoreLocation Cert:\LocalMachine\TrustedPublisher

@@ -1,4 +1,4 @@
-﻿<#
+<#
 .Synopsis
    Aternity - Remediation Script: Check-Filehash-Powerpoint
 .DESCRIPTION

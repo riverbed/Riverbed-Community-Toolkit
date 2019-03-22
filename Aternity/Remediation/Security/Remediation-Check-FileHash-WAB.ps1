@@ -1,8 +1,8 @@
 ﻿<#
 .Synopsis
-   Aternity - Remediation Script: Remove-App-Chrome
+   Aternity - Remediation Script: Check-Filehash-WAB
 .DESCRIPTION
-	Uninstall the software using MSI
+	Check the MD5 file hash of powerpoint
 	
 	References:
 	* https://www.riverbed.com
@@ -10,21 +10,21 @@
 
 .EXAMPLE
    Deploy in Aternity (Configuration > Remediation > Add Action) 
-   Action Name: Remove-App-Chrome
-   Description: Uninstall the application Chrome using MSI
+   Action Name: Check-Filehash-WAB
+   Description: Check the MD5 file hash of wab
 #>
 
 #region Remediation action logic
 
-	# Set the name of the app to remove, for example:
-	# $app_name = "Chrome"
-    $app_name = "Chrome"
-
-    get-wmiobject Win32_Product | where-object { $_.Name -like "*$($app_name)*" } | % { 
-        "Uninstalling App: $($_.Name)"
-        Write-Output $_.IdentifyingNumber
-	    msiexec /x "$($_.IdentifyingNumber)" /qn 
-    }
+	#Set the path of the binary to check
+	$app_executable_path = "C:\Program Files\Windows Mail\wab.exe" 
+	try{
+		$result = (Get-FileHash -Path $app_executable_path  -Algorithm  MD5).Hash
+	}
+	catch {
+		$result = "Exception"
+		
+	}
 
 #endregion
 
