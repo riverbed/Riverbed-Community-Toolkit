@@ -1,4 +1,4 @@
-## Remediation scripts
+# Remediation scripts
 
 In this repo, you will be able to find examples of Remediation scripts shared by the Riverbed Community
 
@@ -10,7 +10,6 @@ Related links:
 - Share ideas https://aternity.ideas.riverbed.com 
 - Try Aternity http://riverbed.com/try-aternity
 
-
 ## How to contribute?
 
 The community website is currently the best place to start: https://community.riverbed.com.
@@ -20,20 +19,7 @@ And if you are already familair with github, please do not hesitate to submit pu
 
 ## FAQ
 
-### Are there generic templates?
-
-A first basic template is available, Aternity-Remediation-Template.ps1.
-More advanced, for example with error handling, would be great to have.
-
-### How to return an error status?
-
-The SetFailed method returns a error status with the message in parameter. 
-
-```powershell
-[ActionExtensionsMethods.ActionExtensionsMethods]::SetFailed("message")
-```
-
-### How to test with signed scripts?
+### How to sign and test signed Remediation scripts?
 
 When you have a Remediation script ready (for example, Remediation-DNS-ClearCache.ps1) you have to sign it before configuring it in the Remediation action in Aternity. The User Device where it will be run must have Aternity agent installed and trust the certificate of the publisher, as the agent installer will by default set Action Policy Execution to Trusted.
 
@@ -41,11 +27,10 @@ Here is how to setup a quick test environment and sign new Remediation scripts:
 
 #### Seting the test environment, the first time only
 
-- Step 1: On the machine having the Remediation scripts you need to sign, use the script Prepare-RemediationSigning.ps1.
-  
-It will generate a self-signed publisher certificate for code signing in the local certs store and export it as a certificate file (.cer). In the certs store, the certificate will have the subject "Aternity Remediation Code Signing".
+- Step 1: On the signing machine, where you will sign Remediation scripts, run once the script Prepare-RemediationSigning.ps1. It will generate a self-signed publisher certificate for code signing in the local certs store and export it as a certificate file (.cer). In the certs store, the certificate will have the subject "Aternity Remediation Code Signing".
 
 ```powershell
+#On the signing machine
 .\Prepare-RemediationSigning.ps1
 ```
 
@@ -60,41 +45,80 @@ Mode                LastWriteTime         Length Name
 -a----         5/1/2019  12:02 PM            812 Aternity-Remediation-Certificate.cer
 ```
 
-- Step 2: On the user test machine, copy the certificate file (.cer) in a local directory and from there execute the following Powershell script with administrator privileges (i.e. launch Powershell with Run as Administrator)
-
-It will import the certificate into the machine certs store Root CA and Publishers locations.
+- Step 2: On the test user deivce where the Aternity agent is installed, copy the certificate file (.cer) and script Import-RemediationSigningCertificate.ps1 in a local directory. Then from this local directory execute the Powershell script with administrator privileges (i.e. launch Powershell with Run as Administrator). It will import the certificate into both Root CA and TrustedPublishers machine certs stores to establish the trust.
 
 ```powershell
-# on the test user device
-Import-Certificate -FilePath .\Aternity-Remediation-Certificate.cer -CertStoreLocation Cert:\LocalMachine\TrustedPublisher
-Import-Certificate -FilePath .\Aternity-Remediation-Certificate.cer -CertStoreLocation Cert:\LocalMachine\Root
+#On the user test device
+.\Import-RemediationSigningCertificate.ps1
 ```
 
 #### Signing a new script
 
-On the machine where the certificate has been generated, the Powershell script Sign-RemediationScript.ps1 is ready to sign Remediation script.
+On the machine prepared for signing, the Powershell script Sign-RemediationScript.ps1 can sign Remediation scripts. It uses the certificate created previously in the local certs store. The Source parameter is the path of the script to sign and Destination is the path where the signed file will be created.
 
-It uses the certificate created previously in the local certs store. The Source parameter is the path of the script to sign and Destination is the path where the signed file will be created.
+The signed script can then be uploaded in a Aternity remediation action and executed on a user test device.
 
 Example:
 
 ```powershell
-./Sign-RemediationScript.ps1 -Source .\Remediation-script.ps1 -Destination Signed\Remediation-script-signed.ps1
+.\Sign-RemediationScript.ps1 -Source .\Network\Remediation-DNS-ClearCache.ps1 -Destination .\Signed\Remediation-DNS-ClearCache-signed.ps1
 ```
 
 Output example:
 
 ```output
-    Directory: C:\Riverbed-Community-Toolkit\Aternity\Remediation
+    Directory: C:\Riverbed-Community-Toolkit\Aternity\Remediation\Signed
 
 
 SignerCertificate                         Status     Path
 -----------------                         ------     ----
-E2C88872665FE1B5B8430E53EC7213B1171241E3  Valid      Remediation-script-signed.ps1
+E2C88872665FE1B5B8430E53EC7213B1171241E3  Valid      Remediation-DNS-ClearCache-signed.ps1
 ```
 
+#### Quick step-by-step to test Remediation
 
+On the signing machine:
+
+- step 1: [Download](https://github.com/riverbed/Riverbed-Community-Toolkit/archive/master.zip) the kit archive and extract all in C:\
+
+- step 2: Launch PowerShell as Administrator to prepare signing cert and sign a script
+
+```powershell
+Set-Location C:\Riverbed-Community-Toolkit-master\Aternity\Remediation
+Set-ExecutionPolicy Unrestricted -Scope CurrentUser
+.\Prepare-RemediationSigning.ps1
+New-Item -Type Directory Signed
+.\Sign-RemediationScript.ps1 -Source .\Network\Remediation-DNS-ClearCache.ps1 -Destination .\Signed\Remediation-DNS-ClearCache-signed.ps1
+```
+
+- step 3: open Aternity, create a new remediation action for "DNS-ClearCache" and upload the signed script
+
+On the user test device
+
+- step 4: Retrieve the certificate Aternity-Remediation-Certificate.cer and the script Import-RemediationSigningCertificate.ps1 from the signing machine
+
+- step 5: Launch PowerShell as Administrator and import the cert
+```powershell
+.\Import-RemediationSigningCertificate.ps1
+```
+- step 6: Install the Aternity agent (if not already done)
+
+In Aternity, 
+- step 7: Search the user test device and open its Device Events dashboard click Run Action button and select the remediation 
+
+### Are there generic templates for remediation scripts?
+
+A first basic template is available, Aternity-Remediation-Template.ps1.
+More advanced, for example with error handling, would be great to have.
+
+### How to return an error status in a remediation script?
+
+The SetFailed method returns a error status with the message in parameter.
+
+```powershell
+[ActionExtensionsMethods.ActionExtensionsMethods]::SetFailed("message")
+```
 
 #### Trigger the action in Aternity
 
-Find the User test device (ex. Search bar), open the Device Events dashboard and run the Remediaction (Run Action button).
+Find the User test device (ex. type the device name in the Search bar), open the Device Events dashboard and run the Remediation (click Run Action button).
