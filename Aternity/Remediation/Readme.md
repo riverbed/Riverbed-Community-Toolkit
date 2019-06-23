@@ -85,7 +85,7 @@ On the signing machine:
 
 ```powershell
 Set-Location C:\Riverbed-Community-Toolkit-master\Aternity\Remediation
-Set-ExecutionPolicy Unrestricted -Scope CurrentUser
+Set-ExecutionPolicy Unrestricted -Scope Process
 .\Prepare-RemediationSigning.ps1
 New-Item -Type Directory Signed
 .\Sign-RemediationScript.ps1 -Source .\Network\Remediation-DNS-ClearCache.ps1 -Destination .\Signed\Remediation-DNS-ClearCache-signed.ps1
@@ -95,10 +95,12 @@ New-Item -Type Directory Signed
 
 On the user test device
 
-- step 4: Retrieve the certificate Aternity-Remediation-Certificate.cer and the script Import-RemediationSigningCertificate.ps1 from the signing machine
+- step 4: Create a folder C:\install and retrieve from the signing machine the certificate Aternity-Remediation-Certificate.cer and the script Import-RemediationSigningCertificate.ps1 into it
 
 - step 5: Launch PowerShell as Administrator and import the cert
 ```powershell
+Set-Location c:\install
+Set-ExecutionPolicy Unrestricted -Scope Process
 .\Import-RemediationSigningCertificate.ps1
 ```
 - step 6: Install the Aternity agent (if not already done)
