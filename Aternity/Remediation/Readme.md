@@ -23,7 +23,10 @@ And if you are already familair with github, please do not hesitate to submit pu
 
 When you have a Remediation script ready (for example, Remediation-DNS-ClearCache.ps1) you have to sign it before configuring it in the Remediation action in Aternity. The User Device where it will be run must have Aternity agent installed and trust the certificate of the publisher, as the agent installer will by default set Action Policy Execution to Trusted.
 
-Here is how to setup a quick test environment and sign new Remediation scripts:
+Here is how to setup a quick test environment and sign new Remediation scripts. Depending on your environment you might need to set the powershell execution policy prior running the preparation script. For example, when launching PowerShell console, the following line would all to execute any script (.ps1 file) in the current PowerShell session:
+```powershell
+Set-ExecutionPolicy Unrestricted -Scope Process
+```
 
 #### Seting the test environment, the first time only
 
@@ -106,7 +109,7 @@ Set-ExecutionPolicy Unrestricted -Scope Process
 - step 6: Install the Aternity agent (if not already done)
 
 In Aternity, 
-- step 7: Search the user test device and open its Device Events dashboard click Run Action button and select the remediation 
+- step 7: In the Remediation, open the menu for "DNS-ClearCache", click run and type the name of the user test device to apply the remediation 
 
 ### Are there generic templates for remediation scripts?
 
