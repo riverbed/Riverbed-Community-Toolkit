@@ -129,8 +129,7 @@ The execution of the script Sign-RemediationScript.ps1 might give this error:
 
 ```powershell
 Set-AuthenticodeSignature : Cannot convert 'System.Object[]' to the type
-'System.Security.Cryptography.X509Certificates.X509Certificate2' required by parameter 'Certificate'. Specified method
-is not supported.
+'System.Security.Cryptography.X509Certificates.X509Certificate2' required by parameter 'Certificate'. Specified method is not supported.
 At C:\Riverbed-Community-Toolkit-master\Aternity\Remediation\Sign-RemediationScript.ps1:27 char:40
 + Set-AuthenticodeSignature -Certificate $cert -FilePath $Destination
 +                                        ~~~~~
