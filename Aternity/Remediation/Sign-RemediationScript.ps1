@@ -22,6 +22,13 @@ param(
     $Destination=".\Signed\Remediation-script-signed.ps1"
 )
 
-Get-Content $Source | Out-File -Encoding ascii -FilePath $Destination
 $cert=Get-ChildItem Cert:\CurrentUser\My | Where-Object { $_.Subject -eq "CN=$subject" }
-Set-AuthenticodeSignature -Certificate $cert -FilePath $Destination
+
+if (!$cert) {
+    Write-Error "Cannot find any certficate with the subject: $subject"
+} elseif ($cert.GetType().Name -eq "Object[]") {
+    Write-Error "Cannot choose which certificate to use. Multiple certs found with the same subject: $subject.`nPlease remove extra certs, keep only one cert and retry.`nYou can delete all certs using .\Clean-RemediationSigning.ps1"
+} else {
+    Get-Content $Source | Out-File -Encoding ascii -FilePath $Destination 
+    Set-AuthenticodeSignature -Certificate $cert -FilePath $Destination
+}

@@ -2,7 +2,6 @@
 
 In this repo, you will be able to find examples of Remediation scripts shared by the Riverbed Community
 
-
 Related links:
 
 - Ask the community: https://community.riverbed.com
@@ -124,14 +123,48 @@ In Aternity,
 
 - step 7: In the Remediation, open the menu for "DNS-ClearCache", click run and type the name of the user test device to apply the remediation
 
+#### Fix signing issue
+
+The execution of the script Sign-RemediationScript.ps1 might give this error:
+
+```powershell
+Set-AuthenticodeSignature : Cannot convert 'System.Object[]' to the type
+'System.Security.Cryptography.X509Certificates.X509Certificate2' required by parameter 'Certificate'. Specified method
+is not supported.
+At C:\Riverbed-Community-Toolkit-master\Aternity\Remediation\Sign-RemediationScript.ps1:27 char:40
++ Set-AuthenticodeSignature -Certificate $cert -FilePath $Destination
++                                        ~~~~~
+    + CategoryInfo          : InvalidArgument: (:) [Set-AuthenticodeSignature], ParameterBindingException
+    + FullyQualifiedErrorId : CannotConvertArgument,Microsoft.PowerShell.Commands.SetAuthenticodeSignatureCommand
+```
+
+It happens if the script Prepare-RemediationSigning.ps1 has run multiple times and you have now many certificates with the same subject name. The last version of the script will now give a more explicit message:
+
+```powershell
+Sign-RemediationScript.ps1 : Cannot choose which certificate to use. Multiple certs found with the same subject: Aternity Remediation Code Signing.
+Please remove extra certs, keep only one cert and retry.
+You can delete all existing using .\Clean-RemediationSigning.ps1
+At line:1 char:1
++ .\Sign-RemediationScript.ps1 -subject Aternity Remediation Code Signing
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [Write-Error], WriteErrorException
+    + FullyQualifiedErrorId : Microsoft.PowerShell.Commands.WriteErrorException,Sign-RemediationScript.ps1
+```
+
+To fix, you can clean-up all certificates with the following, and retry the setup from the begining using Prepare-RemediationSigning.ps1, Sign-RemediationScript.ps1 and import new cert on the test devices.
+
+```powershell
+.\Clean-RemediationSigning.ps1
+```
+
 ### Developing remediation scripts
 
-#### Are there generic templates for remediation scripts?
+#### Generic templates for remediation scripts
 
 A first basic template is available, Aternity-Remediation-Template.ps1.
 More advanced, for example with error handling, would be great to have.
 
-#### How to return an error status in a remediation script?
+#### How to return an error status in a remediation script
 
 The SetFailed method returns a error status with the message in parameter.
 
