@@ -1,0 +1,59 @@
+{
+    "name": "SteelHead vCX-10",
+    "category": "router",
+    "description": "Riverbed SteelHead delivers not only best-in-class optimization – but essential visibility and control as companies transition to the Hybrid WAN. SteelHead CX for Virtual is available as a virtual solution on most major hypervisors including VMware vSphere, Microsoft Hyper-V and KVM. It accelerates the performance of all applications including on-premises, cloud, and SaaS across the hybrid enterprise for organizations that want to deliver the best end user experience – while leveraging the scalability and cost benefits of virtualization.\n\nSteelHead CX for Virtual uniquely delivers the best application performance along with application, network and end user visibility, and simplified control management of users, applications and networks based on business requirements and decisions.",
+    "vendor_name": "Riverbed Technology",
+    "vendor_url": "http://www.riverbed.com",
+    "documentation_url": "https://support.riverbed.com/content/support/software/steelhead/cx-appliance.html",
+    "product_name": "SteelHead-v vCX-10",
+    "registry_version": 3,
+    "status": "stable",
+    "symbol":"steelhead-vcx.png",
+    "maintainer": "Riverbed Technical Evangelist Group",
+    "maintainer_email": "Tech-evangelists@riverbed.com",
+    "usage": "Download the image from Riverbed Support website then extract the archive.\nDefault credentials: admin / password",
+    "qemu": {
+        "adapter_type": "virtio-net-pci",
+        "adapters": 4,
+        "ram": 2048,
+        "hda_disk_interface": "virtio",
+        "hdb_disk_interface": "virtio",
+        "hdc_disk_interface": "virtio",
+        "arch": "x86_64",
+        "console_type": "telnet",
+        "kvm": "require"
+    },
+    "images": [
+        {
+            "filename": "mgmt.qcow2",
+            "version": "9.9.0",
+            "md5sum": "e620cf4fd0a463c82215d2772d028953",
+            "filesize": 2046623744,
+            "download_url": "hhttps://support.riverbed.com/content/support/software/steelhead/cx-appliance.html"
+        },
+        {
+            "filename": "empty50Gb-b.qcow2",
+            "version": "1.0",
+            "md5sum": "4cde9c7382ff2924e8933b35354fb1af",
+            "filesize": 197632,
+            "download_url":"https://github.com/riverbed/Riverbed-Community-Toolkit/blob/master/SteelHead/empty50Gb-b.qcow2"
+        },
+        {
+            "filename": "empty50Gb-c.qcow2",
+            "version": "1.0",
+            "md5sum": "4cde9c7382ff2924e8933b35354fb1af",
+            "filesize": 197632,
+            "download_url":"https://github.com/riverbed/Riverbed-Community-Toolkit/blob/master/SteelHead/empty50Gb-c.qcow2"
+        }
+    ],
+    "versions": [
+        {
+            "name": "9.9.0",
+            "images": {
+                "hda_disk_image": "mgmt.qcow2",
+                "hdb_disk_image": "empty50Gb-b.qcow2",
+                "hdc_disk_image": "empty50Gb-c.qcow2"
+            }
+        }
+    ]
+}
