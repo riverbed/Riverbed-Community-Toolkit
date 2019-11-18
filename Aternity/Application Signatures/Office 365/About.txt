@@ -1,0 +1,1 @@
+Signatures for Office 365 designed with language neutrality in mind.
