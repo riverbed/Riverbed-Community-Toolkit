@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ActivityConfiguration xmlns:act="www.aternity.com/activity" xmlns:html="www.aternity.com/html"
+                       xmlns:http="www.aternity.com/http" xmlns:java="www.aternity.com/java"
+                       xmlns:js="www.aternity.com/js" xmlns:net="www.aternity.com/network"
+                       xmlns:sys="www.aternity.com/sys" xmlns:ui="www.aternity.com/ui"
+                       xmlns:ux="www.aternity.com/ux" xmlns:xgen="www.aternity.com/xgen"
+                       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <act:Activity timeout="180" xmlns="www.aternity.com/activity" onapp="true">
+        <sys:process act:id="oProcess1" act:idtype="referenceORdefine">
+            <OR>
+                <sys:name value="iexplore"/>
+                <sys:name value="chrome"/>
+                <sys:name value="Google Chrome"/>
+                <sys:name value="firefox"/>
+                <sys:name value="MicrosoftEdge"/>
+            </OR>
+        </sys:process>
+        <States>
+            <act:State id="idle" type="start"/>
+            <act:State id="Start" measure="application">
+                <act:Literal act:cartridge="network">
+                    <act:AND>
+                        <net:traffic event="accumulate"/>
+                        <net:ipAddress from="0.0.0.0" to="255.255.255.255"/>
+                    </act:AND>
+                </act:Literal>
+            </act:State>
+            <act:State id="Complete" measure="user" type="endmatch">
+                <act:Action act:cartridge="sys">
+                    <act:setValue name="isAvailable" value="true"/>
+                </act:Action>
+            </act:State>
+            <act:State id="Incomplete" measure="user" type="endnomatch"/>
+            <act:State id="chromeDummy" measure="user">
+                <act:Literal act:cartridge="ux">
+                    <ux:uxevent type="http:chrome:WebRequest.Completed">
+                        <act:AND>
+                                <ux:condition hasValue="(?i)^https?://((outlook\.office\.com)|([^/:]*office\.com)|([^/:]*office365\.com)|([^/:]*sharepoint\.com)|([^/:]*live\.com)|([^/:]*microsoftstream\.com)|([^/:]*sway\.com)|([^/:]*yammer\.com)|([^/:]*microsoft\.com)|([^/:]*powerapps\.com))/[^#?]*calendar/[^#?]*" matchType="regex" property="documentCommittedUrl"/>
+                            <ux:condition hasValue="VALUE_NEVER_MATCH" matchType="exact" property="PROPERTY_NEVER_MATCH"/>
+                            <ux:condition hasValue=".*" matchType="regex" property="url"/>
+                            <ux:condition hasValue=".*" matchType="regex" property="type"/>
+                            <ux:condition hasValue=".*" matchType="regex" property="tabId"/>
+                            <ux:condition hasValue=".*" matchType="regex" property="ip"/>
+                            <ux:condition hasValue=".*" matchType="regex" property="aternityIncomingBytes"/>
+                            <ux:condition hasValue=".*" matchType="regex" property="aternityOutgoingBytes"/>
+                            <ux:condition hasValue=".*" matchType="regex" property="aternityNetworkStartTime"/>
+                            <ux:condition hasValue=".*" matchType="regex" property="aternityNetworkEndTime"/>
+                            <ux:condition hasValue=".*" matchType="regex" property="aternityTotalServerTime"/>
+                            <ux:condition hasValue=".*" matchType="regex" property="aternityEventTimes"/>
+                        </act:AND>
+                    </ux:uxevent>
+                </act:Literal>
+            </act:State>
+        </States>
+        <Transitions>
+                <act:Transition from="idle" id="idle-Start" to="Start">
+                        <Literal act:cartridge="ux">
+                            <ux:uxevent type="ui:chrome:OnApp:Document.click">
+                                <AND>
+                                    <ux:condition matchType="regex" property="documentCommittedUrl" hasValue="(?i)^https?://((outlook\.office\.com)|([^/:]*office\.com)|([^/:]*office365\.com)|([^/:]*sharepoint\.com)|([^/:]*live\.com)|([^/:]*microsoftstream\.com)|([^/:]*sway\.com)|([^/:]*yammer\.com)|([^/:]*microsoft\.com)|([^/:]*powerapps\.com))/[^#?]*calendar/[^#?]*" />
+                                    <ux:condition matchType="exact" property="type" hasValue="document" />
+                                    <ux:condition matchType="regex" property="documentTitle" hasValue=".*" />
+                                    <ux:condition matchType="regex" property="aternityCSSSelector" hasValue=";button\.ms-Button\.ms-Button--commandBar\.ms-CommandBarItem-link\[role=&apos;menuitem&apos;\];" />
+                                    <ux:condition matchType="exact" property="aternityMouseButton" hasValue="Left" />
+                                    <ux:condition matchType="exact" property="aternityModifierKeys" hasValue="None" />
+                                </AND>
+                            </ux:uxevent>
+                        </Literal>
+                </act:Transition>
+                <act:Transition from="Start" id="Start-Complete" to="Complete">
+                        <Literal act:cartridge="ux">
+                            <ux:uxevent type="ui:chrome:OnApp:Dom.Visible">
+                                <AND>
+                                    <ux:condition matchType="regex" property="documentCommittedUrl" hasValue="(?i)^https?://((outlook\.office\.com)|([^/:]*office\.com)|([^/:]*office365\.com)|([^/:]*sharepoint\.com)|([^/:]*live\.com)|([^/:]*microsoftstream\.com)|([^/:]*sway\.com)|([^/:]*yammer\.com)|([^/:]*microsoft\.com)|([^/:]*powerapps\.com))/[^#?]*calendar/[^#?]*" />
+                                    <ux:condition matchType="exact" property="type" hasValue="document" />
+                                    <ux:condition matchType="regex" property="documentTitle" hasValue=".*" />
+                                    <ux:condition matchType="regex" property="aternityCSSSelector" hasValue=";\[title=&apos;Collapse\\ Required\\ attendees&apos;\];" />
+                                </AND>
+                            </ux:uxevent>
+                        </Literal>
+                </act:Transition>
+                <act:Transition from="Start" id="Start-Incomplete" to="Incomplete">
+                        <Literal act:cartridge="ux">
+                            <ux:uxevent type="ui:chrome:OnApp:Document.click">
+                                <AND>
+                                    <ux:condition matchType="regex" property="documentCommittedUrl" hasValue="(?i)^https?://((outlook\.office\.com)|([^/:]*office\.com)|([^/:]*office365\.com)|([^/:]*sharepoint\.com)|([^/:]*live\.com)|([^/:]*microsoftstream\.com)|([^/:]*sway\.com)|([^/:]*yammer\.com)|([^/:]*microsoft\.com)|([^/:]*powerapps\.com))/[^#?]*calendar/[^#?]*" />
+                                    <ux:condition matchType="exact" property="type" hasValue="document" />
+                                    <ux:condition matchType="regex" property="documentTitle" hasValue=".*" />
+                                    <ux:condition matchType="regex" property="aternityCSSSelector" hasValue=";button\.ms-Button\.ms-Button--commandBar\.ms-CommandBarItem-link\[role=&apos;menuitem&apos;\];" />
+                                    <ux:condition matchType="exact" property="aternityMouseButton" hasValue="Left" />
+                                    <ux:condition matchType="exact" property="aternityModifierKeys" hasValue="None" />
+                                </AND>
+                            </ux:uxevent>
+                        </Literal>
+                </act:Transition>
+        </Transitions>
+        <Measurements>
+            <act:monitoredAttribute enabled="true" maType="ActivityResponse"/>
+            <act:monitoredAttribute enabled="true" maType="NetworkLatency">
+                <act:Configuration minBytesIn="100" minBytesOut="100"
+                                   xsi:type="TYPE_networkLatencyMonitoredAttributeConfiguration"/>
+            </act:monitoredAttribute>
+            <act:monitoredAttribute enabled="true" maType="TotalNetworkResponseTime"/>
+            <act:monitoredAttribute enabled="true" maType="ClientTime"/>
+            <act:monitoredAttribute enabled="true" maType="TotalNetworkIncomingTraffic"/>
+            <act:monitoredAttribute enabled="true" maType="TotalNetworkOutgoingTraffic"/>
+            <contextualAttribute saType="ServerID">
+                <act:Configuration/>
+            </contextualAttribute>
+        </Measurements>
+    </act:Activity>
+</ActivityConfiguration>
