@@ -205,7 +205,7 @@ Creating a subnet inside the existing VNET will allow integration of the Acceler
 
 ![Step1](./images/Riverbed-Acceleration-Azure-step1.png)
 
-The script [Create-SubnetAcceleration.ps1](./scripts/Create-SubnetAcceleration.ps1) can be used to deploy the acceleration subnet in any VNET. The parameters are basically the Virtual Network, its Resource Group name and the /24 subnet prefix for acceleration.
+The script [Create-SubnetAcceleration.ps1](./101-service-chain-gw-appliance/scripts/Create-SubnetAcceleration.ps1) can be used to deploy the acceleration subnet in any VNET. The parameters are basically the Virtual Network, its Resource Group name and the /24 subnet prefix for acceleration.
 
 For example, here is how to deploy on the sample topology AZE:
 
