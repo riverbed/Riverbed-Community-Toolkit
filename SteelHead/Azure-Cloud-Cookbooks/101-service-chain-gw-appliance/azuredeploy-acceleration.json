@@ -152,7 +152,6 @@
 
         "subnetRef": "[concat(parameters('VirtualNetworkId'), '/subnets/', variables('subnetName_acceleration'))]",
 
-        // network interface naming
         "splitSubnetPrefix_acceleration": "[split(parameters('subnetPrefix_acceleration'),'.')]",
         "prefixStaticPrivateIp_acceleration" : "[concat(variables('splitSubnetPrefix_acceleration')[0],'.',variables('splitSubnetPrefix_acceleration')[1],'.',variables('splitSubnetPrefix_acceleration')[2],'.')]",
         "staticPrivateIP_acceleration": "[concat(variables('prefixStaticPrivateIp_acceleration'),'82')]",
