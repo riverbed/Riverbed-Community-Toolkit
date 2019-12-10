@@ -1,0 +1,15 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.191120",
+    "parameters": {
+        "adminPublicKey": {
+            "value": "GEN-SSH-PUB-KEY"
+        },
+        "VirtualNetworkId": {
+            "value": "GET-PREREQ-VirtualNetworkId"
+        },
+        "subnetPrefix_acceleration": {
+            "value": "GET-PREREQ-subnetPrefix_acceleration"
+        }
+    }
+}

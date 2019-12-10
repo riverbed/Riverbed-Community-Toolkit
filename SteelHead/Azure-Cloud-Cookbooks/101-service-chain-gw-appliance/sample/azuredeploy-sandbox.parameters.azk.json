@@ -1,0 +1,36 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.190925",
+  "parameters": {
+      "projectName": {
+        "value": "azk"
+      },
+      "addressPrefixes": {
+          "value": [
+            "192.168.1.0/24",
+            "10.82.0.0/16"
+          ]
+      },
+      "subnetPrefix_siteOOB" : {
+          "value": "10.82.254.0/24"
+      },
+      "subnetPrefix_transit" : {
+          "value": "10.82.0.0/24"
+      },
+      "subnetPrefix_servernetwork" : {
+          "value": "10.82.1.0/24"
+      },
+      "staticPrivateIPsiteOOB_gw" : {
+        "value": "10.82.254.254"
+      },
+      "staticPrivateIPtransit_gw" : {
+        "value": "10.82.0.254"
+      },
+      "adminPublicKey_gw" : {
+        "value": "GEN-SSH-PUB-KEY"
+      },
+      "staticPrivateIPservernetwork_workload"  : {
+        "value": "10.82.1.50"
+      }
+  }   
+}

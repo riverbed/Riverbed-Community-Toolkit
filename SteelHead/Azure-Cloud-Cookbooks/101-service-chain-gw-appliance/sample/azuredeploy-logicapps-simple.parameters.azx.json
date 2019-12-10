@@ -1,0 +1,30 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.191129",
+    "parameters": {
+        "projectName": {
+            "value": "azx"
+        },
+        "location": {
+            "value": "eastus2"
+        },
+        "integrationServiceEnvironmentId" :{
+            "value": "SET-ACTUAL-VALUE"
+        },
+        "shFQDN":{
+            "value": "azx-sh82.your-private-domain.org"
+        },
+        "shApiUsername":{
+            "value": "api"
+        },
+        "shApiPassword":{
+            "value": "community"
+        },
+        "uriBypassAccelerationRoutes" : {
+            "value": "https://your-automation/webhooks?token=FAKETOKEN1"
+        },
+        "uriSetAccelerationRoutes" : {
+            "value": "https://your-automation/webhooks?token=FAKETOKEN2"
+        },
+    }
+}

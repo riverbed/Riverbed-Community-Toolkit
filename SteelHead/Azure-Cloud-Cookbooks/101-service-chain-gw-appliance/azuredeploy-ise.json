@@ -1,0 +1,106 @@
+{
+    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.191120",
+    "parameters": {
+        "projectName": {
+            "type": "string",
+            "defaultValue": "azu",
+            "metadata": {
+                "description": "Site name"
+            }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "Location for the resources."
+            }
+        },
+        "integrationServiceEnvironmentName": {
+            "defaultValue": "[concat(parameters('projectName'),'-ise-',parameters('location'))]",
+            "type": "string",
+            "metadata": {
+              "description": "The name of the Integration Service Environment."
+            }
+          },
+          "integrationServiceEnvironmentSku": {
+            "type": "string",
+            "defaultValue": "Premium",
+            "allowedValues": ["Developer", "Premium"],
+            "metadata": {
+              "description": "The SKU for the Integration Service Environment, either Developer or Premium."
+            }
+          },
+          "skuCapacity": {
+            "defaultValue": 0,
+            "type": "int",
+            "metadata": {
+              "description": "The number of scale units for the Integration Service Environment. 0 is the base unit."
+            }
+          },
+          "subnetIdISE1": {
+            "type": "string",
+            "defaultValue": "/subscriptions/1234-1234/resourceGroups/azu-hub-westus/providers/Microsoft.Network/virtualNetworks/azu-hub-westus/subnets/ISE1",
+            "metadata": {
+              "description": "The id of the first ISE subnet."
+            }
+          },
+          "subnetIdISE2": {
+            "type": "string",
+            "defaultValue": "/subscriptions/1234-1234/resourceGroups/azu-hub-westus/providers/Microsoft.Network/virtualNetworks/azu-hub-westus/subnets/ISE2",
+            "metadata": {
+              "description": "The id of the second ISE subnet."
+            }
+          },
+          "subnetIdISE3": {
+            "type": "string",
+            "defaultValue": "/subscriptions/1234-1234/resourceGroups/azu-hub-westus/providers/Microsoft.Network/virtualNetworks/azu-hub-westus/subnets/ISE3",
+            "metadata": {
+              "description": "The id of the third ISE subnet."
+            }
+          },
+          "subnetIdISE4": {
+            "type": "string",
+            "defaultValue": "/subscriptions/1234-1234/resourceGroups/azu-hub-westus/providers/Microsoft.Network/virtualNetworks/azu-hub-westus/subnets/ISE4",
+            "metadata": {
+              "description": "The id of the fourth ISE subnet."
+            }
+          }
+    },
+    "variables": {
+     },
+    "resources": [
+
+        {
+            "type": "Microsoft.Logic/integrationServiceEnvironments",
+            "apiVersion": "2019-05-01",
+            "name": "[parameters('integrationServiceEnvironmentName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [ ],
+            "sku": {
+                "name": "[parameters('integrationServiceEnvironmentSku')]",
+                "capacity": "[parameters('skuCapacity')]"
+            },
+            "properties": {
+                "networkConfiguration": {
+                    "subnets":
+                    [
+                        {
+                            "id": "[parameters('subnetIdISE1')]"
+                        },
+                        {
+                            "id": "[parameters('subnetIdISE2')]"
+                        },
+                        {
+                            "id": "[parameters('subnetIdISE3')]"
+                        },
+                        {
+                            "id": "[parameters('subnetIdISE4')]"
+                        }
+                    ]
+                }
+            }
+        }
+
+    ]
+}

@@ -1,0 +1,772 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.190925",
+    "parameters": {
+        "projectName": {
+            "type": "string",
+            "defaultValue": "community",
+            "metadata": {
+                "description": "Prefix added to resource name. Ex. a site name"
+            }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "Location to for the resources."
+            }
+        },
+        "virtualNetworkName": {
+            "type": "string",
+            "defaultValue": "[concat(parameters('projectName'),'-hub-',resourceGroup().location)]",
+            "metadata": {
+                "description": "Name of the virtual network"
+            }
+        },
+        "subnetPrexix_WAN": {
+            "type": "string",
+            "defaultValue": "10.0.0.0/8",
+            "metadata": {
+                "description": "Network prefix of the WAN"
+            }
+        },
+        "addressPrefixes": {
+            "type": "array",
+            "defaultValue": [
+                "192.168.1.0/24",
+                "10.1.0.0/16"
+            ],
+            "metadata": {
+                "description": "Address prefix of the virtual network"
+            }
+        },
+        "subnetName_ULInternet1": {
+            "type": "string",
+            "defaultValue": "UL-Internet1",
+            "metadata": {
+                "description": "Name of the uplink subnet for Internet1 uplink"
+            }
+        },
+        "subnetPrefix_ULInternet1": {
+            "type": "string",
+            "defaultValue": "192.168.1.0/24",
+            "metadata": {
+                "description": "Subnet prefix of the virtual network for Internet1 uplink"
+            }
+        },
+        "subnetName_siteOOB": {
+            "type": "string",
+            "defaultValue": "AzureBastionSubnet",
+            "metadata": {
+                "description": "Name of the uplink subnet for Bastion and/or Out of Band access"
+            }
+        },
+        "subnetPrefix_siteOOB": {
+            "type": "string",
+            "defaultValue": "10.1.254.0/24",
+            "metadata": {
+                "description": "Subnet prefix for subnet siteOOB"
+            }
+        },
+        "subnetName_transit": {
+            "type": "string",
+            "defaultValue": "transit",
+            "metadata": {
+                "description": "Name of the subnet for transit with applications and workloads in Azure"
+            }
+        },
+        "subnetPrefix_transit": {
+            "type": "string",
+            "defaultValue": "10.1.0.0/24",
+            "metadata": {
+                "description": "Subnet prefix of the virtual network for transit with applications and workloads in Azure"
+            }
+        },
+        "subnetName_servernetwork": {
+            "type": "string",
+            "defaultValue": "servernetwork",
+            "metadata": {
+                "description": "Name of the subnet for applications and workloads in Azure"
+            }
+        },
+        "subnetPrefix_servernetwork": {
+            "type": "string",
+            "defaultValue": "10.1.1.0/24",
+            "metadata": {
+                "description": "Subnet prefix of the virtual network for applications and workloads in Azure"
+            }
+        },
+        "publicIpName_OOB_gw": {
+            "type": "string",
+            "defaultValue": "[concat(parameters('projectName'),'-OOB-gw')]",
+            "metadata": {
+                "description": "Name of the public ip address for OOB-gw uplink"
+            }
+        },
+        "publicIpName_OOB_bastion": {
+            "type": "string",
+            "defaultValue": "[concat(parameters('projectName'),'-OOB-bastion')]",
+            "metadata": {
+                "description": "Name of the public ip address for the Bastion Host in OOB subnet"
+            }
+        },
+        "publicIpName_ULInternet1": {
+            "type": "string",
+            "defaultValue": "[concat(parameters('projectName'),'-UL-Internet1')]",
+            "metadata": {
+                "description": "Name of the public ip address for Internet1 uplink"
+            }
+        },
+        "networkSecurityGroupName_OOB": {
+            "type": "string",
+            "defaultValue": "[concat(parameters('projectName'),'-OOB')]",
+            "metadata": {
+                "description": "Network security group for siteOOB subnet"
+            }
+        },
+        "staticPrivateIPsiteOOB_gw": {
+            "type": "string",
+            "defaultValue": "10.1.254.254",
+            "metadata": {
+                "description": "Static IP address in siteOOB uplink subnet for the gateway"
+            }
+        },
+        "staticPrivateIPULInternet1_gw": {
+            "type": "string",
+            "defaultValue": "192.168.1.254",
+            "metadata": {
+                "description": "Static IP address in Internet uplink subnet for the gateway"
+            }
+        },
+        "staticPrivateIPtransit_gw": {
+            "type": "string",
+            "defaultValue": "10.1.0.254",
+            "metadata": {
+                "description": "Static IP address in transit subnet for the gateway"
+            }
+        },
+        "osDiskType": {
+            "type": "string",
+            "defaultValue": "StandardSSD_LRS",
+            "metadata": {
+                "description": "Disk type"
+            }
+        },
+        "vmSize_gw": {
+            "type": "string",
+            "defaultValue": "Standard_B2ms",
+            "metadata": {
+                "description": "Size of the VM."
+            }
+        },
+        "virtualMachineName_gw": {
+            "type": "string",
+            "defaultValue": "[concat(parameters('projectName'),'-gw')]",
+            "metadata": {
+                "description": "Name of the gateway"
+            }
+        },
+        "adminPublicKey_gw": {
+            "type": "string",
+            "metadata": {
+                "description": "SSH Key for the gateway"
+            }
+        },
+        "publicIpName_workload": {
+            "type": "string",
+            "defaultValue": "[concat(parameters('projectName'),'-OOB-workload')]",
+            "metadata": {
+                "description": "Name of the public ip address for workload"
+            }
+        },
+        "publicIpDns_workload": {
+            "type": "string",
+            "defaultValue": "[concat(parameters('projectName'), uniqueString(resourceGroup().id))]",
+            "metadata": {
+                "description": "DNS of the public ip address for workload"
+            }
+        },
+        "staticPrivateIPservernetwork_workload": {
+            "type": "string",
+            "defaultValue": "10.1.1.50",
+            "metadata": {
+                "description": "Static IP address in servernetwork subnet for workload"
+            }
+        },
+        "osDiskType_workload": {
+            "type": "string",
+            "defaultValue": "StandardSSD_LRS",
+            "metadata": {
+                "description": "Disk type"
+            }
+        },
+        "vmSize_workload": {
+            "type": "string",
+            "defaultValue": "Standard_B2ms",
+            "metadata": {
+                "description": "Size of the VM. Standard_Dsv3 serie not available everywhere."
+            }
+        },
+        "virtualMachineName_workload": {
+            "type": "string",
+            "defaultValue": "[concat(parameters('projectName'),'-workload')]",
+            "metadata": {
+                "description": "Name of the workload"
+            }
+        },
+        "adminPublicKey_workload": {
+            "type": "string",
+            "defaultValue": "[parameters('adminPublicKey_gw')]",
+            "metadata": {
+                "description": "SSH Key for the workload"
+            }
+        },
+        "adminUsername": {
+            "type": "string",
+            "defaultValue": "riverbed-community",
+            "metadata": {
+                "description": "Admin username"
+            }
+        },
+        "bastionHostName": {
+            "type": "string",
+            "defaultValue": "[parameters('virtualNetworkName')]",
+            "metadata": {
+                "description": "Name of the BastionHost"
+            }
+        },
+        "CreateBastion": {
+            "type": "string",
+            "defaultValue": "[if(contains(createarray('westus','eastus','westeurope','australiaeast','japaneast'),resourceGroup().location),'create','skip')]",
+            "allowedValues": [
+              "create",
+              "skip"
+            ],
+            "metadata": {
+                "description": "If set to skip the Bastion will not be created. By default, it will create only in location where Bastion is available, as of 191201"
+            }
+          },   
+        "CreateVirtualMachine_workload": {
+            "type": "string",
+            "defaultValue": "create",
+            "allowedValues": [
+              "create",
+              "skip"
+            ],
+            "metadata": {
+                "description": "If set to skip the VM and NIC will not be created"
+            }
+          },      
+        "CreateVirtualMachine_gateway": {
+            "type": "string",
+            "defaultValue": "create",
+            "allowedValues": [
+              "create",
+              "skip"
+            ],
+            "metadata": {
+                "description": "If set to skip the VM and NIC will not be created"
+            }
+          }
+    },
+    "variables": {
+        "vnetId": "[resourceId(resourceGroup().name,'Microsoft.Network/virtualNetworks', parameters('virtualNetworkName'))]",
+        "subnetSiteOOBRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName_siteOOB'))]",
+        "subnetULInternet1Ref": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName_ULInternet1'))]",
+        "subnetTransitRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName_transit'))]",
+        "subnetServernetworkRef": "[concat(variables('vnetId'), '/subnets/', parameters('subnetName_servernetwork'))]",
+        "routeTables_servernetwork": "[concat(parameters('projectName'), '-servernetwork')]",
+        "nsgId_OOB": "[resourceId(resourceGroup().name, 'Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName_OOB'))]",
+        "networkInterfaceName_gw_eth0": "[concat(parameters('virtualMachineName_gw'),'-eth0')]",
+        "networkInterfaceName_gw_eth1": "[concat(parameters('virtualMachineName_gw'),'-eth1')]",
+        "networkInterfaceName_gw_eth2": "[concat(parameters('virtualMachineName_gw'),'-eth2')]",
+        "diagnosticsStorageAccountName": "[concat(uniquestring(resourceGroup().id), 'diag')]",
+        "networkInterfaceName_workload_eth0": "[concat(parameters('virtualMachineName_workload'),'-eth0')]",
+        "configAppCommand": "apt update -y -q ; apt install apache2 -q -y ; head -c 5G </dev/urandom > /var/www/html/5GB.bak",
+        "ubuntuSku" : "19.04"
+    },
+    "resources": [
+        {
+            "condition":"[equals(parameters('CreateBastion'),'create')]",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "apiVersion": "2019-09-01",
+            "name": "[parameters('publicIpName_OOB_bastion')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "publicIPAllocationMethod": "Static"
+            },
+            "sku":{
+                "name":"Standard"
+            }
+        },
+        {
+            "condition":"[equals(parameters('CreateBastion'),'create')]",
+            "apiVersion": "2019-09-01",
+            "type": "Microsoft.Network/bastionHosts",
+            "name": "[parameters('bastionHostName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/publicIPAddresses/',parameters('publicIpName_OOB_bastion'))]",
+                "[concat('Microsoft.Network/virtualNetworks/',parameters('virtualNetworkName'))]"
+            ],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig",
+                        "properties": {
+                            "subnet": {
+                                "id": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('virtualNetworkName'),parameters('subnetName_siteOOB'))]"
+                            },
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIpAddresses', parameters('publicIpName_OOB_bastion'))]"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/publicIPAddresses",
+            "apiVersion": "2017-09-01",
+            "name": "[parameters('publicIpName_OOB_gw')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "publicIPAllocationMethod": "Static"
+            }
+        },
+        {
+            "type": "Microsoft.Network/publicIPAddresses",
+            "apiVersion": "2017-09-01",
+            "name": "[parameters('publicIpName_ULInternet1')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "publicIPAllocationMethod": "Static"
+            }
+        },
+        {
+            "type": "Microsoft.Network/routeTables",
+            "apiVersion": "2019-09-01",
+            "name": "[variables('routeTables_servernetwork')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "disableBgpRoutePropagation": false,
+                "routes": [
+                    {
+                        "name": "default_via_Internet",
+                        "properties": {
+                            "addressPrefix": "0.0.0.0/0",
+                            "nextHopType": "Internet"
+                        }
+                    },
+                    {
+                        "name": "WAN_via_gw_appliance",
+                        "properties": {
+                            "addressPrefix": "[parameters('subnetPrexix_WAN')]",
+                            "nextHopType": "VirtualAppliance",
+                            "nextHopIpAddress": "[parameters('staticPrivateIPtransit_gw')]"
+                        }
+                    },
+                    {
+                        "name": "block_UL_Internet1",
+                        "properties": {
+                            "addressPrefix": "[parameters('subnetPrefix_ULInternet1')]",
+                            "nextHopType": "None"
+                        }
+                    },
+                    {
+                        "name": "servernetwork",
+                        "properties": {
+                            "addressPrefix": "[parameters('subnetPrefix_servernetwork')]",
+                            "nextHopType": "VnetLocal"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks",
+            "apiVersion": "2019-09-01",
+            "name": "[parameters('virtualNetworkName')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/routeTables/', variables('routeTables_servernetwork'))]"
+            ],
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": "[parameters('addressPrefixes')]"
+                },
+                "subnets": [
+                    {
+                        "name": "[parameters('subnetName_ULInternet1')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('subnetPrefix_ULInternet1')]"
+                        }
+                    },
+                    {
+                        "name": "[parameters('subnetName_siteOOB')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('subnetPrefix_siteOOB')]"
+                        }
+                    },
+                    {
+                        "name": "[parameters('subnetName_transit')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('subnetPrefix_transit')]"
+                        }
+                    },
+                    {
+                        "name": "[parameters('subnetName_servernetwork')]",
+                        "properties": {
+                            "addressPrefix": "[parameters('subnetPrefix_servernetwork')]",
+                            "routeTable": {
+                                "id": "[resourceId(resourceGroup().name, 'Microsoft.Network/routeTables/', variables('routeTables_servernetwork'))]"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "name": "[parameters('networkSecurityGroupName_OOB')]",
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "apiVersion": "2019-02-01",
+            "location": "[parameters('location')]",
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "ToggleOOBInBound",
+                        "properties": {
+                            "description": "Toggle allow/deny for external access to ssh, https",
+                            "sourceAddressPrefix": "*",
+                            "sourcePortRange": "*",
+                            "direction": "Inbound",
+                            "access": "Deny",
+                            "priority": 2011,
+                            "protocol": "Tcp",
+                            "destinationAddressPrefix": "*",
+                            "destinationPortRanges": [
+                                "22",
+                                "443"
+                            ]
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "apiVersion": "2019-04-01",
+            "name": "[variables('diagnosticsStorageAccountName')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "Standard_LRS"
+            },
+            "kind": "Storage",
+            "properties": {}
+        },
+        {
+            "condition": "[equals(parameters('CreateVirtualMachine_gateway'),'create')]",
+            "name": "[variables('networkInterfaceName_gw_eth0')]",
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2019-09-01",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]",
+                "[concat('Microsoft.Network/publicIpAddresses/', parameters('publicIpName_OOB_gw'))]",
+                "[concat('Microsoft.Network/networkSecurityGroups/', parameters('networkSecurityGroupName_OOB'))]"
+            ],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "eth0",
+                        "properties": {
+                            "subnet": {
+                                "id": "[variables('subnetSiteOOBRef')]"
+                            },
+                            "privateIPAllocationMethod": "Static",
+                            "privateIPAddress": "[parameters('staticPrivateIPsiteOOB_gw')]",
+                            "publicIpAddress": {
+                                "id": "[resourceId(resourceGroup().name, 'Microsoft.Network/publicIpAddresses', parameters('publicIpName_OOB_gw'))]"
+                            }
+                        }
+                    }
+                ],
+                "networkSecurityGroup": {
+                    "id": "[variables('nsgId_OOB')]"
+                }
+            }
+        },
+        {
+            "condition": "[equals(parameters('CreateVirtualMachine_gateway'),'create')]",
+            "name": "[variables('networkInterfaceName_gw_eth1')]",
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2019-09-01",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]",
+                "[concat('Microsoft.Network/publicIpAddresses/', parameters('publicIpName_ULInternet1'))]"
+            ],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "eth1",
+                        "properties": {
+                            "subnet": {
+                                "id": "[variables('subnetULInternet1Ref')]"
+                            },
+                            "privateIPAllocationMethod": "Static",
+                            "privateIPAddress": "[parameters('staticPrivateIPULInternet1_gw')]",
+                            "publicIpAddress": {
+                                "id": "[resourceId(resourceGroup().name, 'Microsoft.Network/publicIpAddresses', parameters('publicIpName_ULInternet1'))]"
+                            }
+                        }
+                    }
+                ],
+                "enableIPForwarding": true
+            }
+        },
+        {
+            "condition": "[equals(parameters('CreateVirtualMachine_gateway'),'create')]",
+            "name": "[variables('networkInterfaceName_gw_eth2')]",
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2019-09-01",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]"
+            ],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "eth2",
+                        "properties": {
+                            "subnet": {
+                                "id": "[variables('subnetTransitRef')]"
+                            },
+                            "privateIPAllocationMethod": "Static",
+                            "privateIPAddress": "[parameters('staticPrivateIPtransit_gw')]"
+                        }
+                    }
+                ],
+                "enableIPForwarding": true
+            }
+        },
+        {
+            "condition": "[equals(parameters('CreateVirtualMachine_gateway'),'create')]",
+            "name": "[parameters('virtualMachineName_gw')]",
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2019-03-01",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]",
+                "[concat('Microsoft.Network/networkInterfaces/', variables('networkInterfaceName_gw_eth0'))]",
+                "[concat('Microsoft.Network/networkInterfaces/', variables('networkInterfaceName_gw_eth1'))]",
+                "[concat('Microsoft.Network/networkInterfaces/', variables('networkInterfaceName_gw_eth2'))]",
+                "[concat('Microsoft.Storage/storageAccounts/', variables('diagnosticsStorageAccountName'))]"
+            ],
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "[parameters('vmSize_gw')]"
+                },
+                "storageProfile": {
+                    "osDisk": {
+                        "createOption": "fromImage",
+                        "managedDisk": {
+                            "storageAccountType": "[parameters('osDiskType')]"
+                        }
+                    },
+                    "imageReference": {
+                        "publisher": "Canonical",
+                        "offer": "UbuntuServer",
+                        "sku": "[variables('ubuntuSku')]",
+                        "version": "latest"
+                    }
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('networkInterfaceName_gw_eth0'))]",
+                            "properties": {
+                                "primary": true,
+                                "enableIPForwarding": true
+                            }
+                        },
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('networkInterfaceName_gw_eth1'))]",
+                            "properties": {
+                                "primary": false,
+                                "enableIPForwarding": true
+                            }
+                        },
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('networkInterfaceName_gw_eth2'))]",
+                            "properties": {
+                                "primary": false,
+                                "enableIPForwarding": true
+                            }
+                        }
+                    ]
+                },
+                "osProfile": {
+                    "computerName": "[parameters('virtualMachineName_gw')]",
+                    "adminUsername": "[parameters('adminUsername')]",
+                    "linuxConfiguration": {
+                        "disablePasswordAuthentication": true,
+                        "ssh": {
+                            "publicKeys": [
+                                {
+                                    "path": "[concat('/home/', parameters('adminUsername'), '/.ssh/authorized_keys')]",
+                                    "keyData": "[parameters('adminPublicKey_gw')]"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "diagnosticsProfile": {
+                    "bootDiagnostics": {
+                        "enabled": true,
+                        "storageUri": "[concat('https://', variables('diagnosticsStorageAccountName'), '.blob.core.windows.net/')]"
+                    }
+                }
+            }
+        },
+        {
+            "condition": "[equals(parameters('CreateVirtualMachine_workload'),'create')]",
+            "type": "Microsoft.Network/publicIPAddresses",
+            "apiVersion": "2019-09-01",
+            "name": "[parameters('publicIpName_workload')]",
+            "location": "[parameters('location')]",
+            "properties": {
+                "publicIPAllocationMethod": "Static",
+                "dnsSettings": {
+                    "domainNameLabel": "[parameters('publicIpDns_workload')]"
+                }
+            }
+        },
+        {
+            "condition": "[equals(parameters('CreateVirtualMachine_workload'),'create')]",
+            "name": "[variables('networkInterfaceName_workload_eth0')]",
+            "type": "Microsoft.Network/networkInterfaces",
+            "apiVersion": "2019-09-01",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]",
+                "[concat('Microsoft.Network/publicIpAddresses/', parameters('publicIpName_workload'))]",
+                "[concat('Microsoft.Network/networkSecurityGroups/', parameters('networkSecurityGroupName_OOB'))]"
+            ],
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "eth0",
+                        "properties": {
+                            "subnet": {
+                                "id": "[variables('subnetServernetworkRef')]"
+                            },
+                            "privateIPAllocationMethod": "Static",
+                            "privateIPAddress": "[parameters('staticPrivateIPservernetwork_workload')]",
+                            "publicIpAddress": {
+                                "id": "[resourceId(resourceGroup().name, 'Microsoft.Network/publicIpAddresses', parameters('publicIpName_workload'))]"
+                            }
+                        }
+                    }
+                ],
+                "networkSecurityGroup": {
+                    "id": "[variables('nsgId_OOB')]"
+                }
+            }
+        },
+        {
+            "condition": "[equals(parameters('CreateVirtualMachine_workload'),'create')]",
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2019-03-01",
+            "name": "[parameters('virtualMachineName_workload')]",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[concat('Microsoft.Storage/storageAccounts/', variables('diagnosticsStorageAccountName'))]",
+                "[concat('Microsoft.Network/networkInterfaces/', variables('networkInterfaceName_workload_eth0'))]",
+                "[concat('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]"
+            ],
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "[parameters('vmSize_workload')]"
+                },
+                "storageProfile": {
+                    "osDisk": {
+                        "createOption": "fromImage",
+                        "managedDisk": {
+                            "storageAccountType": "[parameters('osDiskType_workload')]"
+                        }
+                    },
+                    "imageReference": {
+                        "publisher": "Canonical",
+                        "offer": "UbuntuServer",
+                        "sku": "[variables('ubuntuSku')]",
+                        "version": "latest"
+                    }
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('networkInterfaceName_workload_eth0'))]",
+                            "properties": {
+                                "primary": true
+                            }
+                        }
+                    ]
+                },
+                "osProfile": {
+                    "computerName": "[parameters('virtualMachineName_workload')]",
+                    "adminUsername": "[parameters('adminUsername')]",
+                    "linuxConfiguration": {
+                        "disablePasswordAuthentication": true,
+                        "ssh": {
+                            "publicKeys": [
+                                {
+                                    "path": "[concat('/home/', parameters('adminUsername'), '/.ssh/authorized_keys')]",
+                                    "keyData": "[parameters('adminPublicKey_workload')]"
+                                }
+                            ]
+                        }
+                    }
+                },
+                "diagnosticsProfile": {
+                    "bootDiagnostics": {
+                        "enabled": true,
+                        "storageUri": "[concat('https://', variables('diagnosticsStorageAccountName'), '.blob.core.windows.net/')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[concat(parameters('virtualMachineName_workload'),'/config-app')]",
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "location": "[resourceGroup().location]",
+            "apiVersion": "2019-03-01",
+            "dependsOn": [
+                "[concat('Microsoft.Compute/virtualMachines/', parameters('virtualMachineName_workload'))]"
+            ],
+            "properties": {
+                "publisher": "Microsoft.Azure.Extensions",
+                "type": "CustomScript",
+                "typeHandlerVersion": "2.0",
+                "autoUpgradeMinorVersion": true,
+                "protectedSettings": {
+                    "commandToExecute": "[variables('configAppCommand')]"
+                }
+            }
+        }
+    ],
+    "outputs": {
+        "adminUsername": {
+            "type": "string",
+            "value": "[parameters('adminUsername')]"
+        },
+        "workload": {
+            "type": "string",
+            "value": "[concat(parameters('publicIpDns_workload'),'.',parameters('location'),'.cloudapp.azure.com')]"
+        },
+        "VirtualNetworkId":{
+            "type": "string",
+            "value": "[resourceId('Microsoft.Network/virtualNetworks/', parameters('virtualNetworkName'))]"
+        }
+    }
+}

@@ -1,0 +1,18 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.191120",
+    "parameters": {
+        "projectName":{
+            "value": "azk"
+        },
+        "adminPublicKey": {
+            "value": "GEN-SSH-PUB-KEY"
+        },
+        "VirtualNetworkId": {
+            "value": "GET-PREREQ-VirtualNetworkId"
+        },
+        "subnetPrefix_acceleration": {
+            "value": "10.82.82.0/24"
+        }
+    }
+}
