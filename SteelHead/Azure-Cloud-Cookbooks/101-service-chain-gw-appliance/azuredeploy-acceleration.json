@@ -132,10 +132,6 @@
               "description": "Name of the availability set where the appliance will be placed"
             }
         },
-
-        /*
-        TESTING
-        */
         "skipSteelHeadController": {
             "defaultValue": false,
             "type": "bool",
