@@ -104,9 +104,9 @@ Post-deployment configuration required:
 
 The templates used in the cookbook and be deployed and configured in the Azure Portal by clicking on the buttons "Deploy in Azure" in the table below:
 
-|**VNET sample**|**Acceleration**|**Service Chain**|**Automation Runbooks**|**Automatic "Fail-to-Wire"**|
-|---|---|---|---|---|---|
-|[![Deploy to Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%riverbed%2FRiverbed-Community-Toolkit%2Fmaster%SteelHead%2FAzure-Cloud-Cookbooks%2F101-service-chain-gw-appliance%2Fazuredeploy-sanbox.json)|[![Deploy to Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%riverbed%2FRiverbed-Community-Toolkit%2Fmaster%SteelHead%2FAzure-Cloud-Cookbooks%2F101-service-chain-gw-appliance%2Fazuredeploy-acceleration.json)|[![Deploy to Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%riverbed%2FRiverbed-Community-Toolkit%2Fmaster%SteelHead%2FAzure-Cloud-Cookbooks%2F101-service-chain-gw-appliance%2Fazuredeploy-routetables.json)|n.a.|[![Deploy to Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%riverbed%2FRiverbed-Community-Toolkit%2Fmaster%SteelHead%2FAzure-Cloud-Cookbooks%2F101-service-chain-gw-appliance%2Fazuredeploy-ise.json) - [![Deploy to Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%riverbed%2FRiverbed-Community-Toolkit%2Fmaster%SteelHead%2FAzure-Cloud-Cookbooks%2F101-service-chain-gw-appliance%2Fazuredeploy-logicapps-simple.json)|
+| **VNET sample** | **Acceleration** | **Service Chain** | **Automation Runbooks** | **Automatic "Fail-to-Wire"** |
+| --- | --- | --- | --- | --- | --- |
+| [![Deploy to Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Friverbed%2FRiverbed-Community-Toolkit%2Fmaster%2FSteelHead%2FAzure-Cloud-Cookbooks%2F101-service-chain-gw-appliance%2Fazuredeploy-sandbox.json) | [![Deploy to Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Friverbed%2FRiverbed-Community-Toolkit%2Fmaster%2FSteelHead%2FAzure-Cloud-Cookbooks%2F101-service-chain-gw-appliance%2Fazuredeploy-acceleration.json) | [![Deploy to Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Friverbed%2FRiverbed-Community-Toolkit%2Fmaster%2FSteelHead%2FAzure-Cloud-Cookbooks%2F101-service-chain-gw-appliance%2Fazuredeploy-routetables.json)| n.a. | [![Deploy to Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Friverbed%2FRiverbed-Community-Toolkit%2Fmaster%2FSteelHead%2FAzure-Cloud-Cookbooks%2F101-service-chain-gw-appliance%2Fazuredeploy-ise.json) - [![Deploy to Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.png)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Friverbed%2FRiverbed-Community-Toolkit%2Fmaster%2FSteelHead%2FAzure-Cloud-Cookbooks%2F101-service-chain-gw-appliance%2Fazuredeploy-logicapps-simple.json) |
 
 All the ARM templates can be found in the [cookbook folder](./101-service-chain-gw-appliance/) with some examples of parameters files in the [sample subfolder](./101-service-chain-gw-appliance/sample).
 
@@ -114,7 +114,7 @@ All the ARM templates can be found in the [cookbook folder](./101-service-chain-
 
 ### Get ready to run scripts with your Azure subscription
 
-To run and test other "how-to", you will need to connect [Azure portal](https://portal.azure.com) and run some PowerShell scripts provided on the [Riverbed Community Toolkit](https://github.com/riverbed/Riverbed-Community-Toolkit/tree/master/SteelHead/Azure-CloudCookbooks).
+To run and test other "how-to", you will need to connect [Azure portal](https://portal.azure.com) and run some PowerShell scripts provided here on the [Riverbed Community Toolkit](https://github.com/riverbed/Riverbed-Community-Toolkit/tree/master/SteelHead/Azure-Cloud-Cookbooks).
 
 The following are quick steps to download sources from GitHub and initialize the Azure Context in the PowerShell console. For simplicity we recommend to run all scripts in [Azure Cloud Shell](https://shell.azure.com/).
 
@@ -205,12 +205,13 @@ Creating a subnet inside the existing VNET will allow integration of the Acceler
 
 ![Step1](./images/Riverbed-Acceleration-Azure-step1.png)
 
-The script [Create-SubnetAcceleration.ps1](.\scripts\Create-SubnetAcceleration.ps1) can be used to deploy the acceleration subnet in any VNET. The parameters are basically the Virtual Network, its Resource Group name and the /24 subnet prefix for acceleration.
+The script [Create-SubnetAcceleration.ps1](./scripts/Create-SubnetAcceleration.ps1) can be used to deploy the acceleration subnet in any VNET. The parameters are basically the Virtual Network, its Resource Group name and the /24 subnet prefix for acceleration.
 
 For example, here is how to deploy on the sample topology AZE:
 
 ```PowerShell
-.\scripts\Create-SubnetAcceleration.ps1 -VirtualNetworkResourceGroupName "aze-hub-westeurope" -VirtualNetworkName "aze-hub-westeurope" -SubnetPrefix_acceleration "10.3.82.0/24"
+.\scripts\Create-SubnetAcceleration.ps1 -VirtualNetworkResourceGroupName "aze-hub-westeurope" -VirtualNetworkName "aze-hub-westeurope" `
+    -SubnetPrefix_acceleration "10.3.82.0/24"
 ```
 
 ### Deploy Cloud SteelHead
@@ -248,24 +249,28 @@ For example, it can be run like this:
 
 ##### Azure Portal or Marketplace
 
-Navigate to the [SteelHead in Azure MarketPlace](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/riverbed.riverbed-steelhead-9-9-1?tab=PlansAndPrice). Choose **Get it Now** and then **Deploy**. It is recommended to follow the [SteelHead in the Cloud User Guide](https://support.riverbed.com/bin/support/download?did=bjjjqgkb1oro6m4l7v7q6ifbvk&version=9.9.1) and pay attention to the following details:
-    - Deploy in a **new resource group**: **acceleration**
-    - Create a **new subnet**: **acceleration**
-    - Disk Type: **SSD Premium**
+Navigate to the [SteelHead in Azure MarketPlace](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/riverbed.riverbed-steelhead-9-9-1?tab=PlansAndPrice).
+
+Choose **Get it Now** and then **Deploy**. It is recommended to follow the [SteelHead in the Cloud User Guide](https://support.riverbed.com/bin/support/download?did=bjjjqgkb1oro6m4l7v7q6ifbvk&version=9.9.1) and pay attention to the following details:
+
+- Deploy in a **new resource group**: **acceleration**
+- Create a **new subnet**: **acceleration**
+- Disk Type: **SSD Premium**
 
 #### SteelHead basic configuration
 
 Appliances can be configured directly via webconsole, SSH, SSH via Azure Bastion, or via a SteelHead Controller Appliance. The SteelHead controller is also available in the marketplace, [SteelHead Controller in Azure Marketplace](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/riverbed.riverbed-scc-990a?tab=Overview).
 
 Via webconsole, here are the minimal settings:
-    - Open a browser on [https://<your_appliance_vm_IP_address>](https://<your_appliance_vm_IP_address>) to get access to the SteelHead webconsole
-    - Log on with the default administrator acount: "admin". Default password: "password".
-    - Change the default password (ADMINISTRATION > My Account)
-    - Set your license (ADMINISTRATION > License)
-    - Create a user account "api-user" with Readonly permissions (ADMINISTRATION > User Permissions: add new account).
-    - Create a REST API access code (ADMINISTRATION > REST API)
-    - Replace the private key and certifcate (ADMINISTRATION > Web Settings: replace certificate)
-    - Save the configuration
+
+- Open a browser on [https://<your_appliance_vm_IP_address>](https://<your_appliance_vm_IP_address>) to get access to the SteelHead webconsole
+- Log on with the default administrator acount: "admin". Default password: "password".
+- Change the default password (ADMINISTRATION > My Account)
+- Set your license (ADMINISTRATION > License)
+- Create a user account "api-user" with Readonly permissions (ADMINISTRATION > User Permissions: add new account).
+- Create a REST API access code (ADMINISTRATION > REST API)
+- Replace the private key and certifcate (ADMINISTRATION > Web Settings: replace certificate)
+- Save the configuration
 
 For more details you can refer to the [Riverbed SteelHead in the Cloud User Guide](https://support.riverbed.com/bin/support/download?did=bjjjqgkb1oro6m4l7v7q6ifbvk&version=9.9.1).
 
@@ -300,7 +305,8 @@ The deployment can be customized via template parameters in the artifact directo
 
 ```PowerShell
 ## Deploy route tables
-.\scripts\Deploy-RouteTables.ps1 -ProjectName "azk" -Location "koreacentral" -ResourceGroupName "azk-acceleration-koreacentral" -templateParameterFilePath ".\sample\azuredeploy-routetables.parameters.azk.json"
+.\scripts\Deploy-RouteTables.ps1 -ProjectName "azk" -Location "koreacentral" -ResourceGroupName "azk-acceleration-koreacentral" `
+    -templateParameterFilePath ".\sample\azuredeploy-routetables.parameters.azk.json"
 ```
 
 ##### *draft - PowerShell script only*
@@ -318,7 +324,7 @@ This automation is based on a PowerShell script that is customizable. To enable 
 #### Deploy Runbook from Azure Portal
 
 1. Provision an Automation Account with an Azure RunAsAccount and specific modules required for the Runbooks (Az.Accounts, Az.Automation and Az.Network)
-2. Create a new PowerShell Runbook based on the template [Template-Runbook-AccelerationRoutes.ps1](./101-service-chain-gw-appliance/Template-Runbook-AccelerationRoutes.ps1)
+2. Create a new PowerShell Runbook based on the template [Template-Runbook-AccelerationRoutes.ps1](./101-service-chain-gw-appliance/scripts/Template-Runbook-AccelerationRoutes.ps1)
     - Naming for the Runbook: {siteName}-Runbook-AccelerationRoutes.ps1.
     - In the customization section of script, set parameters with actual value for Virtual Network name, Resource Group name and Route Tables id
 
@@ -343,7 +349,8 @@ The parameters can be overriden to match another template parameters file which 
 
 ```PowerShell
 ## Deploy Runbook
-.\scripts\Deploy-Automation.ps1 -ProjectName "azk" -Location "koreacentral" -ResourceGroupName "azk-acceleration-koreacentral" -automationAccountName "azk-automation-koreacentral"
+.\scripts\Deploy-Automation.ps1 -ProjectName "azk" -Location "koreacentral" -ResourceGroupName "azk-acceleration-koreacentral" `
+    -automationAccountName "azk-automation-koreacentral"
 
 ### Create the runbook for the sample AZK
 $parameters = @{
@@ -358,7 +365,8 @@ $parameters = @{
     routeTableName_transit = "azk-transit-ACCELERATION"
     routeTableName_servernetwork_ACCELERATION = "azk-servernetwork-ACCELERATION"
 }
-.\scripts\Create-AccelerationRoutes-Runbook.ps1 -ProjectName "azk" -Location "koreacentral" -AutomationAccountName "azk-automation-koreacentral" -searchResourcesDetailByName @parameters
+.\scripts\Create-AccelerationRoutes-Runbook.ps1 -ProjectName "azk" -Location "koreacentral" `
+    -AutomationAccountName "azk-automation-koreacentral" -searchResourcesDetailByName @parameters
 ```
 
 ### Execute the Runbook to Set or Bypass acceleration
@@ -396,12 +404,15 @@ The following scripts deploys the resources for the sample topology "AZE", in lo
 
 ```PowerShell
 
-    # Create new subnets for ISE integration for sandbox sample AZE, with default naming for resources and dependencies
+    # Create new subnets for ISE integration for sandbox sample AZE
+    # with default naming for resources and dependencies
     .\scripts\Deploy-ISE.ps1 -ProjectName "aze" -Location "westeurope" -NewSubnetsISE
 
-    # Deploy the Logic Apps for sandbox sample AZE, using default naming (template parameters file path, resource group to search ISE, automation name to generate webhook)
+    # Deploy the Logic Apps for sandbox sample AZE,
+    # using default naming (template parameters file path, resource group to search ISE, automation name to generate webhook)
     .\scripts\Deploy-LogicApps-Simple.ps1 -ProjectName "aze" -Location "westeurope" `
-        -shApiUsername (ConvertTo-SecureString -AsPlainText -Force "api-user") -shApiPassword (ConvertTo-SecureString -AsPlainText -Force "api-user-password") `
+        -shApiUsername (ConvertTo-SecureString -AsPlainText -Force "api-user") `
+        -shApiPassword (ConvertTo-SecureString -AsPlainText -Force "api-user-password") `
         -generateRunbookWebhook
 ```
 
@@ -413,7 +424,8 @@ Customization can also be applied with inline parameters.
         -VirtualNetworkResourceGroupName "your-vnet-rg" -VirtualNetworkName "your-vnet" `
         -NewSubnetsISE `
         -subnetNameISE1 "ISE1" -subnetNameISE2 "ISE2" -subnetNameISE3 "ISE3" -subnetNameISE4 "ISE4" `
-        -subnetPrefixISE1 "10.1.253.0/26" -subnetPrefixISE2 "10.1.253.64/26" -subnetPrefixISE3 "10.1.253.128/26" -subnetPrefixISE4 "10.1.253.192/26" `
+        -subnetPrefixISE1 "10.1.253.0/26" -subnetPrefixISE2 "10.1.253.64/26" `
+        -subnetPrefixISE3 "10.1.253.128/26" -subnetPrefixISE4 "10.1.253.192/26" `
         -templateParameterFilePath ".\sample\azuredeploy-ise.parameters.yoursite.json"
 
     # Create new subnets for ISE integration in an existing vnet
@@ -421,7 +433,8 @@ Customization can also be applied with inline parameters.
         -VirtualNetworkResourceGroupName "your-vnet-rg" -VirtualNetworkName "your-vnet" `
         -NewSubnetsISE `
         -subnetNameISE1 "ISE1" -subnetNameISE2 "ISE2" -subnetNameISE3 "ISE3" -subnetNameISE4 "ISE4" `
-        -subnetPrefixISE1 "10.1.253.0/26" -subnetPrefixISE2 "10.1.253.64/26" -subnetPrefixISE3 "10.1.253.128/26" -subnetPrefixISE4 "10.1.253.192/26" `
+        -subnetPrefixISE1 "10.1.253.0/26" -subnetPrefixISE2 "10.1.253.64/26" `
+        -subnetPrefixISE3 "10.1.253.128/26" -subnetPrefixISE4 "10.1.253.192/26" `
         -templateParameterFilePath ".\sample\azuredeploy-ise.parameters.yoursite.json"
 ```
 
