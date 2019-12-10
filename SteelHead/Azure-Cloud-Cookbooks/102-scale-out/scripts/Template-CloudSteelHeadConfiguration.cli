@@ -1,0 +1,22 @@
+enable
+configure terminal
+
+user admin password 0 {{adminPassword}}
+hostname {{shHostname}}
+
+license client init {{oneTimeToken}}
+
+show licenses
+
+user shark disable
+user {{apiUsername}} password 0 {{apiPassword}}
+rbm user {{apiUsername}} role acceleration_service permissions read-only
+rbm user {{apiUsername}} role general_settings permissions read-only
+
+web rest-server enable
+papi rest access_code import desc monitoring data {{apiCode}}
+
+no web http enable
+
+write mem
+reload
