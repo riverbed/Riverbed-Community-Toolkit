@@ -106,3 +106,8 @@ van.sh file will have bash script which will be executed as part of cloud-init s
 As part of this terraform template below topology will be brought up:
 
  ![Topology](https://raw.githubusercontent.com/gleyfer/Riverbed-Community-Toolkit/master/SteelConnect/Azure-EX-Templates/he_standalone/Topology_Riverbed_HE_Standalone_Azure.jpg)
+
+## License
+
+Copyright (c) 2019 Riverbed Technology, Inc.
+The scripts provided here are licensed under the terms and conditions of the MIT License accompanying the software ("License"). The scripts are distributed "AS IS" as set forth in the License. The script also include certain third party code. All such third party code is also distributed "AS IS" and is licensed by the respective copyright holders under the applicable terms and conditions (including, without limitation, warranty and liability disclaimers) identified in the license notices accompanying the software.

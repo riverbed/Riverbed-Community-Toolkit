@@ -66,15 +66,15 @@ variable "hostname_analytics" {
 
 variable "director_vm_size" {
   description = "Size of Riverbed Director VM."
-  default = "Standard_DS3_v2"
+  default = "Standard_F8s_v2"
 }
 
 variable "controller_vm_size" {
   description = "Size of Riverbed Controller VM."
-  default = "Standard_DS3_v2"
+  default = "Standard_F8s_v2"
 }
 
 variable "analytics_vm_size" {
   description = "Size of Riverbed Analytics VM."
-  default = "Standard_DS3_v2"
+  default = "Standard_F8s_v2"
 }
