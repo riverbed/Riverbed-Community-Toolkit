@@ -105,4 +105,4 @@ van.sh file will have bash script which will be executed as part of cloud-init s
 
 As part of this terraform template below topology will be brought up:
 
- ![Topology](https://code.rvbdtechlabs.net/users/gleyfer/repos/scex_templates/raw/azure/he_standalone/Topology_Riverbed_HE_Standalone_Azure.jpg?at=refs%2Fheads%2Fmaster)
+ ![Topology](https://raw.githubusercontent.com/gleyfer/Riverbed-Community-Toolkit/master/SteelConnect/Azure-EX-Templates/he_standalone/Topology_Riverbed_HE_Standalone_Azure.jpg)
