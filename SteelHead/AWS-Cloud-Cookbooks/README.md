@@ -1,0 +1,1 @@
+# Community Cloud Cookbooks for Riverbed Acceleration in AWS
