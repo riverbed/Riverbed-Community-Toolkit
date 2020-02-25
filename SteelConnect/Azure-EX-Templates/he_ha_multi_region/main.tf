@@ -4,6 +4,7 @@ provider "azurerm" {
     client_id       = var.client_id
     client_secret   = var.client_secret
     tenant_id       = var.tenant_id
+    features {}
 }
 
 # Create a resource group in each region
@@ -415,13 +416,40 @@ resource "azurerm_network_security_rule" "rvbd_nsg_rule4" {
 	resource_group_name        = element(azurerm_resource_group.rvbd_rg.*.name, count.index)
 	network_security_group_name = element(azurerm_network_security_group.rvbd_nsg.*.name, count.index)
 }
+
+# Create security group subnet associations
+resource "azurerm_subnet_network_security_group_association" "mgmt_sec_assoc" {
+  count = length(var.location) 
+  subnet_id                 = element(azurerm_subnet.mgmt_subnet.*.id, count.index)
+  network_security_group_id = element(azurerm_network_security_group.rvbd_nsg.*.id, count.index)
+}
+resource "azurerm_subnet_network_security_group_association" "dir_router_sec_assoc" {
+  count = length(var.location) 
+  subnet_id                 = element(azurerm_subnet.dir_router_network_subnet.*.id, count.index)
+  network_security_group_id = element(azurerm_network_security_group.rvbd_nsg.*.id, count.index) 
+}
+resource "azurerm_subnet_network_security_group_association" "router_network_sec_assoc" {
+  count = length(var.location) 
+  subnet_id                 = element(azurerm_subnet.router_network_subnet.*.id, count.index)
+  network_security_group_id = element(azurerm_network_security_group.rvbd_nsg.*.id, count.index) 
+}
+resource "azurerm_subnet_network_security_group_association" "control_network_sec_assoc" {
+  count = length(var.location) 
+  subnet_id                 = element(azurerm_subnet.control_network_subnet.*.id, count.index)
+  network_security_group_id = element(azurerm_network_security_group.rvbd_nsg.*.id, count.index) 
+}
+resource "azurerm_subnet_network_security_group_association" "wan_network_sec_assoc" {
+  count = length(var.location) 
+  subnet_id                 = element(azurerm_subnet.wan_network_subnet.*.id, count.index)
+  network_security_group_id = element(azurerm_network_security_group.rvbd_nsg.*.id, count.index) 
+}
+
 # Create Management network interface for Directors
 resource "azurerm_network_interface" "director_nic_1" {
     count								= length(var.location)
     name								= "Director_NIC1-${1+count.index}"
     location							= element(var.location, count.index)
     resource_group_name					= element(azurerm_resource_group.rvbd_rg.*.name, count.index)
-    network_security_group_id			= element(azurerm_network_security_group.rvbd_nsg.*.id, count.index)
 
     ip_configuration {
         name							= "Director_NIC1_Configuration-${1+count.index}"
@@ -439,7 +467,6 @@ resource "azurerm_network_interface" "director_nic_2" {
     name								= "Director_NIC2-${1+count.index}"
     location							= element(var.location, count.index)
     resource_group_name					= element(azurerm_resource_group.rvbd_rg.*.name, count.index)
-    network_security_group_id			= element(azurerm_network_security_group.rvbd_nsg.*.id, count.index)
 
     ip_configuration {
         name							= "Director_NIC2_Configuration-${1+count.index}"
@@ -456,7 +483,6 @@ resource "azurerm_network_interface" "router_nic_1" {
     name								= "Router_NIC1-${1+count.index}"
     location							= element(var.location, count.index)
     resource_group_name					= element(azurerm_resource_group.rvbd_rg.*.name, count.index)
-    network_security_group_id			= element(azurerm_network_security_group.rvbd_nsg.*.id, count.index)
 
     ip_configuration {
         name							= "Router_NIC1_Configuration-${1+count.index}"
@@ -474,7 +500,6 @@ resource "azurerm_network_interface" "router_nic_2" {
     name								= "Router_NIC2-${1+count.index}"
     location							= element(var.location, count.index)
     resource_group_name					= element(azurerm_resource_group.rvbd_rg.*.name, count.index)
-    network_security_group_id			= element(azurerm_network_security_group.rvbd_nsg.*.id, count.index)
 	enable_ip_forwarding				= "true"
     enable_accelerated_networking = "true"
     
@@ -493,7 +518,6 @@ resource "azurerm_network_interface" "router_nic_3" {
     name								= "Router_NIC3-${1+count.index}"
     location							= element(var.location, count.index)
     resource_group_name					= element(azurerm_resource_group.rvbd_rg.*.name, count.index)
-    network_security_group_id			= element(azurerm_network_security_group.rvbd_nsg.*.id, count.index)
 	enable_ip_forwarding				= "true"
     enable_accelerated_networking = "true"
 
@@ -512,7 +536,6 @@ resource "azurerm_network_interface" "router_nic_4" {
     name								= "Router_NIC4-${1+count.index}"
     location							= element(var.location, count.index)
     resource_group_name					= element(azurerm_resource_group.rvbd_rg.*.name, count.index)
-    network_security_group_id			= element(azurerm_network_security_group.rvbd_nsg.*.id, count.index)
 	enable_ip_forwarding				= "true"
     enable_accelerated_networking = "true"
 
@@ -531,7 +554,6 @@ resource "azurerm_network_interface" "controller_nic_1" {
     name								= "Controller_NIC1-${1+count.index}"
     location							= element(var.location, count.index)
     resource_group_name					= element(azurerm_resource_group.rvbd_rg.*.name, count.index)
-    network_security_group_id			= element(azurerm_network_security_group.rvbd_nsg.*.id, count.index)
 
     ip_configuration {
         name							= "Controller_NIC1_Configuration-${1+count.index}"
@@ -549,7 +571,6 @@ resource "azurerm_network_interface" "controller_nic_2" {
     name								= "Controller_NIC2-${1+count.index}"
     location							= element(var.location, count.index)
     resource_group_name					= element(azurerm_resource_group.rvbd_rg.*.name, count.index)
-    network_security_group_id			= element(azurerm_network_security_group.rvbd_nsg.*.id, count.index)
 	enable_ip_forwarding				= "true"
     enable_accelerated_networking = "true"
 
@@ -568,7 +589,6 @@ resource "azurerm_network_interface" "controller_nic_3" {
     name								= "Controller_NIC3-${1+count.index}"
     location							= element(var.location, count.index)
     resource_group_name					= element(azurerm_resource_group.rvbd_rg.*.name, count.index)
-    network_security_group_id			= element(azurerm_network_security_group.rvbd_nsg.*.id, count.index)
     enable_accelerated_networking = "true"
     
     ip_configuration {
@@ -587,7 +607,6 @@ resource "azurerm_network_interface" "van_nic_1" {
     name								= "VAN_NIC1-${1+count.index}"
     location							= element(var.location, count.index)
     resource_group_name					= element(azurerm_resource_group.rvbd_rg.*.name, count.index)
-    network_security_group_id			= element(azurerm_network_security_group.rvbd_nsg.*.id, count.index)
 
     ip_configuration {
         name							= "VAN_NIC1_Configuration-${1+count.index}"
@@ -605,7 +624,6 @@ resource "azurerm_network_interface" "van_nic_2" {
     name								= "VAN_NIC2-${1+count.index}"
     location							= element(var.location, count.index)
     resource_group_name					= element(azurerm_resource_group.rvbd_rg.*.name, count.index)
-    network_security_group_id			= element(azurerm_network_security_group.rvbd_nsg.*.id, count.index)
 
     ip_configuration {
         name							= "VAN_NIC2_Configuration-${1+count.index}"
