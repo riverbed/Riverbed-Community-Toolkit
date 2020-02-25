@@ -4,6 +4,7 @@ provider "azurerm" {
     client_id       = var.client_id
     client_secret   = var.client_secret
     tenant_id       = var.tenant_id
+    features {}
 }
 
 # Create a resource group
@@ -163,7 +164,6 @@ resource "azurerm_network_security_group" "rvbd_nsg" {
 }
 # Create security group rules
 resource "azurerm_network_security_rule" "rvbd_nsg_rule1" {
-	count = length(var.location) 
 	name                       = "RVBD_Security_Rule_TCP"
 	description                = "RVBD security group"
 	priority                   = 151
@@ -178,7 +178,6 @@ resource "azurerm_network_security_rule" "rvbd_nsg_rule1" {
 	network_security_group_name = azurerm_network_security_group.rvbd_nsg.name
 }
 resource "azurerm_network_security_rule" "rvbd_nsg_rule2" {
-	count = length(var.location) 
 	name                       = "RVBD_Security_Rule_UDP"
 	description                = "RVBD security group"
 	priority                   = 201
@@ -193,7 +192,6 @@ resource "azurerm_network_security_rule" "rvbd_nsg_rule2" {
 	network_security_group_name = azurerm_network_security_group.rvbd_nsg.name
 }
 resource "azurerm_network_security_rule" "rvbd_nsg_rule3" {
-	count = length(var.location) 
 	name                       = "RVBD_Security_Rule_Outbound"
 	description                = "RVBD security group"
 	priority                   = 251
@@ -208,7 +206,6 @@ resource "azurerm_network_security_rule" "rvbd_nsg_rule3" {
 	network_security_group_name = azurerm_network_security_group.rvbd_nsg.name
 }
 resource "azurerm_network_security_rule" "rvbd_nsg_rule4" {
-	count = length(var.location) 
 	name                       = "RVBD_Security_Rule_Outbound"
 	description                = "RVBD security group"
 	priority                   = 301
@@ -223,12 +220,25 @@ resource "azurerm_network_security_rule" "rvbd_nsg_rule4" {
 	network_security_group_name = azurerm_network_security_group.rvbd_nsg.name
 }
 
+# Create network security group subnet associations 
+resource "azurerm_subnet_network_security_group_association" "mgmt_sec_assoc" {
+  subnet_id                 = azurerm_subnet.mgmt_subnet.id
+  network_security_group_id = azurerm_network_security_group.rvbd_nsg.id
+}
+resource "azurerm_subnet_network_security_group_association" "ctrl_sec_assoc" {
+  subnet_id                 = azurerm_subnet.ctrl_network_subnet.id
+  network_security_group_id = azurerm_network_security_group.rvbd_nsg.id
+}
+resource "azurerm_subnet_network_security_group_association" "wan_sec_assoc" {
+  subnet_id                 = azurerm_subnet.wan_network_subnet.id
+  network_security_group_id = azurerm_network_security_group.rvbd_nsg.id
+}
+
 # Create Management network interface for Director
 resource "azurerm_network_interface" "director_nic_1" {
     name                      = "Director_NIC1"
     location                  = var.location
     resource_group_name       = azurerm_resource_group.rvbd_rg.name
-    network_security_group_id = azurerm_network_security_group.rvbd_nsg.id
 
     ip_configuration {
         name                          = "Director_NIC1_Configuration"
@@ -245,7 +255,6 @@ resource "azurerm_network_interface" "director_nic_2" {
     name                      = "Director_NIC2"
     location                  = var.location
     resource_group_name       = azurerm_resource_group.rvbd_rg.name
-    network_security_group_id = azurerm_network_security_group.rvbd_nsg.id
 
     ip_configuration {
         name                          = "Director_NIC2_Configuration"
@@ -261,7 +270,6 @@ resource "azurerm_network_interface" "controller_nic_1" {
     name                      = "Controller_NIC1"
     location                  = var.location
     resource_group_name       = azurerm_resource_group.rvbd_rg.name
-    network_security_group_id = azurerm_network_security_group.rvbd_nsg.id
 
     ip_configuration {
         name                          = "Controller_NIC1_Configuration"
@@ -278,7 +286,6 @@ resource "azurerm_network_interface" "controller_nic_2" {
     name                      = "Controller_NIC2"
     location                  = var.location
     resource_group_name       = azurerm_resource_group.rvbd_rg.name
-    network_security_group_id = azurerm_network_security_group.rvbd_nsg.id
 	enable_ip_forwarding      = "true"
     enable_accelerated_networking = "true"
 
@@ -296,7 +303,6 @@ resource "azurerm_network_interface" "controller_nic_3" {
     name                      = "Controller_NIC3"
     location                  = var.location
     resource_group_name       = azurerm_resource_group.rvbd_rg.name
-    network_security_group_id = azurerm_network_security_group.rvbd_nsg.id
     enable_accelerated_networking = "true"
 
     ip_configuration {
@@ -314,7 +320,6 @@ resource "azurerm_network_interface" "van_nic_1" {
     name                      = "VAN_NIC1"
     location                  = var.location
     resource_group_name       = azurerm_resource_group.rvbd_rg.name
-    network_security_group_id = azurerm_network_security_group.rvbd_nsg.id
 
     ip_configuration {
         name                          = "VAN_NIC1_Configuration"
@@ -331,7 +336,6 @@ resource "azurerm_network_interface" "van_nic_2" {
     name                      = "VAN_NIC2"
     location                  = var.location
     resource_group_name       = azurerm_resource_group.rvbd_rg.name
-    network_security_group_id = azurerm_network_security_group.rvbd_nsg.id
 
     ip_configuration {
         name                          = "VAN_NIC2_Configuration"
