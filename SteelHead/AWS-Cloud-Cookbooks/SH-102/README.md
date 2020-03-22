@@ -4,8 +4,8 @@ This scenario will create a VPC, required Subnets, workloads, SteelHead applianc
 ### Step 1: Create VPC, Subnets and Workload
 The below launch stack button will create:
 - a VPC to seperate resources (Subnets & VMs) from other network.
-- servernetwork: connecting some Virtual Machines and PAAS services.
-- gateway downlink to connect with SteelHead appliance.
+- servernetwork: connecting some Virtual Machines and PAAS services.(ToDo)
+- gateway downlink network: To deploy SteelHead appliance.
 
 [![Launch Stack](https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=ap-south-1#/stacks/new?stackName=Create-VPC-And-Subnets&templateURL=https://rvbd-community-toolkit.s3-eu-west-1.amazonaws.com/Create-VPC-And-Subnets.template)
 
@@ -20,6 +20,9 @@ Click below button to launch stack in AWS.
 [![Launch Stack](https://s3.amazonaws.com/cloudformation-examples/cloudformation-launch-stack.png)](https://console.aws.amazon.com/cloudformation/home?region=ap-south-1#/stacks/new?stackName=SH-Deployment-In-VPC&templateURL=https://rvbd-community-toolkit.s3-eu-west-1.amazonaws.com/SH-Deployment-In-VPC.template)
 
 Follow [SH-101 README](../SH-101/README.md) steps to deploy acceleration in a VPC created in Step 1.
+
+### Step 3: Service Chain with Gateway appliance
+To Do.
 
 ## License
 
