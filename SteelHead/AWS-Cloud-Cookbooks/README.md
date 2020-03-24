@@ -2,7 +2,7 @@
 
 Riverbed provides below solutions to the user community to integrate Acceleration in AWS.
 
-- [SH-101 - Deploying Acceleration in an existing VPC having a gateway appliance (VPN or SD-WAN)](./SH-101/README.md)
+- [SH-101 - Deploying Acceleration in an existing VPC having a gateway appliance (VPN or SD-WAN)](./101-service-chain-gw-appliance.md)
 - [SH-102 - Create VPC, Subnets, Workload, Acceleration and service chain with gateway appliance](./SH-102/README.md)
 
 ## License
