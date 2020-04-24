@@ -1,7 +1,21 @@
 {
     "name": "SteelHead vCX-10",
     "category": "router",
-    "description": "Riverbed SteelHead delivers not only best-in-class optimization – but essential visibility and control as companies transition to the Hybrid WAN. SteelHead CX for Virtual is available as a virtual solution on most major hypervisors including VMware vSphere, Microsoft Hyper-V and KVM. It accelerates the performance of all applications including on-premises, cloud, and SaaS across the hybrid enterprise for organizations that want to deliver the best end user experience – while leveraging the scalability and cost benefits of virtualization.\n\nSteelHead CX for Virtual uniquely delivers the best application performance along with application, network and end user visibility, and simplified control management of users, applications and networks based on business requirements and decisions.",
+    "description": "Riverbed SteelHead delivers not only best-in-class optimization – but essential visibility and control as companies transition to the Hybrid WAN. SteelHead CX for Virtual is available as a virtual solution on most major hypervisors including VMware vSphere, Microsoft Hyper-V and KVM. It accelerates the performance of all applications including on-premises, cloud, and SaaS across the hybrid enterprise for organizations that want to deliver the best end user experience – while leveraging the scalability and cost benefits of virtualization.\n\nSteelHead-V uniquely delivers the best application performance along with application, network and end user visibility, and simplified control management of users, applications and networks based on business requirements and decisions.
+    This template is for VCX-10. Should you need to change specs, follow the below instructions:
+    MODEL       CPU   RAM   DiskA DiskB DiskC
+    VCX10        1  2048MB  20GB  50GB  50GB
+    VCX20        1  2048MB  20GB  80GB  80GB
+    VCX30        1  2048MB  20GB  100GB 100GB
+    VCX40        2  4096MB  26GB  150GB 150GB
+    VCX50        4  8192MB  38GB  400GB 400GB
+    VCX60        4  8192MB  38GB  400GB 400GB
+    VCX70        6 24576MB  70GB  800GB   80GB
+    VCX80       12 32768MB  86GB  1600GB 160GB
+    VCX90       24 49152MB  118GB 2240GB 160GB
+    VCX100      32 65536MB  160GB 3600GB 300GB
+    VCX110      44 131072MB 300GB 4800GB 300GB
+    ",
     "vendor_name": "Riverbed Technology",
     "vendor_url": "http://www.riverbed.com",
     "documentation_url": "https://support.riverbed.com/content/support/software/steelhead/cx-appliance.html",
@@ -36,14 +50,14 @@
             "version": "1.0",
             "md5sum": "4cde9c7382ff2924e8933b35354fb1af",
             "filesize": 197632,
-            "download_url":"https://github.com/riverbed/Riverbed-Community-Toolkit/blob/master/SteelHead/empty50Gb-b.qcow2"
+            "download_url":"https://github.com/riverbed/Riverbed-Community-Toolkit/blob/master/GNS3/SteelHead/empty50Gb-b.qcow2"
         },
         {
             "filename": "empty50Gb-c.qcow2",
             "version": "1.0",
             "md5sum": "4cde9c7382ff2924e8933b35354fb1af",
             "filesize": 197632,
-            "download_url":"https://github.com/riverbed/Riverbed-Community-Toolkit/blob/master/SteelHead/empty50Gb-c.qcow2"
+            "download_url":"https://github.com/riverbed/Riverbed-Community-Toolkit/blob/master/GNS3/SteelHead/empty50Gb-c.qcow2"
         }
     ],
     "versions": [
