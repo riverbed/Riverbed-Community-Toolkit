@@ -33,7 +33,6 @@ Get-Command rbtdebug.exe -ErrorAction Stop
 
 #Default install path is "C:\Program Files (x86)\Riverbed\Steelhead Mobile\"
 $result = rbtdebug.exe --status-all
-$result += rbtdebug.exe --stats-all
 
 	#endregion
 
