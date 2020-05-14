@@ -1,0 +1,35 @@
+AZURE_BANDWIDTH_COST_MIB DEFINITIONS ::= BEGIN
+
+IMPORTS
+OBJECT-TYPE, mib-2,
+Integer32 FROM SNMPv2-SMI;
+
+host     OBJECT IDENTIFIER ::= { mib-2 1990000 }
+
+pretaxcost OBJECT-TYPE
+	SYNTAX	Integer32 (0..4294967295)
+	MAX-ACCESS read-only
+	STATUS	current
+	DESCRIPTION	"Pre Tax cost for Bandwidth used"
+	::= { host 1 }
+billingmonth OBJECT-TYPE
+	SYNTAX	DisplayString
+	MAX-ACCESS read-only
+	STATUS	current
+	DESCRIPTION	"Billing cycle in the format YYYY-MM"
+	::= { host 2 }
+servicename OBJECT-TYPE
+	SYNTAX	DisplayString
+	MAX-ACCESS read-only
+	STATUS	current
+	DESCRIPTION	"Azure Services. for ex: bandwidth"
+	::= { host 3 }
+
+currency OBJECT-TYPE
+	SYNTAX	DisplayString
+	MAX-ACCESS read-only
+	STATUS	current
+	DESCRIPTION	"Currency. For ex: USD"
+	::= { host 4 }
+
+END

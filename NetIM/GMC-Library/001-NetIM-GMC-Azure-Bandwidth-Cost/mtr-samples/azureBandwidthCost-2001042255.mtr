@@ -1,0 +1,4 @@
+[SampleDataHeader][name=azureBandwidthCost]
+[metricClass=metric]timestamp,pretaxcost,billingmonth,servicename,currency
+[TargetInfoHeader]HEADERNAME,SYSNAME
+[TI]azureBandwidthCost,12341234-1234-1234-1234-123412341234[SI][SD]1574679221,34.86519916688411,2019-11-01T00:00:00,bandwidth,USD

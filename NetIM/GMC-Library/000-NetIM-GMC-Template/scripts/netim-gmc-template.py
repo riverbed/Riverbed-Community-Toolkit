@@ -1,0 +1,2 @@
+
+print("GMC is collecting")
