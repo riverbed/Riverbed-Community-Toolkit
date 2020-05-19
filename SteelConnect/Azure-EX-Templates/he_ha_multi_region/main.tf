@@ -403,7 +403,7 @@ resource "azurerm_network_security_rule" "rvbd_nsg_rule3" {
 }
 resource "azurerm_network_security_rule" "rvbd_nsg_rule4" {
 	count = length(var.location) 
-	name                       = "RVBD_Security_Rule_Outbound-${1+count.index}"
+	name                       = "RVBD_Security_Rule_Inbound-${1+count.index}"
 	description                = "RVBD security group"
 	priority                   = 301
 	direction                  = "Inbound"

@@ -206,7 +206,7 @@ resource "azurerm_network_security_rule" "rvbd_nsg_rule3" {
 	network_security_group_name = azurerm_network_security_group.rvbd_nsg.name
 }
 resource "azurerm_network_security_rule" "rvbd_nsg_rule4" {
-	name                       = "RVBD_Security_Rule_Outbound"
+	name                       = "RVBD_Security_Rule_Inbound"
 	description                = "RVBD security group"
 	priority                   = 301
 	direction                  = "Inbound"
