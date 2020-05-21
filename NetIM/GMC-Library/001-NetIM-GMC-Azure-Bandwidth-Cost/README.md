@@ -2,7 +2,9 @@
 
 ## Description
 
-*todo*
+With this custom metric you can make a simple widget in NetIM to visualize the bandwidth cost.
+
+![Wdiget example in NetIM](demo/azureBandwidthCost-netim-widget-example.png)
 
 ## Deploy
 
