@@ -11,8 +11,8 @@
 
 ## Deployment
 
-[1. Import VHD Images](#1-import-vhd-images)
-[2. Deploy using Terraform template](#2-deploy-using-terraform-template)
+- [1. Import VHD Images](#1-import-vhd-images)
+- [2. Deploy using Terraform template](#2-deploy-using-terraform-template)
 
 ### 1. Import VHD Images
 
@@ -68,11 +68,11 @@ Set-Location ./SteelConnect/Azure-DeployHeadend/scripts
 ../../Azure-DeployHeadend/scripts/SteelConnect-EX_Deploy-Terraform.ps1
 ```
 
-After 3 to 5 minutes the resource group in Azure should look like this:
+After 3 to 5 minutes the resource group in Azure should looks like this:
 
 ![resource group](./images/steelconnect-ex-headend-resources.png)
 
-and you can start accessing the appliance via Azure Serial Console or SSH.
+and you can start accessing the appliances via Azure Serial Console or SSH.
 For example, the Director via Azure Serial Console:
 
 ![resource group](./images/steelconnect-ex-director-serial-console.png)
