@@ -94,7 +94,7 @@ resource "azurerm_subnet" "mgmt_subnet" {
     name                 = "MGMT-NET"
     resource_group_name  = azurerm_resource_group.rvbd_rg.name
     virtual_network_name = azurerm_virtual_network.rvbdNetwork.name
-	address_prefix = cidrsubnet("${azurerm_virtual_network.rvbdNetwork.address_space.0}","${var.newbits_subnet}",1)
+	address_prefixes     = [cidrsubnet("${azurerm_virtual_network.rvbdNetwork.address_space.0}","${var.newbits_subnet}",1)]
 }
 
 # Create Traffic Subnet for Director, Controller and Analytics
@@ -102,7 +102,7 @@ resource "azurerm_subnet" "ctrl_network_subnet" {
     name                 = "Control-Network"
     resource_group_name  = azurerm_resource_group.rvbd_rg.name
     virtual_network_name = azurerm_virtual_network.rvbdNetwork.name
-	address_prefix = cidrsubnet("${azurerm_virtual_network.rvbdNetwork.address_space.0}","${var.newbits_subnet}",2)
+	address_prefixes     = [cidrsubnet("${azurerm_virtual_network.rvbdNetwork.address_space.0}","${var.newbits_subnet}",2)]
 }
 
 # Create Traffic Subnet for Controller and Branch
@@ -110,7 +110,7 @@ resource "azurerm_subnet" "wan_network_subnet" {
     name                 = "WAN-Network"
     resource_group_name  = azurerm_resource_group.rvbd_rg.name
     virtual_network_name = azurerm_virtual_network.rvbdNetwork.name
-	address_prefix = cidrsubnet("${azurerm_virtual_network.rvbdNetwork.address_space.0}","${var.newbits_subnet}",3)
+	address_prefixes     = [cidrsubnet("${azurerm_virtual_network.rvbdNetwork.address_space.0}","${var.newbits_subnet}",3)]
 }
 
 # Add route table association for Director and Analytics
