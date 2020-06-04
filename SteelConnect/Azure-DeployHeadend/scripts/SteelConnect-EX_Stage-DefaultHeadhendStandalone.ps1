@@ -97,7 +97,7 @@ if (!$ServicePrincipalName) {
 }
 # headend resource group
 $scope = "/subscriptions/$($azureContext.Subscription.SubscriptionId)/resourceGroups/$resourceGroupName"
-$sp = New-AzADServicePrincipal -DisplayName $ServicePrincipalName -Role "Contributor" -Scope $scope -
+$sp = New-AzADServicePrincipal -DisplayName $ServicePrincipalName -Role "Contributor" -Scope $scope
 # images resource group
 $scope = "/subscriptions/$($azureContext.Subscription.SubscriptionId)/resourceGroups/$imagesResourceGroupName"
 New-AzRoleAssignment -RoleDefinitionName "Reader" -ApplicationId $sp.ApplicationId -Scope $scope
