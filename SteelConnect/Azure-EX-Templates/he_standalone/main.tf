@@ -65,6 +65,11 @@ resource "azurerm_virtual_network" "rvbdNetwork" {
     resource_group_name = azurerm_resource_group.rvbd_rg.name
 
     tags = {"environment" = "RVBDHeadEndHA"}
+	
+    subnet {
+        name           = "default"
+        address_prefix = cidrsubnet(var.vpc_address_space,var.newbits_subnet,0)
+    }
 }
 
 # Create Route Table
