@@ -26,15 +26,22 @@
 
 # Parameters
 param(
-$imagesResourceGroupName="SteelConnect-EX-Images",
-$resourceGroupName="SteelConnect-EX-Headend",
-$imageResourceIdSteelConnectEX = "",
-$imageResourceIdSteelConnectDirector = "",
-$imageResourceIdSteelConnectAnalytics = "",
-$sshPublicKey="",
-$passphrase="", # used when generating the ssh key, the passphrase protects the private key,
-$ServicePrincipalName = "",
-$headend_location = ""
+    $headendLocation = "",
+    $vmSize = "Standard_F8s_v2",
+
+    $imagesResourceGroupName="Riverbed-Images",
+    $resourceGroupName="SteelConnect-EX-Headend",
+    $imageResourceIdSteelConnectEX = "",
+    $imageResourceIdSteelConnectDirector = "",
+    $imageResourceIdSteelConnectAnalytics = "",
+    $sshPublicKey="",
+    $passphrase="", # used when generating the ssh key, the passphrase protects the private key,
+    $ServicePrincipalName = "",
+    $overlayNetwork = "99.0.0.0/8",
+    $vnetAddressSpace="10.100.0.0/16",
+    $newbitsSubnet = 8,
+    $hostnameDirector   = "Director1",
+    $hostnameAnalytics  = "Analytics1"
 )
 
 # Use Azure-EX-templates standalone
@@ -72,14 +79,15 @@ if (!$imageResourceIdSteelConnectAnalytics) {
     $imageResourceIdSteelConnectAnalytics = $imageResource.Id
 }
 
-# Get location
-if (!$headend_location) {
-    $headend_location = (Get-AzResourceGroup -ResourceGroupName $imagesResourceGroupName).Location
+# If location is not set in parameters, then get location for the Director image
+if (!$headendLocation) {
+    $imageResourceDirector = Get-AzResource -ResourceId $imageResourceIdSteelConnectDirector -ErrorAction stop    
+    $headendLocation = $imageResourceDirector.Location
 }
 
-# Get Headend Resource group
-if (! (Get-AzResourceGroup -ResourceGroupName $resourceGroupName)) {
-    New-AzResourceGroup -ResourceGroupName $resourceGroupName -Location $headend_location
+# Get existing Headend resource group or create it
+if (! (Get-AzResourceGroup -ResourceGroupName $resourceGroupName -ErrorAction SilentlyContinue)) {
+    New-AzResourceGroup -ResourceGroupName $resourceGroupName -Location $headendLocation -ErrorAction Stop
 }
 
 # Generate a service principal for terraform to interact with Azure
@@ -89,10 +97,10 @@ if (!$ServicePrincipalName) {
 }
 # headend resource group
 $scope = "/subscriptions/$($azureContext.Subscription.SubscriptionId)/resourceGroups/$resourceGroupName"
-$sp = New-AzADServicePrincipal -DisplayName $ServicePrincipalName -Role "Contributor" -Scope $scope
+$sp = New-AzADServicePrincipal -DisplayName $ServicePrincipalName -Role "Contributor" -Scope $scope -
 # images resource group
 $scope = "/subscriptions/$($azureContext.Subscription.SubscriptionId)/resourceGroups/$imagesResourceGroupName"
-New-AzRoleAssignment -RoleDefinitionName "Contributor" -ApplicationId $sp.ApplicationId -Scope $scope
+New-AzRoleAssignment -RoleDefinitionName "Reader" -ApplicationId $sp.ApplicationId -Scope $scope
 
 $clientSecret = ConvertFrom-SecureString $sp.Secret -AsPlainText
 $clientId=$sp.ApplicationId
@@ -108,20 +116,20 @@ tenant_id           = "$tenantId"
 subscription_id     = "$subscriptionId"
 client_id           = "$clientId"
 client_secret       = "$clientSecret"
-location            = "$headend_location"
+location            = "$headendLocation"
 resource_group      = "$resourceGroupName"
 ssh_key             = "$sshPublicKey"
 image_controller    = "$imageResourceIdSteelConnectEX"
 image_director      = "$imageResourceIdSteelConnectDirector"
 image_analytics     = "$imageResourceIdSteelConnectAnalytics"
-vpc_address_space   = "10.234.0.0/16"
-newbits_subnet      = "8"
-overlay_network     = "172.30.0.0/15"
-hostname_director   = "Director1"
-hostname_analytics  = "Analytics1"
-director_vm_size    = "Standard_F8s_v2"
-controller_vm_size  = "Standard_F8s_v2"
-analytics_vm_size   = "Standard_F8s_v2"
+vpc_address_space   = "$vnetAddressSpace"
+newbits_subnet      = "$newbitsSubnet"
+overlay_network     = "$overlayNetwork"
+hostname_director   = "$hostnameDirector"
+hostname_analytics  = "$hostnameAnalytics"
+director_vm_size    = "$vmSize"
+controller_vm_size  = "$vmSize"
+analytics_vm_size   = "$vmSize"
 "@ | Out-File $terraformVariableStagingFile
 Get-Content $terraformVariableStagingFile
 
