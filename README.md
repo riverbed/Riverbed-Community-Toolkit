@@ -3,7 +3,7 @@
 A public toolkit for Riverbed Solution engineering and integration
 
 | Folders | Contents | Related 3rd party technology |
-| --- | --- | --- | --- |
+| --- | --- | --- |
 | [SteelHead](/SteelHead/README.md) | Community Cloud Cookbooks: scripts and howto to deploy Acceleration in the Cloud | Azure, AWS, PowerShell, ARM |
 | [SteelConnect](/SteelConnect) | Scripts, howtos and templates to deploy SteelConnect headend in Azure | Azure, Terraform, PowerShell |
 | [NetIM](/NetIM/GMC-Library/README.md) | Community library to share GMC metrics extensions for NetIM: scripts, howtos and custom mibs | Azure API, Python |
