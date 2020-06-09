@@ -5,6 +5,7 @@
 - [Deployment](#deployment)
     - [1. Import VHD Images](#1-import-vhd-images)
     - [2. Deploy using Terraform template](#2-deploy-using-terraform-template)
+- [Connect to the appliances](#connect-to-the-appliances)
 
 ## Overview
 
@@ -24,7 +25,7 @@ The Cookbook uses the following default values
 
 | Tasks | Description |
 | --- | --- |
-| 1. Connect to your Azure subscription | Sign-in on [Azure portal](https://portal.azure.com)|
+| 1. Connect to the Azure Portal and check there is enough vCPU available: navigate to your Subscription details, open Usage and Quota menu, check there is at least 24 vCPU available for the Standard FsV2 Compute in the target location|<ul><li>Sign-in on [Azure portal](https://portal.azure.com)</li><li>Hit "Request Increase" button if you need more vCPU</li></ul>![quota](images/azure-westus-fsv2-quota.png)|
 | 2. Create a resource group in the location where you will deploy SteelConnect EX appliances| <ul><li>Resource Group name: **Riverbed-Images**</li><li>Location: **Target location for appliances**</li></ul> |
 | 3. Create a Storage Account resource, and then create a Blob container  | <ul><li>Storage Account Name: **unique name**</li><li>Location: **Target location for appliances**</li><li>Replication: Locally-redundant storage (LRS) is ok</li><li>Container name: **images**</li></ul> |
 | 4. Send a request to [Riverbed Support](https://support.riverbed.com/) with a SAS and connecting string to receive images in your Blob Container: FlexVNF, Director and Analytics | <ul><li>Generate a **Shared Access Signature** for your blob container</li><li>Get the **SAS** and connection string for support </li></ul>|
@@ -53,7 +54,9 @@ When the import is done, the resource group will contain a storage account and a
 
 Try from Azure Portal, or [shell.azure.com](https://shell.azure.com), or by clicking [![Embed launch](https://shell.azure.com/images/launchcloudshell.png "Launch Azure Cloud Shell")](https://shell.azure.com)
 
-2. Get Riverbed Community Toolkit sources (PowerShell)
+2. Get Riverbed Community Toolkit sources
+
+The following PowerShell commands initialize the console and download the sources from Riverbed Community Toolkit git repository on GitHub.
 
 ```PowerShell
 # Check the Azure context (subscription and tenant id are correct)
@@ -70,7 +73,9 @@ cd $user
 git clone https://github.com/riverbed/Riverbed-Community-Toolkit.git
 ```
 
-3. Stage variables for Terraform (terraform.vartf)
+3. Stage variables for Terraform
+
+The following PowerShell commands prepare the parameters file *terraform.vartf* for Terraform.
 
 ```PowerShell
 Set-Location ./Riverbed-Community-Toolkit
@@ -79,7 +84,9 @@ Set-Location ./SteelConnect/Azure-DeployHeadend/scripts
 ./SteelConnect-EX_Stage-DefaultHeadhendStandalone.ps1
 ```
 
-4. Deploy Terraform (init, plan and apply)
+4. Deploy Terraform
+
+The following PowerShell commands launch the deployment using Terraform ((init, plan and apply)
 
 ```PowerShell
 ../../Azure-DeployHeadend/scripts/SteelConnect-EX_Deploy-Terraform.ps1
