@@ -2,7 +2,7 @@
 
 ## 1. Open Cloud Shell (select Bash mode)
 
-Try from shell.azure.com or by clicking below.
+Try from shell.azure.com or clicking 
 [![Embed launch](https://shell.azure.com/images/launchcloudshell.png "Launch Azure Cloud Shell")](https://shell.azure.com)
 
 ## 2. Run the following bash commands to download and execute the script **azure_credentials_generate.sh**: 
