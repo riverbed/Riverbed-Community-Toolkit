@@ -9,7 +9,7 @@
 
 ## Overview
 
-This cookbook explains how to deploy a SteelConnect-EX Standalone Headend in Azure.
+This cookbook explains how to deploy a SteelConnect-EX Standalone Headend in Azure, in the location of your choice.
 
 ![cloud architecture](images/steelconnect-ex-headend-standalone-architecture.png)
 
@@ -30,8 +30,10 @@ The Cookbook uses the following parameters and default values.
 | --- | --- |
 | 1. Connect to the Azure Portal and check there is enough vCPU available in the target location: navigate to your Subscription details, open Usage and Quota menu|<ul><li>Sign-in on [Azure portal](https://portal.azure.com)</li><li>At least **24 vCPU available for the Standard FsV2 Compute in the target Location**</li><li>Hit "Request Increase" button if you need more vCPU</li></ul>![quota](images/azure-westus-fsv2-quota.png)|
 | 2. Create a resource group in the location where you will deploy SteelConnect EX appliances| <ul><li>Resource Group name: **Riverbed-Images**</li><li>Location: **Target location for appliances**</li></ul> |
-| 3. Create a Storage Account resource, and then create a Blob container  | <ul><li>Storage Account Name: *a unique name*</li><li>Location: **Target location for appliances**</li><li>Replication: Locally-redundant storage (LRS) is ok</li><li>Container name: **images**</li></ul> |
-| 4. Send a request to [Riverbed Support](https://support.riverbed.com/) with a SAS and connecting string to receive images in your Blob Container: FlexVNF, Director and Analytics | <ul><li>Generate a **Shared Access Signature** for your blob container</li><li>Transmit the **SAS and connection string** to Riverbed Support to obtain the .vhd images</li></ul>|
+| 3. Create a Storage Account resource  | <ul><li>Storage Account Name: *a unique name*</li><li>Location: **Target location for appliances**</li><li>Replication: Locally-redundant storage (LRS) is ok</li></ul> |
+| 4. Create a Blob container in the Storage Account previously created | <ul><li>Container name: **images**</li></ul> |
+| 5. Generate a temporary Shared Access Signature for this Storage Account/Container | <ul><li>End date: few days</li><li>Hit **Generate SAS and connection string**</li></ul>![azure-sa-sas-creation](images/azure-sa-sas-creation.png)|
+| 6. Send a request to Riverbed Support with the **SAS and connecting string** generated previously and check you received images in your Blob Container: FlexVNF, Director and Analytics |<ul><li>Request to [Riverbed Support](https://support.riverbed.com/)</li></ul> |
 
 ## Deployment
 
@@ -39,7 +41,7 @@ The Cookbook uses the following parameters and default values.
 
 | Tasks | Description |
 | --- | --- |
-| 1. In the Azure Portal, navigate to the Resource group |Go to [Azure portal](https://portal.azure.com)|
+| 1. In the Azure Portal, navigate to the Resource group **Riverbed Images** |Go to [Azure portal](https://portal.azure.com)|
 | 2. Add new resource, select Image, and hit Create new| ![add button](images/azure-resource-group-add-button.png) |
 | 3. Fill parameters to create an Image resource for the **SteelConnect EX FlexVNF**| <ul><li>Name: **steelconnect-ex-flexvnf**</li><li>Location: **Target location** for appliances</li><li>OS disk type: **Linux**</li><li>Storage Blob: url of the **flexvnf vhd** in the storage account blobs container</li><li>Storage type: Premium SSD recommended</li></ul>|
 | 4. Repeat **step 2.** and fill the parameters to create an Image resource for the **SteelConnect EX Director**| <ul><li>Name: **steelconnect-ex-director**</li><li>Location: **Target location** for appliances</li><li>OS disk type: **Linux**</li><li>Storage Blob: url of the **director vhd** in the storage account blobs container</li><li>Storage type: Premium SSD recommended</li></ul>|
