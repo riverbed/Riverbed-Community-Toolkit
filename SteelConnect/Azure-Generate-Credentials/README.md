@@ -30,5 +30,5 @@ About 2 min after, the output will display the generated credential and applicat
 
 Use the credentials and details to configure the Azure connector in SteelConnect CX or EX:
 
-- in SteelConnect CX: SCM > Network Design > Azure
-- in SteelConnect EX: Direction > CMS Connector
+- in SteelConnect CX from the SCM > Network Design > Azure
+- in SteelConnect EX from the Director > Administration > Appliances > Connectors > CMS, new connector for Azure
