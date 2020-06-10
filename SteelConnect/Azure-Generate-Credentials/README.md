@@ -2,17 +2,19 @@
 
 ## Steps
 
-### 1. Open Cloud Shell (select Bash mode)
+### 1. Open Cloud Shell 
 
 Try from shell.azure.com or clicking 
 [![Embed launch](https://shell.azure.com/images/launchcloudshell.png "Launch Azure Cloud Shell")](https://shell.azure.com)
 
-### 2. Run the script and keep the output
+### 2. Select Bash mode
 
-The following bash commands download the script **azure_credentials_generate.sh** that create a service principal.
+### 3. Run the script and keep the output
+
+The following bash commands download the script [azure_credentials_generate.sh](azure_credentials_generate.sh) that create a service principal.
 
 ```bash
-wget https://raw.githubusercontent.com/riverbed/se-toolkit/master/SteelConnect/Azure-Generate-Credentials/azure_credentials_generate.sh
+wget https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/master/SteelConnect/Azure-Generate-Credentials/azure_credentials_generate.sh
 
 chmod +x azure_credentials_generate.sh
 
