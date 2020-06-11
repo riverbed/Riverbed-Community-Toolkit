@@ -21,6 +21,8 @@ The Cookbook uses the following parameters and default values.
 | VNET | 10.100.0.0/16 |
 | Azure VM Size | Standard_F8s_v2 |
 | Azure Location* | *no default value* |
+| SSH keypair | *generated in local files ssh-timestamp and ssh-timestamp.pub* |
+| passphrase of SSH key | riverbed-community |
 
 > The cookbook let you choose any **Azure Location** for the deployment, for example **West-US**, **West-Europe** or **Korea Central**. Thus in some location the default VM size is not available, for example Standard_F8s_v2 is currently not available in Switzerland North, in that case please refer to the SteelConnect deployment guide and adapt the cookbook script parameters to use an other VM size.
 
@@ -57,30 +59,27 @@ When the import is done, the resource group will contain a storage account and a
 
 #### 1. Open Azure Cloud Shell and select PowerShell console
 
-Try from Azure Portal, or [shell.azure.com](https://shell.azure.com), or by clicking [![Embed launch](https://shell.azure.com/images/launchcloudshell.png "Launch Azure Cloud Shell")](https://shell.azure.com)
+Launch Cloud Shell from Azure Portal, or [shell.azure.com](https://shell.azure.com), or by clicking [![Embed launch](https://shell.azure.com/images/launchcloudshell.png "Launch Azure Cloud Shell")](https://shell.azure.com)
 
 #### 2. Get Riverbed Community Toolkit sources
 
 The following PowerShell commands initialize the console and download the sources from Riverbed Community Toolkit git repository on GitHub.
 
 ```PowerShell
-# Check the Azure context (subscription and tenant id are correct)
-$azureContext = Get-AzContext
-$azureContext.Subscription
+# Check the Azure context
+# i.e check subscription and tenant id are correct
+Get-AzContext
 
-# Comment our the line below and fill the parameter {your-test-sub} to select a different subscription
-# Select-AzSubscription -SubscriptionName "{your-test-sub}"
+# Comment our the line below and replace {your subscription name} if you need to select a different subscription
+# Set-AzContext -SubscriptionName "{your subscription name}"
 
-# Change dir
-cd $user
-
-# Copy the sources/scripts from Github
+# Get a local copy of the Riverbed Community Toolkit scripts from Github
 git clone https://github.com/riverbed/Riverbed-Community-Toolkit.git
 ```
 
 #### 3. Stage variables for Terraform
 
-The following PowerShell commands prepare the parameters file *terraform.vartf* for Terraform.
+The following PowerShell commands prepare the parameters file *terraform.vartf* for Terraform and generate a keypair for SSH stored local files *ssh-timestamp* and *ssh-timestamp.pub*.
 
 ```PowerShell
 Set-Location ./Riverbed-Community-Toolkit
@@ -99,7 +98,7 @@ The following PowerShell commands launch the deployment using Terraform ((init, 
 
 #### 5. Keep the output
 
-After 3 to 5 minutes, the deployment finishes and the terrafrom output gives useful information such as WebConsole URL and public IP.
+After 3 to 5 minutes, the deployment finishes and the Terraform deployment output gives useful information such as WebConsole URL and Public IP for each appliance.
 
 ![terraform output](./images/steelconnect-ex-terraform-output.png)
 
@@ -111,8 +110,18 @@ In the Azure portal, the resource group contains all the resources.
 
 Appliances can be accessed via Azure Serial Console, SSH or Webconsole.
 
-For example, connect the Director VM with Azure Serial Console:
+- For example, connect to the Director VM with Azure Serial Console:
 
-![resource group](./images/steelconnect-ex-director-serial-console.png)
+![resource group](images/steelconnect-ex-director-serial-console.png)
+
+- For example, connect to the webconsole  of the Director: [https://{{your Director public IP}}]()
+
+- For example, connect to the Directory VM with SSH using the generated keypair protected with a passphrase (see [cookbook default values](#overview)). 
+
+```shell
+# replace {{your sshkey-timestamp}} with the actual file name generated in the current directory
+# replace {{your Director public IP}} with the actual IP of the Director, see terraform output
+ssh -i {{your sshkey-timestamp}} Administrator@{{your Director public IP}}
+```
 
 ## Copyright (c) 2020 Riverbed Technology
