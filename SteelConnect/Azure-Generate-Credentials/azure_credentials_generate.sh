@@ -13,7 +13,7 @@ SubsID=$1
 echo "Using user provided Subscription ID: $SubsID"
 fi
  
-AppName="SteelConnect$RANDOM"
+AppName="Riverbed-Community-SteelConnect$RANDOM"
 AppSecret="SteelConnect123$RANDOM"
 AppID=$(azure ad app create --name $AppName \
 --home-page https://www.riverbed.com/$RANDOM \
