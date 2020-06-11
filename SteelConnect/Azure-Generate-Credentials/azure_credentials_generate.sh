@@ -25,7 +25,7 @@ grep "Object Id" | awk -F ":" '{print $3}' | awk '{print $1}')
 echo "On Azure Portal, created an application with name: $AppName"
 echo "Waiting for changes to propagate to Azure..."
 sleep 120
-azure role assignment create --objectId $SPObjID -o Owner -c \
+azure role assignment create --objectId $SPObjID -o Contributor -c \
 /subscriptions/$SubsID > /dev/null 2>&1
 TenantID=$(azure account show $SubsID | grep "Tenant ID" |
 awk -F ":" '{print $3}' | awk '{print $1}')
