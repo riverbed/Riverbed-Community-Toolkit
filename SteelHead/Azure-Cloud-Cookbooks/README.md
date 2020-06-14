@@ -1,6 +1,6 @@
 # Community Cloud Cookbooks for Riverbed Acceleration in Azure
 
-Riverbed shares some cookbooks with the user community to integratating Acceleration in Azure.
+Riverbed shares some cookbooks with the user community to help integrating Acceleration in Azure.
 
 - [101 - Chaining Acceleration in a VNET having a gateway appliance (VPN or SD-WAN)](101-service-chain-gw-appliance.md)
 - [102 - Acceleration Scale Out in Azure](102-scale-out.md)
