@@ -1,6 +1,6 @@
 # Community Cloud Cookbooks for Riverbed Acceleration in AWS
 
-Riverbed shares some cookbooks with the user community to integratating Acceleration in AWS.
+Riverbed shares some cookbooks with the user community to help integrating Acceleration in AWS.
 
 - [101 - Deploying Acceleration in an existing VPC having a gateway appliance (VPN or SD-WAN)](101-service-chain-gw-appliance.md)
 - [102 - Create VPC, Subnets, Workload, Acceleration and service chain with gateway appliance](102-vpc-and-service-chain-gw-appliance.md)
