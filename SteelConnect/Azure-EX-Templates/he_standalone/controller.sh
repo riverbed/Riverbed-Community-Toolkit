@@ -1,4 +1,7 @@
 #!/bin/bash
+# Riverbed Community Toolkit
+# SteelConnect-EX Controller VM Initialization script
+
 log_path="/etc/bootLog.txt"
 if [ -f "$log_path" ]
 then
@@ -55,7 +58,7 @@ else
     echo -e "SSH Key already present in file: $KeyFile.." >> $log_path
 fi
 
-echo -e "Enanbling ssh login using password from Director to Controller required for first time login durin Controller on boarding." >> $log_path
+echo -e "Enabling ssh login using password from Director to Controller required for first time login durin Controller on boarding." >> $log_path
 if ! grep -Fq "$Address" $SSH_Conf; then
     echo -e "Adding the match address exception for Director Management IP required for first time login durin Controller on boarding.\n" >> $log_path
     sed -i.bak "\$a\Match Address $DirIP\n  PasswordAuthentication yes\nMatch all" $SSH_Conf

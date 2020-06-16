@@ -1,3 +1,6 @@
+# Riverbed Community Toolkit
+# SteelConnect-EX Standalone Headend template
+
 # Configure the Microsoft Azure Provider
 provider "azurerm" {
     subscription_id = var.subscription_id
@@ -12,7 +15,7 @@ resource "azurerm_resource_group" "rvbd_rg" {
     name     = var.resource_group
     location = var.location
 
-    tags = {"environment" = "RVBDHeadEndHA"}
+    tags = {"environment" = "SteelConnect-EX-Headend"}
 }
 
 # Add template to use custom data for Director:
@@ -42,7 +45,7 @@ data "template_file" "user_data_ctrl" {
 
 # Add template to use custom data for Controller:
 data "template_file" "user_data_van" {
-  template = file("van.sh")
+  template = file("analytics.sh")
   
   vars = {
     van_mgmt_ip = azurerm_network_interface.van_nic_1.private_ip_address
@@ -64,7 +67,7 @@ resource "azurerm_virtual_network" "rvbdNetwork" {
     location            = var.location
     resource_group_name = azurerm_resource_group.rvbd_rg.name
 
-    tags = {"environment" = "RVBDHeadEndHA"}
+    tags = {"environment" = "SteelConnect-EX-Headend"}
 	
     subnet {
         name           = "default"
@@ -126,7 +129,7 @@ resource "azurerm_public_ip" "ip_dir" {
     resource_group_name          = azurerm_resource_group.rvbd_rg.name
     allocation_method = "Dynamic"
 
-    tags = {"environment" = "RVBDHeadEndHA"}
+    tags = {"environment" = "SteelConnect-EX-Headend"}
 }
 
 # Create Public IP for Controller
@@ -136,7 +139,7 @@ resource "azurerm_public_ip" "ip_ctrl" {
     resource_group_name          = azurerm_resource_group.rvbd_rg.name
     allocation_method = "Dynamic"
 
-    tags = {"environment" = "RVBDHeadEndHA"}
+    tags = {"environment" = "SteelConnect-EX-Headend"}
 }
 
 # Create Public IP for Controller WAN Interface
@@ -146,7 +149,7 @@ resource "azurerm_public_ip" "ip_ctrl_wan" {
     resource_group_name          = azurerm_resource_group.rvbd_rg.name
     allocation_method = "Static"
 
-    tags = {"environment" = "RVBDHeadEndHA"}
+    tags = {"environment" = "SteelConnect-EX-Headend"}
 }
 
 # Create Public IP for Analytics
@@ -156,7 +159,7 @@ resource "azurerm_public_ip" "ip_van" {
     resource_group_name          = azurerm_resource_group.rvbd_rg.name
     allocation_method = "Dynamic"
 
-    tags = {"environment" = "RVBDHeadEndHA"}
+    tags = {"environment" = "SteelConnect-EX-Headend"}
 }
 
 
@@ -165,7 +168,7 @@ resource "azurerm_network_security_group" "rvbd_nsg" {
     name							= "RVBDNSG"
     location						= var.location
     resource_group_name				= azurerm_resource_group.rvbd_rg.name
-    tags = map("environment", "RVBDHeadEndHA")
+    tags = map("environment", "SteelConnect-EX-Headend")
 }
 # Create security group rules
 resource "azurerm_network_security_rule" "rvbd_nsg_rule1" {
@@ -252,7 +255,7 @@ resource "azurerm_network_interface" "director_nic_1" {
         public_ip_address_id          = azurerm_public_ip.ip_dir.id
     }
 
-    tags = {"environment" = "RVBDHeadEndHA"}
+    tags = {"environment" = "SteelConnect-EX-Headend"}
 }
 
 # Create Southbound network interface for Director
@@ -267,7 +270,7 @@ resource "azurerm_network_interface" "director_nic_2" {
         private_ip_address_allocation = "dynamic"
     }
 
-    tags = {"environment" = "RVBDHeadEndHA"}
+    tags = {"environment" = "SteelConnect-EX-Headend"}
 }
 
 # Create Management network interface for Controller
@@ -283,7 +286,7 @@ resource "azurerm_network_interface" "controller_nic_1" {
         public_ip_address_id          = azurerm_public_ip.ip_ctrl.id
     }
 
-    tags = {"environment" = "RVBDHeadEndHA"}
+    tags = {"environment" = "SteelConnect-EX-Headend"}
 }
 
 # Create Northbound/Control network interface for Controller
@@ -300,7 +303,7 @@ resource "azurerm_network_interface" "controller_nic_2" {
         private_ip_address_allocation = "dynamic"
     }
 
-    tags = {"environment" = "RVBDHeadEndHA"}
+    tags = {"environment" = "SteelConnect-EX-Headend"}
 }
 
 # Create Southbound/WAN network interface for Controller
@@ -317,7 +320,7 @@ resource "azurerm_network_interface" "controller_nic_3" {
 		public_ip_address_id		  = azurerm_public_ip.ip_ctrl_wan.id
     }
 
-    tags = {"environment" = "RVBDHeadEndHA"}
+    tags = {"environment" = "SteelConnect-EX-Headend"}
 }
 
 # Create Management network interface for Analytics
@@ -333,7 +336,7 @@ resource "azurerm_network_interface" "van_nic_1" {
         public_ip_address_id          = azurerm_public_ip.ip_van.id
     }
 
-    tags = {"environment" = "RVBDHeadEndHA"}
+    tags = {"environment" = "SteelConnect-EX-Headend"}
 }
 
 # Create Southbound network interface for Analytics
@@ -348,7 +351,7 @@ resource "azurerm_network_interface" "van_nic_2" {
         private_ip_address_allocation = "dynamic"
     }
 
-    tags = {"environment" = "RVBDHeadEndHA"}
+    tags = {"environment" = "SteelConnect-EX-Headend"}
 }
 
 # Generate random text for a unique storage account name
@@ -369,7 +372,7 @@ resource "azurerm_storage_account" "storageaccountDir" {
     account_tier                = "Standard"
     account_replication_type    = "LRS"
 
-    tags = {"environment" = "RVBDHeadEndHA"}
+    tags = {"environment" = "SteelConnect-EX-Headend"}
 }
 
 # Create storage account for boot diagnostics of Controller VM
@@ -380,7 +383,7 @@ resource "azurerm_storage_account" "storageaccountCtrl" {
     account_tier                = "Standard"
     account_replication_type    = "LRS"
 
-    tags = {"environment" = "RVBDHeadEndHA"}
+    tags = {"environment" = "SteelConnect-EX-Headend"}
 }
 # Create storage account for boot diagnostics of Director VM
 resource "azurerm_storage_account" "storageaccountVAN" {
@@ -390,7 +393,7 @@ resource "azurerm_storage_account" "storageaccountVAN" {
     account_tier                = "Standard"
     account_replication_type    = "LRS"
 
-    tags = {"environment" = "RVBDHeadEndHA"}
+    tags = {"environment" = "SteelConnect-EX-Headend"}
 }
 
 # Create RVBD Director Virtual Machine
@@ -432,7 +435,7 @@ resource "azurerm_virtual_machine" "directorVM" {
         storage_uri = azurerm_storage_account.storageaccountDir.primary_blob_endpoint
     }
 	
-    tags = {"environment" = "RVBDHeadEndHA"}
+    tags = {"environment" = "SteelConnect-EX-Headend"}
 }
 
 # Create RVBD Controller Virtual Machine
@@ -475,7 +478,7 @@ resource "azurerm_virtual_machine" "controllerVM" {
         storage_uri = azurerm_storage_account.storageaccountCtrl.primary_blob_endpoint
     }
 	
-    tags = {"environment" = "RVBDHeadEndHA"}
+    tags = {"environment" = "SteelConnect-EX-Headend"}
 }
 
 # Create RVBD Analytics Virtual Machine
@@ -487,6 +490,9 @@ resource "azurerm_virtual_machine" "vanVM" {
 	primary_network_interface_id = azurerm_network_interface.van_nic_1.id
     vm_size               = var.analytics_vm_size
 #	depends_on            = [azurerm_virtual_machine.controllerVM]
+
+    # analytics initialiazation script (analytics.sh) requires director to be up and running
+	depends_on            = [azurerm_virtual_machine.directorVM]
 
     storage_os_disk {
         name              = "VAN_OSDisk"
@@ -518,7 +524,7 @@ resource "azurerm_virtual_machine" "vanVM" {
         storage_uri = azurerm_storage_account.storageaccountVAN.primary_blob_endpoint
     }
 	
-    tags = {"environment" = "RVBDHeadEndHA"}
+    tags = {"environment" = "SteelConnect-EX-Headend"}
 }
 
 data "azurerm_public_ip" "dir_pub_ip" {
