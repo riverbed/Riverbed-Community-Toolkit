@@ -5,7 +5,9 @@
 - [Deployment](#deployment)
     - [1. Create Azure Image Resources](#1-create-azure-image-resources)
     - [2. Deploy using Terraform template](#2-deploy-using-terraform-template)
-- [Connect to the appliances](#connect-to-the-appliances)
+- [Usage](#usage)
+    - [Configure your headend](#configure-your-headend)
+    - [Connect to the appliances](#connect-to-the-appliances)
 
 ## Overview
 
@@ -106,7 +108,22 @@ In the Azure portal, the resource group contains all the resources.
 
 ![resource group](./images/steelconnect-ex-headend-resources.png)
 
-## Connect to the appliances
+## Usage
+
+### Configure your headend
+
+At this point you should be good to configure your headend as you have learnt during the bootcamp. Typically you will:
+- Set administrators password
+- Create the initial Organization and some others using the workflow
+- Create an Analytics cluster
+- Deploy a controller with staging capabilities using the workflow
+- Check VPN profile id details on the staging controller
+- Define device creation workflow and try onboarding some devices
+- Generate a nodesid to obtain a license
+- ...
+- and more
+
+### Connect to the appliances
 
 Appliances can be accessed via Azure Serial Console, SSH or Webconsole.
 
