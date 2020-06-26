@@ -124,7 +124,7 @@ In the Azure portal, the resource group contains all the resources.
 ## Usage
 
 At this point you should be good to configure your headend as you have learnt during the bootcamp. Typically you will:
-- Define a connector to the Analytics cluster and register your analytics node
+- Define a connector to the Analytics cluster and register the  analytics node
 - Create the initial Organization and some others using the workflow
 - Deploy a controller with staging capabilities using the workflow
 - Check VPN profile id details on the staging controller
