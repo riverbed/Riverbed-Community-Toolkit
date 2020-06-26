@@ -41,7 +41,8 @@ param(
     $vnetAddressSpace="10.100.0.0/16",
     $newbitsSubnet = 8,
     $hostnameDirector   = "Director1",
-    $hostnameAnalytics  = "Analytics1"
+    $hostnameAnalytics  = "Analytics1",
+    $portAnalytics = "1234"
 )
 
 # Use Azure-EX-templates standalone
@@ -122,7 +123,7 @@ ssh_key             = "$sshPublicKey"
 image_controller    = "$imageResourceIdSteelConnectEX"
 image_director      = "$imageResourceIdSteelConnectDirector"
 image_analytics     = "$imageResourceIdSteelConnectAnalytics"
-vpc_address_space   = "$vnetAddressSpace"
+vnet_address_space   = "$vnetAddressSpace"
 newbits_subnet      = "$newbitsSubnet"
 overlay_network     = "$overlayNetwork"
 hostname_director   = "$hostnameDirector"
@@ -130,6 +131,7 @@ hostname_analytics  = "$hostnameAnalytics"
 director_vm_size    = "$vmSize"
 controller_vm_size  = "$vmSize"
 analytics_vm_size   = "$vmSize"
+analytics_port      = "$portAnalytics"
 "@ | Out-File $terraformVariableStagingFile
 Get-Content $terraformVariableStagingFile
 
