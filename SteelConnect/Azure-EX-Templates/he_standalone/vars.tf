@@ -20,16 +20,16 @@ variable "location" {
 
 variable "resource_group" {
   description = "Name of the resource group in which Riverbed Head End setup will be deployed."
-  default = "Riverbed_HE"
+  default = "SteelConnect-EX-Headend"
 }
 
 variable "ssh_key" {
   description = "SSH Key to be injected into VMs deployed on Azure."
 }
 
-variable "vpc_address_space" {
+variable "vnet_address_space" {
   description = "Virtual Private Network's address space to be used to deploy Riverbed Head end setup."
-  default = "10.234.0.0/16"
+  default = "10.100.0.0/16"
 }
 
 variable "newbits_subnet" {
@@ -39,29 +39,34 @@ variable "newbits_subnet" {
 
 variable "overlay_network" {
   description = "This is the SDWAN overlay network space. It will be used to install a route on analytics"
-  default = "172.30.0.0/15"
+  default = "99.00.0.0/8"
 }
 
 variable "image_director" {
-  description = "Riverbed Director Image ID to be used to deploy Riverbed Director."
+  description = "Riverbed Director Image ID to be used to deploy SteelConnect-EX Director."
 }
 
 variable "image_controller" {
-  description = "Controller/FlexVNF Image ID to be used to deploy Riverbed Controller."
+  description = "Controller/FlexVNF Image ID to be used to deploy SteelConnect-EX Controller."
 }
 
 variable "image_analytics" {
-  description = "Riverbed Analytics Image ID to be used to deploy Riverbed Analytics."
+  description = "Riverbed Analytics Image ID to be used to deploy SteelConnect-EX Analytics."
 }
 
 variable "hostname_director" {
-  description = "Hostname to be used for Riverbed Director."
-  default = "rvbd-director"
+  description = "Hostname to be used for SteelConnect-EX Director."
+  default = "Director1"
+}
+
+variable "hostname_controller" {
+  description = "Hostname to be used for SteelConnect-EX Controller."
+  default = "Controller1"
 }
 
 variable "hostname_analytics" {
-  description = "Hostname to be used for Riverbed Analytics."
-  default = "rvbd-analytics"
+  description = "Hostname to be used for SteelConnect-EX Analytics."
+  default = "Analytics1"
 }
 
 variable "director_vm_size" {
@@ -77,4 +82,24 @@ variable "controller_vm_size" {
 variable "analytics_vm_size" {
   description = "Size of Riverbed Analytics VM."
   default = "Standard_F8s_v2"
+}
+
+variable "hostnum_director" {
+  description = "Hostnum of the Director1. Used in management and control subnets."
+  default = "11"
+}
+
+variable "hostnum_controller" {
+  description = "Hostnum of the Controller1. Used in management, control and uplink subnets."
+  default = "21"
+}
+
+variable "hostnum_analytics" {
+  description = "Hostnum of the Analytics1. Used in management and control subnets."
+  default = "31"
+}
+
+variable "analytics_port" {
+  description = "Southound port of Analytics node"
+  default = "1234"
 }

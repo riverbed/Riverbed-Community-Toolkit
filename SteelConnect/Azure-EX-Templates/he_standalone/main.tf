@@ -1,8 +1,9 @@
 # Riverbed Community Toolkit
-# SteelConnect-EX Standalone Headend template
+# SteelConnect-EX Standalone Headend - Terraform template
 
 # Configure the Microsoft Azure Provider
 provider "azurerm" {
+    version = "~>2.0.0"
     subscription_id = var.subscription_id
     client_id       = var.client_id
     client_secret   = var.client_secret
@@ -15,7 +16,7 @@ resource "azurerm_resource_group" "rvbd_rg" {
     name     = var.resource_group
     location = var.location
 
-    tags = {"environment" = "SteelConnect-EX-Headend"}
+    tags = {"Riverbed-Community" = "SteelConnect-EX_Headend"}
 }
 
 # Add template to use custom data for Director:
@@ -23,13 +24,18 @@ data "template_file" "user_data_dir" {
   template = file("director.sh")
   
   vars = {
+    sshkey = var.ssh_key
     hostname_dir = var.hostname_director
     hostname_van = var.hostname_analytics
     dir_mgmt_ip = azurerm_network_interface.director_nic_1.private_ip_address
     dir_ctrl_ip = azurerm_network_interface.director_nic_2.private_ip_address
-    ctrl_net = azurerm_subnet.ctrl_network_subnet.address_prefix
-    sshkey = var.ssh_key
     van_mgmt_ip = azurerm_network_interface.van_nic_1.private_ip_address
+    ctrl_net = azurerm_subnet.control_subnet.address_prefix
+    overlay_net = var.overlay_network    
+
+    # assuming the control subnet is a /24, the hostnum of the Azure default gw is .1
+    # TODO: variabilize instead of hardcoding
+    azure_default_gw_ip_subnet_control = cidrhost(azurerm_subnet.control_subnet.address_prefix,1)
   }
 }
 
@@ -48,132 +54,148 @@ data "template_file" "user_data_van" {
   template = file("analytics.sh")
   
   vars = {
-    van_mgmt_ip = azurerm_network_interface.van_nic_1.private_ip_address
-    van_ctrl_ip = azurerm_network_interface.van_nic_2.private_ip_address
-    controller_ip = azurerm_network_interface.controller_nic_2.private_ip_address
-    ctrl_net = azurerm_subnet.ctrl_network_subnet.address_prefix
-    overlay_net = var.overlay_network
+    sshkey = var.ssh_key
     hostname_dir = var.hostname_director
     hostname_van = var.hostname_analytics
     dir_mgmt_ip = azurerm_network_interface.director_nic_1.private_ip_address
-	sshkey = var.ssh_key
+    van_mgmt_ip = azurerm_network_interface.van_nic_1.private_ip_address
+    ctrl_net = azurerm_subnet.control_subnet.address_prefix
+    overlay_net = var.overlay_network
+
+    # assuming the control subnet is a /24, the hostnum of the Azure default gw is .1
+    # TODO: variabilize instead of hardcoding
+    azure_default_gw_ip_subnet_control = cidrhost(azurerm_subnet.control_subnet.address_prefix,1)
+
+    analytics_control_ip = azurerm_network_interface.van_nic_2.private_ip_address
+    analytics_port = var.analytics_port
   }
 }
 
 # Create virtual network
 resource "azurerm_virtual_network" "rvbdNetwork" {
-    name                = "RVBD_VPC"
-    address_space       = [var.vpc_address_space]
+    name                = "SteelConnect-EX_Headend"
+    address_space       = [var.vnet_address_space]
     location            = var.location
     resource_group_name = azurerm_resource_group.rvbd_rg.name
 
-    tags = {"environment" = "SteelConnect-EX-Headend"}
-	
+    tags = {"Riverbed-Community" = "SteelConnect-EX_Headend"}
+
     subnet {
-        name           = "default"
-        address_prefix = cidrsubnet(var.vpc_address_space,var.newbits_subnet,0)
+        # Define a Bastion subnet for future needs
+        name           = "BastionSubnet"
+        address_prefix = cidrsubnet(var.vnet_address_space,var.newbits_subnet,0)
     }
 }
 
-# Create Route Table
-resource "azurerm_route_table" "rvbd_udr" {
-    name                = "RVBDRouteTable"
+# Management Subnet for Director, Controller and Analytics
+resource "azurerm_subnet" "management_subnet" {
+    name                 = "Management"
+    resource_group_name  = azurerm_resource_group.rvbd_rg.name
+    virtual_network_name = azurerm_virtual_network.rvbdNetwork.name
+	address_prefix       = cidrsubnet("${azurerm_virtual_network.rvbdNetwork.address_space.0}","${var.newbits_subnet}",1)
+}
+
+# Control Subnet for Director, Controller and Analytics
+resource "azurerm_subnet" "control_subnet" {
+    name                 = "Control"
+    resource_group_name  = azurerm_resource_group.rvbd_rg.name
+    virtual_network_name = azurerm_virtual_network.rvbdNetwork.name
+    address_prefix       = cidrsubnet("${azurerm_virtual_network.rvbdNetwork.address_space.0}","${var.newbits_subnet}",2)
+}
+
+# Define an Analytics Subnet for future need (multiple Analytics nodes)
+resource "azurerm_subnet" "analytics_subnet" {
+    name                 = "Analytics"
+    resource_group_name  = azurerm_resource_group.rvbd_rg.name
+    virtual_network_name = azurerm_virtual_network.rvbdNetwork.name
+    address_prefix       = cidrsubnet("${azurerm_virtual_network.rvbdNetwork.address_space.0}","${var.newbits_subnet}",3)
+}
+
+# WAN Uplink Subnet for Controller
+resource "azurerm_subnet" "wan_network_subnet" {
+    name                 = "Internet-Uplink"
+    resource_group_name  = azurerm_resource_group.rvbd_rg.name
+    virtual_network_name = azurerm_virtual_network.rvbdNetwork.name
+    address_prefix       = cidrsubnet("${azurerm_virtual_network.rvbdNetwork.address_space.0}","${var.newbits_subnet}",254)
+}
+
+# Route Table for the Control subnet
+resource "azurerm_route_table" "route_table_control" {
+    name                = "SteelConnect-EX_Control"
     location            = var.location
     resource_group_name = azurerm_resource_group.rvbd_rg.name
 }
 
-# Add Route in Route Table
-resource "azurerm_route" "rvbd_route" {
-    name                = "RVBDRoute"
-	resource_group_name = azurerm_resource_group.rvbd_rg.name
-	route_table_name    = azurerm_route_table.rvbd_udr.name
+# Route to forward all the traffic to the Controller interface connected to the control subnet
+resource "azurerm_route" "route_to_controller" {
+    name                = "default-via-controller"
+    resource_group_name = azurerm_resource_group.rvbd_rg.name
+    route_table_name    = azurerm_route_table.route_table_control.name
     address_prefix      = "0.0.0.0/0"
     next_hop_type       = "VirtualAppliance"
     next_hop_in_ip_address = azurerm_network_interface.controller_nic_2.private_ip_address
 }
 
-# Create Management Subnet
-resource "azurerm_subnet" "mgmt_subnet" {
-    name                 = "MGMT-NET"
-    resource_group_name  = azurerm_resource_group.rvbd_rg.name
-    virtual_network_name = azurerm_virtual_network.rvbdNetwork.name
-	address_prefixes     = [cidrsubnet("${azurerm_virtual_network.rvbdNetwork.address_space.0}","${var.newbits_subnet}",1)]
+# Associate Route to the Route Table of the Control subnet 
+resource "azurerm_subnet_route_table_association" "control_subnet_route_table_association" {
+    subnet_id = azurerm_subnet.control_subnet.id
+    route_table_id = azurerm_route_table.route_table_control.id
 }
 
-# Create Traffic Subnet for Director, Controller and Analytics
-resource "azurerm_subnet" "ctrl_network_subnet" {
-    name                 = "Control-Network"
-    resource_group_name  = azurerm_resource_group.rvbd_rg.name
-    virtual_network_name = azurerm_virtual_network.rvbdNetwork.name
-	address_prefixes     = [cidrsubnet("${azurerm_virtual_network.rvbdNetwork.address_space.0}","${var.newbits_subnet}",2)]
-}
-
-# Create Traffic Subnet for Controller and Branch
-resource "azurerm_subnet" "wan_network_subnet" {
-    name                 = "WAN-Network"
-    resource_group_name  = azurerm_resource_group.rvbd_rg.name
-    virtual_network_name = azurerm_virtual_network.rvbdNetwork.name
-	address_prefixes     = [cidrsubnet("${azurerm_virtual_network.rvbdNetwork.address_space.0}","${var.newbits_subnet}",3)]
-}
-
-# Add route table association for Director and Analytics
-resource "azurerm_subnet_route_table_association" "dir_router_assoc" {
-    subnet_id = azurerm_subnet.ctrl_network_subnet.id
-    route_table_id = azurerm_route_table.rvbd_udr.id
-}
-
-# Create Public IP for Director
+# Public IP for Director Management interface
 resource "azurerm_public_ip" "ip_dir" {
-    name                         = "PublicIP_Director"
+    name                         = "SteelConnect-EX_Director_Management"
     location                     = var.location
     resource_group_name          = azurerm_resource_group.rvbd_rg.name
     allocation_method = "Dynamic"
 
-    tags = {"environment" = "SteelConnect-EX-Headend"}
+    tags = {"Riverbed-Community" = "SteelConnect-EX_Headend"}
 }
 
-# Create Public IP for Controller
+# Public IP for Controller Management interface
+# TODO: remove if not necessary to have a management public IP on the controller
 resource "azurerm_public_ip" "ip_ctrl" {
-    name                         = "PublicIP_Controller"
+    name                         = "SteelConnect-EX_Controller_Management"
     location                     = var.location
     resource_group_name          = azurerm_resource_group.rvbd_rg.name
     allocation_method = "Dynamic"
 
-    tags = {"environment" = "SteelConnect-EX-Headend"}
+    tags = {"Riverbed-Community" = "SteelConnect-EX_Headend"}
 }
 
-# Create Public IP for Controller WAN Interface
+# Public IP for Controller WAN Interface
 resource "azurerm_public_ip" "ip_ctrl_wan" {
-    name                         = "PublicIP_Controller_WAN"
+    name                         = "SteelConnect-EX_Controller-Internet-Uplink"
     location                     = var.location
     resource_group_name          = azurerm_resource_group.rvbd_rg.name
     allocation_method = "Static"
 
-    tags = {"environment" = "SteelConnect-EX-Headend"}
+    tags = {"Riverbed-Community" = "SteelConnect-EX_Headend"}
 }
 
-# Create Public IP for Analytics
+# Public IP for Analytics Management interface
 resource "azurerm_public_ip" "ip_van" {
-    name                         = "PublicIP_VAN"
+    name                         = "SteelConnect-EX_Analytics-Management"
     location                     = var.location
     resource_group_name          = azurerm_resource_group.rvbd_rg.name
     allocation_method = "Dynamic"
 
-    tags = {"environment" = "SteelConnect-EX-Headend"}
+    tags = {"Riverbed-Community" = "SteelConnect-EX_Headend"}
 }
 
-
-# Create Network Security Group and rule
+# Network Security Group and rules
 resource "azurerm_network_security_group" "rvbd_nsg" {
-    name							= "RVBDNSG"
+    name							= "SteelConnect-EX_Headend"
     location						= var.location
     resource_group_name				= azurerm_resource_group.rvbd_rg.name
-    tags = map("environment", "SteelConnect-EX-Headend")
+    tags = map("Riverbed-Community", "SteelConnect-EX_Headend")
 }
-# Create security group rules
+
+# Security group rules
+# TODO: limit exposure on Internet
 resource "azurerm_network_security_rule" "rvbd_nsg_rule1" {
-	name                       = "RVBD_Security_Rule_TCP"
-	description                = "RVBD security group"
+	name                       = "SteelConnect-EX_TCP"
+	description                = "Simple rule allowing all TCP"
 	priority                   = 151
 	direction                  = "Inbound"
 	access                     = "Allow"
@@ -186,8 +208,8 @@ resource "azurerm_network_security_rule" "rvbd_nsg_rule1" {
 	network_security_group_name = azurerm_network_security_group.rvbd_nsg.name
 }
 resource "azurerm_network_security_rule" "rvbd_nsg_rule2" {
-	name                       = "RVBD_Security_Rule_UDP"
-	description                = "RVBD security group"
+	name                       = "SteelConnect-EX_UDP"
+	description                = "Simple rule allowing all UDP"
 	priority                   = 201
 	direction                  = "Inbound"
 	access                     = "Allow"
@@ -200,8 +222,8 @@ resource "azurerm_network_security_rule" "rvbd_nsg_rule2" {
 	network_security_group_name = azurerm_network_security_group.rvbd_nsg.name
 }
 resource "azurerm_network_security_rule" "rvbd_nsg_rule3" {
-	name                       = "RVBD_Security_Rule_Outbound"
-	description                = "RVBD security group"
+	name                       = "SteelConnect-EX_Outbound"
+	description                = "Simple rule allowing all Outbound"
 	priority                   = 251
 	direction                  = "Outbound"
 	access                     = "Allow"
@@ -214,8 +236,8 @@ resource "azurerm_network_security_rule" "rvbd_nsg_rule3" {
 	network_security_group_name = azurerm_network_security_group.rvbd_nsg.name
 }
 resource "azurerm_network_security_rule" "rvbd_nsg_rule4" {
-	name                       = "RVBD_Security_Rule_Inbound"
-	description                = "RVBD security group"
+	name                       = "SteelConnect-EX_Inbound"
+	description                = "Simple rule allowing any inbound initiated from the VNET"
 	priority                   = 301
 	direction                  = "Inbound"
 	access                     = "Allow"
@@ -230,11 +252,11 @@ resource "azurerm_network_security_rule" "rvbd_nsg_rule4" {
 
 # Create network security group subnet associations 
 resource "azurerm_subnet_network_security_group_association" "mgmt_sec_assoc" {
-  subnet_id                 = azurerm_subnet.mgmt_subnet.id
+  subnet_id                 = azurerm_subnet.management_subnet.id
   network_security_group_id = azurerm_network_security_group.rvbd_nsg.id
 }
 resource "azurerm_subnet_network_security_group_association" "ctrl_sec_assoc" {
-  subnet_id                 = azurerm_subnet.ctrl_network_subnet.id
+  subnet_id                 = azurerm_subnet.control_subnet.id
   network_security_group_id = azurerm_network_security_group.rvbd_nsg.id
 }
 resource "azurerm_subnet_network_security_group_association" "wan_sec_assoc" {
@@ -244,114 +266,130 @@ resource "azurerm_subnet_network_security_group_association" "wan_sec_assoc" {
 
 # Create Management network interface for Director
 resource "azurerm_network_interface" "director_nic_1" {
-    name                      = "Director_NIC1"
+    name                      = "SteelConnect-EX_Director_NIC1"
     location                  = var.location
     resource_group_name       = azurerm_resource_group.rvbd_rg.name
 
     ip_configuration {
         name                          = "Director_NIC1_Configuration"
-        subnet_id                     = azurerm_subnet.mgmt_subnet.id
-        private_ip_address_allocation = "dynamic"
+        subnet_id                     = azurerm_subnet.management_subnet.id
+        # private_ip_address_allocation = "dynamic"
+        private_ip_address_allocation = "static"
+        private_ip_address = cidrhost(azurerm_subnet.management_subnet.address_prefix,var.hostnum_director)
+
         public_ip_address_id          = azurerm_public_ip.ip_dir.id
     }
 
-    tags = {"environment" = "SteelConnect-EX-Headend"}
+    tags = {"Riverbed-Community" = "SteelConnect-EX_Headend"}
 }
 
 # Create Southbound network interface for Director
 resource "azurerm_network_interface" "director_nic_2" {
-    name                      = "Director_NIC2"
+    name                      = "SteelConnect-EX_Director_NIC2"
     location                  = var.location
     resource_group_name       = azurerm_resource_group.rvbd_rg.name
 
     ip_configuration {
         name                          = "Director_NIC2_Configuration"
-        subnet_id                     = azurerm_subnet.ctrl_network_subnet.id
-        private_ip_address_allocation = "dynamic"
+        subnet_id                     = azurerm_subnet.control_subnet.id
+        private_ip_address_allocation = "static"
+        private_ip_address = cidrhost(azurerm_subnet.control_subnet.address_prefix,var.hostnum_director)
     }
 
-    tags = {"environment" = "SteelConnect-EX-Headend"}
+    tags = {"Riverbed-Community" = "SteelConnect-EX_Headend"}
 }
 
 # Create Management network interface for Controller
 resource "azurerm_network_interface" "controller_nic_1" {
-    name                      = "Controller_NIC1"
+    name                      = "SteelConnect-EX_Controller_NIC1"
     location                  = var.location
     resource_group_name       = azurerm_resource_group.rvbd_rg.name
 
     ip_configuration {
         name                          = "Controller_NIC1_Configuration"
-        subnet_id                     = azurerm_subnet.mgmt_subnet.id
-        private_ip_address_allocation = "dynamic"
+        subnet_id                     = azurerm_subnet.management_subnet.id
+        private_ip_address_allocation = "static"
+        private_ip_address = cidrhost(azurerm_subnet.management_subnet.address_prefix,var.hostnum_controller)
+
+        # TODO: remove to limit internet exposure
         public_ip_address_id          = azurerm_public_ip.ip_ctrl.id
     }
 
-    tags = {"environment" = "SteelConnect-EX-Headend"}
+    tags = {"Riverbed-Community" = "SteelConnect-EX_Headend"}
 }
 
 # Create Northbound/Control network interface for Controller
 resource "azurerm_network_interface" "controller_nic_2" {
-    name                      = "Controller_NIC2"
+    name                      = "SteelConnect-EX_Controller_NIC2"
     location                  = var.location
     resource_group_name       = azurerm_resource_group.rvbd_rg.name
 	enable_ip_forwarding      = "true"
-    enable_accelerated_networking = "true"
+
+    # TODO: uncomment when accelerated networking/dpdk is supported
+    # enable_accelerated_networking = "true"
 
     ip_configuration {
         name                          = "Controller_NIC2_Configuration"
-        subnet_id                     = azurerm_subnet.ctrl_network_subnet.id
-        private_ip_address_allocation = "dynamic"
+        subnet_id                     = azurerm_subnet.control_subnet.id
+        # private_ip_address_allocation = "dynamic"
+        private_ip_address_allocation = "static"
+        private_ip_address = cidrhost(azurerm_subnet.control_subnet.address_prefix,var.hostnum_controller)
     }
 
-    tags = {"environment" = "SteelConnect-EX-Headend"}
+    tags = {"Riverbed-Community" = "SteelConnect-EX_Headend"}
 }
 
 # Create Southbound/WAN network interface for Controller
 resource "azurerm_network_interface" "controller_nic_3" {
-    name                      = "Controller_NIC3"
+    name                      = "SteelConnect-EX_Controller_NIC3"
     location                  = var.location
     resource_group_name       = azurerm_resource_group.rvbd_rg.name
-    enable_accelerated_networking = "true"
+    
+    # TODO: uncomment when accelerated networking/dpdk is supported
+    # enable_accelerated_networking = "true"
 
     ip_configuration {
         name                          = "Controller_NIC3_Configuration"
         subnet_id                     = azurerm_subnet.wan_network_subnet.id
-        private_ip_address_allocation = "dynamic"
+        private_ip_address_allocation = "static"
+        private_ip_address = cidrhost(azurerm_subnet.wan_network_subnet.address_prefix,var.hostnum_controller)
 		public_ip_address_id		  = azurerm_public_ip.ip_ctrl_wan.id
     }
 
-    tags = {"environment" = "SteelConnect-EX-Headend"}
+    tags = {"Riverbed-Community" = "SteelConnect-EX_Headend"}
 }
 
 # Create Management network interface for Analytics
 resource "azurerm_network_interface" "van_nic_1" {
-    name                      = "VAN_NIC1"
+    name                      = "SteelConnect-EX_Analytics_NIC1"
     location                  = var.location
     resource_group_name       = azurerm_resource_group.rvbd_rg.name
 
     ip_configuration {
         name                          = "VAN_NIC1_Configuration"
-        subnet_id                     = azurerm_subnet.mgmt_subnet.id
-        private_ip_address_allocation = "dynamic"
+        subnet_id                     = azurerm_subnet.management_subnet.id
+        private_ip_address_allocation = "static"
+        private_ip_address = cidrhost(azurerm_subnet.management_subnet.address_prefix,var.hostnum_analytics)
         public_ip_address_id          = azurerm_public_ip.ip_van.id
     }
 
-    tags = {"environment" = "SteelConnect-EX-Headend"}
+    tags = {"Riverbed-Community" = "SteelConnect-EX_Headend"}
 }
 
 # Create Southbound network interface for Analytics
 resource "azurerm_network_interface" "van_nic_2" {
-    name                      = "VAN_NIC2"
+    name                      = "SteelConnect-EX_Analytics_NIC2"
     location                  = var.location
     resource_group_name       = azurerm_resource_group.rvbd_rg.name
 
     ip_configuration {
         name                          = "VAN_NIC2_Configuration"
-        subnet_id                     = azurerm_subnet.ctrl_network_subnet.id
-        private_ip_address_allocation = "dynamic"
+        subnet_id                     = azurerm_subnet.control_subnet.id
+        private_ip_address_allocation = "static"
+        private_ip_address = cidrhost(azurerm_subnet.control_subnet.address_prefix,var.hostnum_analytics)
     }
 
-    tags = {"environment" = "SteelConnect-EX-Headend"}
+    tags = {"Riverbed-Community" = "SteelConnect-EX_Headend"}
 }
 
 # Generate random text for a unique storage account name
@@ -364,41 +402,27 @@ resource "random_id" "randomId" {
     byte_length = 8
 }
 
-# Create storage account for boot diagnostics of Director VM
-resource "azurerm_storage_account" "storageaccountDir" {
-    name                        = "dirdiag${random_id.randomId.hex}"
+# Create storage account for boot diagnostics
+resource "azurerm_storage_account" "storageAccountDiagnostic" {
+    name                        = "diag${random_id.randomId.hex}"
     resource_group_name         = azurerm_resource_group.rvbd_rg.name
     location                    = var.location
     account_tier                = "Standard"
     account_replication_type    = "LRS"
 
-    tags = {"environment" = "SteelConnect-EX-Headend"}
+    tags = {"Riverbed-Community" = "SteelConnect-EX_Headend"}
 }
 
-# Create storage account for boot diagnostics of Controller VM
-resource "azurerm_storage_account" "storageaccountCtrl" {
-    name                        = "ctrldiag${random_id.randomId.hex}"
-    resource_group_name         = azurerm_resource_group.rvbd_rg.name
-    location                    = var.location
-    account_tier                = "Standard"
-    account_replication_type    = "LRS"
-
-    tags = {"environment" = "SteelConnect-EX-Headend"}
-}
-# Create storage account for boot diagnostics of Director VM
-resource "azurerm_storage_account" "storageaccountVAN" {
-    name                        = "vandiag${random_id.randomId.hex}"
-    resource_group_name         = azurerm_resource_group.rvbd_rg.name
-    location                    = var.location
-    account_tier                = "Standard"
-    account_replication_type    = "LRS"
-
-    tags = {"environment" = "SteelConnect-EX-Headend"}
-}
-
-# Create RVBD Director Virtual Machine
+# SteelConnect-EX Director Virtual Machine
 resource "azurerm_virtual_machine" "directorVM" {
-    name                  = "RVBD_Director"
+    name                  = "SteelConnect-EX_Director"
+
+	depends_on            = [
+        #try the following dependency to workaround the image first boot issue impacting cloud-init: DataSourceAzure.py[WARNING]: /dev/sr0 was not mountable
+        azurerm_subnet_network_security_group_association.mgmt_sec_assoc,
+        azurerm_subnet_network_security_group_association.ctrl_sec_assoc
+    ]
+
     location              = var.location
     resource_group_name   = azurerm_resource_group.rvbd_rg.name
     network_interface_ids = [azurerm_network_interface.director_nic_1.id, azurerm_network_interface.director_nic_2.id]
@@ -406,10 +430,8 @@ resource "azurerm_virtual_machine" "directorVM" {
     vm_size               = var.director_vm_size
 
     storage_os_disk {
-        name              = "Director_OSDisk"
-        caching           = "ReadWrite"
+        name              = "SteelConnect-EX_Director_OSDisk"
         create_option     = "FromImage"
-        managed_disk_type = "Standard_LRS"
     }
 
     storage_image_reference {
@@ -418,41 +440,40 @@ resource "azurerm_virtual_machine" "directorVM" {
 
     os_profile {
         computer_name  = var.hostname_director
-        admin_username = "rvbd_devops"
         custom_data = data.template_file.user_data_dir.rendered
+
+        # admin_username is required by the template but the user account will be created on the vm
+        admin_username = "riverbed-community"
     }
 
     os_profile_linux_config {
         disable_password_authentication = true
         ssh_keys {
-            path     = "/home/rvbd_devops/.ssh/authorized_keys"
+            path     = "/home/riverbed-community/.ssh/authorized_keys"
             key_data = var.ssh_key
         }
     }
 
     boot_diagnostics {
         enabled = "true"
-        storage_uri = azurerm_storage_account.storageaccountDir.primary_blob_endpoint
+        storage_uri = azurerm_storage_account.storageAccountDiagnostic.primary_blob_endpoint
     }
 	
-    tags = {"environment" = "SteelConnect-EX-Headend"}
+    tags = {"Riverbed-Community" = "SteelConnect-EX_Headend"}
 }
 
-# Create RVBD Controller Virtual Machine
+# SteelConnect-EX Controller Virtual Machine
 resource "azurerm_virtual_machine" "controllerVM" {
-    name                  = "RVBD_Controller"
+    name                  = "SteelConnect-EX_Controller"
     location              = var.location
     resource_group_name   = azurerm_resource_group.rvbd_rg.name
     network_interface_ids = [azurerm_network_interface.controller_nic_1.id, azurerm_network_interface.controller_nic_2.id, azurerm_network_interface.controller_nic_3.id]
 	primary_network_interface_id = azurerm_network_interface.controller_nic_1.id
     vm_size               = var.controller_vm_size
-#	depends_on            = [azurerm_virtual_machine.directorVM]
 	
     storage_os_disk {
-        name              = "Controller_OSDisk"
-        caching           = "ReadWrite"
+        name              = "SteelConnect-EX_Controller_OSDisk"
         create_option     = "FromImage"
-        managed_disk_type = "Standard_LRS"
     }
 
     storage_image_reference {
@@ -460,45 +481,51 @@ resource "azurerm_virtual_machine" "controllerVM" {
     }
 
     os_profile {
-        computer_name  = "rvbd-flexvnf"
-        admin_username = "rvbd_devops"
+        computer_name  = var.hostname_controller
         custom_data = data.template_file.user_data_ctrl.rendered
+
+        # admin_username is required by the template but the user account will be created on the vm
+        admin_username = "riverbed-community"
     }
 
     os_profile_linux_config {
         disable_password_authentication = true
         ssh_keys {
-            path     = "/home/rvbd_devops/.ssh/authorized_keys"
+            path     = "/home/riverbed-community/.ssh/authorized_keys"
             key_data = var.ssh_key
         }
     }
 
     boot_diagnostics {
         enabled = "true"
-        storage_uri = azurerm_storage_account.storageaccountCtrl.primary_blob_endpoint
+        storage_uri = azurerm_storage_account.storageAccountDiagnostic.primary_blob_endpoint
     }
 	
-    tags = {"environment" = "SteelConnect-EX-Headend"}
+    tags = {"Riverbed-Community" = "SteelConnect-EX_Headend"}
 }
 
-# Create RVBD Analytics Virtual Machine
+# SteelConnect-EX Analytics Virtual Machine
 resource "azurerm_virtual_machine" "vanVM" {
-    name                  = "RVBD_Analytics"
+    name                  = "SteelConnect-EX_Analytics"
+
+    depends_on            = [
+        #try the following dependency to workaround an image issue with cloud-init: DataSourceAzure.py[WARNING]: /dev/sr0 was not mountable
+        azurerm_subnet_network_security_group_association.mgmt_sec_assoc,
+        azurerm_subnet_network_security_group_association.ctrl_sec_assoc,
+
+        # analytics initialization script (analytics.sh) requires director to be up and running
+        azurerm_virtual_machine.directorVM
+    ]
+
     location              = var.location
     resource_group_name   = azurerm_resource_group.rvbd_rg.name
     network_interface_ids = [azurerm_network_interface.van_nic_1.id, azurerm_network_interface.van_nic_2.id]
 	primary_network_interface_id = azurerm_network_interface.van_nic_1.id
     vm_size               = var.analytics_vm_size
-#	depends_on            = [azurerm_virtual_machine.controllerVM]
-
-    # analytics initialiazation script (analytics.sh) requires director to be up and running
-	depends_on            = [azurerm_virtual_machine.directorVM]
 
     storage_os_disk {
-        name              = "VAN_OSDisk"
-        caching           = "ReadWrite"
+        name              = "SteelConnect-EX_Analytics_OSDisk"
         create_option     = "FromImage"
-        managed_disk_type = "Standard_LRS"
     }
 
     storage_image_reference {
@@ -507,24 +534,26 @@ resource "azurerm_virtual_machine" "vanVM" {
 
     os_profile {
         computer_name  = var.hostname_analytics
-        admin_username = "rvbd_devops"
         custom_data = data.template_file.user_data_van.rendered
+
+        # admin_username is required by the template but the user account will be created on the vm
+        admin_username = "riverbed-community"
     }
 
     os_profile_linux_config {
         disable_password_authentication = true
         ssh_keys {
-            path     = "/home/rvbd_devops/.ssh/authorized_keys"
+            path     = "/home/riverbed-community/.ssh/authorized_keys"
             key_data = var.ssh_key
         }
     }
 
     boot_diagnostics {
         enabled = "true"
-        storage_uri = azurerm_storage_account.storageaccountVAN.primary_blob_endpoint
+        storage_uri = azurerm_storage_account.storageAccountDiagnostic.primary_blob_endpoint
     }
-	
-    tags = {"environment" = "SteelConnect-EX-Headend"}
+
+    tags = {"Riverbed-Community" = "SteelConnect-EX_Headend"}
 }
 
 data "azurerm_public_ip" "dir_pub_ip" {
