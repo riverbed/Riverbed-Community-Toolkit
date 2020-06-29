@@ -1,9 +1,9 @@
 # Riverbed Community Toolkit - NetIM Synthetic Test
 
-[Overview](#overview)
-[Robots cookbook](#robot-cookbookx)
-[Synthetic Test Library](#synthetic-test-library)
-[How to contribute](#how-to-contribute)
+- [Overview](#overview)
+- [Robots cookbook](#robot-cookbookx)
+- [Synthetic Test Library](#synthetic-test-library)
+- [How to contribute](#how-to-contribute)
 
 ## Overview
 
