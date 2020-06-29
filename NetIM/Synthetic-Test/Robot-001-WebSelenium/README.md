@@ -52,8 +52,10 @@ Run the **install.bat** in a PowerShell (with Administrator privilege).
 ![edge version 83](images/edge-version-83.png)
 
 3. Download the [Driver](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/#downloads) for **Windows 64 bits** and extract it to c:\. 
+
 For example the URL of the version **83.0.478.56** for Windows 64bits is https://msedgedriver.azureedge.net/83.0.478.56/edgedriver_win64.zip
-After extraction the driver should be in that path: C:\edgedriver_win64\msedgedriver.exe
+
+After extraction the driver should be in the following path: C:\edgedriver_win64\msedgedriver.exe
 
 ![Edge Driver extracted](images/edgedriver-win64-extracted.png)
 
@@ -68,8 +70,10 @@ pip install msedge-selenium-tools
 1. Download and install [Google Chrome](https://www.google.com/chrome/)
 
 2. Download the [Driver](https://chromedriver.chromium.org/downloads) for **Windows 32 bits** and extract it to c:\. 
+
 For example the URL of the version **83.0.4103.39** for Windows 32 bits is https://chromedriver.storage.googleapis.com/83.0.4103.39/chromedriver_win32.zip
-After extraction the driver should be in that path: C:\chromedriver_win32\chromedriver.exe
+
+After extraction the driver should be in the path: C:\chromedriver_win32\chromedriver.exe
 
 ![Chrome Driver extracted](images/chromedriver-win32-extracted.png)
 
