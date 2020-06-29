@@ -6,7 +6,7 @@ A public toolkit for Riverbed Solution engineering and integration
 | --- | --- | --- |
 | [SteelHead](/SteelHead) | Community Cloud Cookbooks: scripts and howto to deploy Acceleration in the Cloud | Azure, AWS, PowerShell, ARM |
 | [SteelConnect](/SteelConnect) | Scripts, howtos and templates to deploy SteelConnect headend in Azure | Azure, Terraform, PowerShell |
-| [NetIM](/NetIM/GMC-Library) | Community library to share GMC metrics extensions for NetIM: scripts, howtos and custom mibs | Azure API, Python |
+| [NetIM](/NetIM/GMC-Library) | Community library to share extensions for NetIM: GMC metrics, custom mibs, Robots, Syntehtic-Test | Azure API, Python |
 | [Portal](#) | *work in progress* |  |
 | [GNS3](/GNS3/SteelHead) | Artificats to install SteelHead devices in GNS3 projects | GNS3 |
 | [Aternity](/Aternity) | Library of Application Signatures and Remediations for Aternity EUE. Includes Remediation scripts able to interact with Client Accelerator (SteelHead Mobile) | Azure, Windows, PowerShell  |
