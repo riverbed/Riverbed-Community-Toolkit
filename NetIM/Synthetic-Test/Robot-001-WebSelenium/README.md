@@ -26,8 +26,8 @@ The next paragraph explains how to setup from scratch on a Windows machine. It i
 2. Download a install a decent code editor, for example [Visual Studio Code - x64 System Installer](https://code.visualstudio.com/#alt-downloads)
 
 3. Download and install [Python](https://www.python.org). For example [Python 3.8.83 x64](https://www.python.org/ftp/python/3.8.3/python-3.8.3-amd64.exe)
-> Check the installer option to Add Python to PATH
-> Hit Custom Install button and select "install for all users" in the Advanced Install options
+> - Check the installer option to Add Python to PATH
+> - Hit Custom Install button and select "install for all users" in the Advanced Install options
 
 ### 2. NetIM agent
 
@@ -49,7 +49,7 @@ Run the **install.bat** in a PowerShell (with Administrator privilege).
 
 2. Launch Edge and open the url [edge://settings/help](edge://settings/help) to check the version that is running. For example version 83:
 
-![edge version 83](images/edge-version-83.PNG)
+![edge version 83](images/edge-version-83.png)
 
 3. Download the [Driver](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/#downloads) for **Windows 64 bits** and extract it to c:\. 
 For example the URL of the version **83.0.478.56** for Windows 64bits is https://msedgedriver.azureedge.net/83.0.478.56/edgedriver_win64.zip
