@@ -1,11 +1,13 @@
 # Synthetic Test - Browse YourAppDemo
 
 Usecase: App monitoring
+
 Recommended Robots: Web Selenium
 
 ## YourApp
 
-This simple web application is called "IMS - UI SPA". 
+This simple web application is called "IMS - UI SPA".
+
 It is a sinlge page app (SPA) based on bootstrap framework and provided for demo prupose.
 
 In Chrome the app looks like this : 
