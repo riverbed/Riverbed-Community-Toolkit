@@ -1,6 +1,7 @@
 # Synthetic Test - Open URL
 
 Usecase: Monitor the availability
+
 Recommended Robots: Web Selenium
 
 ## NetIM configuration
