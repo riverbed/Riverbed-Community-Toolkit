@@ -19,14 +19,14 @@ Any contributions are welcome. More details in the [How to contribute](#how-to-c
 
 | Robot | SubFolder | Capabilities |
 | --- | --- | --- |
-| Robot Template | [Robot-000-Template](/Robot-000-Template) | Template to design new Robot
-| Web Selenium Robot | [Robot-001-WebSelenium](/Robot-001-WebSelenium) | <li>Edge and Chrome</li><li>Selenium with Python</li> |
+| Robot Template | [Robot-000-Template](Robot-000-Template) | Template to design new Robot
+| Web Selenium Robot | [Robot-001-WebSelenium](Robot-001-WebSelenium) | <li>Edge and Chrome</li><li>Selenium with Python</li> |
 
 ## Synthetic Test Library
 
 | Usecase  | SubFolder  |  Recommended Robots | 
 | --- | --- | --- |
-| Synthetic Test Template | [Synthetic-000-Template](/Synthetic-000-Template) | - | 
+| Synthetic Test Template | [Synthetic-000-Template](Synthetic-000-Template) | - | 
 | URL availability, Edge | [Synthetic-001-Browser-Open-URL](Synthetic-001-Browser-Open-URL) | Web Selenium Robot | 
 | Generic URL availability, Edge or Chrome | [Synthetic-002-Browser-Open-URL-Generic](Synthetic-002-Browser-Open-URL-Generic) | Web Selenium Robot |
 | YourApp Demo | [Synthetic-003-Browser-Browse-YourAppDemo](Synthetic-003-Browser-Browse-YourAppDemo) | Web Selenium Robot | 
