@@ -1,6 +1,7 @@
 # Synthetic Test - Template
 
 Usecase: tbd
+
 Recommended Robots: tbd
 
 ## NetIM configuration sample
