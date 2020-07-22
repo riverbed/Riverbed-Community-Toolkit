@@ -10,6 +10,10 @@ KeyDir="/home/versa/.ssh"
 KeyFile="/home/versa/.ssh/authorized_keys"
 PrefixLength=`echo "${mgmt_master_net}"| cut -d'/' -f2`
 MgmtGW=`echo "${mgmt_slave_net}"|cut -d '.' -f1-3`.1
+Dir1IP="${dir_master_mgmt_ip}"
+Dir2IP="${dir_slave_mgmt_ip}"
+Address="Match Address $Dir1IP,$Dir2IP"
+SSH_Conf="/etc/ssh/sshd_config"
 echo "Starting cloud init script..." > $log_path
 
 echo "Modifying /etc/network/interface file.." >> $log_path
@@ -101,6 +105,15 @@ elif ! grep -Fq "$SSHKey" $KeyFile; then
     sudo chmod 600 $KeyFile
 else
     echo -e "SSH Key already present in file: $KeyFile.." >> $log_path
+fi
+
+echo -e "Enanbling ssh login using password." >> $log_path
+if ! grep -Fq "$Address" $SSH_Conf; then
+        echo -e "Adding the match address exception for Director Management IPs to run cluster install scripts.\n" >> $log_path
+        sed -i.bak "\$a\Match Address $Dir1IP,$Dir2IP\n  PasswordAuthentication yes\nMatch all" $SSH_Conf
+        sudo service ssh restart
+else
+        echo -e "Director Management IP address is alredy present in file $SSH_Conf.\n" >> $log_path
 fi
 
 echo -e "Adding script to copy certificates from director after instance boot up." >> $log_path
