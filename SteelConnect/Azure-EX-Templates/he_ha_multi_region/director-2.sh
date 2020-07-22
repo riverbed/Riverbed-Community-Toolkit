@@ -10,7 +10,8 @@ KeyDir="/home/Administrator/.ssh"
 KeyFile="/home/Administrator/.ssh/authorized_keys"
 Van1IP="${van_1_mgmt_ip}"
 Van2IP="${van_2_mgmt_ip}"
-Address="Match Address $Van1IP,$Van2IP"
+Dir1IP="${dir_master_mgmt_ip}"
+Address="Match Address $Dir1IP,$Van1IP,$Van2IP"
 SSH_Conf="/etc/ssh/sshd_config"
 PrefixLength=`echo "${mgmt_master_net}"| cut -d'/' -f2`
 MgmtGW=`echo "${mgmt_slave_net}"|cut -d '.' -f1-3`.1
@@ -106,7 +107,7 @@ fi
 echo -e "Enanbling ssh login using password." >> $log_path
 if ! grep -Fq "$Address" $SSH_Conf; then
 	echo -e "Adding the match address exception for Analytics Management IP to install certificate.\n" >> $log_path
-	sed -i.bak "\$a\Match Address $Van1IP,$Van2IP\n  PasswordAuthentication yes\nMatch all" $SSH_Conf
+	sed -i.bak "\$a\Match Address $Dir1IP,$Van1IP,$Van2IP\n  PasswordAuthentication yes\nMatch all" $SSH_Conf
 	sudo service ssh restart
 else
 	echo -e "Analytics Management IP address is alredy present in file $SSH_Conf.\n" >> $log_path

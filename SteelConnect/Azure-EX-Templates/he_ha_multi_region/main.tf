@@ -1,5 +1,9 @@
+# Riverbed Community Toolkit
+# SteelConnect-EX High Availability Headend - Terraform template
+
 # Configure the Microsoft Azure Provider
 provider "azurerm" {
+    version = "~>2.0.0"
     subscription_id = var.subscription_id
     client_id       = var.client_id
     client_secret   = var.client_secret
@@ -13,7 +17,7 @@ resource "azurerm_resource_group" "rvbd_rg" {
     name     = "${var.resource_group}-${1+count.index}"
     location = element(var.location, count.index)
 
-    tags = {"environment" = "RVBDHeadEndHA"}
+    tags = {"Riverbed-Community" = "SteelConnect-EX_HA_Headend"}
 }
 
 # Add template to use custom data for Director:
@@ -90,18 +94,18 @@ data "template_file" "user_data_van" {
 # Create virtual network in each region
 resource "azurerm_virtual_network" "rvbdNetwork" {
     count				= length(var.location)
-    name				= "RVBD_VNet-${1+count.index}"
+    name				= "SteelConnect-EX_Headend-${1+count.index}"
 	location			= element(var.location, count.index)
 	address_space		= [element(var.vpc_address_space, count.index)]
 	resource_group_name	= element(azurerm_resource_group.rvbd_rg.*.name, count.index)
 
-    tags = map("environment", "RVBDHeadEndHA")
+    tags = {"Riverbed-Community" = "SteelConnect-EX_HA_Headend"}
 }
 
 # Create Route Tables for Director to Router traffic pass through
 resource "azurerm_route_table" "rvbd_udr_1" {
     count				= length(var.location)
-    name				= "RVBDRouteTableDir-Router-${1+count.index}"
+    name				= "EXRouteTableDir-Router-${1+count.index}"
     location			= element(var.location, count.index)
     resource_group_name	= element(azurerm_resource_group.rvbd_rg.*.name, count.index)
 }
@@ -109,7 +113,7 @@ resource "azurerm_route_table" "rvbd_udr_1" {
 # Add CatchAll Route in Route Tables for Director to Router traffic pass through
 resource "azurerm_route" "rvbd_route_catchAll" {
     count					= length(var.location)
-    name					= "RVBDRouteDir-CatchAll-${1+count.index}"
+    name					= "EXRouteDir-CatchAll-${1+count.index}"
     resource_group_name		= element(azurerm_resource_group.rvbd_rg.*.name, count.index)
 	route_table_name		= element(azurerm_route_table.rvbd_udr_1.*.name, count.index)
     address_prefix			= "0.0.0.0/0"
@@ -120,7 +124,7 @@ resource "azurerm_route" "rvbd_route_catchAll" {
 # Add Controller Route in Route Tables for Director to Router traffic
 resource "azurerm_route" "rvbd_dirroute_ctrlrNet" {
     count					= length(var.location)
-    name					= "RVBDRouteDir-Controller-${1+count.index}"
+    name					= "EXRouteDir-Controller-${1+count.index}"
     resource_group_name		= element(azurerm_resource_group.rvbd_rg.*.name, count.index)
 	route_table_name		= element(azurerm_route_table.rvbd_udr_1.*.name, count.index)
     address_prefix			= element(azurerm_subnet.control_network_subnet.*.address_prefix, count.index)
@@ -131,7 +135,7 @@ resource "azurerm_route" "rvbd_dirroute_ctrlrNet" {
 # Add Peer Vnet Route in Route Tables for Director to Router traffic
 resource "azurerm_route" "rvbd_dirroute_peerNet" {
     count					= length(var.location)
-    name					= "RVBDRouteDir-PeerNet-${1+count.index}"
+    name					= "EXRouteDir-PeerNet-${1+count.index}"
     resource_group_name		= element(azurerm_resource_group.rvbd_rg.*.name, count.index)
 	route_table_name		= element(azurerm_route_table.rvbd_udr_1.*.name, count.index)
     address_prefix			= count.index == 0 ? var.vpc_address_space[1] : var.vpc_address_space[0]
@@ -142,7 +146,7 @@ resource "azurerm_route" "rvbd_dirroute_peerNet" {
 # Create Route Tables for Router to Controller traffic pass through
 resource "azurerm_route_table" "rvbd_udr_2" {
     count				= length(var.location)
-    name				= "RVBDRouteTableRouter-Ctrl-${1+count.index}"
+    name				= "EXRouteTableRouter-Ctrl-${1+count.index}"
     location			= element(var.location, count.index)
     resource_group_name	= element(azurerm_resource_group.rvbd_rg.*.name, count.index)
 }
@@ -150,7 +154,7 @@ resource "azurerm_route_table" "rvbd_udr_2" {
 # Add Route in Route Tables for Router to Controller traffic pass through
 resource "azurerm_route" "rvbd_ctrlroute_catchAll" {
     count					= length(var.location)
-    name					= "RVBDRouteCtrl-catchAll-${1+count.index}"
+    name					= "EXRouteCtrl-catchAll-${1+count.index}"
     resource_group_name		= element(azurerm_resource_group.rvbd_rg.*.name, count.index)
 	route_table_name		= element(azurerm_route_table.rvbd_udr_2.*.name, count.index)
     address_prefix			= "0.0.0.0/0"
@@ -161,7 +165,7 @@ resource "azurerm_route" "rvbd_ctrlroute_catchAll" {
 # Add Route in Route Tables for Controller to Director Southbound Network
 resource "azurerm_route" "rvbd_ctrlroute_dirNet" {
     count					= length(var.location)
-    name					= "RVBDRouteCtrl-dirNet-${1+count.index}"
+    name					= "EXRouteCtrl-dirNet-${1+count.index}"
     resource_group_name		= element(azurerm_resource_group.rvbd_rg.*.name, count.index)
 	route_table_name		= element(azurerm_route_table.rvbd_udr_2.*.name, count.index)
     address_prefix			= element(azurerm_subnet.dir_router_network_subnet.*.address_prefix, count.index)
@@ -172,7 +176,7 @@ resource "azurerm_route" "rvbd_ctrlroute_dirNet" {
 # Add Route in Route Tables for Controller to peerNet
 resource "azurerm_route" "rvbd_ctrlroute_peerNet" {
     count					= length(var.location)
-    name					= "RVBDRouteCtrl-peerNet-${1+count.index}"
+    name					= "EXRouteCtrl-peerNet-${1+count.index}"
     resource_group_name		= element(azurerm_resource_group.rvbd_rg.*.name, count.index)
 	route_table_name		= element(azurerm_route_table.rvbd_udr_2.*.name, count.index)
     address_prefix			= count.index == 0 ? var.vpc_address_space[1] : var.vpc_address_space[0]
@@ -183,7 +187,7 @@ resource "azurerm_route" "rvbd_ctrlroute_peerNet" {
 # Create Route Tables for Router to Router traffic pass through
 resource "azurerm_route_table" "rvbd_udr_3" {
     count				= length(var.location)
-    name				= "RVBDRouteTableRouter-Router-${1+count.index}"
+    name				= "EXRouteTableRouter-Router-${1+count.index}"
     location			= element(var.location, count.index)
     resource_group_name	= element(azurerm_resource_group.rvbd_rg.*.name, count.index)
 }
@@ -191,34 +195,23 @@ resource "azurerm_route_table" "rvbd_udr_3" {
 # Add Route in Route Tables for Router to Router traffic pass through
 resource "azurerm_route" "rvbd_rtrroute_catchAll" {
     count					= length(var.location)
-    name					= "RVBDRouteRouter-catchAll-${1+count.index}"
+    name					= "EXRouteRouter-catchAll-${1+count.index}"
     resource_group_name		= element(azurerm_resource_group.rvbd_rg.*.name, count.index)
 	route_table_name		= element(azurerm_route_table.rvbd_udr_3.*.name, count.index)
     address_prefix			= "0.0.0.0/0"
     next_hop_type			= "VirtualAppliance"
-    next_hop_in_ip_address	= element(azurerm_network_interface.router_nic_3.*.private_ip_address, count.index)
+    next_hop_in_ip_address	= count.index == 0 ? azurerm_network_interface.router_nic_3[1].private_ip_address : azurerm_network_interface.router_nic_3[0].private_ip_address 
 }
 
 # Add Route in Route Tables for Router to Router vnet peering
 resource "azurerm_route" "rvbd_rtrroute_peerNet" {
     count					= length(var.location)
-    name					= "RVBDRouteRouter-peerNet-${1+count.index}"
+    name					= "EXRouteRouter-peerNet-${1+count.index}"
     resource_group_name		= element(azurerm_resource_group.rvbd_rg.*.name, count.index)
 	route_table_name		= element(azurerm_route_table.rvbd_udr_3.*.name, count.index)
     address_prefix			= count.index == 0 ? var.vpc_address_space[1] : var.vpc_address_space[0]
     next_hop_type			= "VirtualAppliance"
     next_hop_in_ip_address	= count.index == 0 ? azurerm_network_interface.router_nic_3[1].private_ip_address : azurerm_network_interface.router_nic_3[0].private_ip_address 
-}
-
-# Add Route in Route Tables for Router to Router vnet override
-resource "azurerm_route" "rvbd_rtrroute_vnetOverride" {
-    count					= length(var.location)
-    name					= "RVBDRouteRouter-vnetOverride-${1+count.index}"
-    resource_group_name		= element(azurerm_resource_group.rvbd_rg.*.name, count.index)
-	route_table_name		= element(azurerm_route_table.rvbd_udr_3.*.name, count.index)
-    address_prefix			= var.vpc_address_space[count.index]
-    next_hop_type			= "VirtualAppliance"
-    next_hop_in_ip_address	= element(azurerm_network_interface.router_nic_3.*.private_ip_address, count.index)
 }
 
 # Create Management Subnet in each region
@@ -299,7 +292,7 @@ resource "azurerm_public_ip" "ip_dir" {
     resource_group_name				= element(azurerm_resource_group.rvbd_rg.*.name, count.index)
     allocation_method	= "Dynamic"
 
-    tags = map("environment", "RVBDHeadEndHA")
+    tags = {"Riverbed-Community" = "SteelConnect-EX_HA_Headend"}
 }
 
 # Create Public IP for Routers
@@ -310,7 +303,7 @@ resource "azurerm_public_ip" "ip_router" {
     resource_group_name				= element(azurerm_resource_group.rvbd_rg.*.name, count.index)
     allocation_method	= "Dynamic"
 
-    tags = map("environment", "RVBDHeadEndHA")
+    tags = {"Riverbed-Community" = "SteelConnect-EX_HA_Headend"}
 }
 
 # Create Public IP for Controllers
@@ -321,7 +314,7 @@ resource "azurerm_public_ip" "ip_ctrl" {
     resource_group_name				= element(azurerm_resource_group.rvbd_rg.*.name, count.index)
     allocation_method	= "Dynamic"
 
-    tags = map("environment", "RVBDHeadEndHA")
+    tags = {"Riverbed-Community" = "SteelConnect-EX_HA_Headend"}
 }
 
 # Create Public IP for Controllers WAN Interface
@@ -332,7 +325,7 @@ resource "azurerm_public_ip" "ip_ctrl_wan" {
     resource_group_name				= element(azurerm_resource_group.rvbd_rg.*.name, count.index)
     allocation_method	= "Static"
 
-    tags = map("environment", "RVBDHeadEndHA")
+    tags = {"Riverbed-Community" = "SteelConnect-EX_HA_Headend"}
 }
 
 # Create Public IP for Analytics
@@ -343,23 +336,23 @@ resource "azurerm_public_ip" "ip_van" {
     resource_group_name				= element(azurerm_resource_group.rvbd_rg.*.name, count.index)
     allocation_method	= "Dynamic"
 
-    tags = map("environment", "RVBDHeadEndHA")
+    tags = {"Riverbed-Community" = "SteelConnect-EX_HA_Headend"}
 }
 
 
 # Create Network Security Groups and rules
 resource "azurerm_network_security_group" "rvbd_nsg" {
     count							= length(var.location)
-    name							= "RVBDNSG-${1+count.index}"
+    name							= "SteelConnect-EX_NSG-${1+count.index}"
     location						= element(var.location, count.index)
     resource_group_name				= element(azurerm_resource_group.rvbd_rg.*.name, count.index)
-    tags = map("environment", "RVBDHeadEndHA")
+    tags = {"Riverbed-Community" = "SteelConnect-EX_HA_Headend"}
 }
 # Create security group rules
 resource "azurerm_network_security_rule" "rvbd_nsg_rule1" {
 	count = length(var.location) 
-	name                       = "RVBD_Security_Rule_TCP-${1+count.index}"
-	description                = "RVBD security group"
+	name                       = "SteelConnect-EX_TCP-${1+count.index}"
+	description                = "Allow required TCP ports for SteelConnect EX Inbound"
 	priority                   = 151
 	direction                  = "Inbound"
 	access                     = "Allow"
@@ -373,8 +366,8 @@ resource "azurerm_network_security_rule" "rvbd_nsg_rule1" {
 }
 resource "azurerm_network_security_rule" "rvbd_nsg_rule2" {
 	count = length(var.location) 
-	name                       = "RVBD_Security_Rule_UDP-${1+count.index}"
-	description                = "RVBD security group"
+	name                       = "SteelConnect-EX_UDP-${1+count.index}"
+	description                = "Allow required UDP ports for SteelConnect EX Inbound"
 	priority                   = 201
 	direction                  = "Inbound"
 	access                     = "Allow"
@@ -388,8 +381,8 @@ resource "azurerm_network_security_rule" "rvbd_nsg_rule2" {
 }
 resource "azurerm_network_security_rule" "rvbd_nsg_rule3" {
 	count = length(var.location) 
-	name                       = "RVBD_Security_Rule_Outbound-${1+count.index}"
-	description                = "RVBD security group"
+	name                       = "SteelConnect-EX_Outbound-${1+count.index}"
+	description                = "Allow all ports outbound from the Vnet"
 	priority                   = 251
 	direction                  = "Outbound"
 	access                     = "Allow"
@@ -403,8 +396,8 @@ resource "azurerm_network_security_rule" "rvbd_nsg_rule3" {
 }
 resource "azurerm_network_security_rule" "rvbd_nsg_rule4" {
 	count = length(var.location) 
-	name                       = "RVBD_Security_Rule_Inbound-${1+count.index}"
-	description                = "RVBD security group"
+	name                       = "SteelConnect-EX_Inbound-${1+count.index}"
+	description                = "Allow all ports inbound from within the Vnet"
 	priority                   = 301
 	direction                  = "Inbound"
 	access                     = "Allow"
@@ -458,7 +451,7 @@ resource "azurerm_network_interface" "director_nic_1" {
         public_ip_address_id			= element(azurerm_public_ip.ip_dir.*.id, count.index)
     }
 
-    tags = map("environment", "RVBDHeadEndHA")
+    tags = {"Riverbed-Community" = "SteelConnect-EX_HA_Headend"}
 }
 
 # Create Southbound network interface for Directors
@@ -474,7 +467,7 @@ resource "azurerm_network_interface" "director_nic_2" {
         private_ip_address_allocation	= "dynamic"
     }
 
-    tags = map("environment", "RVBDHeadEndHA")
+    tags = {"Riverbed-Community" = "SteelConnect-EX_HA_Headend"}
 }
 
 # Create Management network interface for Routers
@@ -491,7 +484,7 @@ resource "azurerm_network_interface" "router_nic_1" {
 		public_ip_address_id			= element(azurerm_public_ip.ip_router.*.id, count.index)
     }
 
-    tags = map("environment", "RVBDHeadEndHA")
+    tags = {"Riverbed-Community" = "SteelConnect-EX_HA_Headend"}
 }
 
 # Create Northbound network interface for Routers
@@ -509,7 +502,7 @@ resource "azurerm_network_interface" "router_nic_2" {
         private_ip_address_allocation	= "dynamic"
     }
 
-    tags = map("environment", "RVBDHeadEndHA")
+    tags = {"Riverbed-Community" = "SteelConnect-EX_HA_Headend"}
 }
 
 # Create BGP network interface for Routers (Router to Router connectivity)
@@ -527,7 +520,7 @@ resource "azurerm_network_interface" "router_nic_3" {
         private_ip_address_allocation	= "dynamic"
     }
 
-    tags = map("environment", "RVBDHeadEndHA")
+    tags = {"Riverbed-Community" = "SteelConnect-EX_HA_Headend"}
 }
 
 # Create Southbound network interface for Routers
@@ -545,7 +538,7 @@ resource "azurerm_network_interface" "router_nic_4" {
         private_ip_address_allocation	= "dynamic"
     }
 
-    tags = map("environment", "RVBDHeadEndHA")
+    tags = {"Riverbed-Community" = "SteelConnect-EX_HA_Headend"}
 }
 
 # Create Management network interface for Controllers
@@ -562,7 +555,7 @@ resource "azurerm_network_interface" "controller_nic_1" {
 		public_ip_address_id			= element(azurerm_public_ip.ip_ctrl.*.id, count.index)
     }
 
-    tags = map("environment", "RVBDHeadEndHA")
+    tags = {"Riverbed-Community" = "SteelConnect-EX_HA_Headend"}
 }
 
 # Create Northbound/Control network interface for Controllers
@@ -580,7 +573,7 @@ resource "azurerm_network_interface" "controller_nic_2" {
         private_ip_address_allocation	= "dynamic"
     }
 
-    tags = map("environment", "RVBDHeadEndHA")
+    tags = {"Riverbed-Community" = "SteelConnect-EX_HA_Headend"}
 }
 
 # Create Southbound/WAN network interface for Controllers
@@ -598,7 +591,7 @@ resource "azurerm_network_interface" "controller_nic_3" {
 		public_ip_address_id			= element(azurerm_public_ip.ip_ctrl_wan.*.id, count.index)
     }
 
-    tags = map("environment", "RVBDHeadEndHA")
+    tags = {"Riverbed-Community" = "SteelConnect-EX_HA_Headend"}
 }
 
 # Create Management network interface for Analytics
@@ -615,7 +608,7 @@ resource "azurerm_network_interface" "van_nic_1" {
 		public_ip_address_id			= element(azurerm_public_ip.ip_van.*.id, count.index)
     }
 
-    tags = map("environment", "RVBDHeadEndHA")
+    tags = {"Riverbed-Community" = "SteelConnect-EX_HA_Headend"}
 }
 
 # Create Southbound network interface for Analytics
@@ -631,7 +624,7 @@ resource "azurerm_network_interface" "van_nic_2" {
         private_ip_address_allocation	= "dynamic"
     }
 
-    tags = map("environment", "RVBDHeadEndHA")
+    tags = {"Riverbed-Community" = "SteelConnect-EX_HA_Headend"}
 }
 
 # Enable global peering between the two virtual network 
@@ -662,7 +655,7 @@ resource "azurerm_storage_account" "storageaccountDir" {
     account_tier				= "Standard"
     account_replication_type	= "LRS"
 
-    tags = map("environment", "RVBDHeadEndHA")
+    tags = {"Riverbed-Community" = "SteelConnect-EX_HA_Headend"}
 }
 
 # Create storage account for boot diagnostics of Router VMs
@@ -674,7 +667,7 @@ resource "azurerm_storage_account" "storageaccountRouter" {
     account_tier                = "Standard"
     account_replication_type    = "LRS"
 
-    tags = map("environment", "RVBDHeadEndHA")
+    tags = {"Riverbed-Community" = "SteelConnect-EX_HA_Headend"}
 }
 
 # Create storage account for boot diagnostics of Controller VMs
@@ -686,7 +679,7 @@ resource "azurerm_storage_account" "storageaccountCtrl" {
     account_tier                = "Standard"
     account_replication_type    = "LRS"
 
-    tags = map("environment", "RVBDHeadEndHA")
+    tags = {"Riverbed-Community" = "SteelConnect-EX_HA_Headend"}
 }
 
 # Create storage account for boot diagnostics of Analytics VMs
@@ -698,13 +691,13 @@ resource "azurerm_storage_account" "storageaccountVAN" {
     account_tier                = "Standard"
     account_replication_type    = "LRS"
 
-    tags = map("environment", "RVBDHeadEndHA")
+    tags = {"Riverbed-Community" = "SteelConnect-EX_HA_Headend"}
 }
 
-# Create RVBD Director Virtual Machine
+# Create SteelConnect-EX Director Virtual Machines
 resource "azurerm_virtual_machine" "directorVM" {
     count							= length(var.location)
-    name                  			= "RVBDDirector${1+count.index}"
+    name                  			= "SteelConnect-EX_Director${1+count.index}"
     location						= element(var.location, count.index)
     resource_group_name				= element(azurerm_resource_group.rvbd_rg.*.name, count.index)
     network_interface_ids 			= [element(azurerm_network_interface.director_nic_1.*.id, count.index), element(azurerm_network_interface.director_nic_2.*.id, count.index)]
@@ -741,13 +734,13 @@ resource "azurerm_virtual_machine" "directorVM" {
         storage_uri = element(azurerm_storage_account.storageaccountDir.*.primary_blob_endpoint, count.index)
     }
 	
-    tags = map("environment", "RVBDHeadEndHA")
+    tags = {"Riverbed-Community" = "SteelConnect-EX_HA_Headend"}
 }
 
-# Create RVBD Router FlexVNF Machines
+# Create SteelConnect-EX Router FlexVNF Machines
 resource "azurerm_virtual_machine" "routerVM" {
     count							= length(var.location)
-    name							= "RVBDRouter${1+count.index}"
+    name							= "SteelConnect-EX_Router${1+count.index}"
     location						= element(var.location, count.index)
     resource_group_name				= element(azurerm_resource_group.rvbd_rg.*.name, count.index)
     network_interface_ids			= [element(azurerm_network_interface.router_nic_1.*.id, count.index), element(azurerm_network_interface.router_nic_2.*.id, count.index), element(azurerm_network_interface.router_nic_3.*.id, count.index), element(azurerm_network_interface.router_nic_4.*.id, count.index)]
@@ -784,13 +777,13 @@ resource "azurerm_virtual_machine" "routerVM" {
         storage_uri = element(azurerm_storage_account.storageaccountRouter.*.primary_blob_endpoint, count.index)
     }
 	
-    tags = map("environment", "RVBDHeadEndHA")
+    tags = {"Riverbed-Community" = "SteelConnect-EX_HA_Headend"}
 }
 
-# Create RVBD Controller Virtual Machines
+# Create SteelConnect-EX Controller Virtual Machines
 resource "azurerm_virtual_machine" "controllerVM" {
     count							= length(var.location)
-    name							= "RVBDController${1+count.index}"
+    name							= "SteelConnect-EX_Controller${1+count.index}"
     location						= element(var.location, count.index)
     resource_group_name				= element(azurerm_resource_group.rvbd_rg.*.name, count.index)
     network_interface_ids			= [element(azurerm_network_interface.controller_nic_1.*.id, count.index), element(azurerm_network_interface.controller_nic_2.*.id, count.index), element(azurerm_network_interface.controller_nic_3.*.id, count.index)]
@@ -827,13 +820,17 @@ resource "azurerm_virtual_machine" "controllerVM" {
         storage_uri = element(azurerm_storage_account.storageaccountCtrl.*.primary_blob_endpoint, count.index)
     }
 	
-    tags = map("environment", "RVBDHeadEndHA")
+    tags = {"Riverbed-Community" = "SteelConnect-EX_HA_Headend"}
 }
 
-# Create RVBD Analytics Virtual Machines
+# Create SteelConnect-EX Analytics Virtual Machines
 resource "azurerm_virtual_machine" "vanVM" {
     count							= length(var.location)
-    name							= "RVBDAnalytics${1+count.index}"
+    name							= "SteelConnect-EX_Analytics${1+count.index}"
+    depends_on            = [
+        # analytics initialization script (analytics.sh) requires director to be up and running
+        azurerm_virtual_machine.directorVM
+    ]
     location						= element(var.location, count.index)
     resource_group_name				= element(azurerm_resource_group.rvbd_rg.*.name, count.index)
     network_interface_ids			= [element(azurerm_network_interface.van_nic_1.*.id, count.index), element(azurerm_network_interface.van_nic_2.*.id, count.index)]
@@ -870,7 +867,7 @@ resource "azurerm_virtual_machine" "vanVM" {
         storage_uri = element(azurerm_storage_account.storageaccountVAN.*.primary_blob_endpoint, count.index)
     }
 	
-    tags = map("environment", "RVBDHeadEndHA")
+    tags = {"Riverbed-Community" = "SteelConnect-EX_HA_Headend"}
 }
 
 data "azurerm_public_ip" "dir_pub_ip" {
