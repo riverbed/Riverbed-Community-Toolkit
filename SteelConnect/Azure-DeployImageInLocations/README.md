@@ -78,7 +78,7 @@ The script New-ImageFromVhdUri requires the following parameters:
 For example the following script will deploy the images in the resource group Riverbed-Images
 
 ```PowerShell
-./Create-ImageFromVhdUri.ps1 -ResourceGroupName "Riverbed-Images" -Location "westeurope" `
+./New-ImageFromVhdUri.ps1 -ResourceGroupName "Riverbed-Images" -Location "westeurope" `
     -DestinationLocations westeurope,francecentral,koreacentral,westus,southeastasia `
     -DestinationVhdFileName "steelconnect-ex-flexvnf-20.2-bhd93.vhd" `
     -DestinationImageBasename "steelconnect-ex-20.2" `
