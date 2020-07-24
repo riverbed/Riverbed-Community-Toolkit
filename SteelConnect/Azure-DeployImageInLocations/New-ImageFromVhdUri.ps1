@@ -54,7 +54,7 @@
     
         # List and then delete resources created in the resource group (default name: "Riverbed-Images"). Storage Accounts having the default image name prefix ("rctimg") and Images having the prefix "steelconnect-ex"
 
-        Get-AzStorageAccount -ResourceGroupName "Riverbed-Images" | Where-Object { $_.StorageAccountName -like "rctimg*" } | Select-Object Name,ResourceGroupName
+        Get-AzStorageAccount -ResourceGroupName "Riverbed-Images" | Where-Object { $_.StorageAccountName -like "rctimg*" } | Select-Object StorageAccountName,ResourceGroupName,Location
         Get-AzStorageAccount -ResourceGroupName "Riverbed-Images" | Where-Object { $_.StorageAccountName -like "rctimg*" } | Remove-AzStorageAccount -Force
         
         Get-AzImage -ResourceGroupName "Riverbed-Images" | Where-Object { $_.Name -like "steelconnect-ex*" } | Select-Object Name,ResourceGroupName
