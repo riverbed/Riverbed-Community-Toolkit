@@ -8,7 +8,7 @@
 
 ## Overview
 
-After having deployed a SteelConnect-EX Headend in Azure, following a cookbook like [SteelConnect-EX Standalone Headend in Azure](../Azure-DeployHeadend), the will probably need to deploy some SteelConnect-EX FlexVNF appliances in the VNET in multiple Azure Locations.
+After having deployed a SteelConnect-EX Headend in Azure, following a cookbook like [SteelConnect-EX Standalone Headend in Azure](../Azure-DeployHeadend), you will probably need to deploy some SteelConnect-EX FlexVNF appliances in the VNET of multiple Azure Locations.
 
 This cookbook allows to deploy the SteelConnect-EX FlexVNF image automating the creation of some Azure Image resource in other Azure Locations.
 
