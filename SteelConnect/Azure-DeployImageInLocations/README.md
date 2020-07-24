@@ -4,6 +4,7 @@
 - [Prerequisites](#prerequisites)
 - [Steps](#steps)
 - [Usage](#usage)
+- [Howto](#howto)
 
 ## Overview
 
@@ -86,13 +87,30 @@ For example the following script will deploy the images in the resource group Ri
     -SourceSASToken "?sv=2019-10-10&ss=b&srt=co&sp=rwdlacx&se=2020-07-22T05:51:31Z&st=2020-07-21T21:51:31Z&spr=https&sig=JAFoNefbVBktBuWIe2sYTNV3bCf1jjx%2FuERl%2FC%2BSsWo%3D"
 ```
 
-### Usage
+## Usage
 
 The script will usually take few minutes to deploy the image in each location. When done he Storage Account and Images resources will be available in the resource group (default name: Riverbed images).
 
 ![images in resource group](images/resource-group-steelconnect-ex-images.png)
 
-Image can be be used to deploy the SteelConnect appliance directly from the Azure portal (navigate to the image and hit New VM), via ARM templates, or else using the automated deployment from the SteelConnect-EX Director gui.
+The Image resource can be be used to deploy the SteelConnect appliances directly from the Azure portal (navigate to the image and hit Create VM), referencing the image in an ARM templates, or else using the automated deployment from the SteelConnect-EX Director.
+
+
+## Howto
+
+### Delete the temporary Storage Accounts created in each Location?
+
+The following script will list the Storage Account resources created in the resource group (default name: "Riverbed-Images") and having the default Image prefix name ("rctimg").
+
+```PowerShell
+Get-AzStorageAccount -ResourceGroupName "Riverbed-Images" | Where-Object { $_.StorageAccountName -like "rctimg*" } | Select-Object StorageAccountName,ResourceGroupName,Location
+```
+
+Then all the Storage Account can be deleted with the following command (using the default Resource Group name and Image prefix name.
+
+```PowerShell
+Get-AzStorageAccount -ResourceGroupName "Riverbed-Images" | Where-Object { $_.StorageAccountName -like "rctimg*" } | Remove-AzStorageAccount -Force
+```
 
 ## License
 
