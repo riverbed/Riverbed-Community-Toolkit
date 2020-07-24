@@ -32,7 +32,7 @@
 
         # Deploy in all available Locations
 
-        ./New-ImagesFromVHD.ps1 -ResourceGroupName "Riverbed-Images" -Location "westeurope" `
+        ./New-ImageFromVhdUri.ps1 -ResourceGroupName "Riverbed-Images" -Location "westeurope" `
             -DestinationLocations ALL `
             -DestinationVhdFileName "steelconnect-ex-flexvnf-20.2-bhd93.vhd" `
             -DestinationImageBasename "steelconnect-ex-20.2" `
@@ -43,7 +43,7 @@
 
         # Deploy in few Locations
 
-        ./New-ImagesFromVHD.ps1 -ResourceGroupName "Riverbed-Images" -Location "westeurope" `
+        ./New-ImageFromVhdUri.ps1 -ResourceGroupName "Riverbed-Images" -Location "westeurope" `
             -DestinationLocations westeurope,francecentral,koreacentral,westus,southeastasia `
             -DestinationVhdFileName "steelconnect-ex-flexvnf-20.2-bhd93.vhd" `
             -DestinationImageBasename "steelconnect-ex-20.2" `
