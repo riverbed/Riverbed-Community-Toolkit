@@ -89,7 +89,7 @@ For example the following script will deploy the images in the resource group Ri
 
 ## Usage
 
-The script will usually take few minutes to deploy the image in each location. When done he Storage Account and Images resources will be available in the resource group (default name: Riverbed images).
+The script will usually take few minutes to deploy the image in each location. When done the Storage Account and Image resources will be available in the resource group (default name: Riverbed-Images).
 
 ![images in resource group](images/resource-group-steelconnect-ex-images.png)
 
