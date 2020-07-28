@@ -10,7 +10,7 @@ This Terraform Template is intended to Automate the bringing up Riverbed Head En
   - Riverbed Controller
   - Riverbed Analytics
   
-- **Role:** At least &quot;contributor&quot; level role is required to the Terraform user used to run this template.
+- **Role:** At least &quot;contributor&quot; role on the subscription is required to the Terraform user used to run this template.
 
 # Usage:
 
