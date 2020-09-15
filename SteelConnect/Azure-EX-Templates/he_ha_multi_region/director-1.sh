@@ -8,12 +8,8 @@ else
 SSHKey="${sshkey}"
 KeyDir="/home/Administrator/.ssh"
 KeyFile="/home/Administrator/.ssh/authorized_keys"
-Van1IP="${van_1_mgmt_ip}"
-Van2IP="${van_2_mgmt_ip}"
-Address="Match Address $Van1IP,$Van2IP"
+Address="Match Address"
 SSH_Conf="/etc/ssh/sshd_config"
-PrefixLength=`echo "${mgmt_master_net}"| cut -d'/' -f2`
-MgmtGW=`echo "${mgmt_master_net}"|cut -d '.' -f1-3`.1
 echo "Starting cloud init script...." > $log_path
 
 echo "Modifying /etc/network/interface file.." >> $log_path
@@ -32,44 +28,27 @@ iface eth0 inet dhcp
 
 # The secondary network interface
 auto eth1
-iface eth1 inet static
-	address ${dir_master_ctrl_ip}/$PrefixLength
+iface eth1 inet dhcp
+post-up ip route add ${ctrl_master_net} via ${south_master_gw} dev eth1
+post-up ip route add ${ctrl_slave_net} via ${south_master_gw} dev eth1
+post-up ip route add ${south_slave_net} via ${south_master_gw} dev eth1
+post-up ip route add ${overlay_net} via ${router1_dir_ip} dev eth1
 
 EOF
 echo -e "Modified /etc/network/interface file. Refer below new interface file content:\n`cat /etc/network/interfaces`" >> $log_path
 
-echo "Adding static routes to /etc/rc.local" >> $log_path
-cp /etc/rc.local /etc/rc.local.bak
-cat > /etc/rc.local << EOF
-#!/bin/sh -e
-#
-# rc.local
-#
-# This script is executed at the end of each multiuser runlevel.
-# Make sure that the script will "exit 0" on success or any other
-# value on error.
-#
-# In order to enable or disable this script just change the execution
-# bits.
-#
-# By default this script does nothing.
-while [ "$(ip link show eth1 up)" == "" ]; do sleep 1; done
-/sbin/ip route add ${mgmt_slave_net} via $MgmtGW
-/sbin/ip route add ${ctrl_master_net} via ${router1_dir_ip}
-/sbin/ip route add ${slave_net} via ${router1_dir_ip}
-/sbin/ip route add ${overlay_net} via ${router1_dir_ip}
-exit 0
-EOF
-echo -e "Modified /etc/rc.local file. Routes added:\n`cat /etc/rc.local`" >> $log_path
-
 echo "Modifying /etc/hosts file.." >> $log_path
 cp /etc/hosts /etc/hosts.bak
 cat > /etc/hosts << EOF
-127.0.0.1			localhost
-${dir_master_mgmt_ip}			${hostname_dir_master}
-${dir_slave_mgmt_ip}			${hostname_dir_slave}
-${van_1_mgmt_ip}			${hostname_van_1}
-${van_2_mgmt_ip}			${hostname_van_2}
+127.0.0.1	localhost
+${dir_master_mgmt_ip}	${hostname_dir_master}
+${dir_slave_mgmt_ip}	${hostname_dir_slave}
+%{ for host, ip in analytics_host_map ~}
+${ip}	${host}
+%{ endfor ~}
+%{ for host, ip in forwarder_host_map ~}
+${ip}	${host}
+%{ endfor ~}
 
 # The following lines are desirable for IPv6 capable hosts cloudeinit
 ::1localhost ip6-localhost ip6-loopback
@@ -78,7 +57,7 @@ ff02::2 ip6-allrouters
 EOF
 echo -e "Modified /etc/hosts file. Refer below new hosts file content:\n`cat /etc/hosts`" >> $log_path
 
-echo "Moditing /etc/hostname file.." >> $log_path
+echo "Modifying /etc/hostname file.." >> $log_path
 hostname ${hostname_dir_master}
 cp /etc/hostname /etc/hostname.bak
 cat > /etc/hostname << EOF
@@ -104,10 +83,13 @@ else
 	echo -e "SSH Key already present in file: $KeyFile.." >> $log_path
 fi
 
-echo -e "Enanbling ssh login using password." >> $log_path
+echo -e "Enabling ssh login using password." >> $log_path
 if ! grep -Fq "$Address" $SSH_Conf; then
 	echo -e "Adding the match address exception for Analytics Management IP to install certificate.\n" >> $log_path
-	sed -i.bak "\$a\Match Address $Van1IP,$Van2IP\n  PasswordAuthentication yes\nMatch all" $SSH_Conf
+	%{ for ip in analytics_host_map }
+	sed -i.bak "\$a\Match Address ${ip}\n  PasswordAuthentication yes\n" $SSH_Conf
+	%{ endfor }
+	sed -i.bak "\$a\Match all" $SSH_Conf
 	sudo service ssh restart
 else
 	echo -e "Analytics Management IP address is alredy present in file $SSH_Conf.\n" >> $log_path
@@ -131,9 +113,6 @@ cat > /opt/versa/etc/setup.json << EOF
 }
 EOF
 echo -e "Got below data from setup.json file:\n `cat /opt/versa/etc/setup.json`" >> $log_path
-echo "Executing rc.local to install routes..." >> $log_path
-sudo source /etc/rc.local
-echo -e "Resulting route table:\n `route`" >> $log_path 
 echo "Executing the startup script in non interactive mode.." >> $log_path
 sudo -u Administrator /opt/versa/vnms/scripts/vnms-startup.sh --non-interactive
 fi
