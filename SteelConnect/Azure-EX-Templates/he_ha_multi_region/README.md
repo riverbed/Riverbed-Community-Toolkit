@@ -86,13 +86,13 @@ main.tf template file will perform below actions/activities when executed:
 - Install SteelConnect EX Analytics instances in primary region and run the cloud-init script for:
   - Updating the /etc/network/interface file.
   - Updating the /etc/hosts file.
-  - Install necessary routes for controller and overlay networks into /etc/rc.local.
+  - Install necessary routes for controller and overlay networks.
   - Inject the ssh key for analytics user
   - Copy certificates from SteelConnect EX Director and install this certificate into Analytics.
 - Install SteelConnect EX Log Forwarder instances in secondary region and run the cloud-init script for:
   - Updating the /etc/network/interface file.
   - Updating the /etc/hosts file.
-  - Install necessary routes for controller and overlay networks into /etc/rc.local.
+  - Install necessary routes for controller and overlay networks.
   - Inject the ssh key for analytics user
 
 **var.tf file:**
