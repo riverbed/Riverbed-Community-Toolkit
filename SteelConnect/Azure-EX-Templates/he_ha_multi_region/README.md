@@ -33,7 +33,7 @@ git clone https://github.com/riverbed/Riverbed-Community-Toolkit.git
 cd ./Riverbed-Community-Toolkit/SteelConnect/Azure-EX-Templates/he_ha_multi_region/
 ```
 
-- Fill in the necessary values in the [terraform.tfvars](#terraform.tfvars file:) file.
+- Fill in the necessary values in the terraform.tfvars file.
 - Use the command `terraform init` to initialize. it will download necessary terraform plugins required to run this template.
 - Then use the command `terraform plan` to plan the deployment. It will show the plan regarding all the resources being provisioned as part of this template.
 - Lastly, use the command `terraform apply` to start deploying all of the resources in Azure.
