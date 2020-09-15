@@ -8,8 +8,6 @@ else
 SSHKey="${sshkey}"
 KeyDir="/home/versa/.ssh"
 KeyFile="/home/versa/.ssh/authorized_keys"
-PrefixLength=`echo "${mgmt_master_net}"| cut -d'/' -f2`
-MgmtGW=`echo "${mgmt_slave_net}"|cut -d '.' -f1-3`.1
 Dir1IP="${dir_master_mgmt_ip}"
 Dir2IP="${dir_slave_mgmt_ip}"
 Address="Match Address $Dir1IP,$Dir2IP"
@@ -26,53 +24,37 @@ cat > /etc/network/interfaces << EOF
 auto lo
 iface lo inet loopback
 
-# The primary network interface
+# The management network interface
 auto eth0
 iface eth0 inet dhcp
 
-# The secondary network interface
+# The southbound network interface
 auto eth1
-iface eth1 inet static
-        address ${van_2_ctrl_ip}/$PrefixLength
+iface eth1 inet dhcp
+post-up ip route add ${ctrl_master_net} via ${south_master_gw} dev eth1
+post-up ip route add ${ctrl_slave_net} via ${south_master_gw} dev eth1
+post-up ip route add ${south_slave_net} via ${south_master_gw} dev eth1
 
-# The third network interface
-#auto eth2
-#iface eth2 inet dhcp
+# The cluster network interface
+auto eth2
+iface eth2 inet dhcp
+post-up ip route add ${cluster_slave_net} via ${cluster_master_gw} dev eth2
+
 EOF
 echo -e "Modified /etc/network/interface file. Refer below new interface file content:\n`cat /etc/network/interfaces`" >> $log_path
-
-echo "Adding static routes to /etc/rc.local" >> $log_path
-cp /etc/rc.local /etc/rc.local.bak
-cat > /etc/rc.local << EOF
-#!/bin/sh -e
-#
-# rc.local
-#
-# This script is executed at the end of each multiuser runlevel.
-# Make sure that the script will "exit 0" on success or any other
-# value on error.
-#
-# In order to enable or disable this script just change the execution
-# bits.
-#
-# By default this script does nothing.
-while [ "$(ip link show eth1 up)" == "" ]; do sleep 1; done
-/sbin/ip route add ${mgmt_master_net} via $MgmtGW
-/sbin/ip route add ${ctrl_slave_net} via ${router2_dir_ip}
-/sbin/ip route add ${master_net} via ${router2_dir_ip}
-/sbin/ip route add ${overlay_net} via ${router2_dir_ip}
-exit 0
-EOF
-echo -e "Modified /etc/rc.local file. Routes added:\n`cat /etc/rc.local`" >> $log_path
 
 echo "Modifying /etc/hosts file.." >> $log_path
 cp /etc/hosts /etc/hosts.bak
 cat > /etc/hosts << EOF
-127.0.0.1					localhost
-${van_2_mgmt_ip}			${hostname_van_2}
-${van_1_mgmt_ip}			${hostname_van_1}
-${dir_master_mgmt_ip}		${hostname_dir_master}
-${dir_slave_mgmt_ip}		${hostname_dir_slave}
+127.0.0.1	localhost
+${dir_master_mgmt_ip}	${hostname_dir_master}
+${dir_slave_mgmt_ip}	${hostname_dir_slave}
+%{ for host, ip in analytics_host_map ~}
+${ip}	${host}
+%{ endfor ~}
+%{ for host, ip in forwarder_host_map ~}
+${ip}	${host}
+%{ endfor ~}
 
 # The following lines are desirable for IPv6 capable hosts cloudeinit
 ::1localhost ip6-localhost ip6-loopback
@@ -81,11 +63,11 @@ ff02::2 ip6-allrouters
 EOF
 echo -e "Modified /etc/hosts file. Refer below new hosts file content:\n`cat /etc/hosts`" >> $log_path
 
-echo -e "Moditing /etc/hostname file.." >> $log_path
-hostname ${hostname_van_2}
+echo -e "Modifying /etc/hostname file.." >> $log_path
+hostname ${hostname_van}
 cp /etc/hostname /etc/hostname.bak
 cat > /etc/hostname << EOF
-${hostname_van_2}
+${hostname_van}
 EOF
 echo -e "Hostname modified to : `hostname`" >> $log_path
 
@@ -109,7 +91,7 @@ fi
 
 echo -e "Enanbling ssh login using password." >> $log_path
 if ! grep -Fq "$Address" $SSH_Conf; then
-        echo -e "Adding the match address exception for Director Management IPs to run cluster install scripts.\n" >> $log_path
+	echo -e "Adding the match address exception for Director Management IPs to run cluster install scripts.\n" >> $log_path
         sed -i.bak "\$a\Match Address $Dir1IP,$Dir2IP\n  PasswordAuthentication yes\nMatch all" $SSH_Conf
         sudo service ssh restart
 else
@@ -127,7 +109,4 @@ sudo chmod 0755 /etc/get_cert.sh
 crontab -l > /tmp/orig_crontab
 echo "`date +%M --date='5 minutes'` `date +%H` `date +%d` `date +%m` * sudo bash /etc/get_cert.sh; sudo crontab -l | grep -v get_cert.sh | crontab " >>  /tmp/orig_crontab
 sudo crontab /tmp/orig_crontab
-echo "Executing rc.local to install routes..." >> $log_path
-sudo source /etc/rc.local
-echo -e "Resulting route table:\n `route`" >> $log_path
 fi
