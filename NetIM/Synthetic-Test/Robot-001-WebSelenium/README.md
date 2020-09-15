@@ -19,7 +19,7 @@ The next paragraph explains how to setup from scratch on a Windows machine. It i
 
 ### 1. Basic components
 
-1. Download the [Riverbed Community Toolkit](https://github.com/riverbed/Riverbed-Community-Toolkit/archive/master.zip). Extract it on the C: drive and rename the folder "Riverbed-Community-Toolit" (remoning the "-master" at the end)
+1. Download the [Riverbed Community Toolkit](https://github.com/riverbed/Riverbed-Community-Toolkit/archive/master.zip). Extract it on the C: drive and rename the folder "Riverbed-Community-Toolit" (removing the "-master" at the end)
 
 ![Riverbed Community Toolkit extract](images/riverbed-community-toolkit-extracted.png)
 
