@@ -4,7 +4,9 @@ This Terraform Template is intended to automate the deployment of a High Availab
 
  ![Topology](https://raw.githubusercontent.com/gleyfer/Riverbed-Community-Toolkit/master/SteelConnect/Azure-EX-Templates/he_ha_multi_region/SteelConnect-EX_HE_HA_Azure.png)
 
-The Router service nodes must be configured to send traffic destined to the overlay subnet via routes learned over BGP from the Controller in the local region and peer Router in the other region. All other communication between instances uses the Azure backbone gateway.
+The Router service nodes must be configured to send traffic destined to the overlay subnet via routes learned over BGP from the Controller in the local region and peer Router in the other region. All other communication between instances uses the Azure backbone gateway. The following KB contains additional information this SteelConnect EX Headend topology and steps for configuration of the Analytics cluster and Backup cluster:
+
+https://supportkb.riverbed.com/support/index?page=content&id=S34421 
  
 # Pre-requisites for using this template:
 
@@ -121,9 +123,9 @@ terraform.tfvars file is being used to get the variables values from user. User 
 - hostname_forwarders : Provide the hostname for SteelConnect EX Log Forwarder instances to be created in the secondary region. Adding more hostnames dynamically grows the Log forwarder cluster. By default, a two node cluster consisting of "Forwarder1" and "Forwarder2" hostnames is created. This can be expanded by adding more hostnames in this variable delimited by commas. E.g. hostname_forwarders = ["Forwarder1","Forwarder2","Forwarder3","Forwarder4"] would create a four node cluster in the secondary region.
 - director_vm_size : Provide the instance type/size which will be used to provision the SteelConnect EX Director Instance. By default, Standard_F8s_v2 will be used.
 - controller_vm_size : Provide the instance type/size which will be used to provision the SteelConnect EX Controller Instance. By default, Standard_F8s_v2 will be used.
-- router_vm_size : Provide the instance type/size which will be used to provision the SteelConnect EX Router Instance. By default, Standard_F4s_v2 will be used.
+- router_vm_size : Provide the instance type/size which will be used to provision the SteelConnect EX Router Instance. By default, Standard_F8s_v2 will be used.
 - analytics_vm_size : Provide the instance type/size which will be used to provision the SteelConnect EX Analytics Instance. By default, Standard_F8s_v2 will be used.
-- forwarder_vm_size : Provide the instance type/size which will be used to provision the SteelConnect EX Log Forwarder Instances. By default, Standard_F4s_v2 will be used.
+- forwarder_vm_size : Provide the instance type/size which will be used to provision the SteelConnect EX Log Forwarder Instances. By default, Standard_F8s_v2 will be used.
 
 **output.tf file:**
 

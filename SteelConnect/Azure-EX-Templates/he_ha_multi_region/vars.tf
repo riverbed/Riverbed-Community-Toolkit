@@ -36,8 +36,8 @@ variable "vpc_address_space" {
   description = "Virtual Private Network's address space to be used to deploy SteelConnect-EX Head end setup."
   type    = list
   default = [
-    "10.234.0.0/16",
-    "10.235.0.0/16"
+    "10.54.0.0/16",
+    "10.55.0.0/16"
   ]
 }
 
@@ -87,7 +87,7 @@ variable "hostname_analytics" {
 variable "hostname_forwarders" {
   description = "Hostname to be used for SteelConnect-EX Log Forwarders."
   type    = list
-  default = ["Forwarder"]
+  default = ["Forwarder1", "Forwarder2"]
 }
 
 variable "accel_networking" {
