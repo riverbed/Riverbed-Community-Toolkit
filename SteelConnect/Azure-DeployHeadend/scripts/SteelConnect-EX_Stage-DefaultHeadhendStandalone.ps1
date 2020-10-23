@@ -45,6 +45,27 @@ param(
     $portAnalytics = "1234"
 )
 
+#region Riverbed Community Lib
+Write-Output "$(Get-Date -Format "yyMMddHHmmss"): SteelConnect-EX_Stage-DefaultHeadhendStandalone"
+
+# get azure context
+$azureContext = Get-AzContext
+$tenantId = $azureContext.Tenant.Id
+$subscriptionId = $azureContext.Subscription.Id
+
+#Link Riverbed Microsoft Partner
+try {
+$azContext = Get-AzContext
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+$accessToken = ($azContext.TokenCache.ReadItems() | Where-Object{ ($_.TenantId -eq $azContext.Tenant.Id) -and ($_.Resource -eq "https://management.core.windows.net/") } | Sort-Object -Property ExpiresOn -Descending)[0].AccessToken
+$uri = "https://management.azure.com/providers/Microsoft.ManagementPartner/partners/1854868/?api-version=2018-02-01"
+$irm_output = Invoke-RestMethod -Method PUT -Uri $uri -Headers @{ 'Authorization' = 'Bearer ' + $accessToken }
+} catch {
+try { $irm_output += Invoke-RestMethod -Method patch -Uri $uri -Headers @{ 'Authorization' = 'Bearer ' + $accessToken } } catch { $irm_status ="Retry Failed"}
+}
+        
+#endregion
+
 # Use Azure-EX-templates standalone
 cd "../../Azure-EX-Templates/he_standalone/"
 
@@ -58,10 +79,6 @@ if (!$sshPublicKey) {
     Write-Output "Generated key pair: $keyFileName / $keyFileName.pub"
 }
 
-# get azure context
-$azureContext = Get-AzContext
-$tenantId = $azureContext.Tenant.Id
-$subscriptionId = $azureContext.Subscription.Id
 
 # Fetch the resourceId for the image of each SteelConnect apliance
 $defaultNameImageSteelconnectEX = "steelconnect-ex-flexvnf"

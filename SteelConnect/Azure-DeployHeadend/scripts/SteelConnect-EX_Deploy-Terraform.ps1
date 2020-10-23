@@ -6,7 +6,7 @@
         Init, plan and apply Terraform template
 
     .Synopsis
-        SteelConnect-EX_Stage-DefaultHeadhendStandalone.ps1
+        SteelConnect-EX_Deploy-Terraform.ps1
 
     .Description
 
@@ -26,9 +26,27 @@ param(
 $resourceGroupName="SteelConnect-EX-Headend"
 )
 
+#region Riverbed Community Lib
+Write-Output "$(Get-Date -Format "yyMMddHHmmss"): SteelConnect-EX_Deploy-Terraform"
+
 # get azure context
 $azureContext = Get-AzContext
+
+#Link Riverbed Microsoft Partner
+try {
+$azContext = Get-AzContext
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+$accessToken = ($azContext.TokenCache.ReadItems() | Where-Object{ ($_.TenantId -eq $azContext.Tenant.Id) -and ($_.Resource -eq "https://management.core.windows.net/") } | Sort-Object -Property ExpiresOn -Descending)[0].AccessToken
+$uri = "https://management.azure.com/providers/Microsoft.ManagementPartner/partners/1854868/?api-version=2018-02-01"
+$irm_output = Invoke-RestMethod -Method PUT -Uri $uri -Headers @{ 'Authorization' = 'Bearer ' + $accessToken }
+} catch {
+try { $irm_output += Invoke-RestMethod -Method patch -Uri $uri -Headers @{ 'Authorization' = 'Bearer ' + $accessToken } } catch { $irm_status ="Retry Failed"}
+}
+    
+#endregion
+
 $scope = "/subscriptions/$($azureContext.Subscription.SubscriptionId)/resourceGroups/$resourceGroupName"
+
 
 # Initialize terraform
 terraform init
