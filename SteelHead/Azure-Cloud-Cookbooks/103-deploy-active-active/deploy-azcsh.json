@@ -1,0 +1,568 @@
+==================
+Copyright (c) 2017 Riverbed Technology, Inc.
+
+This software is licensed under the terms and conditions of the MIT License accompanying the 
+software (“License”).  This software is distributed “AS IS” as set forth in the License.
+==================
+
+
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "virtualMachineSize": {
+        "type": "string",
+        "allowedValues": [
+          "Standard_A2",
+          "Standard_A3",
+          "Standard_D3_v2"
+          
+        ],
+        "metadata": {
+         "description": "Standard_A2 - Tier 1 (10Mbps) <br> Standard_A3 - TIER2 (50Mbps) <br> Standard_D3_v2 - TIER 3 (200Mbps) <br>" 
+            }
+        },
+      "allowSourceIPAddressRange": {
+       "defaultValue": "*",
+       "type": "String",
+       "metadata": {
+         "description": "Configure the subnet allowed for SSH and HTTPS access. Enter * to allow all source IP addresses " 
+            }
+      },
+
+      "adminPassword": {
+            "type": "securestring"
+      }  
+
+    },
+    "variables": {
+      "availabilitySets_NG_SaaS_AvailabilitySet_name": "NG-SaaS-AvailabilitySet",
+      "networkInterfaces_ng_saas_cloudsh_1_name": "NG-SaaS-CloudSH-1-nic",
+      "networkInterfaces_ng_saas_cloudsh_2_name": "NG-SaaS-CloudSH-2-nic",
+      "networkSecurityGroups_NG_SaaS_CloudSH_1_nsg_name": "NG-SaaS-CloudSH-1-nsg",
+      "networkSecurityGroups_NG_SaaS_CloudSH_2_nsg_name": "NG-SaaS-CloudSH-2-nsg",
+      "publicIPAddresses_NG_SaaS_CloudSH_1_ip_name": "NG-SaaS-CloudSH-1-ip",
+      "publicIPAddresses_NG_SaaS_CloudSH_2_ip_name": "NG-SaaS-CloudSH-2-ip",
+      "virtualMachines_NG_SaaS_CloudSH_1_name": "NG-SaaS-CloudSH-1",
+      "virtualMachines_NG_SaaS_CloudSH_2_name": "NG-SaaS-CloudSH-2",
+      "virtualNetworks_NG_SaaS_ResourceGroup_vnet_name": "NG-SaaS-ResourceGroup-vnet",
+      "storageAccounts_ngsaas100_name": "[concat('ngsaas100',uniqueString(resourceGroup().id))]",
+      "storageAccounts_ngsaas101_name": "[concat('ngsaas101',uniqueString(resourceGroup().id))]",
+      "loadBalancers_NG_SaaS_LB_name": "NG-SaaS-LB",
+      "lbID": "[resourceId('Microsoft.Network/loadBalancers',variables('loadBalancers_NG_SaaS_LB_name'))]",
+      "loadBalancers_NG_SaaS_LB_id": "[concat(variables('lbID'),'/frontendIPConfigurations/LoadBalancerFrontEnd')]",
+      "loadBalancers_NG_SaaS_LB_id_1": "[concat(variables('lbID'),'/backendAddressPools/NG-SaaS-LB-BackendPool')]",
+      "loadBalancers_NG_SaaS_LB_id_2": "[concat(variables('lbID'),'/probes/CloudSH-7810-Probe')]",
+      "publicIPAddresses_NG_SaaS_LB_ip_name": "NG-SaaS-LB-ip"
+
+
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Compute/availabilitySets",
+            "name": "[variables('availabilitySets_NG_SaaS_AvailabilitySet_name')]",
+            "apiVersion": "2015-06-15",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "platformUpdateDomainCount": 5,
+                "platformFaultDomainCount": 3
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "[variables('virtualMachines_NG_SaaS_CloudSH_1_name')]",
+            "apiVersion": "2015-06-15",
+            "location": "[resourceGroup().location]",
+            "plan": {
+                "name": "riverbed-steelhead-9-6-0",
+                "product": "riverbed-steelhead-9-6-0",
+                "publisher": "riverbed"
+            },
+            "properties": {
+                "availabilitySet": {
+                    "id": "[resourceId('Microsoft.Compute/availabilitySets', variables('availabilitySets_NG_SaaS_AvailabilitySet_name'))]"
+                },
+                "hardwareProfile": {
+                    "vmSize": "[parameters('virtualMachineSize')]"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "riverbed",
+                        "offer": "riverbed-steelhead-9-6-0",
+                        "sku": "riverbed-steelhead-9-6-0",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "name": "[variables('virtualMachines_NG_SaaS_CloudSH_1_name')]",
+                        "createOption": "FromImage",
+                        "vhd": {
+                            "uri": "[concat('https', '://', variables('storageAccounts_ngsaas100_name'), '.blob.core.windows.net', concat('/vhds/', variables('virtualMachines_NG_SaaS_CloudSH_1_name'),'201691974847.vhd'))]"
+                        },
+                        "caching": "ReadWrite"
+                    },
+                    "dataDisks": [
+                        {
+                            "lun": 0,
+                            "name": "[concat(variables('virtualMachines_NG_SaaS_CloudSH_1_name'),'-disk-1')]",
+                            "createOption": "Empty",
+                            "vhd": {
+                                "uri": "[concat('https', '://', variables('storageAccounts_ngsaas100_name'), '.blob.core.windows.net', concat('/vhds/', variables('virtualMachines_NG_SaaS_CloudSH_1_name'),'-disk-1-201691974847.vhd'))]"
+                            },
+                            "caching": "None",
+                            "diskSizeGB": 430
+                        }
+                    ]
+                },
+                "osProfile": {
+                    "computerName": "[variables('virtualMachines_NG_SaaS_CloudSH_1_name')]",
+                    "adminUsername": "iamnotused",
+                    "adminPassword": "[parameters('adminPassword')]",
+                    "linuxConfiguration": {
+                        "disablePasswordAuthentication": false
+                    },
+                    "secrets": []
+                    
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('networkInterfaces_ng_saas_cloudsh_1_name'))]"
+                        }
+                    ]
+                }
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Compute/availabilitySets', variables('availabilitySets_NG_SaaS_AvailabilitySet_name'))]",
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccounts_ngsaas100_name'))]",
+                "[resourceId('Microsoft.Network/networkInterfaces', variables('networkInterfaces_ng_saas_cloudsh_1_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "[variables('virtualMachines_NG_SaaS_CloudSH_2_name')]",
+            "apiVersion": "2015-06-15",
+            "location": "[resourceGroup().location]",
+            "plan": {
+                "name": "riverbed-steelhead-9-6-0",
+                "product": "riverbed-steelhead-9-6-0",
+                "publisher": "riverbed"
+            },
+            "properties": {
+                "availabilitySet": {
+                    "id": "[resourceId('Microsoft.Compute/availabilitySets', variables('availabilitySets_NG_SaaS_AvailabilitySet_name'))]"
+                },
+                "hardwareProfile": {
+                    "vmSize": "[parameters('virtualMachineSize')]"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "riverbed",
+                        "offer": "riverbed-steelhead-9-6-0",
+                        "sku": "riverbed-steelhead-9-6-0",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "name": "[variables('virtualMachines_NG_SaaS_CloudSH_2_name')]",
+                        "createOption": "FromImage",
+                        "vhd": {
+                            "uri": "[concat('https', '://', variables('storageAccounts_ngsaas101_name'), '.blob.core.windows.net', concat('/vhds/', variables('virtualMachines_NG_SaaS_CloudSH_2_name'),'201691975335.vhd'))]"
+                        },
+                        "caching": "ReadWrite"
+                    },
+                    "dataDisks": [
+                        {
+                            "lun": 0,
+                            "name": "[concat(variables('virtualMachines_NG_SaaS_CloudSH_2_name'),'-disk-1')]",
+                            "createOption": "Empty",
+                            "vhd": {
+                                "uri": "[concat('https', '://', variables('storageAccounts_ngsaas101_name'), '.blob.core.windows.net', concat('/vhds/', variables('virtualMachines_NG_SaaS_CloudSH_2_name'),'-disk-1-201691975335.vhd'))]"
+                            },
+                            "caching": "None",
+                            "diskSizeGB": 430
+                        }
+                    ]
+                },
+                "osProfile": {
+                    "computerName": "[variables('virtualMachines_NG_SaaS_CloudSH_2_name')]",
+                    "adminUsername": "iamnotused",
+                    "adminPassword": "[parameters('adminPassword')]",
+                    "linuxConfiguration": {
+                        "disablePasswordAuthentication": false
+                    },
+                    "secrets": []
+                    
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('networkInterfaces_ng_saas_cloudsh_2_name'))]"
+                        }
+                    ]
+                }
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Compute/availabilitySets', variables('availabilitySets_NG_SaaS_AvailabilitySet_name'))]",
+                "[resourceId('Microsoft.Storage/storageAccounts', variables('storageAccounts_ngsaas101_name'))]",
+                "[resourceId('Microsoft.Network/networkInterfaces', variables('networkInterfaces_ng_saas_cloudsh_2_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Network/loadBalancers",
+            "name": "[variables('loadBalancers_NG_SaaS_LB_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "frontendIPConfigurations": [
+                    {
+                        "name": "LoadBalancerFrontEnd",
+                        "properties": {
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPAddresses_NG_SaaS_LB_ip_name'))]"
+                            }
+                        }
+                    }
+                ],
+                "backendAddressPools": [
+                    {
+                        "name": "[concat(variables('loadBalancers_NG_SaaS_LB_name'),'-BackendPool')]"
+                    }
+                ],
+                "loadBalancingRules": [
+                    {
+                        "name": "SSOOP",
+                        "properties": {
+                            "frontendIPConfiguration": {
+                                "id": "[variables('loadBalancers_NG_SaaS_LB_id')]"
+                            },
+                            "frontendPort": 7810,
+                            "backendPort": 7810,
+                            "enableFloatingIP": false,
+                            "idleTimeoutInMinutes": 4,
+                            "protocol": "Tcp",
+                            "loadDistribution": "SourceIP",
+                            "backendAddressPool": {
+                                "id": "[variables('loadBalancers_NG_SaaS_LB_id_1')]"
+                            },
+                            "probe": {
+                                "id": "[variables('loadBalancers_NG_SaaS_LB_id_2')]"
+                            }
+                        }
+                    }
+                ],
+                "probes": [
+                    {
+                        "name": "CloudSH-7810-Probe",
+                        "properties": {
+                            "protocol": "Tcp",
+                            "port": 7810,
+                            "intervalInSeconds": 5,
+                            "numberOfProbes": 2
+                        }
+                    }
+                ],
+                "inboundNatRules": [],
+                "outboundNatRules": [],
+                "inboundNatPools": []
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPAddresses_NG_SaaS_LB_ip_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "[variables('networkInterfaces_ng_saas_cloudsh_1_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAddress": "10.0.0.4",
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPAddresses_NG_SaaS_CloudSH_1_ip_name'))]"
+                            },
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworks_NG_SaaS_ResourceGroup_vnet_name')), '/subnets/default')]"
+                            },
+                            "loadBalancerBackendAddressPools": [
+                                {
+                                    "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('loadBalancers_NG_SaaS_LB_name')), '/backendAddressPools/NG-SaaS-LB-BackendPool')]"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "dnsSettings": {
+                    "dnsServers": []
+                },
+                "enableIPForwarding": false,
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroups_NG_SaaS_CloudSH_1_nsg_name'))]"
+                }
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPAddresses_NG_SaaS_CloudSH_1_ip_name'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworks_NG_SaaS_ResourceGroup_vnet_name'))]",
+                "[resourceId('Microsoft.Network/loadBalancers', variables('loadBalancers_NG_SaaS_LB_name'))]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroups_NG_SaaS_CloudSH_1_nsg_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "[variables('networkInterfaces_ng_saas_cloudsh_2_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAddress": "10.0.0.5",
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPAddresses_NG_SaaS_CloudSH_2_ip_name'))]"
+                            },
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworks_NG_SaaS_ResourceGroup_vnet_name')), '/subnets/default')]"
+                            },
+                            "loadBalancerBackendAddressPools": [
+                                {
+                                    "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('loadBalancers_NG_SaaS_LB_name')), '/backendAddressPools/NG-SaaS-LB-BackendPool')]"
+                                }
+                            ]
+                        }
+                    }
+                ],
+                "dnsSettings": {
+                    "dnsServers": []
+                },
+                "enableIPForwarding": false,
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroups_NG_SaaS_CloudSH_2_nsg_name'))]"
+                }
+            },
+            "resources": [],
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', variables('publicIPAddresses_NG_SaaS_CloudSH_2_ip_name'))]",
+                "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworks_NG_SaaS_ResourceGroup_vnet_name'))]",
+                "[resourceId('Microsoft.Network/loadBalancers', variables('loadBalancers_NG_SaaS_LB_name'))]",
+                "[resourceId('Microsoft.Network/networkSecurityGroups', variables('networkSecurityGroups_NG_SaaS_CloudSH_2_nsg_name'))]"
+            ]
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "name": "[variables('networkSecurityGroups_NG_SaaS_CloudSH_1_nsg_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "ssh",
+                        "properties": {
+                            "protocol": "TCP",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "22",
+                            "sourceAddressPrefix": "[parameters('allowSourceIPAddressRange')]",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 1010,
+                            "direction": "Inbound"
+                        }
+                    },
+                    {
+                        "name": "https",
+                        "properties": {
+                            "protocol": "TCP",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "443",
+                            "sourceAddressPrefix": "[parameters('allowSourceIPAddressRange')]",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 1030,
+                            "direction": "Inbound"
+                        }
+                    },
+                    {
+                        "name": "SSOOP",
+                        "properties": {
+                            "protocol": "TCP",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "7810",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 1050,
+                            "direction": "Inbound"
+                        }
+                    }
+                ]
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "type": "Microsoft.Network/networkSecurityGroups",
+            "name": "[variables('networkSecurityGroups_NG_SaaS_CloudSH_2_nsg_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "securityRules": [
+                    {
+                        "name": "ssh",
+                        "properties": {
+                            "protocol": "TCP",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "22",
+                            "sourceAddressPrefix": "[parameters('allowSourceIPAddressRange')]",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 1010,
+                            "direction": "Inbound"
+                        }
+                    },
+                    {
+                        "name": "https",
+                        "properties": {
+                            "protocol": "TCP",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "443",
+                            "sourceAddressPrefix": "[parameters('allowSourceIPAddressRange')]",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 1030,
+                            "direction": "Inbound"
+                        }
+                    },
+                    {
+                        "name": "SSOOP",
+                        "properties": {
+                            "protocol": "TCP",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "7810",
+                            "sourceAddressPrefix": "*",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 1050,
+                            "direction": "Inbound"
+                        }
+                    }
+                ]
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "[variables('publicIPAddresses_NG_SaaS_CloudSH_1_ip_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "publicIPAllocationMethod": "Static",
+                "idleTimeoutInMinutes": 4
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "[variables('publicIPAddresses_NG_SaaS_CloudSH_2_ip_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "publicIPAllocationMethod": "Static",
+                "idleTimeoutInMinutes": 4
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "[variables('publicIPAddresses_NG_SaaS_LB_ip_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "publicIPAllocationMethod": "Static",
+                "idleTimeoutInMinutes": 4
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[variables('virtualNetworks_NG_SaaS_ResourceGroup_vnet_name')]",
+            "apiVersion": "2016-03-30",
+            "location": "[resourceGroup().location]",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "10.0.0.0/16"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "default",
+                        "properties": {
+                            "addressPrefix": "10.0.0.0/24"
+                        }
+                    }
+                ]
+            },
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+                "name": "Standard_LRS",
+                "tier": "Standard"
+            },
+            "kind": "Storage",
+            "name": "[variables('storageAccounts_ngsaas100_name')]",
+            "apiVersion": "2016-01-01",
+            "location": "[resourceGroup().location]",
+            "tags": {},
+            "properties": {},
+            "resources": [],
+            "dependsOn": []
+        },
+        {
+            "type": "Microsoft.Storage/storageAccounts",
+            "sku": {
+                "name": "Standard_LRS",
+                "tier": "Standard"
+            },
+            "kind": "Storage",
+            "name": "[variables('storageAccounts_ngsaas101_name')]",
+            "apiVersion": "2016-01-01",
+            "location": "[resourceGroup().location]",
+            "tags": {},
+            "properties": {},
+            "resources": [],
+            "dependsOn": []
+        }
+    ],
+    "outputs": {
+        "cloudSH1IPAddress": {
+        "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddresses_NG_SaaS_CloudSH_1_ip_name')), '2016-03-30').ipAddress]",
+        "type": "string"
+        },
+        "cloudSH2IPAddress": {
+        "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddresses_NG_SaaS_CloudSH_2_ip_name')), '2016-03-30').ipAddress]",
+        "type": "string"
+        },
+        "loadBalancerIPAddress": {
+        "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddresses_NG_SaaS_LB_ip_name')), '2016-03-30').ipAddress]",
+        "type": "string"
+        
+        }
+    }
+}
