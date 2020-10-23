@@ -12,3 +12,8 @@ GNS3 is a free tool that can be downloaded from the  [GNS3 website](https://gns3
 
 The solution guide will help you adding SteelHead-V to your topology on GNS3.
 For your convenience, we have added an appliance that you can import directly on GNS3 once you have downloaded the SteelHead-V image for KVM from [Riverbed Support website](https://support.riverbed.com/content/support/software/steelhead/cx-appliance.html).
+
+## License
+
+Copyright (c) 2020 Riverbed Technology, Inc.
+The scripts provided here are licensed under the terms and conditions of the MIT License accompanying the software ("License"). The scripts are distributed "AS IS" as set forth in the License. The script also include certain third party code. All such third party code is also distributed "AS IS" and is licensed by the respective copyright holders under the applicable terms and conditions (including, without limitation, warranty and liability disclaimers) identified in the license notices accompanying the software.
