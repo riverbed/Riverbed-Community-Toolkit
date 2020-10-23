@@ -1,8 +1,14 @@
-# Cookbook - Cluster of 2 active Cloud SteelHead
+# Cookbook - Cluster of 2 active Cloud SteelHead appliances
+
+## Fast-forward
+
+Click the button "Deploy in Azure" to open the ARM template in the Azure Portal where you can customize the parameters before deploying the resources:
+
+[![Deploy To Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Friverbed%2FRiverbed-Community-Toolkit%2Fmaster%2FSteelHead%2FAzure-Cloud-Cookbooks%2F103-deploy-active-active%2Fazuredeploy-active-active-azcsh.json)
 
 ## 1 - Overview
 
-The cookbook contains technical artifact to deploy a cluster of 2 active Cloud SteelHead appliance in Azure.
+The cookbook contains technical artifacts to deploy a cluster of 2 active Cloud SteelHead appliances in Azure.
 The code comes from some 2017 contributions and might need review or refinement.
 
 > You might also be interested by the other cookbook [102 - Acceleration Scale Out in Azure](../102-scale-out), that allow to deploy a similar setup with more recent and generic templates and scripts.
