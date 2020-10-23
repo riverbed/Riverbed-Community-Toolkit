@@ -17,7 +17,7 @@ The template for "Acceleration Scale Out" is in the [cookbook folder](./) with s
 
 To increase the capacity and the availability of the acceleration service in the cloud, the Cloud SteelHead can scale up (i.e. increasing sizing of the appliance and license) and also scale out (i.e multiplying the nodes).
 
-This cookbook uses the scale out approach where a load balancer can distribute the inbound and outbound traffic to multiple SteelHead nodes. It will be based on the Service Chain concepts explained in details in the cookbook [101 - Chain Acceleration in a VNET having a gateway appliance (VPN or SD-WAN)](101-service-chain-gw-appliance.md).
+This cookbook uses the scale out approach where a load balancer can distribute the inbound and outbound traffic to multiple SteelHead nodes. It will be based on the Service Chain concepts explained in details in the cookbook [101 - Chain Acceleration in a VNET having a gateway appliance (VPN or SD-WAN)](../101-service-chain-gw-appliance).
 
 ![Acceleration Scale Out in Azure](../images/Riverbed-Acceleration-Azure-Scale-Out.png)
 
@@ -50,7 +50,7 @@ Select-AzSubscription -SubscriptionName "{your-test-sub}"
 
 #### Sandbox AZE in west-europe
 
-This quickstart reuses some scripts of the cookbook [101 - Chain Acceleration in a VNET having a gateway appliance (VPN or SD-WAN)](101-service-chain-gw-appliance.md), to deploy a sample sandbox AZE in westeurope region and then deploy the acceleration Scale Out resources (3 nodes) with the Runbook.
+This quickstart reuses some scripts of the cookbook [101 - Chain Acceleration in a VNET having a gateway appliance (VPN or SD-WAN)](../101-service-chain-gw-appliance), to deploy a sample sandbox AZE in westeurope region and then deploy the acceleration Scale Out resources (3 nodes) with the Runbook.
 
 The execution takes about 30 min.
 
@@ -58,7 +58,7 @@ The execution takes about 30 min.
 .\quickstarts\Test-SampleAZE-ScaleOut.ps1
 ```
 
-All the artifacts will be stored in a subfolder called *artificats*. For example it will contain the generated ssh keypair some CLI configuration based on this [SteelHead simple CLI template](./102-scale-out/scripts/Template-CloudSteelHeadConfiguration.cli).
+All the artifacts will be stored in a subfolder called *artifiacts*. For example it will contain the generated ssh keypair some CLI configuration based on this [SteelHead simple CLI template](./scripts/Template-CloudSteelHeadConfiguration.cli).
 
 Some post-deployment configurations steps are required:
 
