@@ -2,6 +2,28 @@
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.191119",
     "parameters": {
+        "VirtualNetworkId": {
+            "type": "string",
+            "metadata": {
+                "description": "Id of the existing virtual network that must have a subnet 'acceleration' and in the same region. For example: /subscriptions/1234-1234-1243-1234/resourceGroups/yourRG/providers/Microsoft.Network/virtualNetworks/aze-hub-westeurope"
+            }
+        },
+        "virtualMachineSize": {
+            "type": "string",
+            "defaultValue": "Standard_DS3_v2",
+            "metadata": {
+                "description": "Size of the VM. Standard_D2s_v3 or Standard_DS3_v2 are ok with CCX-SUB-PERF-TIER3 license"
+            }
+        },
+        "virtualMachineCount":{
+            "type": "int",
+            "minValue": 2,
+            "maxValue" : 150,
+            "defaultValue": 1,
+            "metadata": {
+                "description": "Count of SteelHead nodes to deploy in the cluster"
+            }
+        },
         "projectName": {
             "type": "string",
             "defaultValue": "community",
@@ -16,32 +38,12 @@
                 "description": "Location for the acceleration resources."
             }
         },
-        "VirtualNetworkId": {
-            "type": "string",
-            "metadata": {
-                "description": "Id of the existing virtual network. ex. /subscriptions/1234-1234-1243-1234/resourceGroups/yourRG/providers/Microsoft.Network/virtualNetworks/aze-hub-westeurope"
-            }
-        },
         "subnetPrefix_acceleration": {
             "type": "string",
             "metadata": {
                 "description": "A /24 subnet in the virtual network, used for Acceleration."
             },
             "defaultValue": "10.1.82.0/24"
-        },
-        "publicIpAddressName": {
-            "type": "string",
-            "defaultValue": "[parameters('virtualMachineName')]",
-            "metadata": {
-                "description": "Name of the public ip address"
-            }
-        },
-        "virtualMachineName": {
-            "type": "string",
-            "defaultValue": "[concat(parameters('projectName'),'-sh')]",
-            "metadata": {
-                "description": "Name for the acceleration appliance"
-            }
         },
         "dataDiskSizeGB": {
             "type": "int",
@@ -57,24 +59,11 @@
                 "description": "Disk type. Premium_LRS enable the 99.9% availability SLA on a single VM. StandardSSD_LRS for SDD, Standard_LRS for cheap HDD."
             }
         },
-        "virtualMachineSize": {
-            "type": "string",
-            "defaultValue": "Standard_DS3_v2",
-            "metadata": {
-                "description": "Size of the VM. Standard_D2s_v3 or Standard_DS3_v2 are ok with CCX-SUB-PERF-TIER3 license"
-            }
-        },
-        "adminUsername": {
-            "type": "string",
-            "metadata": {
-                "description": "Admin username"
-            },
-            "defaultValue": "riverbed-community"
-        },
         "adminPublicKey": {
             "type": "string",
+            "defaultValue" : "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDzDzB9HnAILK4CLPRLxA5MLfrt8YcWr2YMtuGIl7IusYPk+2cAAM5Zm8hPQ3Hl4NmtzjMcSNEH1FnfgT4h0n975/eUhJnS2oy6j66jueInab/TquSKSBwDKQ/lFpnKj9jdHMSbr5zUP1lQihYoCYlS6duTxmO+ly6Sgau6iHYZV/bcfgyKO3kVPno/FLhsa+AMEc4SVaSNHzSVR9AAfLDl6M5J/n7e0N+yvehN21xeKQBaIBNMTVCcAYFc7+kb2RdLaxGptQP54tkMVM4fQg1mg9rCuIXd0DRrnmh6+VpcsWUBtXrdcEKBG4mSzQKVnydtZRMOn0FbAYyV/8cWEz9d riverbed-community",
             "metadata": {
-                "description": "SSH Public Key"
+                "description": "SSH Public Key. By default, community key"
             }
         },
         "steelheadPlan": {
@@ -115,45 +104,12 @@
                 }
             ]
         },
-        "virtualMachineCount":{
-            "type": "int",
-            "minValue": 2,
-            "maxValue" : 150,
-            "defaultValue": 1
-        },
-        "availabilitySetName": {
-            "defaultValue": "[concat(parameters('projectName'),'-sh')]",
-            "type": "string",
-            "metadata": {
-              "description": "Name of the availability set where the appliance will be placed"
-            }
-        },
-        "RequiresLoadbalancer" :{
-            "type" : "bool",
-            "defaultValue" : "[greaterOrEquals(parameters('virtualMachineCount'),2)]",
-            "metadata": {
-              "description": "Set to true to provision a loadbalancer. Only if there is more than 1 appliance"
-            }
-        },
-        "loadbalancer_sh_lb_name" : {
-            "defaultValue": "[concat(parameters('projectName'),'-lb-sh')]",
-            "type": "string",
-            "metadata": {
-              "description": "Name of the loadbalancer"
-            }
-        },
+
         "skipSteelHeadController": {
-            "defaultValue": false,
+            "defaultValue": true,
             "type": "bool",
             "metadata": {
-              "description": "Wether to deploy or not the SteelHead Controller appliance. By default false"
-            }
-        },
-        "publicIpDns": {
-            "type": "string",
-            "defaultValue": "[concat(parameters('projectName'),'-sh-',uniqueString(resourceGroup().id))]",
-            "metadata": {
-              "description": "DNS name for the public ip address"
+              "description": "Wether deploy or not the SteelHead Controller appliance. By default true, to skip"
             }
         }
     },
@@ -167,6 +123,14 @@
         "staticPrivateIP_acceleration": "[concat(variables('prefixStaticPrivateIp_acceleration'),'82')]",
         "subnetName_acceleration": "acceleration",
 
+        "virtualMachineName": "[concat(parameters('projectName'),'-sh')]",
+        "adminUsername": "riverbed-community",
+        "availabilitySetName": "[concat(parameters('projectName'),'-sh')]",
+
+        "publicIpAddressName": "[concat(parameters('projectName'),'-sh-',uniqueString(resourceGroup().id))]",
+
+        "RequiresLoadbalancer" : "[greaterOrEquals(parameters('virtualMachineCount'),2)]",
+        "loadbalancer_sh_lb_name" : "[concat(parameters('projectName'),'-lb-sh')]",
         "lbBackendPoolName" : "steelhead-cluster",
 
         "diagnosticsStorageAccountName": "[concat(uniquestring(resourceGroup().id), 'diag')]"
@@ -174,11 +138,11 @@
     "resources": [
 
         {
-            "condition" : "[parameters('RequiresLoadbalancer')]",
+            "condition" : "[variables('RequiresLoadbalancer')]",
             "type": "Microsoft.Network/loadBalancers",
             "apiVersion": "2019-09-01",
             "location": "[parameters('location')]",
-            "name": "[parameters('loadbalancer_sh_lb_name')]",
+            "name": "[variables('loadbalancer_sh_lb_name')]",
             "sku": {
                 "name": "Standard"
             },
@@ -207,7 +171,7 @@
                         "name": "lb-rule-availability",
                         "properties": {
                             "frontendIPConfiguration": {
-                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadbalancer_sh_lb_name')), '/frontendIPConfigurations/acceleration')]"
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('loadbalancer_sh_lb_name')), '/frontendIPConfigurations/acceleration')]"
                             },
                             "frontendPort": 0,
                             "backendPort": 0,
@@ -218,10 +182,10 @@
                             "loadDistribution": "Default",
                             "disableOutboundSnat": false,
                             "backendAddressPool": {
-                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadbalancer_sh_lb_name')), '/backendAddressPools/',variables('lbBackendPoolName'))]"
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('loadbalancer_sh_lb_name')), '/backendAddressPools/',variables('lbBackendPoolName'))]"
                             },
                             "probe": {
-                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', parameters('loadbalancer_sh_lb_name')), '/probes/check-https-open')]"
+                                "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('loadbalancer_sh_lb_name')), '/probes/check-https-open')]"
                             }
                         }
                     }
@@ -260,14 +224,14 @@
             "type": "Microsoft.Network/networkInterfaces",
             "apiVersion": "2019-09-01",
             "location": "[parameters('location')]",
-            "name": "[concat(parameters('virtualMachineName'), copyIndex(variables('virtualMachineStartId')), '-PRI')]",
+            "name": "[concat(variables('virtualMachineName'), copyIndex(variables('virtualMachineStartId')), '-PRI')]",
             "copy": {
                 "name": "NICcopy",
                 "count": "[parameters('virtualMachineCount')]"
               },
             "dependsOn": [
-                "[concat('Microsoft.Network/publicIpAddresses/', parameters('publicIpAddressName'))]",
-                "[resourceId('Microsoft.Network/loadBalancers',parameters('loadbalancer_sh_lb_name'))]"
+                "[concat('Microsoft.Network/publicIpAddresses/', variables('publicIpAddressName'))]",
+                "[resourceId('Microsoft.Network/loadBalancers',variables('loadbalancer_sh_lb_name'))]"
             ],
             "properties": {
                 "ipConfigurations": [
@@ -283,7 +247,7 @@
                             "privateIPAddress": "[concat(variables('prefixStaticPrivateIp_acceleration'),copyIndex(variables('virtualMachineStartId')))]",
                             "loadBalancerBackendAddressPools" : [
                                 {
-                                    "id" : "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools',parameters('loadbalancer_sh_lb_name'),variables('lbBackendPoolName'))]"
+                                    "id" : "[resourceId('Microsoft.Network/loadBalancers/backendAddressPools',variables('loadbalancer_sh_lb_name'),variables('lbBackendPoolName'))]"
                                 }
                             ]
                         }                        
@@ -297,7 +261,7 @@
             "type": "Microsoft.Network/publicIpAddresses",
             "apiVersion": "2019-09-01",
             "location": "[parameters('location')]",
-            "name": "[parameters('publicIpAddressName')]",
+            "name": "[variables('publicIpAddressName')]",
             "properties": {
                 "publicIpAllocationMethod": "Static"
             },
@@ -307,7 +271,7 @@
         },
         
         {
-            "name": "[parameters('availabilitySetName')]",
+            "name": "[variables('availabilitySetName')]",
             "type": "Microsoft.Compute/availabilitySets",
             "apiVersion": "2019-03-01",
             "location": "[resourceGroup().location]",
@@ -329,7 +293,7 @@
                 "name": "DataDiskcopy",
                 "count": "[parameters('virtualMachineCount')]"
             },
-            "name": "[concat(parameters('virtualMachineName'), copyIndex(variables('virtualMachineStartId')), '-dataDisk')]",
+            "name": "[concat(variables('virtualMachineName'), copyIndex(variables('virtualMachineStartId')), '-dataDisk')]",
             "properties":  {
                 "diskSizeGB": "[parameters('dataDiskSizeGB')]",
                 "creationData": {
@@ -349,12 +313,12 @@
                 "name": "VMcopy",
                 "count": "[parameters('virtualMachineCount')]"
             },
-            "name": "[concat(parameters('virtualMachineName'), copyIndex(variables('virtualMachineStartId')))]",
+            "name": "[concat(variables('virtualMachineName'), copyIndex(variables('virtualMachineStartId')))]",
             "dependsOn": [
-                "[concat('Microsoft.Compute/availabilitySets/', parameters('availabilitySetName'))]",
+                "[concat('Microsoft.Compute/availabilitySets/', variables('availabilitySetName'))]",
                 "[concat('Microsoft.Storage/storageAccounts/', variables('diagnosticsStorageAccountName'))]",
-                "[resourceId('Microsoft.Compute/disks',concat(parameters('virtualMachineName'), copyIndex(variables('virtualMachineStartId')), '-dataDisk'))]",
-                "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('virtualMachineName'), copyIndex(variables('virtualMachineStartId')), '-PRI'))]"
+                "[resourceId('Microsoft.Compute/disks',concat(variables('virtualMachineName'), copyIndex(variables('virtualMachineStartId')), '-dataDisk'))]",
+                "[resourceId('Microsoft.Network/networkInterfaces', concat(variables('virtualMachineName'), copyIndex(variables('virtualMachineStartId')), '-PRI'))]"
             ],
             "properties": {
                 "hardwareProfile": {
@@ -375,7 +339,7 @@
                             "caching": "ReadOnly",
                             "writeAcceleratorEnabled": false,
                             "managedDisk":{
-                                "id": "[resourceId('Microsoft.Compute/disks',concat(parameters('virtualMachineName'), copyIndex(variables('virtualMachineStartId')), '-dataDisk'))]"
+                                "id": "[resourceId('Microsoft.Compute/disks',concat(variables('virtualMachineName'), copyIndex(variables('virtualMachineStartId')), '-dataDisk'))]"
                             }
                         }
                     ]
@@ -383,19 +347,19 @@
                 "networkProfile": {
                     "networkInterfaces": [
                         {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(parameters('virtualMachineName'), copyIndex(variables('virtualMachineStartId')), '-PRI'))]"
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(variables('virtualMachineName'), copyIndex(variables('virtualMachineStartId')), '-PRI'))]"
                         }
                     ]
                 },
                 "osProfile": {
-                    "computerName": "[parameters('virtualMachineName')]",
-                    "adminUsername": "[parameters('adminUsername')]",
+                    "computerName": "[variables('virtualMachineName')]",
+                    "adminUsername": "[variables('adminUsername')]",
                     "linuxConfiguration": {
                         "disablePasswordAuthentication": true,
                         "ssh": {
                             "publicKeys": [
                                 {
-                                    "path": "[concat('/home/', parameters('adminUsername'), '/.ssh/authorized_keys')]",
+                                    "path": "[concat('/home/', variables('adminUsername'), '/.ssh/authorized_keys')]",
                                     "keyData": "[parameters('adminPublicKey')]"
                                 }
                             ]
@@ -416,7 +380,7 @@
     "outputs": {
         "adminUsername": {
             "type": "string",
-            "value": "[parameters('adminUsername')]"
+            "value": "[variables('adminUsername')]"
         }
     }
 }
