@@ -12,3 +12,8 @@ Here is how this GMC setup works
 1. Make sure to put the details of only the docker nodes into ```NETIM_DOCKER_NODES``` inside ```netim-docker-gmc.py```
 1. Make sure to put the details for the core node into ```NETIM_CORE``` inside ```netim-docker-gmc.py```
 1. Ensure the paths everywhere in all files are correct for your NetIM instance
+
+Here is the final view in SCPortal
+
+![](https://github.com/ishankapoor/Riverbed-Community-Toolkit/blob/Lightweight-Self-Docker-Monitoring/NetIM/GMC-Library/002-NetIM-GMC-Lightweight-Self-Docker-Monitoring/demo/Portal-Drilldown.jpg)
+![](https://github.com/ishankapoor/Riverbed-Community-Toolkit/blob/Lightweight-Self-Docker-Monitoring/NetIM/GMC-Library/002-NetIM-GMC-Lightweight-Self-Docker-Monitoring/demo/Portal-Overall.jpg)
