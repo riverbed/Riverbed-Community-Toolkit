@@ -1,0 +1,3 @@
+[SampleDataHeader][name=netimdockerstats][metricClass=CM_200922231140]timestamp,container_cpu_util,container_mem_util,container_name
+[TargetInfoHeader]HEADERNAME,SYSNAME
+[TI]netimdockerstats,n31-netimmgr[SI][SD]1603745404000,0.00,0.03,registry

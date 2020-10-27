@@ -1,0 +1,48 @@
+NETIM_DOCKER_STATS DEFINITIONS ::= BEGIN
+
+IMPORTS
+OBJECT-TYPE, mib-2,
+Integer32 FROM SNMPv2-SMI;
+
+host     OBJECT IDENTIFIER ::= { mib-2 1000000 }
+
+childTable OBJECT-TYPE
+    SYNTAX       SEQUENCE OF ChildTableEntry
+    MAX-ACCESS   not-accessible
+    STATUS       current
+    DESCRIPTION  "Child table"
+    ::= { host 1 }
+
+childTableEntry OBJECT-TYPE
+    SYNTAX       ChildTableEntry
+    MAX-ACCESS   not-accessible
+    STATUS       current
+    DESCRIPTION  "Entry in Child table"
+    INDEX        { container_name }
+    ::= { childTable 1 }
+
+ChildTableEntry ::= SEQUENCE {
+    container_name   OCTET STRING,
+	container_cpu_util Integer32,
+	container_mem_util Integer32
+    }
+
+container_cpu_util OBJECT-TYPE
+	SYNTAX	Integer32 (0..4294967295)
+	MAX-ACCESS read-only
+	STATUS	current
+	DESCRIPTION	"Container CPU Utilization"
+	::= { childTableEntry 1 }
+container_mem_util OBJECT-TYPE
+	SYNTAX	Integer32 (0..4294967295)
+	MAX-ACCESS read-only
+	STATUS	current
+	DESCRIPTION	"Container Memory Utilization"
+	::= { childTableEntry 2 }
+container_name OBJECT-TYPE
+	SYNTAX	OCTET STRING
+	MAX-ACCESS read-only
+	STATUS	current
+	DESCRIPTION	"Container Name"
+	::= { childTableEntry 3 }
+END
