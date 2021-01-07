@@ -1,19 +1,19 @@
 {
-    "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.191120",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.201023",
     "parameters": {
-        "projectName": {
-            "type": "string",
-            "defaultValue": "azu",
-            "metadata": {
-                "description": "Site name"
-            }
-        },
         "location": {
             "type": "string",
             "defaultValue": "[resourceGroup().location]",
             "metadata": {
                 "description": "Location for the resources."
+            }
+        },
+        "projectName": {
+            "type": "string",
+            "defaultValue": "community",
+            "metadata": {
+                "description": "Prefix added to resource name. Ex. a site name"
             }
         },
         "integrationServiceEnvironmentName": {

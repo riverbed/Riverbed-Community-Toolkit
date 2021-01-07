@@ -29,11 +29,12 @@ The technical solution exists in different form factors so that it can be deploy
 
 ### Cookbooks for Azure
 
-- [Azure-101 - Chaining Acceleration in a VNET having a gateway appliance (VPN or SD-WAN)](Azure-Cloud-Cookbooks/101-service-chain-gw-appliance.md)
-- [Azure-102 - Acceleration Load-Balancing and Scale Out in Azure](Azure-Cloud-Cookbooks/102-scale-out.md)
+- [Azure-101 - Chaining Acceleration in a VNET having a gateway appliance (VPN or SD-WAN)](Azure-Cloud-Cookbooks/101-service-chain-gw-appliance)
+- [Azure-102 - Acceleration Load-Balancing and Scale Out in Azure](Azure-Cloud-Cookbooks/102-scale-out)
+- [Azure-103 - Cluster of 2 active Cloud SteelHead appliances](Azure-Cloud-Cookbooks/103-deploy-active-active)
 - [Azure-300 - PowerShell script to configure Route Tables for Service Chaining](Azure-ServiceChain)
 
-*Other topcis in preparation: - Active/Passive, Monitoring, VNET to VNET Acceleration, MTTR/Availability, SteelConnect SD-WAN, 3rd party SD-WAN, ExpressRoute, AzureVWAN, Azure Virtual Gateway*
+*Other topics in preparation: - Active/Passive, Monitoring, VNET to VNET Acceleration, MTTR/Availability, SteelConnect SD-WAN, 3rd party SD-WAN, ExpressRoute, AzureVWAN, Azure Virtual Gateway*
 
 ## License
 

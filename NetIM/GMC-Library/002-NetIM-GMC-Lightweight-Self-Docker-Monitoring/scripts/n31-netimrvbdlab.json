@@ -1,0 +1,51 @@
+{"items": [
+    {
+      "name": "n31-netimwrk",
+      "displayName": "n31-netimwrk",
+      "deviceName": "n31-netimwrk",
+      "accessAddress": "10.99.31.77",
+       "deviceAccessInfo": {
+        "name": "n31-netimwrk",
+        "displayName": "n31-netimwrk",
+        "id": "1",
+        "active": true,
+        "activeCLIConfigCollection": false,
+        "activeMIBConfigCollection": false,
+        "activeWMIConfigCollection": false,
+        "activeMetricsCollection": false
+      }
+    },
+	{
+      "name": "n31-netimmgr",
+      "displayName": "n31-netimmgr",
+      "deviceName": "n31-netimmgr",
+      "accessAddress": "10.99.31.76",
+       "deviceAccessInfo": {
+        "name": "n31-netimmgr",
+        "displayName": "n31-netimmgr",
+        "id": "1",
+        "active": true,
+        "activeCLIConfigCollection": false,
+        "activeMIBConfigCollection": false,
+        "activeWMIConfigCollection": false,
+        "activeMetricsCollection": false
+      }
+	},
+	{
+      "name": "n31-netimdatamgr",
+      "displayName": "n31-netimdatamgr",
+      "deviceName": "n31-netimdatamgr",
+      "accessAddress": "10.99.31.78",
+       "deviceAccessInfo": {
+        "name": "n31-netimdatamgr",
+        "displayName": "n31-netimdatamgr",
+        "id": "1",
+        "active": true,
+        "activeCLIConfigCollection": false,
+        "activeMIBConfigCollection": false,
+        "activeWMIConfigCollection": false,
+        "activeMetricsCollection": false
+      }
+    }]
+}
+

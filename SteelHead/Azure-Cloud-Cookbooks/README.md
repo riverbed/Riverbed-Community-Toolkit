@@ -1,9 +1,10 @@
 # Community Cloud Cookbooks for Riverbed Acceleration in Azure
 
-Riverbed shares some cookbooks with the user community to help integrating Acceleration in Azure.
+Riverbed is sharing the cookbooks with the user community to help integrating Acceleration in Azure.
 
-- [101 - Chaining Acceleration in a VNET having a gateway appliance (VPN or SD-WAN)](101-service-chain-gw-appliance.md)
-- [102 - Acceleration Scale Out in Azure](102-scale-out.md)
+- [101 - Chaining Acceleration in a VNET having a gateway appliance (VPN or SD-WAN)](./101-service-chain-gw-appliance)
+- [102 - Acceleration Scale Out in Azure](./102-scale-out)
+- [103 - Cluster of 2 active Cloud SteelHead](./103-deploy-active-active)
 
 ### License
 

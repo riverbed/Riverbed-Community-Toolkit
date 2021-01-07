@@ -194,6 +194,21 @@ resource "azurerm_network_security_group" "rvbd_nsg" {
 # Security group rules
 # TODO: limit exposure on Internet
 resource "azurerm_network_security_rule" "rvbd_nsg_rule1" {
+	name                       = "SteelConnect-EX_ICMP"
+	description                = "Simple rule allowing all TCP"
+	priority                   = 101
+	direction                  = "Inbound"
+	access                     = "Allow"
+	protocol                   = "Icmp"
+	source_port_range          = "*"
+	destination_port_range     = "*"
+	source_address_prefix      = "*"
+	destination_address_prefix = azurerm_network_interface.controller_nic_3.private_ip_address
+	resource_group_name        = azurerm_resource_group.rvbd_rg.name
+	network_security_group_name = azurerm_network_security_group.rvbd_nsg.name
+}
+
+resource "azurerm_network_security_rule" "rvbd_nsg_rule2" {
 	name                       = "SteelConnect-EX_TCP"
 	description                = "Simple rule allowing all TCP"
 	priority                   = 151
@@ -207,7 +222,7 @@ resource "azurerm_network_security_rule" "rvbd_nsg_rule1" {
 	resource_group_name        = azurerm_resource_group.rvbd_rg.name
 	network_security_group_name = azurerm_network_security_group.rvbd_nsg.name
 }
-resource "azurerm_network_security_rule" "rvbd_nsg_rule2" {
+resource "azurerm_network_security_rule" "rvbd_nsg_rule3" {
 	name                       = "SteelConnect-EX_UDP"
 	description                = "Simple rule allowing all UDP"
 	priority                   = 201
@@ -221,7 +236,7 @@ resource "azurerm_network_security_rule" "rvbd_nsg_rule2" {
 	resource_group_name        = azurerm_resource_group.rvbd_rg.name
 	network_security_group_name = azurerm_network_security_group.rvbd_nsg.name
 }
-resource "azurerm_network_security_rule" "rvbd_nsg_rule3" {
+resource "azurerm_network_security_rule" "rvbd_nsg_rule4" {
 	name                       = "SteelConnect-EX_Outbound"
 	description                = "Simple rule allowing all Outbound"
 	priority                   = 251
@@ -235,7 +250,7 @@ resource "azurerm_network_security_rule" "rvbd_nsg_rule3" {
 	resource_group_name        = azurerm_resource_group.rvbd_rg.name
 	network_security_group_name = azurerm_network_security_group.rvbd_nsg.name
 }
-resource "azurerm_network_security_rule" "rvbd_nsg_rule4" {
+resource "azurerm_network_security_rule" "rvbd_nsg_rule5" {
 	name                       = "SteelConnect-EX_Inbound"
 	description                = "Simple rule allowing any inbound initiated from the VNET"
 	priority                   = 301

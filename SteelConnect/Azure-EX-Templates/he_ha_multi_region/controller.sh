@@ -27,6 +27,19 @@ iface lo inet loopback
 # The primary network interface
 auto eth0
 iface eth0 inet dhcp
+offload-gro off
+
+auto eth1
+iface eth1 inet dhcp
+offload-gro off
+
+auto eth2
+iface eth2 inet dhcp
+offload-gro off
+
+auto eth3
+iface eth3 inet dhcp
+offload-gro off
 EOF
 echo -e "Modified /etc/network/interface file. Refer below new interface file content:\n`cat /etc/network/interfaces`" >> $log_path
 

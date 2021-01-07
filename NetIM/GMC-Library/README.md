@@ -14,8 +14,9 @@ Links:
 
 | Folder | Description |
 | --- | --- |
-| [000 - GMC Template](000-NetIM-GMC-Template/) | Template for new GMC folder. Simply copy and remane it |
+| [000 - GMC Template](000-NetIM-GMC-Template/) | Template for new GMC folder. Simply copy and rename it |
 | [001 - Azure Bandwidth Cost](001-NetIM-GMC-Azure-Bandwidth-Cost/) | Access Azure API to monitor the Network Bandwidth Costs |
+| [002 - Lightweight Self Docker Monitoring](002-NetIM-GMC-Lightweight-Self-Docker-Monitoring/) | Lighweight NetIM Self Docker Monitoing |
 
 
 ## How to contribute?
