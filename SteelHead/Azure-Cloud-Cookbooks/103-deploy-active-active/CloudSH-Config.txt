@@ -1,0 +1,76 @@
+############################################################################# 
+# Copyright (c) 2017 Riverbed Technology, Inc.                              #
+#                                                                           #
+# This software is licensed under the terms and conditions of the MIT       # 
+# License accompanying the software (“License”).  This software is          #
+# distributed “AS IS” as set forth in the License.                          #
+#                                                                           #
+#                                                                           #
+# Copy and paste the following commands to configure the CloudSH in Azure   # 
+# - Obtain the token from the cloud portal                                  #  
+# - Change the hostname as necessary                                        # 
+# - Set the CloudSH to the correct time zone                                # 
+############################################################################# 
+  
+   
+# Enter the token from the cloud portal 
+  license client init <token> 
+   
+# Configure hostname  
+  hostname <hostname> 
+   
+# Set the timezone 
+# e.g. clock timezone America North United_States Central 
+#      clock timezone Asia Southeast Singapore 
+#      clock timezone Europe Western Amsterdam 
+  clock timezone <timezone> 
+  
+# Disable simplified routing and agent intercept 
+  no in-path simplified routing 
+  no in-path agent-intercept enable 
+  
+# Enable SSOOP 
+  out-of-path enable 
+  
+# Enable SSL and TLS 1.2 
+  protocol ssl enable 
+  protocol ssl backend client-tls-1.2 
+  protocol ssl backend server-tls-1.2 
+  secure-peering peer-tls-1.2 
+  secure-peering traffic-type "all" 
+  no secure-peering fallback-no-enc  enable 
+  
+# Enable MoH and OA 
+  protocol eos moh enable 
+  
+# Disable CMC 
+  no cmc enable 
+  
+## Netflow Export Service 
+  stats settings app-vis enable 
+     
+# Configure QoS 
+  application CustomMXTCP traffic-type Optimized local-net 0.0.0.0/0 remote-net 0.0.0.0/0 
+  qos profile MXTCP 
+  qos profile MXTCP class Default parent Root 
+  qos profile MXTCP class MXTCP parent Root 
+  qos profile MXTCP rule application CustomMXTCP class MXTCP dscp Preserve position 1 
+  qos profile MXTCP class-params class Default priority 1 min-bw 1.0 max-bw 100.0 ob-queue SFQ  
+  qos profile MXTCP class-params class MXTCP priority 1 min-bw 1.0 max-bw 100.0 ob-queue MX-TCP  
+  topology site DefaultSite out-qos-profile MXTCP in-qos-profile Default 
+
+# Enable QoS 
+  qos outbound interface primary enable     
+  qos outbound shaping enable 
+     
+# Generate SSL certs on CloudSH 
+  protocol ssl server-cert name 2stars generate-cert rsa  common-name *.* key-size 2048 valid-days 3650 
+  protocol ssl server-cert name 3stars generate-cert rsa  common-name *.*.* key-size 2048 valid-days 3650 
+  protocol ssl server-cert name 4stars generate-cert rsa  common-name *.*.*.* key-size 2048 valid-days 3650 
+  
+# Commit configuration 
+  wr mem 
+ 
+# Restart service 
+  restart 
+  
