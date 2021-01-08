@@ -2,9 +2,9 @@
 
 Here are some cookbooks for [Client Accelerator](https://www.riverbed.com/products/steelhead/client-accelerator.html)
 
-## Terraform to deploy in Azure
+## Deploy a Client Accelerator Controller in Azure with Terraform
 
-The terraform template to automate your [Client Accelerator Controller](Azure/Terraform) deployment in Azure.
+The [terraform template](Azure/Terraform) automate a Client Accelerator Controller instance deployment in Azure.
 
 ## Interact with the Controller REST API
 
