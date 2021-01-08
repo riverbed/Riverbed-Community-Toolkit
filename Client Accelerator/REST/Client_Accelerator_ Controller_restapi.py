@@ -2,10 +2,11 @@ import json
 import requests
 import base64
 
-#replace xxxx with fqdn of the SCCM
+#replace xxxx with fqdn or the ip of the Client Accelerator Controller ex. https://my-controlller.local
 controller="xxxxx"
-#replace xxxx with access_code generated on the SCCM page
-#https://host/mgmt/gui?p=setupRESTInterface
+
+#replace xxxx with access_code generated on the Client Accelerator Controller page
+#https://my-controlller.local/mgmt/gui?p=setupRESTInterface
 access_code='xxxxx'
 
 
