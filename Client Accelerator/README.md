@@ -1,6 +1,14 @@
-# Client Accelerator Controller
+# Client Accelerator
 
-Here is a first [Python script example](REST/Client_Accelerator_Controller_restapi.py) showing how to connect to the Client Accelerator Controller API.
+Here are some cookbooks for [Client Accelerator](https://www.riverbed.com/products/steelhead/client-accelerator.html)
+
+## Terraform to deploy in Azure
+
+The terraform template to automate your [Client Accelerator Controller](Azure/Terraform) deployment in Azure.
+
+## Interact with the Controller REST API
+
+A nice [Python script example](REST/Client_Accelerator_Controller_restapi.py) showing how to connect to the Client Accelerator Controller API.
 
 For more details please refer to
 
