@@ -1,6 +1,6 @@
 # Client Accelerator Controller
 
-Here is a first [Python script example](REST/Client_Accelerator_ Controller_restapi.py) showing how to connect to the Client Accelerator Controller API.
+Here is a first [Python script example](REST/Client_Accelerator_Controller_restapi.py) showing how to connect to the Client Accelerator Controller API.
 
 For more details please refer to
 
