@@ -1,0 +1,17 @@
+---
+- name: AppResponce list sources
+  hosts: localhost
+  vars:
+    host: "hostname_or_ip_address"
+    username: "some_username"
+    password: "some_password"
+
+  tasks:
+    - name: List sources on AppResponce
+      list_sources:
+        host: "{{ host }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+      register: result
+
+    - debug: var=result
