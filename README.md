@@ -7,7 +7,7 @@ A public toolkit for Riverbed Solution engineering and integration
 | [SteelHead](/SteelHead) | Community Cloud Cookbooks: scripts and howto to deploy Acceleration in the Cloud.  | Azure, AWS, PowerShell, ARM |
 | [SteelConnect](/SteelConnect) | Scripts, howtos and templates to deploy SteelConnect headend in Azure | Azure, Terraform, PowerShell |
 | [NetIM](/NetIM/GMC-Library) | Community library to share extensions for NetIM: GMC metrics, custom mibs, Robots, Synthetic-Test | Azure API, Python |
-| [Client Accelerator](/Client%20Accelerator) | Cookbooks using REST API and template to deploy in the Cloud | Python, Azure, REST, Terraform |
+| [Client Accelerator](/Client%20Accelerator) | Cookbooks to interact with the REST API, use Ansible with [SteelScript](https://github.com/riverbed/steelscript), deploy the controller appliance with template in the Cloud | Python, Azure, REST, Terraform |
 | [SteelScript](#) | *work in progress* Examples and use-cases based on [SteelScript Python Library](https://github.com/riverbed/steelscript) | Python |
 | [Portal](#) | *work in progress* Dashboards examples |  |
 | [GNS3](/SteelHead/GNS3) | Artifacts to install SteelHead devices in GNS3 projects | GNS3 |
