@@ -2,8 +2,8 @@
 - name: REST API CAC
   hosts: localhost
   vars:
-    host: "https://myhost.local"
-    access_code: "my_access_code_to_Client_Accelerator_Controller_API"
+    host: "https://my-client-accelerator-controller-host"
+    access_code: "my-access-code"
 
   tasks:
     - name: get Services from CAC via REST API
