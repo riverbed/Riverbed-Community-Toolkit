@@ -12,7 +12,7 @@ Here is a example of an [ansible module](modules/list_sources.py) showing how to
 
 ## Example output:
 
-[ouput.txt](ouput.txt)
+[output.txt](output.txt)
 
 
 ## Copyright (c) 2021 Riverbed Technology
