@@ -28,7 +28,7 @@ class ClientAcceleratorControllerCLIApp(Application):
         self.access_code = code
 
     def main(self):
-        cac = Service("appliance", self.host, auth=OAuth(self.access_code))
+        cac = Service("cac", self.host, auth=OAuth(self.access_code))
 
         path = self.api_url
         content_dict = cac.conn.json_request('GET', path)
