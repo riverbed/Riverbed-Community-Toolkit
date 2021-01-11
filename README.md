@@ -12,6 +12,6 @@ A public toolkit for Riverbed Solution engineering and integration
 | [SteelConnect](/SteelConnect) | Scripts, howtos and templates to deploy SteelConnect headend in Azure | Azure, Terraform, PowerShell |
 | [SteelScript](#) | *work in progress* Examples and use-cases based on [SteelScript Python Library](https://github.com/riverbed/steelscript) | Python |
 | [GNS3](/SteelHead/GNS3) | Artifacts to install SteelHead devices in GNS3 projects | GNS3 |
-| [Aternity](/Aternity) | Library of Application Signatures and Remediations for Aternity EUE. Includes Remediation scripts able to interact with Client Accelerator (SteelHead Mobile) | Azure, Windows, PowerShell  |
+| [Windows](/Windows) | Library Remediations scripts (including script to interact with Client Accelerator (a.k.a SteelHead Mobile), Application Signatures [Aternity](https://www.aternity.com/) | Azure, Windows, PowerShell  |
 
 ## Copyright (c) 2021 Riverbed Technology
