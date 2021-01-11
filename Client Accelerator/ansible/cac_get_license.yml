@@ -1,0 +1,25 @@
+---
+- name: REST API CAC
+  hosts: localhost
+  vars:
+    host: "https://myhost.local"
+    access_code: "my_access_code_to_Client_Accelerator_Controller_API"
+
+  tasks:
+    - name: get Services from CAC via REST API
+      cac_rest_api:
+        host: "{{ host }}"
+        api_url: "/api/appliance/1.0.0/services"
+        access_code: "{{ access_code }}"
+      register: result
+
+    - debug: var=result
+
+    - name: get Licenses from CAC via REST API
+      cac_rest_api:
+        host: "{{ host }}"
+        api_url: "/api/appliance/1.0.0/status/license"
+        access_code: "{{ access_code }}"
+      register: result
+
+    - debug: var=result
