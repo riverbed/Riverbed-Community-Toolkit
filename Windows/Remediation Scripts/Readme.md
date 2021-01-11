@@ -42,7 +42,7 @@ Set-ExecutionPolicy Unrestricted -Scope Process
 Output example:
 
 ```output
-    Directory: C:\Riverbed-Community-Toolkit\Aternity\Remediation
+    Directory: C:\Riverbed-Community-Toolkit\Windows\Remediation Scripts
 
 
 Mode                LastWriteTime         Length Name
