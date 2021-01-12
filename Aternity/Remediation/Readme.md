@@ -1,6 +1,6 @@
-# Remediation scripts
+# Windows Scripts Library
 
-In this repo, you will be able to find examples of Remediation scripts for Windows devices, shared by the Riverbed Community
+In this repository part of the (Riverbed Community Toolkit)[https://github.com/riverbed/Riverbed-Community-Toolkit], you will find some scripts shared by the (Riverbed Community)[Riverbed Community] for Automation, Remediation and Device Healing for Windows. 
 
 Related links:
 
