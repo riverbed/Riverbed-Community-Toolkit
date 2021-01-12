@@ -1,6 +1,6 @@
 # Riverbed Community Toolkit
 
-A public toolkit shared by [Riverbed](https://www.riverbed.com) and the [Riverbed Community](https://community.riverbed.com) for Solution engineering and integration
+A public toolkit shared by [Riverbed](https://www.riverbed.com) and the [Riverbed Community](https://community.riverbed.com) for Solution Engineering and product integration
 
 | Folders | Contents | Related 3rd party technology |
 | --- | --- | --- |
