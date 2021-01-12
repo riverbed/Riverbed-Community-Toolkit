@@ -6,7 +6,7 @@ Related links:
 
 - Ask the Riverbed community: https://community.riverbed.com
 - Watch [how to Improve Service Desk KPIs with Aternity Automated Remediation](https://www.youtube.com/watch?v=01GPFS21A9E)
-- Read [Aternity manual](https://help.aternity.com/search?facetreset=yes&q=remediation)
+- Read [Aternity remediation manual](https://help.aternity.com/search?facetreset=yes&q=remediation)
 - Get scripts from the [Aternity scripts library on GitHub](https://github.com/Aternity/Remediation-Scripts-Library)
 
 ## How to contribute
