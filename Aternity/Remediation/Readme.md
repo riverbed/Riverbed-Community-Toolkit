@@ -1,6 +1,6 @@
 # Windows Scripts Library
 
-In this repository part of the (Riverbed Community Toolkit)[https://github.com/riverbed/Riverbed-Community-Toolkit], you will find some scripts shared by the (Riverbed Community)[Riverbed Community] for Automation, Remediation and Device Healing for Windows. 
+In this repository part of the [Riverbed Community Toolkit](https://github.com/riverbed/Riverbed-Community-Toolkit), you will find some scripts shared by the [Riverbed Community](Riverbed Community) for Automation, Remediation and Device Healing for Windows. 
 
 Related links:
 
