@@ -14,4 +14,11 @@ A public toolkit shared by [Riverbed](https://www.riverbed.com) and the [Riverbe
 | [GNS3](/SteelHead/GNS3) | Artifacts to install SteelHead devices in GNS3 projects | GNS3 |
 | [Windows](/Aternity) | Library of Automation and Remediation scripts for Windows Endpoints - including script to interact with Riverbed Client Accelerator agent (a.k.a SteelHead Mobile), Application Signatures for [Aternity EUEM](https://www.aternity.com/) | Azure, Windows, PowerShell  |
 
+
+## How to contribute?
+
+Feel free to submit any code using [Pull Request](https://github.com/riverbed/Riverbed-Community-Toolkit/pulls) and problems creating [Issues](https://github.com/riverbed/Riverbed-Community-Toolkit/issues).
+
+Thanks for sharing with the [Riverbed Community](https://community.riverbed.com)!
+
 ## Copyright (c) 2021 Riverbed Technology
