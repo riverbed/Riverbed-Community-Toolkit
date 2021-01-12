@@ -1,13 +1,13 @@
 # Windows Scripts Library
 
-In this repository part of the [Riverbed Community Toolkit](https://github.com/riverbed/Riverbed-Community-Toolkit), you will find some scripts shared by the [Riverbed Community](Riverbed Community) for Automation, Remediation and Device Healing for Windows. 
+In this repository part of the [Riverbed Community Toolkit](https://github.com/riverbed/Riverbed-Community-Toolkit), you will find some scripts shared by the [Riverbed Community](https://community.riverbed.com) for Automation, Remediation and Device Healing for Windows. 
 
 Related links:
 
 - Ask the Riverbed community: https://community.riverbed.com
-- Watch how to Improve Service Desk KPIs with SteelCentral Automated Remediation: https://www.youtube.com/watch?v=01GPFS21A9E
+- Watch how to Improve Service Desk KPIs with [Aternity Automated Remediation](https://www.youtube.com/watch?v=01GPFS21A9E)
 - Read Aternity manual https://help.aternity.com/search?facetreset=yes&q=remediation
-- Remediation Scripts Library of Aternity Community https://github.com/Aternity/Remediation-Scripts-Library
+- Get scripts from Aternity scripts library https://github.com/Aternity/Remediation-Scripts-Library
 
 ## How to contribute
 
