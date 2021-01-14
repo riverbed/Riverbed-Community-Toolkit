@@ -31,7 +31,7 @@ The next paragraph explains how to setup from scratch on a Windows machine. It i
 
 ### 2. NetIM agent
 
-1. Download the NetIM TestEngine Agent from the NetIM Manager node
+1. Download the NetIM TestEngine Agent from the **NetIM Manager node**
 
 The installer package can be found on the NetIM Manager node in the following directory: [/data1/riverbed/NetIM/{{version}}/external/TestEngine/](/data1/riverbed/NetIM/{{version}}/external/TestEngine/) (replacing {{version}} according to your environemt)
 
