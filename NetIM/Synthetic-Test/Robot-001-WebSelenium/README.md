@@ -33,15 +33,15 @@ The next paragraph explains how to setup from scratch on a Windows machine. It i
 
 1. Download the NetIM TestEngine Agent installer from the **NetIM Core node**
 
-The installer package can be found on the **NetIM Core node** in the following directory: [/data1/riverbed/NetIM/{{version}}/external/TestEngine/](/data1/riverbed/NetIM/{{version}}/external/TestEngine/) (replacing {{version}} according to your environemt). 
+The installer package can be found on the **NetIM Core node** in the directory /data1/riverbed/NetIM/**{{version}}**/external/TestEngine (replacing {{version}} to match your environment) or /data1/riverbed/NetIM/**latest**/external/TestEngine.
 
-For example :
+The folder contains the package for Linux and Windows (TestEngine-windows.zip, TestEngine-linux.zip). With your favorite SFTP tool, grab the zip file for Windows or use scp from the shell.
 
-```bash
-/data1/riverbed/NetIM/2.2.0_2652/external/TestEngine/TestEngine-windows.zip
+For example:
+
+```PowerShell
+scp netim_admin_username@netim_servername:/data1/riverbed/NetIM/latest/external/TestEngine/TestEngine-*.zip .
 ```
-
-The folder contains the package for Linux and Windows (TestEngine-windows.zip, TestEngine-linux.zip). With your favorite SFTP tool, grab the zip file for Windows.
 
 2. Install the NetIM TestEngine Agent
 
