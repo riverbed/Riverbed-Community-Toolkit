@@ -1,0 +1,64 @@
+# Author: Wim Verhaeghe (wim.verhaeghe@riverbed.com)
+# Version: 2
+# Client Accelerator Controller API doc: https://support.riverbed.com/apis/_products/SteelCentral_Controller_for_SteelHead_Mobile/index.html
+---
+- name: REST API CAC
+  hosts: localhost
+  vars:
+    host: "https://my_cac_hostname or ip address"
+    access_code: "my_access_code"
+
+  tasks:
+    - name: get output from CAC via REST API
+      cac_rest_api:
+        host: "{{ host }}"
+        api_url: "/api/appliance/1.0.0/services"
+        access_code: "{{ access_code }}"
+      register: result
+
+    - debug: var=result
+
+    - name: get SHM endpoints status via REST API
+      cac_rest_api:
+        host: "{{ host }}"
+        api_url: "/api/appliance/1.0.0/status/localEndpoints"
+        access_code: "{{ access_code }}"
+      register: result
+
+    - debug: var=result
+
+    - name: get SHM licenses from CAC via REST API
+      cac_rest_api:
+        host: "{{ host }}"
+        api_url: "/api/appliance/1.0.0/status/license"
+        access_code: "{{ access_code }}"
+      register: result
+
+    - debug: var=result
+
+    - name: get SHM endpoints via REST API
+      cac_rest_api:
+        host: "{{ host }}"
+        api_url: "/api/stats/1.0.0/report/endpoints"
+        access_code: "{{ access_code }}"
+      register: result
+
+    - debug: var=result
+
+    - name: get SHM traffic Summary via REST API
+      cac_rest_api:
+        host: "{{ host }}"
+        api_url: "/api/stats/1.0.0/report/trafficSummary"
+        access_code: "{{ access_code }}"
+      register: result
+
+    - debug: var=result
+
+    - name: get SHM bandwidth Optimization stats via REST API
+      cac_rest_api:
+        host: "{{ host }}"
+        api_url: "/api/stats/1.0.0/report/bwOptimization"
+        access_code: "{{ access_code }}"
+      register: result
+
+    - debug: var=result
