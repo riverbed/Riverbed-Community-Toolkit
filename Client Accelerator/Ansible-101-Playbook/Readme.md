@@ -8,7 +8,7 @@ be sure to use the updated version of the steelscript common/service.py
 ```shell
 #mkdir /usr/lib/python3/dist-packages/ansible/modules/network/riverbed
 #cp modules/cac_rest_api.py /usr/lib/python3/dist-packages/ansible/modules/network/riverbed
-#ansible-playbook cac_get_license.yml
+#ansible-playbook cac_get_api_info.yml
 ```
 
 ## Example output:
