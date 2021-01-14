@@ -1,6 +1,6 @@
 # !/usr/bin/env python
 
-# Copyright (c) 2019 Riverbed Technology, Inc.
+# Copyright (c) 2021 Riverbed Technology, Inc.
 #
 # This software is licensed under the terms and conditions of the MIT License
 # accompanying the software ("License").  This software is distributed "AS IS"
@@ -12,7 +12,7 @@ Show available packet sources.
 
 __author__ = "Wim Verhaeghe"
 __email__ = "wim.verhaeghe@riverbed.com"
-__version__= "1"
+__version__= "2"
 
 from ansible.module_utils.basic import *
 from collections import namedtuple

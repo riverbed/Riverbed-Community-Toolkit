@@ -11,7 +11,7 @@ from __future__ import (absolute_import, unicode_literals, print_function,
 
 __author__ = "Wim Verhaeghe"
 __email__ = "wim.verhaeghe@riverbed.com"
-__version__= "1"
+__version__= "2"
 
 from ansible.module_utils.basic import *
 from steelscript.common.app import Application
@@ -28,7 +28,7 @@ class ClientAcceleratorControllerCLIApp(Application):
         self.access_code = code
 
     def main(self):
-        cac = Service("appliance", self.host, auth=OAuth(self.access_code))
+        cac = Service("cac", self.host, auth=OAuth(self.access_code))
 
         path = self.api_url
         content_dict = cac.conn.json_request('GET', path)
