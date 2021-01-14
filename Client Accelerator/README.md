@@ -17,6 +17,6 @@ For more details please refer to
 
 ## An example of an Ansible playbook interacting with the Client Accelerator Controller
 
-This [ansible playbook](Client%20Accelerator/Ansible-101-Playbook/) shows how to connect to the Client Accelerator Controller. It uses [SteelScript](https://github.com/riverbed/steelscript) to interact with the appliance API.
+This [ansible playbook](Client%20Accelerator/Ansible-101-Playbook/) shows how to connect to the Client Accelerator Controller. It uses [SteelScript Python Library](https://github.com/riverbed/steelscript) to interact with the appliance API.
 
 ## Copyright (c) 2021 Riverbed Technology
