@@ -1,5 +1,5 @@
 ---
-- name: AppResponce list sources
+- name: AppResponse list sources
   hosts: localhost
   vars:
     host: "hostname_or_ip_address"
@@ -7,7 +7,7 @@
     password: "some_password"
 
   tasks:
-    - name: List sources on AppResponce
+    - name: List sources on AppResponse
       list_sources:
         host: "{{ host }}"
         username: "{{ username }}"
