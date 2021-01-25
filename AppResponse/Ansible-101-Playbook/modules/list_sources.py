@@ -12,7 +12,7 @@ Show available packet sources.
 
 __author__ = "Wim Verhaeghe"
 __email__ = "wim.verhaeghe@riverbed.com"
-__version__= "2"
+__version__= "3"
 
 from ansible.module_utils.basic import *
 from collections import namedtuple
@@ -136,9 +136,9 @@ class PacketCaptureApp(AppResponseApp):
 
 def main():
     fields = {
-        "host": {"default": True, "type": "str"},
-        "username": {"default": True, "type": "str"},
-        "password": {"default": True, "type": "str"}
+        "host": {"type": "str"},
+        "username": {"type": "str"},
+        "password": {"type": "str"}
     }
 
     module = AnsibleModule(argument_spec=fields)

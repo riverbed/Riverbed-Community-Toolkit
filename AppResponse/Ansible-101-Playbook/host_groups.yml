@@ -1,0 +1,133 @@
+---
+- name: AppResponse Add hostgroup
+  hosts: localhost
+  vars:
+    host: "some_appresponse_ipv4"
+    username: "my_username"
+    password: "my_password"
+    hostgroup_name: "my_hostgroup"
+    hostgroup_hosts: "192.168.1.10,192.168.1.11,192.168.1.12,192.168.1.13"
+    hostgroup_hosts2: "192.168.1.10,192.168.1.11"
+    hostgroup_hosts3: "192.168.1.10,192.168.1.11,10.10.10.1/32"
+    id: "6"
+    hostgroup_file: "hostgroups_upload_file"
+    id_delete: "7"
+    name_delete: "toto"
+
+  tasks:
+    - name: Add hostgroup on AppResponse
+      host_group_add:
+        host: "{{ host }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+        hostgroup_name: "{{ hostgroup_name }}"
+        hostgroup_hosts: "{{ hostgroup_hosts }}"
+      register: result
+
+    - debug: var=result
+
+    - name: show hostgroups on AppResponse
+      host_group_show:
+        host: "{{ host }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+      register: result
+
+    - debug: var=result
+
+    - name: Update hostgroups by ID on AppResponse
+      host_group_update:
+        host: "{{ host }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+        hostgroup_id: "{{ id }}"
+        hostgroup_hosts: "{{ hostgroup_hosts2 }}"
+      register: result
+
+    - debug: var=result
+
+    - name: show hostgroups on AppResponse
+      host_group_show:
+        host: "{{ host }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+      register: result
+
+    - debug: var=result
+
+    - name: Update hostgroups by Name on AppResponse
+      host_group_update:
+        host: "{{ host }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+        hostgroup_name: "{{ hostgroup_name }}"
+        hostgroup_hosts: "{{ hostgroup_hosts3 }}"
+      register: result
+
+    - debug: var=result
+
+    - name: show hostgroups on AppResponse
+      host_group_show:
+        host: "{{ host }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+      register: result
+
+    - debug: var=result
+
+    - name: Upload File with hostgroups to AppResponse
+      host_group_upload:
+        host: "{{ host }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+        hostgroup_file: "{{ hostgroup_file }}"
+      register: result
+
+    - debug: var=result
+
+    - name: show hostgroups on AppResponse
+      host_group_show:
+        host: "{{ host }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+      register: result
+
+    - debug: var=result
+
+    - name: Delete hostgroup by id on AppResponse
+      host_group_delete:
+        host: "{{ host }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+        hostgroup_id: "{{ id_delete }}"
+      register: result
+
+    - debug: var=result
+
+    - name: show hostgroups on AppResponse
+      host_group_show:
+        host: "{{ host }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+      register: result
+
+    - debug: var=result
+
+    - name: Delete hostgroup by name on AppResponse
+      host_group_delete:
+        host: "{{ host }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+        hostgroup_name: "{{ name_delete }}"
+      register: result
+
+    - debug: var=result
+
+    - name: show hostgroups on AppResponse
+      host_group_show:
+        host: "{{ host }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+      register: result
+
+    - debug: var=result
