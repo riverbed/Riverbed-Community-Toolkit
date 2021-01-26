@@ -1,21 +1,63 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
-# Copyright (c) 2021 Riverbed Technology, Inc.
-#
-# This software is licensed under the terms and conditions of the MIT License
-# accompanying the software ("License").  This software is distributed "AS IS"
-# as set forth in the License.
+# Copyright (c) 2021 Riverbed Technology Inc.
+# The MIT License (MIT) (see https://opensource.org/licenses/MIT)
 
+DOCUMENTATION = """
+---
+module: host_group_delete
+author: Wim Verhaeghe (@rvbd-wimv)
+short_description: delete a hostgroup from Riverbed AppResponse appliance
+options:
+    host:
+        description:
+            - Hostname or IP Address of the AppResponse appliance.
+        required: True
+    username:
+        description:
+            - Username used to login to the AppResponse appliance.
+        required: True
+    password:
+        description:
+            - Password used to login to the AppResponse appliance
+        required: True
+    hostgroup_id:
+        description:
+            - ID of the AppResponse hostgroup to delete
+    hostgroup_name:
+        description:
+            - Name of the AppResponse hostgroup to delete
 """
-Host Group information on AppResponse appliance:
-Delete one host group
+EXAMPLES = """
+#Usage Example
+    - name: Delete a hostgroup by hostgroup name on the AppResponse
+      host_group_delete:
+        host: 192.168.1.1
+        username: admin
+        password: admin
+        hostgroup_name: my_hostgroup_name
+      register: results
+    - debug: var=results
+    
+    - name: Delete a hostgroup by hostgroup ID on the AppResponse
+      host_group_delete:
+        host: 192.168.1.1
+        username: admin
+        password: admin
+        hostgroup_id: 6
+      register: results
+    - debug: var=results
 """
+RETURN = r'''
+msg:
+    description: Status on deletion of the hostgroup
+    returned: always
+    type: str
+'''
 
-__author__ = "Wim Verhaeghe"
-__email__ = "wim.verhaeghe@riverbed.com"
-__version__= "1"
 
-from ansible.module_utils.basic import *
+from ansible.module_utils.basic import AnsibleModule
 from steelscript.appresponse.core.app import AppResponseApp
 from steelscript.appresponse.core.appresponse import AppResponse
 from steelscript.common.service import UserAuth
@@ -30,7 +72,7 @@ class HostGroupApp(AppResponseApp):
         self.name = name
 
 
-    def main(self):
+    def main(self,module):
 
         try:
             if self.id:
@@ -42,17 +84,17 @@ class HostGroupApp(AppResponseApp):
 
             hg.delete()
             results = "Successfully deleted hostgroup with ID/name {}".format(self.id or self.name)
-            return results
+            module.exit_json(changed=True,msg=results)
 
-        except RvbdHTTPException:
+        except RvbdHTTPException as e:
             results = "Error deleting hostgroup with ID/name {}".format(self.id or self.name)
-            return results
+            module.fail_json(changed=False,msg=results,reason=str(e))
 
 def main():
     fields = {
-        "host": {"type": "str"},
-        "username": {"type": "str"},
-        "password": {"type": "str"},
+        "host": {"required": True, "type": "str"},
+        "username": {"required": True, "type": "str"},
+        "password": {"required": True, "type": "str", "no_log": True},
         "hostgroup_id": {"default": None, "type": "str"},
         "hostgroup_name": {"default": None, "type": "str"}
     }
@@ -64,9 +106,7 @@ def main():
     t = HostGroupApp(module.params['hostgroup_id'],module.params['hostgroup_name'])
     t.appresponse = my_ar
 
-    results = t.main()
-
-    module.exit_json(changed=True, meta=results)
+    t.main(module)
 
 
 if __name__ == '__main__':

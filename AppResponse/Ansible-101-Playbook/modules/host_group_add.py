@@ -1,21 +1,56 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
-# Copyright (c) 2021 Riverbed Technology, Inc.
-#
-# This software is licensed under the terms and conditions of the MIT License
-# accompanying the software ("License").  This software is distributed "AS IS"
-# as set forth in the License.
+# Copyright (c) 2021 Riverbed Technology Inc.
+# The MIT License (MIT) (see https://opensource.org/licenses/MIT)
 
+DOCUMENTATION = """
+---
+module: host_group_add
+author: Wim Verhaeghe (@rvbd-wimv)
+short_description: Add a hostgroup to Riverbed AppResponse appliance
+options:
+    host:
+        description:
+            - Hostname or IP Address of the AppResponse appliance.
+        required: True
+    username:
+        description:
+            - Username used to login to the AppResponse appliance.
+        required: True
+    password:
+        description:
+            - Password used to login to the AppResponse appliance
+        required: True
+    hostgroup_name:
+        description:
+            - Name of the AppResponse hostgroup
+        required: True
+    hostgroup_hosts:
+        description:
+            - List of hosts groups to be added to the AppResponse hostgroup
+        required: True
 """
-Host Group information on AppResponse appliance:
-Add one host group
+EXAMPLES = """
+#Usage Example
+    - name: Add a hostgroup to the AppResponse
+      host_group_add:
+        host: 192.168.1.1
+        username: admin
+        password: admin
+        hostgroup_name: my_hostgroup_name
+        hostgroup_hosts: 10.10.10.0/24,192.168.3.4/32,192.168.10.10
+      register: results
+    - debug: var=results
 """
+RETURN = r'''
+msg:
+    description: Status on creating the hostgroup
+    returned: always
+    type: str
+'''
 
-__author__ = "Wim Verhaeghe"
-__email__ = "wim.verhaeghe@riverbed.com"
-__version__= "1"
-
-from ansible.module_utils.basic import *
+from ansible.module_utils.basic import AnsibleModule
 from steelscript.appresponse.core.app import AppResponseApp
 from steelscript.appresponse.core.classification import HostGroupConfig
 from steelscript.appresponse.core.appresponse import AppResponse
@@ -30,7 +65,7 @@ class HostGroupApp(AppResponseApp):
         self.name = name
         self.hosts = hosts
 
-    def main(self):
+    def main(self,module):
 
         try:
             hg = HostGroupConfig(name=self.name,
@@ -38,18 +73,19 @@ class HostGroupApp(AppResponseApp):
                                  enabled=True)
             ret = self.appresponse.classification.create_hostgroup(hg)
             results = "Successfully created hostgroup '{}'".format(ret.data.name)
-            return results
-        except RvbdHTTPException:
-            results = "Error creating hostgroup '{}'".format(self.name)+", group already exists"
-            return results
+            module.exit_json(changed=True,msg=results)
+
+        except RvbdHTTPException as e:
+            results = "Error creating hostgroup '{}'".format(self.name)
+            module.fail_json(changed=False, msg=results, reason=str(e))
 
 def main():
     fields = {
-        "host": {"type": "str"},
-        "username": {"type": "str"},
-        "password": {"type": "str"},
-        "hostgroup_name": {"default": None, "type": "str"},
-        "hostgroup_hosts": {"default": None, "type": "str"}
+        "host": {"required": True, "type": "str"},
+        "username": {"required": True, "type": "str"},
+        "password": {"required": True, "type": "str", "no_log": True},
+        "hostgroup_name": {"required": True, "default": None, "type": "str"},
+        "hostgroup_hosts": {"required": True, "default": None, "type": "str"}
     }
 
     module = AnsibleModule(argument_spec=fields)
@@ -59,9 +95,7 @@ def main():
     t = HostGroupApp(module.params['hostgroup_name'],module.params['hostgroup_hosts'])
     t.appresponse = my_ar
 
-    results = t.main()
-
-    module.exit_json(changed=True, meta=results)
+    t.main(module)
 
 
 if __name__ == '__main__':

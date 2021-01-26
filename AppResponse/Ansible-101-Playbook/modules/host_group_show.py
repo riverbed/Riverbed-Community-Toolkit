@@ -1,25 +1,52 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
-# Copyright (c) 2021 Riverbed Technology, Inc.
-#
-# This software is licensed under the terms and conditions of the MIT License
-# accompanying the software ("License").  This software is distributed "AS IS"
-# as set forth in the License.
+# Copyright (c) 2021 Riverbed Technology Inc.
+# The MIT License (MIT) (see https://opensource.org/licenses/MIT)
 
+DOCUMENTATION = """
+---
+module: host_group_show
+author: Wim Verhaeghe (@rvbd-wimv)
+short_description: Show the hostgroups available in a Riverbed AppResponse appliance
+options:
+    host:
+        description:
+            - Hostname or IP Address of the AppResponse appliance.
+        required: True
+    username:
+        description:
+            - Username used to login to the AppResponse appliance.
+        required: True
+    password:
+        description:
+            - Password used to login to the AppResponse appliance
+        required: True
 """
-Host Group information on AppResponse appliance:
-Show host groups
+EXAMPLES = """
+#Usage Example
+    - name: Get hostgroups on the AppResponse
+      host_group_show:
+        host: 192.168.1.1
+        username: admin
+        password: admin
+      register: results
+      
+    - name: Show hostgroups available on the AppResponse 
+      debug: var=results
 """
+RETURN = r'''
+output:
+    description: Available hostgroups on the AppResponse
+    returned: always
+    type: list
+'''
 
-__author__ = "Wim Verhaeghe"
-__email__ = "wim.verhaeghe@riverbed.com"
-__version__= "1"
 
-from ansible.module_utils.basic import *
+from ansible.module_utils.basic import AnsibleModule
 from steelscript.appresponse.core.app import AppResponseApp
 from steelscript.appresponse.core.appresponse import AppResponse
 from steelscript.common.service import UserAuth
-
 
 
 class HostGroupApp(AppResponseApp):
@@ -27,7 +54,7 @@ class HostGroupApp(AppResponseApp):
     def __init__(self):
         super(AppResponseApp).__init__()
 
-    def main(self):
+    def main(self,module):
 
             total = []
             headers = ['id', 'name', 'active', 'definition']
@@ -36,15 +63,14 @@ class HostGroupApp(AppResponseApp):
                     ]
             total.append(headers)
             total.append(data)
-            return total
-
+            module.exit_json(changed=False,output=total)
 
 
 def main():
     fields = {
-        "host": {"type": "str"},
-        "username": {"type": "str"},
-        "password": {"type": "str"}
+        "host": {"required":True, "type": "str"},
+        "username": {"required":True, "type": "str"},
+        "password": {"required":True, "type": "str", "no_log":True}
     }
 
     module = AnsibleModule(argument_spec=fields)
@@ -54,9 +80,7 @@ def main():
     t = HostGroupApp()
     t.appresponse = my_ar
 
-    results = t.main()
-
-    module.exit_json(changed=True, meta=results)
+    t.main(module)
 
 
 if __name__ == '__main__':

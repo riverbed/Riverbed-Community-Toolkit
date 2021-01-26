@@ -1,33 +1,465 @@
 
-PLAY [AppResponse Add hostgroup] ****************************************************************************************************************
+PLAY [AppResponse Hostgroup Functions] *************************************************************************************************
 
-TASK [Gathering Facts] **************************************************************************************************************************
+TASK [Gathering Facts] *****************************************************************************************************************
 ok: [localhost]
 
-TASK [Add hostgroup on AppResponse] *************************************************************************************************************
+TASK [Add hostgroup on AppResponse] ****************************************************************************************************
 changed: [localhost]
 
-TASK [debug] ************************************************************************************************************************************
+TASK [debug] ***************************************************************************************************************************
 ok: [localhost] => {
     "result": {
         "changed": true,
         "failed": false,
-        "meta": "Error creating hostgroup 'my_hostgroup', group already exists",
-        "warnings": [
-            "Module did not set no_log for password"
+        "msg": "Successfully created hostgroup 'my_hostgroup'"
+    }
+}
+
+TASK [Get hostgroups on AppResponse] ***************************************************************************************************
+ok: [localhost]
+
+TASK [Show hostgroups on AppResponse] **************************************************************************************************
+ok: [localhost] => {
+    "result": {
+        "changed": false,
+        "failed": false,
+        "output": [
+            [
+                "id",
+                "name",
+                "active",
+                "definition"
+            ],
+            [
+                [
+                    1,
+                    "Default-10.x.x.x",
+                    true,
+                    [
+                        "10.0.0.0-10.255.255.255"
+                    ]
+                ],
+                [
+                    2,
+                    "Default-Internet",
+                    true,
+                    [
+                        "1.0.0.0-9.255.255.255",
+                        "11.0.0.0-172.15.255.255",
+                        "172.32.0.0-192.167.255.255",
+                        "192.169.0.0-255.255.255.255"
+                    ]
+                ],
+                [
+                    3,
+                    "Default-172.x.x.x",
+                    true,
+                    [
+                        "172.16.0.0-172.31.255.255"
+                    ]
+                ],
+                [
+                    4,
+                    "Default-192.168.x.x",
+                    true,
+                    [
+                        "192.168.0.0-192.168.255.255"
+                    ]
+                ],
+                [
+                    6,
+                    "my_hostgroup",
+                    true,
+                    [
+                        "192.168.1.10",
+                        "192.168.1.11",
+                        "192.168.1.12",
+                        "192.168.1.13"
+                    ]
+                ]
+            ]
         ]
     }
 }
 
-TASK [show hostgroups on AppResponse] ***********************************************************************************************************
+TASK [Update hostgroups by ID on AppResponse] ******************************************************************************************
 changed: [localhost]
 
-TASK [debug] ************************************************************************************************************************************
+TASK [debug] ***************************************************************************************************************************
 ok: [localhost] => {
     "result": {
         "changed": true,
         "failed": false,
-        "meta": [
+        "msg": "Successfully updated hostgroup 'my_hostgroup'"
+    }
+}
+
+TASK [show hostgroups on AppResponse] **************************************************************************************************
+ok: [localhost]
+
+TASK [debug] ***************************************************************************************************************************
+ok: [localhost] => {
+    "result": {
+        "changed": false,
+        "failed": false,
+        "output": [
+            [
+                "id",
+                "name",
+                "active",
+                "definition"
+            ],
+            [
+                [
+                    1,
+                    "Default-10.x.x.x",
+                    true,
+                    [
+                        "10.0.0.0-10.255.255.255"
+                    ]
+                ],
+                [
+                    2,
+                    "Default-Internet",
+                    true,
+                    [
+                        "1.0.0.0-9.255.255.255",
+                        "11.0.0.0-172.15.255.255",
+                        "172.32.0.0-192.167.255.255",
+                        "192.169.0.0-255.255.255.255"
+                    ]
+                ],
+                [
+                    3,
+                    "Default-172.x.x.x",
+                    true,
+                    [
+                        "172.16.0.0-172.31.255.255"
+                    ]
+                ],
+                [
+                    4,
+                    "Default-192.168.x.x",
+                    true,
+                    [
+                        "192.168.0.0-192.168.255.255"
+                    ]
+                ],
+                [
+                    6,
+                    "my_hostgroup",
+                    true,
+                    [
+                        "192.168.1.10",
+                        "192.168.1.11"
+                    ]
+                ]
+            ]
+        ]
+    }
+}
+
+TASK [Update hostgroups by Name on AppResponse] ****************************************************************************************
+changed: [localhost]
+
+TASK [debug] ***************************************************************************************************************************
+ok: [localhost] => {
+    "result": {
+        "changed": true,
+        "failed": false,
+        "msg": "Successfully updated hostgroup 'my_hostgroup'"
+    }
+}
+
+TASK [show hostgroups on AppResponse] **************************************************************************************************
+ok: [localhost]
+
+TASK [debug] ***************************************************************************************************************************
+ok: [localhost] => {
+    "result": {
+        "changed": false,
+        "failed": false,
+        "output": [
+            [
+                "id",
+                "name",
+                "active",
+                "definition"
+            ],
+            [
+                [
+                    1,
+                    "Default-10.x.x.x",
+                    true,
+                    [
+                        "10.0.0.0-10.255.255.255"
+                    ]
+                ],
+                [
+                    2,
+                    "Default-Internet",
+                    true,
+                    [
+                        "1.0.0.0-9.255.255.255",
+                        "11.0.0.0-172.15.255.255",
+                        "172.32.0.0-192.167.255.255",
+                        "192.169.0.0-255.255.255.255"
+                    ]
+                ],
+                [
+                    3,
+                    "Default-172.x.x.x",
+                    true,
+                    [
+                        "172.16.0.0-172.31.255.255"
+                    ]
+                ],
+                [
+                    4,
+                    "Default-192.168.x.x",
+                    true,
+                    [
+                        "192.168.0.0-192.168.255.255"
+                    ]
+                ],
+                [
+                    6,
+                    "my_hostgroup",
+                    true,
+                    [
+                        "10.10.10.1",
+                        "192.168.1.10",
+                        "192.168.1.11"
+                    ]
+                ]
+            ]
+        ]
+    }
+}
+
+TASK [Upload File with hostgroups to AppResponse] **************************************************************************************
+changed: [localhost]
+
+TASK [debug] ***************************************************************************************************************************
+ok: [localhost] => {
+    "result": {
+        "changed": true,
+        "failed": false,
+        "msg": "Successfully uploaded 3 hostgroup definitions."
+    }
+}
+
+TASK [show hostgroups on AppResponse] **************************************************************************************************
+ok: [localhost]
+
+TASK [debug] ***************************************************************************************************************************
+ok: [localhost] => {
+    "result": {
+        "changed": false,
+        "failed": false,
+        "output": [
+            [
+                "id",
+                "name",
+                "active",
+                "definition"
+            ],
+            [
+                [
+                    1,
+                    "Default-10.x.x.x",
+                    true,
+                    [
+                        "10.0.0.0-10.255.255.255"
+                    ]
+                ],
+                [
+                    2,
+                    "Default-Internet",
+                    true,
+                    [
+                        "1.0.0.0-9.255.255.255",
+                        "11.0.0.0-172.15.255.255",
+                        "172.32.0.0-192.167.255.255",
+                        "192.169.0.0-255.255.255.255"
+                    ]
+                ],
+                [
+                    3,
+                    "Default-172.x.x.x",
+                    true,
+                    [
+                        "172.16.0.0-172.31.255.255"
+                    ]
+                ],
+                [
+                    4,
+                    "Default-192.168.x.x",
+                    true,
+                    [
+                        "192.168.0.0-192.168.255.255"
+                    ]
+                ],
+                [
+                    6,
+                    "my_hostgroup",
+                    true,
+                    [
+                        "10.10.10.1",
+                        "192.168.1.10",
+                        "192.168.1.11"
+                    ]
+                ],
+                [
+                    7,
+                    "my_test1",
+                    true,
+                    [
+                        "172.16.12.12",
+                        "172.16.12.13"
+                    ]
+                ],
+                [
+                    8,
+                    "my_test2",
+                    true,
+                    [
+                        "10.10.10.1",
+                        "10.10.10.2"
+                    ]
+                ],
+                [
+                    9,
+                    "toto",
+                    true,
+                    [
+                        "192.168.0.0-192.168.0.255",
+                        "192.168.12.0-192.168.12.255"
+                    ]
+                ]
+            ]
+        ]
+    }
+}
+
+TASK [Delete hostgroup by id on AppResponse] *******************************************************************************************
+changed: [localhost]
+
+TASK [debug] ***************************************************************************************************************************
+ok: [localhost] => {
+    "result": {
+        "changed": true,
+        "failed": false,
+        "msg": "Successfully deleted hostgroup with ID/name 7"
+    }
+}
+
+TASK [show hostgroups on AppResponse] **************************************************************************************************
+ok: [localhost]
+
+TASK [debug] ***************************************************************************************************************************
+ok: [localhost] => {
+    "result": {
+        "changed": false,
+        "failed": false,
+        "output": [
+            [
+                "id",
+                "name",
+                "active",
+                "definition"
+            ],
+            [
+                [
+                    1,
+                    "Default-10.x.x.x",
+                    true,
+                    [
+                        "10.0.0.0-10.255.255.255"
+                    ]
+                ],
+                [
+                    2,
+                    "Default-Internet",
+                    true,
+                    [
+                        "1.0.0.0-9.255.255.255",
+                        "11.0.0.0-172.15.255.255",
+                        "172.32.0.0-192.167.255.255",
+                        "192.169.0.0-255.255.255.255"
+                    ]
+                ],
+                [
+                    3,
+                    "Default-172.x.x.x",
+                    true,
+                    [
+                        "172.16.0.0-172.31.255.255"
+                    ]
+                ],
+                [
+                    4,
+                    "Default-192.168.x.x",
+                    true,
+                    [
+                        "192.168.0.0-192.168.255.255"
+                    ]
+                ],
+                [
+                    6,
+                    "my_hostgroup",
+                    true,
+                    [
+                        "10.10.10.1",
+                        "192.168.1.10",
+                        "192.168.1.11"
+                    ]
+                ],
+                [
+                    8,
+                    "my_test2",
+                    true,
+                    [
+                        "10.10.10.1",
+                        "10.10.10.2"
+                    ]
+                ],
+                [
+                    9,
+                    "toto",
+                    true,
+                    [
+                        "192.168.0.0-192.168.0.255",
+                        "192.168.12.0-192.168.12.255"
+                    ]
+                ]
+            ]
+        ]
+    }
+}
+
+TASK [Delete hostgroup by name on AppResponse] *****************************************************************************************
+changed: [localhost]
+
+TASK [debug] ***************************************************************************************************************************
+ok: [localhost] => {
+    "result": {
+        "changed": true,
+        "failed": false,
+        "msg": "Successfully deleted hostgroup with ID/name toto"
+    }
+}
+
+TASK [show hostgroups on AppResponse] **************************************************************************************************
+ok: [localhost]
+
+TASK [debug] ***************************************************************************************************************************
+ok: [localhost] => {
+    "result": {
+        "changed": false,
+        "failed": false,
+        "output": [
             [
                 "id",
                 "name",
@@ -90,294 +522,10 @@ ok: [localhost] => {
                     ]
                 ]
             ]
-        ],
-        "warnings": [
-            "Module did not set no_log for password"
         ]
     }
 }
 
-TASK [Update hostgroups by ID on AppResponse] ***************************************************************************************************
-changed: [localhost]
-
-TASK [debug] ************************************************************************************************************************************
-ok: [localhost] => {
-    "result": {
-        "changed": true,
-        "failed": false,
-        "meta": "Successfully updated hostgroup 'my_hostgroup'",
-        "warnings": [
-            "Module did not set no_log for password"
-        ]
-    }
-}
-
-TASK [show hostgroups on AppResponse] ***********************************************************************************************************
-changed: [localhost]
-
-TASK [debug] ************************************************************************************************************************************
-ok: [localhost] => {
-    "result": {
-        "changed": true,
-        "failed": false,
-        "meta": [
-            [
-                "id",
-                "name",
-                "active",
-                "definition"
-            ],
-            [
-                [
-                    1,
-                    "Default-10.x.x.x",
-                    true,
-                    [
-                        "10.0.0.0-10.255.255.255"
-                    ]
-                ],
-                [
-                    2,
-                    "Default-Internet",
-                    true,
-                    [
-                        "1.0.0.0-9.255.255.255",
-                        "11.0.0.0-172.15.255.255",
-                        "172.32.0.0-192.167.255.255",
-                        "192.169.0.0-255.255.255.255"
-                    ]
-                ],
-                [
-                    3,
-                    "Default-172.x.x.x",
-                    true,
-                    [
-                        "172.16.0.0-172.31.255.255"
-                    ]
-                ],
-                [
-                    4,
-                    "Default-192.168.x.x",
-                    true,
-                    [
-                        "192.168.0.0-192.168.255.255"
-                    ]
-                ],
-                [
-                    6,
-                    "my_hostgroup",
-                    true,
-                    [
-                        "192.168.1.10",
-                        "192.168.1.11"
-                    ]
-                ],
-                [
-                    8,
-                    "my_test2",
-                    true,
-                    [
-                        "10.10.10.1",
-                        "10.10.10.2"
-                    ]
-                ]
-            ]
-        ],
-        "warnings": [
-            "Module did not set no_log for password"
-        ]
-    }
-}
-
-TASK [Update hostgroups by Name on AppResponse] *************************************************************************************************
-changed: [localhost]
-
-TASK [debug] ************************************************************************************************************************************
-ok: [localhost] => {
-    "result": {
-        "changed": true,
-        "failed": false,
-        "meta": "Successfully updated hostgroup 'my_hostgroup'",
-        "warnings": [
-            "Module did not set no_log for password"
-        ]
-    }
-}
-
-TASK [show hostgroups on AppResponse] ***********************************************************************************************************
-changed: [localhost]
-
-TASK [debug] ************************************************************************************************************************************
-ok: [localhost] => {
-    "result": {
-        "changed": true,
-        "failed": false,
-        "meta": [
-            [
-                "id",
-                "name",
-                "active",
-                "definition"
-            ],
-            [
-                [
-                    1,
-                    "Default-10.x.x.x",
-                    true,
-                    [
-                        "10.0.0.0-10.255.255.255"
-                    ]
-                ],
-                [
-                    2,
-                    "Default-Internet",
-                    true,
-                    [
-                        "1.0.0.0-9.255.255.255",
-                        "11.0.0.0-172.15.255.255",
-                        "172.32.0.0-192.167.255.255",
-                        "192.169.0.0-255.255.255.255"
-                    ]
-                ],
-                [
-                    3,
-                    "Default-172.x.x.x",
-                    true,
-                    [
-                        "172.16.0.0-172.31.255.255"
-                    ]
-                ],
-                [
-                    4,
-                    "Default-192.168.x.x",
-                    true,
-                    [
-                        "192.168.0.0-192.168.255.255"
-                    ]
-                ],
-                [
-                    6,
-                    "my_hostgroup",
-                    true,
-                    [
-                        "10.10.10.1",
-                        "192.168.1.10",
-                        "192.168.1.11"
-                    ]
-                ],
-                [
-                    8,
-                    "my_test2",
-                    true,
-                    [
-                        "10.10.10.1",
-                        "10.10.10.2"
-                    ]
-                ]
-            ]
-        ],
-        "warnings": [
-            "Module did not set no_log for password"
-        ]
-    }
-}
-
-TASK [Upload File with hostgroups to AppResponse] ***********************************************************************************************
-changed: [localhost]
-
-TASK [debug] ************************************************************************************************************************************
-ok: [localhost] => {
-    "result": {
-        "changed": true,
-        "failed": false,
-        "meta": "Error uploading hostgroup definitions, one of hostgroups already exist",
-        "warnings": [
-            "Module did not set no_log for password"
-        ]
-    }
-}
-
-TASK [show hostgroups on AppResponse] ***********************************************************************************************************
-changed: [localhost]
-
-TASK [debug] ************************************************************************************************************************************
-ok: [localhost] => {
-    "result": {
-        "changed": true,
-        "failed": false,
-        "meta": [
-            [
-                "id",
-                "name",
-                "active",
-                "definition"
-            ],
-            [
-                [
-                    1,
-                    "Default-10.x.x.x",
-                    true,
-                    [
-                        "10.0.0.0-10.255.255.255"
-                    ]
-                ],
-                [
-                    2,
-                    "Default-Internet",
-                    true,
-                    [
-                        "1.0.0.0-9.255.255.255",
-                        "11.0.0.0-172.15.255.255",
-                        "172.32.0.0-192.167.255.255",
-                        "192.169.0.0-255.255.255.255"
-                    ]
-                ],
-                [
-                    3,
-                    "Default-172.x.x.x",
-                    true,
-                    [
-                        "172.16.0.0-172.31.255.255"
-                    ]
-                ],
-                [
-                    4,
-                    "Default-192.168.x.x",
-                    true,
-                    [
-                        "192.168.0.0-192.168.255.255"
-                    ]
-                ],
-                [
-                    6,
-                    "my_hostgroup",
-                    true,
-                    [
-                        "10.10.10.1",
-                        "192.168.1.10",
-                        "192.168.1.11"
-                    ]
-                ],
-                [
-                    8,
-                    "my_test2",
-                    true,
-                    [
-                        "10.10.10.1",
-                        "10.10.10.2"
-                    ]
-                ]
-            ]
-        ],
-        "warnings": [
-            "Module did not set no_log for password"
-        ]
-    }
-}
-
-TASK [Delete hostgroup by id on AppResponse] ****************************************************************************************************
-fatal: [localhost]: FAILED! => {"changed": false, "module_stderr": "/usr/lib/python3/dist-packages/urllib3/connectionpool.py:999: InsecureRequestWarning: Unverified HTTPS request is being made to host '136.243.239.77'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings\n  warnings.warn(\nFailed to retrieved supported versions\n/usr/lib/python3/dist-packages/urllib3/connectionpool.py:999: InsecureRequestWarning: Unverified HTTPS request is being made to host '136.243.239.77'. Adding certificate verification is strongly advised. See: https://urllib3.readthedocs.io/en/latest/advanced-usage.html#ssl-warnings\n  warnings.warn(\nTraceback (most recent call last):\n  File \"/usr/local/lib/python3.8/dist-packages/steelscript/appresponse/core/classification.py\", line 69, in get_hostgroup_by_id\n    return HostGroup(data=resp.data, datarep=resp)\n  File \"/usr/local/lib/python3.8/dist-packages/sleepwalker/datarep.py\", line 620, in data\n    self.pull()\n  File \"/usr/local/lib/python3.8/dist-packages/sleepwalker/datarep.py\", line 662, in pull\n    response = self._request('GET', self.uri)\n  File \"/usr/local/lib/python3.8/dist-packages/sleepwalker/datarep.py\", line 949, in _request\n    return self.service.request(method, uri, body, params, headers)\n  File \"/usr/local/lib/python3.8/dist-packages/sleepwalker/service.py\", line 430, in request\n    return self.connection.json_request(method, uri, body, params, headers)\n  File \"/usr/local/lib/python3.8/dist-packages/steelscript/common/connection.py\", line 344, in json_request\n    r = self._request(method, path, body, params, extra_headers,\n  File \"/usr/local/lib/python3.8/dist-packages/steelscript/common/connection.py\", line 302, in _request\n    raise exc\nsteelscript.common.exceptions.RvbdHTTPException: 404 Failed to retrieve Host group. Reason: No Host Group found with id 7\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/root/.ansible/tmp/ansible-tmp-1611605136.2048852-245415875499464/AnsiballZ_host_group_delete.py\", line 102, in <module>\n    _ansiballz_main()\n  File \"/root/.ansible/tmp/ansible-tmp-1611605136.2048852-245415875499464/AnsiballZ_host_group_delete.py\", line 94, in _ansiballz_main\n    invoke_module(zipped_mod, temp_path, ANSIBALLZ_PARAMS)\n  File \"/root/.ansible/tmp/ansible-tmp-1611605136.2048852-245415875499464/AnsiballZ_host_group_delete.py\", line 40, in invoke_module\n    runpy.run_module(mod_name='ansible.modules.Riverbed.host_group_delete', init_globals=None, run_name='__main__', alter_sys=True)\n  File \"/usr/lib/python3.8/runpy.py\", line 206, in run_module\n    return _run_module_code(code, init_globals, run_name, mod_spec)\n  File \"/usr/lib/python3.8/runpy.py\", line 96, in _run_module_code\n    _run_code(code, mod_globals, init_globals,\n  File \"/usr/lib/python3.8/runpy.py\", line 86, in _run_code\n    exec(code, run_globals)\n  File \"/tmp/ansible_host_group_delete_payload_254eosql/ansible_host_group_delete_payload.zip/ansible/modules/Riverbed/host_group_delete.py\", line 73, in <module>\n  File \"/tmp/ansible_host_group_delete_payload_254eosql/ansible_host_group_delete_payload.zip/ansible/modules/Riverbed/host_group_delete.py\", line 67, in main\n  File \"/tmp/ansible_host_group_delete_payload_254eosql/ansible_host_group_delete_payload.zip/ansible/modules/Riverbed/host_group_delete.py\", line 37, in main\n  File \"/usr/local/lib/python3.8/dist-packages/steelscript/appresponse/core/classification.py\", line 72, in get_hostgroup_by_id\n    raise ValueError('No hostgroup found with id %s' % id_)\nValueError: No hostgroup found with id 7\n", "module_stdout": "", "msg": "MODULE FAILURE\nSee stdout/stderr for the exact error", "rc": 1}
-
-PLAY RECAP **************************************************************************************************************************************
-localhost                  : ok=17   changed=8    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+PLAY RECAP *****************************************************************************************************************************
+localhost                  : ok=25   changed=6    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 

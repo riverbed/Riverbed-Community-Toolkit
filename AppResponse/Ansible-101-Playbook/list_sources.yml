@@ -1,17 +1,19 @@
 ---
 - name: AppResponse list sources
   hosts: localhost
+  connection: local
   vars:
-    host: "hostname_or_ip_address"
+    host: "ip_address_of_AppResponse"
     username: "some_username"
     password: "some_password"
 
   tasks:
-    - name: List sources on AppResponse
+    - name: Get the sources on AppResponse
       list_sources:
         host: "{{ host }}"
         username: "{{ username }}"
         password: "{{ password }}"
       register: result
 
-    - debug: var=result
+    - name: List the sources on the AppResponse
+      debug: var=result
