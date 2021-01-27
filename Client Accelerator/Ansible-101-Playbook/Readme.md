@@ -28,7 +28,7 @@ be sure to use the updated version of the steelscript common/service.py
 
 ## Example output:
 
-[ouput.txt](output.txt)
+[output.txt](output.txt)
 
 
 ## Copyright (c) 2021 Riverbed Technology
