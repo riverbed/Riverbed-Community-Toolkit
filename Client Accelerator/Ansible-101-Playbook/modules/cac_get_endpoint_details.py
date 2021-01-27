@@ -6,9 +6,9 @@
 
 DOCUMENTATION = """
 ---
-module: cac_rest_api
+module: cac_get_endpoint_details
 author: Wim Verhaeghe (@rvbd-wimv)
-short_description: HTTP GET requests to the Riverbed Client accelerator controller REST API
+short_description: HTTP GET specific endpoint details on the Riverbed Client accelerator controller via the REST API
 options:
     host:
         description:
@@ -18,21 +18,21 @@ options:
         description:
             - REST API access code created on the Client accelerator controller.
         required: True
-    api_url:
+    id:
         description:
-            - REST API url part to get the required information from the Client accelerator controller.
+            - Endpoint ID on which the details are requested on the Client accelerator controller.
         required: True
 """
 EXAMPLES = """
 #Usage Example
     - name: Get license information from Client Accelerator controller via REST API
-      cac_rest_api:
+      cac_get_endpoint_details:
         host: 192.168.1.1
         access_code: eyJhdWQiOiAiaHR0cHM6Ly9jbGllbnQt==
-        api_url: /api/appliance/1.0.0/status/license
+        id: 270529056
       register: results
-      
-    - name: Display license information 
+
+    - name: Display Endpoint information 
       debug: var=results
 """
 RETURN = r'''
@@ -41,7 +41,6 @@ output:
     returned: success
     type: dict
 '''
-
 
 from ansible.module_utils.basic import AnsibleModule
 from steelscript.common.app import Application
@@ -52,13 +51,13 @@ from steelscript.common.exceptions import RvbdHTTPException
 
 class ClientAcceleratorControllerCLIApp(Application):
 
-    def __init__(self, host, api_url, code):
+    def __init__(self, host, id, code):
         super(Application).__init__()
         self.host = host
-        self.api_url = api_url
+        self.api_url = "/api/stats/1.0.0/report/endpoint/"+id
         self.access_code = code
 
-    def main(self,module):
+    def main(self, module):
 
         try:
             cac = Service("cac", self.host, auth=OAuth(self.access_code))
@@ -68,22 +67,24 @@ class ClientAcceleratorControllerCLIApp(Application):
 
             del cac
 
-            module.exit_json(changed=False,output=content_dict)
+            module.exit_json(changed=False, output=content_dict)
 
         except RvbdHTTPException as e:
-            results="Error retrieving information on '{}'".format(self.api_url)
-            module.fail_json(changed=False,msg=results,reason=str(e))
+            results = "Error retrieving information on '{}'".format(self.api_url)
+            module.fail_json(changed=False, msg=results, reason=str(e))
+
 
 def main():
     fields = {
         "host": {"required": True, "type": "str"},
-        "api_url": {"required": True, "type": "str"},
+        "id": {"required": True, "type": "str"},
         "access_code": {"required": True, "type": "str", "no_log": True}
     }
 
     module = AnsibleModule(argument_spec=fields)
 
-    my_app = ClientAcceleratorControllerCLIApp(module.params["host"],module.params["api_url"],module.params["access_code"])
+    my_app = ClientAcceleratorControllerCLIApp(module.params["host"], module.params["id"],
+                                               module.params["access_code"])
     my_app.main(module)
 
 

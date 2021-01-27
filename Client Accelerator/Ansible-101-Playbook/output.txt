@@ -1,0 +1,3720 @@
+
+PLAY [REST API CAC] ****************************************************************************************************
+
+TASK [Gathering Facts] *************************************************************************************************
+ok: [localhost]
+
+TASK [get output from CAC via REST API] ********************************************************************************
+ok: [localhost]
+
+TASK [debug] ***********************************************************************************************************
+ok: [localhost] => {
+    "result": {
+        "changed": false,
+        "failed": false,
+        "output": [
+            {
+                "id": "common",
+                "versions": [
+                    "1.0.0"
+                ]
+            },
+            {
+                "id": "stats",
+                "versions": [
+                    "1.0.0"
+                ]
+            },
+            {
+                "id": "appliance",
+                "versions": [
+                    "1.0.0"
+                ]
+            }
+        ]
+    }
+}
+
+TASK [get SHM endpoints status via REST API] ***************************************************************************
+ok: [localhost]
+
+TASK [debug] ***********************************************************************************************************
+ok: [localhost] => {
+    "result": {
+        "changed": false,
+        "failed": false,
+        "output": {
+            "connected": 4,
+            "critical": 0,
+            "degraded": 1,
+            "disabled": 0,
+            "healthy": 3
+        }
+    }
+}
+
+TASK [get SHM licenses from CAC via REST API] **************************************************************************
+ok: [localhost]
+
+TASK [debug] ***********************************************************************************************************
+ok: [localhost] => {
+    "result": {
+        "changed": false,
+        "failed": false,
+        "output": {
+            "installed": 10,
+            "inuse": 0
+        }
+    }
+}
+
+TASK [get SHM endpoints via REST API] **********************************************************************************
+ok: [localhost]
+
+TASK [debug] ***********************************************************************************************************
+ok: [localhost] => {
+    "result": {
+        "changed": false,
+        "failed": false,
+        "output": {
+            "data": [
+                {
+                    "client_id": 275906847,
+                    "conn_time": 1611525932,
+                    "controller": "zbet341mww.francecentral.cloudapp.azure.com",
+                    "group": "VDI",
+                    "ip_addr": "13.83.89.1",
+                    "lan_data": 618258,
+                    "licensed": false,
+                    "platform": "Windows 64-bit",
+                    "policy": "Accelerate SAAS Applications",
+                    "status": "Healthy",
+                    "total_red": 0.0,
+                    "user": "",
+                    "version": "6.2.0 #6",
+                    "wan_data": 888617,
+                    "warmed_data": 0
+                },
+                {
+                    "client_id": 270529056,
+                    "conn_time": 1611529488,
+                    "controller": "zbet341mww.francecentral.cloudapp.azure.com",
+                    "group": "VDI",
+                    "ip_addr": "104.210.112.232",
+                    "lan_data": 0,
+                    "licensed": false,
+                    "platform": "Windows 64-bit",
+                    "policy": "Accelerate SAAS Applications",
+                    "status": "Healthy",
+                    "total_red": 0.0,
+                    "user": "",
+                    "version": "6.2.0 #6",
+                    "wan_data": 0,
+                    "warmed_data": 0
+                },
+                {
+                    "client_id": 272898078,
+                    "conn_time": 1611705279,
+                    "controller": "zbet341mww.francecentral.cloudapp.azure.com",
+                    "group": "Default",
+                    "ip_addr": "190.113.110.27",
+                    "lan_data": 0,
+                    "licensed": false,
+                    "platform": "Windows 64-bit",
+                    "policy": "Passthrough",
+                    "status": "Warning",
+                    "total_red": 0.0,
+                    "user": "US\\DRAMIRE2",
+                    "version": "6.2.1 #43",
+                    "wan_data": 0,
+                    "warmed_data": 0
+                },
+                {
+                    "client_id": 282807288,
+                    "conn_time": 1610559723,
+                    "controller": "zbet341mww.francecentral.cloudapp.azure.com",
+                    "group": "VDI",
+                    "ip_addr": "52.174.108.14",
+                    "lan_data": 278958314,
+                    "licensed": false,
+                    "platform": "Windows 64-bit",
+                    "policy": "Accelerate SAAS Applications",
+                    "status": "Healthy",
+                    "total_red": 48.04,
+                    "user": "",
+                    "version": "6.2.0 #6",
+                    "wan_data": 144946407,
+                    "warmed_data": 0
+                }
+            ],
+            "meta": {
+                "basepath": "/stats/1.0.0/report/endpoints",
+                "limit": 20,
+                "next": -1,
+                "total": 4
+            }
+        }
+    }
+}
+
+TASK [get SHM traffic Summary via REST API] ****************************************************************************
+ok: [localhost]
+
+TASK [debug] ***********************************************************************************************************
+ok: [localhost] => {
+    "result": {
+        "changed": false,
+        "failed": false,
+        "output": {
+            "cluster_response": {
+                "clusterMemberList": [],
+                "failureList": [],
+                "successList": []
+            },
+            "traffic_summary": [
+                {
+                    "label": "HTTPS (443)",
+                    "lan_data": 1503238553,
+                    "reduction": 66.8,
+                    "traffic_pct": 82.81,
+                    "wan_data": 487587840
+                },
+                {
+                    "label": "HTTP (80)",
+                    "lan_data": 279026073,
+                    "reduction": 48.0,
+                    "traffic_pct": 15.74,
+                    "wan_data": 144913203
+                },
+                {
+                    "label": "Unknown (8543)",
+                    "lan_data": 25480396,
+                    "reduction": 0.0,
+                    "traffic_pct": 1.44,
+                    "wan_data": 26424115
+                },
+                {
+                    "label": "kerberos (88)",
+                    "lan_data": 97894,
+                    "reduction": 28.3,
+                    "traffic_pct": 0.01,
+                    "wan_data": 70144
+                },
+                {
+                    "label": "ldap (389)",
+                    "lan_data": 23040,
+                    "reduction": 2.3,
+                    "traffic_pct": 0.0,
+                    "wan_data": 22528
+                },
+                {
+                    "label": "KMS Windows Activation (1688)",
+                    "lan_data": 988,
+                    "reduction": 0.0,
+                    "traffic_pct": 0.0,
+                    "wan_data": 1126
+                }
+            ]
+        }
+    }
+}
+
+TASK [get SHM bandwidth Optimization stats via REST API] ***************************************************************
+ok: [localhost]
+
+TASK [debug] ***********************************************************************************************************
+ok: [localhost] => {
+    "result": {
+        "changed": false,
+        "failed": false,
+        "output": {
+            "cluster_response": {
+                "clusterMemberList": [],
+                "failureList": [],
+                "successList": []
+            },
+            "lan": {
+                "data": [
+                    [
+                        1611136800000,
+                        861
+                    ],
+                    [
+                        1611144000000,
+                        3859974
+                    ],
+                    [
+                        1611151200000,
+                        6681096
+                    ],
+                    [
+                        1611158400000,
+                        1003650
+                    ],
+                    [
+                        1611165600000,
+                        11570166
+                    ],
+                    [
+                        1611172800000,
+                        10737231
+                    ],
+                    [
+                        1611180000000,
+                        10762997
+                    ],
+                    [
+                        1611187200000,
+                        5562363
+                    ],
+                    [
+                        1611194400000,
+                        47528689
+                    ],
+                    [
+                        1611201600000,
+                        347266803
+                    ],
+                    [
+                        1611208800000,
+                        462883
+                    ],
+                    [
+                        1611216000000,
+                        228918289
+                    ],
+                    [
+                        1611223200000,
+                        30020714
+                    ],
+                    [
+                        1611230400000,
+                        24982671
+                    ],
+                    [
+                        1611237600000,
+                        61688390
+                    ],
+                    [
+                        1611244800000,
+                        21831959
+                    ],
+                    [
+                        1611252000000,
+                        363724711
+                    ],
+                    [
+                        1611259200000,
+                        37021
+                    ],
+                    [
+                        1611266400000,
+                        39477421
+                    ],
+                    [
+                        1611273600000,
+                        40004
+                    ],
+                    [
+                        1611280800000,
+                        37024
+                    ],
+                    [
+                        1611288000000,
+                        57016
+                    ],
+                    [
+                        1611295200000,
+                        48540
+                    ],
+                    [
+                        1611302400000,
+                        34495
+                    ],
+                    [
+                        1611309600000,
+                        1714
+                    ],
+                    [
+                        1611316800000,
+                        3395213
+                    ],
+                    [
+                        1611324000000,
+                        3149163
+                    ],
+                    [
+                        1611331200000,
+                        108883090
+                    ],
+                    [
+                        1611338400000,
+                        4493035
+                    ],
+                    [
+                        1611345600000,
+                        38104344
+                    ],
+                    [
+                        1611352800000,
+                        222683
+                    ],
+                    [
+                        1611360000000,
+                        55542
+                    ],
+                    [
+                        1611367200000,
+                        32665654
+                    ],
+                    [
+                        1611374400000,
+                        2567
+                    ],
+                    [
+                        1611381600000,
+                        12725
+                    ],
+                    [
+                        1611388800000,
+                        2575
+                    ],
+                    [
+                        1611396000000,
+                        3428
+                    ],
+                    [
+                        1611403200000,
+                        2374885
+                    ],
+                    [
+                        1611410400000,
+                        1479809
+                    ],
+                    [
+                        1611417600000,
+                        3235188
+                    ],
+                    [
+                        1611424800000,
+                        2130785
+                    ],
+                    [
+                        1611432000000,
+                        89763
+                    ],
+                    [
+                        1611439200000,
+                        3428
+                    ],
+                    [
+                        1611446400000,
+                        2575
+                    ],
+                    [
+                        1611453600000,
+                        1455420
+                    ],
+                    [
+                        1611460800000,
+                        1051164
+                    ],
+                    [
+                        1611468000000,
+                        297390
+                    ],
+                    [
+                        1611475200000,
+                        3428
+                    ],
+                    [
+                        1611482400000,
+                        1604317
+                    ],
+                    [
+                        1611489600000,
+                        9625165
+                    ],
+                    [
+                        1611496800000,
+                        1425209
+                    ],
+                    [
+                        1611504000000,
+                        41132297
+                    ],
+                    [
+                        1611511200000,
+                        34784637
+                    ],
+                    [
+                        1611518400000,
+                        33779219
+                    ],
+                    [
+                        1611525600000,
+                        2233314
+                    ],
+                    [
+                        1611532800000,
+                        1422974
+                    ],
+                    [
+                        1611540000000,
+                        1411364
+                    ],
+                    [
+                        1611547200000,
+                        3609
+                    ],
+                    [
+                        1611554400000,
+                        3428
+                    ],
+                    [
+                        1611561600000,
+                        3428
+                    ],
+                    [
+                        1611568800000,
+                        288303
+                    ],
+                    [
+                        1611576000000,
+                        12007
+                    ],
+                    [
+                        1611583200000,
+                        3428
+                    ],
+                    [
+                        1611590400000,
+                        81800905
+                    ],
+                    [
+                        1611597600000,
+                        1694528
+                    ],
+                    [
+                        1611604800000,
+                        190075
+                    ],
+                    [
+                        1611612000000,
+                        3296942
+                    ],
+                    [
+                        1611619200000,
+                        35280
+                    ],
+                    [
+                        1611626400000,
+                        12007
+                    ],
+                    [
+                        1611633600000,
+                        4963781
+                    ],
+                    [
+                        1611640800000,
+                        2575
+                    ],
+                    [
+                        1611648000000,
+                        3428
+                    ],
+                    [
+                        1611655200000,
+                        3428
+                    ],
+                    [
+                        1611662400000,
+                        481223
+                    ],
+                    [
+                        1611669600000,
+                        6896700
+                    ],
+                    [
+                        1611676800000,
+                        37342936
+                    ],
+                    [
+                        1611684000000,
+                        16359228
+                    ],
+                    [
+                        1611691200000,
+                        16213946
+                    ],
+                    [
+                        1611698400000,
+                        13739254
+                    ],
+                    [
+                        1611705600000,
+                        1636029
+                    ],
+                    [
+                        1611712800000,
+                        28658055
+                    ],
+                    [
+                        1611720000000,
+                        537374
+                    ],
+                    [
+                        1611727200000,
+                        6575
+                    ],
+                    [
+                        1611734400000,
+                        359462
+                    ],
+                    [
+                        1611741418000,
+                        10939131
+                    ]
+                ],
+                "name": "LAN"
+            },
+            "summary": {
+                "bw_capacity_inc": "2.7 X",
+                "peak_data": "Peak Data Reduction Occurred At 18:00:00 on 2021/01/24 - 97.7 %",
+                "total_data": "LAN: 1.7 GB, WAN: 628.5 MB",
+                "total_data_reduction": "62.8 %"
+            },
+            "wan": {
+                "data": [
+                    [
+                        1611136800000,
+                        851
+                    ],
+                    [
+                        1611144000000,
+                        1000968
+                    ],
+                    [
+                        1611151200000,
+                        1932686
+                    ],
+                    [
+                        1611158400000,
+                        435812
+                    ],
+                    [
+                        1611165600000,
+                        6857893
+                    ],
+                    [
+                        1611172800000,
+                        3804266
+                    ],
+                    [
+                        1611180000000,
+                        5099376
+                    ],
+                    [
+                        1611187200000,
+                        2859608
+                    ],
+                    [
+                        1611194400000,
+                        19126226
+                    ],
+                    [
+                        1611201600000,
+                        164981554
+                    ],
+                    [
+                        1611208800000,
+                        170030
+                    ],
+                    [
+                        1611216000000,
+                        50659148
+                    ],
+                    [
+                        1611223200000,
+                        8468217
+                    ],
+                    [
+                        1611230400000,
+                        9037182
+                    ],
+                    [
+                        1611237600000,
+                        51761901
+                    ],
+                    [
+                        1611244800000,
+                        8275777
+                    ],
+                    [
+                        1611252000000,
+                        63109207
+                    ],
+                    [
+                        1611259200000,
+                        50080
+                    ],
+                    [
+                        1611266400000,
+                        3554383
+                    ],
+                    [
+                        1611273600000,
+                        52616
+                    ],
+                    [
+                        1611280800000,
+                        50314
+                    ],
+                    [
+                        1611288000000,
+                        59101
+                    ],
+                    [
+                        1611295200000,
+                        57733
+                    ],
+                    [
+                        1611302400000,
+                        46568
+                    ],
+                    [
+                        1611309600000,
+                        1235
+                    ],
+                    [
+                        1611316800000,
+                        2654548
+                    ],
+                    [
+                        1611324000000,
+                        1405105
+                    ],
+                    [
+                        1611331200000,
+                        100343815
+                    ],
+                    [
+                        1611338400000,
+                        1329337
+                    ],
+                    [
+                        1611345600000,
+                        7274799
+                    ],
+                    [
+                        1611352800000,
+                        109006
+                    ],
+                    [
+                        1611360000000,
+                        40651
+                    ],
+                    [
+                        1611367200000,
+                        876483
+                    ],
+                    [
+                        1611374400000,
+                        1756
+                    ],
+                    [
+                        1611381600000,
+                        13126
+                    ],
+                    [
+                        1611388800000,
+                        1881
+                    ],
+                    [
+                        1611396000000,
+                        2330
+                    ],
+                    [
+                        1611403200000,
+                        1937586
+                    ],
+                    [
+                        1611410400000,
+                        424557
+                    ],
+                    [
+                        1611417600000,
+                        1397093
+                    ],
+                    [
+                        1611424800000,
+                        763035
+                    ],
+                    [
+                        1611432000000,
+                        40508
+                    ],
+                    [
+                        1611439200000,
+                        2672
+                    ],
+                    [
+                        1611446400000,
+                        1764
+                    ],
+                    [
+                        1611453600000,
+                        265207
+                    ],
+                    [
+                        1611460800000,
+                        248316
+                    ],
+                    [
+                        1611468000000,
+                        65493
+                    ],
+                    [
+                        1611475200000,
+                        2328
+                    ],
+                    [
+                        1611482400000,
+                        1155197
+                    ],
+                    [
+                        1611489600000,
+                        1685808
+                    ],
+                    [
+                        1611496800000,
+                        318283
+                    ],
+                    [
+                        1611504000000,
+                        41370890
+                    ],
+                    [
+                        1611511200000,
+                        816751
+                    ],
+                    [
+                        1611518400000,
+                        3669316
+                    ],
+                    [
+                        1611525600000,
+                        1066652
+                    ],
+                    [
+                        1611532800000,
+                        185162
+                    ],
+                    [
+                        1611540000000,
+                        141360
+                    ],
+                    [
+                        1611547200000,
+                        2753
+                    ],
+                    [
+                        1611554400000,
+                        2347
+                    ],
+                    [
+                        1611561600000,
+                        2356
+                    ],
+                    [
+                        1611568800000,
+                        70855
+                    ],
+                    [
+                        1611576000000,
+                        4460
+                    ],
+                    [
+                        1611583200000,
+                        2844
+                    ],
+                    [
+                        1611590400000,
+                        10663996
+                    ],
+                    [
+                        1611597600000,
+                        1236928
+                    ],
+                    [
+                        1611604800000,
+                        114950
+                    ],
+                    [
+                        1611612000000,
+                        897954
+                    ],
+                    [
+                        1611619200000,
+                        19648
+                    ],
+                    [
+                        1611626400000,
+                        3427
+                    ],
+                    [
+                        1611633600000,
+                        4675267
+                    ],
+                    [
+                        1611640800000,
+                        1809
+                    ],
+                    [
+                        1611648000000,
+                        2546
+                    ],
+                    [
+                        1611655200000,
+                        2804
+                    ],
+                    [
+                        1611662400000,
+                        90136
+                    ],
+                    [
+                        1611669600000,
+                        1272838
+                    ],
+                    [
+                        1611676800000,
+                        3338421
+                    ],
+                    [
+                        1611684000000,
+                        16744441
+                    ],
+                    [
+                        1611691200000,
+                        7244349
+                    ],
+                    [
+                        1611698400000,
+                        3324642
+                    ],
+                    [
+                        1611705600000,
+                        797912
+                    ],
+                    [
+                        1611712800000,
+                        26678929
+                    ],
+                    [
+                        1611720000000,
+                        113888
+                    ],
+                    [
+                        1611727200000,
+                        9558
+                    ],
+                    [
+                        1611734400000,
+                        51683
+                    ],
+                    [
+                        1611741418000,
+                        10637909
+                    ]
+                ],
+                "name": "WAN"
+            }
+        }
+    }
+}
+
+TASK [get specific SHM endpoint stats via REST API] ********************************************************************
+ok: [localhost]
+
+TASK [display SHM endpoint stats] **************************************************************************************
+ok: [localhost] => {
+    "result": {
+        "changed": false,
+        "failed": false,
+        "output": {
+            "adapters": [
+                {
+                    "name": "Intel(R) Dual Band Wireless-AC 8265",
+                    "optimize": true
+                }
+            ],
+            "connections": [
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "40.97.188.242",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Rule",
+                    "process": "outlook.exe : 9160",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "52641"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "52.96.69.50",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Rule",
+                    "process": "outlook.exe : 9160",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "52460"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "165.225.222.35",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Rule",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "50802"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "52.202.62.254",
+                        "port": "50883"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Not intercepted",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "9400"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "165.225.222.35",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Pre-existing Connection",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "50307"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "13.110.58.163",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Rule",
+                    "process": "chrome.exe : 14888",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "53084"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "165.225.222.35",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Rule",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "53089"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "52.96.109.226",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Rule",
+                    "process": "outlook.exe : 9160",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "53122"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "165.225.222.35",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Rule",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "53123"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "52.96.19.82",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Rule",
+                    "process": "outlook.exe : 9160",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "53192"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "165.225.222.35",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Rule",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "53193"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "52.96.69.50",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Rule",
+                    "process": "outlook.exe : 9160",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "53353"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "40.97.24.50",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Rule",
+                    "process": "outlook.exe : 9160",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "53354"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "165.225.222.35",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Rule",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "53355"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "165.225.222.35",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Rule",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "53356"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "52.179.224.121",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Pre-existing Connection",
+                    "process": "onedrive.exe : 5424",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "50377"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "64.68.121.175",
+                        "port": "50525"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Not intercepted",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "9400"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "64.68.121.175",
+                        "port": "50526"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Not intercepted",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "9400"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "173.243.0.154",
+                        "port": "56135"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Not intercepted",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "9400"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "52.113.207.3",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Pre-existing Connection",
+                    "process": "teams.exe : 36496",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "50248"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "165.225.222.35",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Pre-existing Connection",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "50279"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "52.179.224.121",
+                        "port": "50364"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Not intercepted",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "9400"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "52.179.224.121",
+                        "port": "50377"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Not intercepted",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "9400"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "52.112.65.178",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Rule",
+                    "process": "lync.exe : 9808",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "50774"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "165.225.222.35",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Rule",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "50775"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "13.107.18.11",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Pre-existing Connection",
+                    "process": "microsoft.notes.exe : 11196",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "50534"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "165.225.222.35",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Pre-existing Connection",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "50535"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "165.225.222.35",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Pre-existing Connection",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "50527"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "165.225.222.35",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Pre-existing Connection",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "50528"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "64.68.121.175",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Not intercepted",
+                    "process": "ptoneclk.exe : 7528",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "50525"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "64.68.121.175",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Not intercepted",
+                    "process": "ptoneclk.exe : 7528",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "50526"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "165.225.222.35",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Pre-existing Connection",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "50458"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "20.188.39.149",
+                        "port": "7870"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Pre-existing Connection",
+                    "process": "rbtmon.exe : 66996",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "50470"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "13.107.18.11",
+                        "port": "50534"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Not intercepted",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "9400"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "3.80.20.191",
+                        "port": "50306"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Not intercepted",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "9400"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "13.110.60.163",
+                        "port": "53359"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Not intercepted",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "9400"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "13.110.58.163",
+                        "port": "53084"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Not intercepted",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "9400"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "35.186.224.25",
+                        "port": "53364"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Not intercepted",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "9400"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "20.191.46.109",
+                        "port": "53370"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Not intercepted",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "9400"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "40.97.24.50",
+                        "port": "53354"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Not intercepted",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "9400"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "35.190.245.89",
+                        "port": "50455"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Not intercepted",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "9400"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "40.97.154.242",
+                        "port": "52418"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Not intercepted",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "9400"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "40.97.24.50",
+                        "port": "53357"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Not intercepted",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "9400"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "3.80.20.191",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Pre-existing Connection",
+                    "process": "zoom.exe : 9272",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "50306"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "165.225.222.35",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Pre-existing Connection",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "50378"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "52.179.224.121",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Pre-existing Connection",
+                    "process": "onedrive.exe : 5936",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "50364"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "165.225.222.35",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Rule",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "53371"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "20.191.46.109",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Rule",
+                    "process": "svchost.exe : 34308",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "53370"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "165.225.222.35",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Rule",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "53365"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "35.186.224.25",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Rule",
+                    "process": "spotify.exe : 23132",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "53364"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "165.225.222.35",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Rule",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "53360"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "13.110.60.163",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Rule",
+                    "process": "chrome.exe : 14888",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "53359"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "165.225.222.35",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Rule",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "53358"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "40.97.24.50",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Rule",
+                    "process": "lync.exe : 9808",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "53357"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "165.225.222.35",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Rule",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "52642"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "52.96.69.50",
+                        "port": "52460"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Not intercepted",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "9400"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "165.225.222.35",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Rule",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "56136"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "173.243.0.154",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Rule",
+                    "process": "ptoneclk.exe : 7528",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "56135"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "50.18.194.39",
+                        "port": "50800"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Not intercepted",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "9400"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "40.97.188.242",
+                        "port": "52641"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Not intercepted",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "9400"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "35.190.245.89",
+                        "port": "80"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Pre-existing Connection",
+                    "process": "spotify.exe : 46728",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "50455"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "165.225.222.35",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Rule",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "50403"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "52.96.109.226",
+                        "port": "53122"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Not intercepted",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "9400"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "52.96.69.50",
+                        "port": "53353"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Not intercepted",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "9400"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "52.112.65.178",
+                        "port": "50774"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Not intercepted",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "9400"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "52.96.122.66",
+                        "port": "50402"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Not intercepted",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "9400"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "52.177.166.224",
+                        "port": "50324"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Pre-existing Connection",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "9400"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "40.97.154.242",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Rule",
+                    "process": "outlook.exe : 9160",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "52418"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "165.225.222.35",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Pre-existing Connection",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "50334"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "52.177.166.224",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Pre-existing Connection",
+                    "process": "svchost.exe : 5652",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "50324"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "52.96.122.66",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Rule",
+                    "process": "outlook.exe : 9160",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "50402"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "173.194.214.188",
+                        "port": "5228"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Pre-existing Connection",
+                    "process": "chrome.exe : 14888",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "50383"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "165.225.222.35",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Rule",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "50884"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "52.202.62.254",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Rule",
+                    "process": "zoom.exe : 9272",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "50883"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "165.225.222.35",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Pre-existing Connection",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "50375"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "165.225.222.35",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Rule",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "52419"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "52.113.207.3",
+                        "port": "50248"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Pre-existing Connection",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "9400"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "52.96.19.82",
+                        "port": "53192"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Not intercepted",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "9400"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "165.225.222.35",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Rule",
+                    "process": "zsatunnel.exe : 23944",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "52461"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                },
+                {
+                    "active_sh": "255.255.255.255:0 (Server Side)",
+                    "application": "",
+                    "congestion_algorithm": "",
+                    "conn_branch_mode": false,
+                    "conn_branch_warming": false,
+                    "conn_err_str": "",
+                    "conn_latency": -1.0,
+                    "conn_optimized": false,
+                    "conn_passthrough": true,
+                    "conn_time": 0,
+                    "conn_type": "Passthrough",
+                    "dst": {
+                        "addr": "50.18.194.39",
+                        "port": "443"
+                    },
+                    "lan_data": 0,
+                    "notes": {
+                        "compression_enabled": false,
+                        "encryption_enabled": false,
+                        "sdr_enabled": false,
+                        "transport_ecode": 0
+                    },
+                    "pass_through_reason": "Rule",
+                    "process": "ntoskrnl.exe : 4",
+                    "reduction": 0.0,
+                    "src": {
+                        "addr": "192.168.100.4",
+                        "port": "50800"
+                    },
+                    "transparency_mode": "65535 (Unknown)",
+                    "wan_data": 0,
+                    "warm_data": 0
+                }
+            ],
+            "info": {
+                "client_id": 272898078,
+                "computer_name": "TDEBC001201",
+                "conn_time": 1611705279,
+                "controller": "zbet341mww.francecentral.cloudapp.azure.com",
+                "controller_id": 8792178,
+                "datastore": 10737418240,
+                "diskspace": 93909213184,
+                "health_desc": "Controller time and client time do not match",
+                "ip_addr": "190.113.110.27",
+                "license_type": "Unknown License Type",
+                "licensed": false,
+                "mac_addr": "20:79:18:51:98:3E",
+                "memory": 8479268864,
+                "os": "Microsoft Windows 10 64bit",
+                "package": "Default",
+                "platform": "Windows 64-bit",
+                "policy": "Passthrough",
+                "processor": "Intel(R) Core(TM) i7-8550U CPU @ 1.80GHz",
+                "status": "Warning",
+                "used_datastore": 10736697344,
+                "user": "US\\DRAMIRE2",
+                "version": "6.2.1 #43"
+            },
+            "stats": {
+                "branchWarming": {
+                    "warmed_data": 0
+                },
+                "bwOptimization": {
+                    "cap_inc": 0,
+                    "lan_data": 0,
+                    "total_reduction": 0.0,
+                    "wan_data": 0
+                },
+                "ssl": {
+                    "pct_ssl_optimized": 0,
+                    "ssl_optimized": 0,
+                    "ssl_requests": 0,
+                    "ssl_unoptimized": 0
+                }
+            }
+        }
+    }
+}
+
+PLAY RECAP *************************************************************************************************************
+localhost                  : ok=15   changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
