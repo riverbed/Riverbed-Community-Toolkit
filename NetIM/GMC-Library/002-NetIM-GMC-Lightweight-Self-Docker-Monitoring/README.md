@@ -2,7 +2,7 @@
 
 ## Description
 
-Here is how this GMC setup works
+### Here is how this GMC setup works for the mtr file based approach the code is in ```scripts_mtr``` folder
 1. Use a Linux machine wiht python3 and [Paramiko](http://www.paramiko.org/) installed.
 1. Add your NetIM nodes into the NetIM inventory keeping in mind the names you assign to the devces in ```n31-netimrvbdlab.json```
 ```curl --insecure --user admin:admin -H 'Content-Type: application/json' -d @n31-netimrvbdlab.json https://10.99.31.75:8543/api/netim/v1/devices```
@@ -15,5 +15,11 @@ Here is how this GMC setup works
 
 Here is the final view in SCPortal
 
-![](https://github.com/ishankapoor/Riverbed-Community-Toolkit/blob/Lightweight-Self-Docker-Monitoring/NetIM/GMC-Library/002-NetIM-GMC-Lightweight-Self-Docker-Monitoring/demo/Portal-Drilldown.jpg)
-![](https://github.com/ishankapoor/Riverbed-Community-Toolkit/blob/Lightweight-Self-Docker-Monitoring/NetIM/GMC-Library/002-NetIM-GMC-Lightweight-Self-Docker-Monitoring/demo/Portal-Overall.jpg)
+![drilldown](https://raw.githubusercontent.com/ishankapoor/Riverbed-Community-Toolkit/new-netim-gmc-metrics-api-example/NetIM/GMC-Library/002-NetIM-GMC-Lightweight-Self-Docker-Monitoring/demo/Portal-Drilldown.jpg)
+![](https://raw.githubusercontent.com/ishankapoor/Riverbed-Community-Toolkit/new-netim-gmc-metrics-api-example/NetIM/GMC-Library/002-NetIM-GMC-Lightweight-Self-Docker-Monitoring/demo/Portal-Overall.jpg)
+
+### Here is how this GMC setup works for the new metrics api based approach the code is in ```scripts_metrics_api``` folder
+1. The Paramiko requirements remain the same as for the above mtr file approach.
+1. The MIB file will also remain the same.
+1. The code is an example from a working setup which captures docker stats fot two NetIM instances DAL and CHE.
+1. Both NetIMs have disparate number of worker VMs (keep that in mind when adapting the code).
