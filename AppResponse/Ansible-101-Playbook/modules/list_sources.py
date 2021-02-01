@@ -22,6 +22,10 @@ options:
         description:
             - Password used to login to the AppResponse appliance
         required: True
+    output_file:
+        description:
+            - File name for write output
+        required: False
 """
 EXAMPLES = """
 #Usage Example
@@ -34,12 +38,27 @@ EXAMPLES = """
 
     - name: List sources available on the AppResponse 
       debug: var=results
+    
+    - name: Get sources from the AppResponse and write to output file
+      list_sources:
+        host: 192.168.1.1
+        username: admin
+        password: admin
+        output_file: test.txt
+      register: results
+
+    - name: Display status on writing to output file 
+      debug: var=results
 """
 RETURN = r'''
 output:
     description: Available hostgroups on the AppResponse
-    returned: always
+    returned: success
     type: list
+msg:
+    description: Status of writing to the output file
+    returned: success
+    type: str
 '''
 
 from ansible.module_utils.basic import AnsibleModule

@@ -27,5 +27,5 @@
         output_file: "{{ file_name }}"
       register: result
 
-    - name: List the sources on the AppResponse
+    - name: Display status on writing to output file
       debug: var=result
