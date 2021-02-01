@@ -3,9 +3,10 @@
   hosts: localhost
   connection: local
   vars:
-    host: "ip_address_of_AppResponse"
+    host: "some_ipv4_or_hostname_of_AppResponse"
     username: "some_username"
     password: "some_password"
+    file_name: "my_output_list_sources.txt"
 
   tasks:
     - name: Get the sources on AppResponse
@@ -13,6 +14,17 @@
         host: "{{ host }}"
         username: "{{ username }}"
         password: "{{ password }}"
+      register: result
+
+    - name: List the sources on the AppResponse
+      debug: var=result
+
+    - name: Get the sources on AppResponse + print to file
+      list_sources:
+        host: "{{ host }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+        output_file: "{{ file_name }}"
       register: result
 
     - name: List the sources on the AppResponse

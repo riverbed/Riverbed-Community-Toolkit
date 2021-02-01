@@ -56,18 +56,24 @@ IFG = namedtuple('IFG', 'type get_id get_items')
 
 class PacketCaptureApp(AppResponseApp):
 
-    def __init__(self):
+    def __init__(self,output_file=None):
         super(AppResponseApp).__init__()
+        self.output_file = output_file
+        self.first_line = True
 
     def console(self, source_type, data, headers):
-        print('')
-        print(source_type)
-        print('-' * len(source_type))
+        if self.output_file is not None:
+            f = open(self.output_file, "a+")
+            f.write('')
+            if not self.first_line:
+                f.write("\n")
+            f.write(source_type + "\n")
+            f.write('-' * len(source_type) + "\n")
+            f.close()
+            self.first_line = False
 
         if data:
-            Formatter.print_table(data, headers)
-        else:
-            print('None.')
+            Formatter.print_table(data, headers,self.output_file)
 
 
     def main(self,module):
@@ -101,7 +107,8 @@ class PacketCaptureApp(AppResponseApp):
                         iface.stats.packets_dropped.total,
                         iface.stats.packets_total.total,
                     ])
-                #self.console('Interfaces', data, headers)
+                if self.output_file is not None:
+                    self.console('Interfaces', data, headers)
                 total.append(headers)
                 total.append(data)
 
@@ -118,7 +125,8 @@ class PacketCaptureApp(AppResponseApp):
                         vifg.data.state.stats.packets_duped.total,
                         vifg.data.state.stats.packets_received.total,
                     ])
-                #self.console('VIFGs', data, headers)
+                if self.output_file is not None:
+                    self.console('VIFGs', data, headers)
                 total.append(headers)
                 total.append(data)
 
@@ -134,7 +142,8 @@ class PacketCaptureApp(AppResponseApp):
                              job.data.state.status.packet_start_time,
                              job.data.state.status.packet_end_time,
                              job.data.state.status.capture_size])
-            #self.console('Capture Jobs', data, headers)
+            if self.output_file is not None:
+                self.console('Capture Jobs', data, headers)
             total.append(headers)
             total.append(data)
 
@@ -148,7 +157,8 @@ class PacketCaptureApp(AppResponseApp):
                              clip.data.config.end_time,
                              getattr(clip.data.config, 'filters',
                                      dict(items=None))['items']])
-            #self.console('Clips', data, headers)
+            if self.output_file is not None:
+                self.console('Clips', data, headers)
             total.append(headers)
             total.append(data)
 
@@ -161,10 +171,16 @@ class PacketCaptureApp(AppResponseApp):
                 data.append([obj.data.type, obj.id, obj.data.link_type,
                              obj.data.format, obj.data.size,
                              obj.data.created, obj.data.modified])
-            #self.console('Uploaded Files/PCAPs', data, headers)
+            if self.output_file is not None:
+                self.console('Uploaded Files/PCAPs', data, headers)
             total.append(headers)
             total.append(data)
-            module.exit_json(changed=False,output=total)
+
+            if self.output_file is None:
+                module.exit_json(changed=False,output=total)
+            else:
+                result="Successfully wrote output to '{}'".format(self.output_file)
+                module.exit_json(changed=False, msg=result)
 
         except RvbdHTTPException as e:
             results = "Error getting list of sources from AppResponse appliance"
@@ -174,14 +190,15 @@ def main():
     fields = {
         "host": {"required":True, "type": "str"},
         "username": {"required":True, "type": "str"},
-        "password": {"required":True, "type": "str", "no_log":True}
+        "password": {"required":True, "type": "str", "no_log":True},
+        "output_file": {"required": False, "type": "str"}
     }
 
     module = AnsibleModule(argument_spec=fields)
 
     my_ar = AppResponse(module.params['host'], UserAuth(module.params['username'], module.params['password']))
 
-    t = PacketCaptureApp()
+    t = PacketCaptureApp(module.params['output_file'])
     t.appresponse = my_ar
 
     t.main(module)
