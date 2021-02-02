@@ -15,8 +15,8 @@
 
 Here is the final view in SCPortal
 
-![drilldown](https://raw.githubusercontent.com/ishankapoor/Riverbed-Community-Toolkit/new-netim-gmc-metrics-api-example/NetIM/GMC-Library/002-NetIM-GMC-Lightweight-Self-Docker-Monitoring/demo/Portal-Drilldown.jpg)
-![](https://raw.githubusercontent.com/ishankapoor/Riverbed-Community-Toolkit/new-netim-gmc-metrics-api-example/NetIM/GMC-Library/002-NetIM-GMC-Lightweight-Self-Docker-Monitoring/demo/Portal-Overall.jpg)
+![drilldown](demo/Portal-Drilldown.jpg)
+![](demo/Portal-Overall.jpg)
 
 ### Here is how this GMC setup works for the new metrics api based approach the code is in ```scripts_metrics_api``` folder
 1. The Paramiko requirements remain the same as for the above mtr file approach.
