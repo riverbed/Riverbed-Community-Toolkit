@@ -10,7 +10,7 @@
 
 ## Overview
 
-The Riverbed Community Toolkit provides this cookbook to deploy an SteelConnect-EX Standalone Headend in Azure.
+The Riverbed Community Toolkit provides this cookbook to deploy a SteelConnect-EX Standalone Headend in Azure.
 
 Some easy steps are described in the prerequisites and deployment sections. The how-to section contains more details or advanced topics.
 
