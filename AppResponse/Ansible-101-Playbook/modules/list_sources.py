@@ -7,7 +7,6 @@
 DOCUMENTATION = """
 ---
 module: list_sources
-author: Wim Verhaeghe (@rvbd-wimv)
 short_description: Show the list of available packet sources on a Riverbed AppResponse appliance
 options:
     host:

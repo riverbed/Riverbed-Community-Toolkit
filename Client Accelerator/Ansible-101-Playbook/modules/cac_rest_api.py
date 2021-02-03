@@ -7,7 +7,6 @@
 DOCUMENTATION = """
 ---
 module: cac_rest_api
-author: Wim Verhaeghe (@rvbd-wimv)
 short_description: HTTP GET requests to the Riverbed Client accelerator controller REST API
 options:
     host:

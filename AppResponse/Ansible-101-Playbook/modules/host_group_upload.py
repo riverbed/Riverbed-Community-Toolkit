@@ -7,7 +7,6 @@
 DOCUMENTATION = """
 ---
 module: host_group_upload
-author: Wim Verhaeghe (@rvbd-wimv)
 short_description: Upload a file with hostgroups to Riverbed AppResponse appliance
 options:
     host:

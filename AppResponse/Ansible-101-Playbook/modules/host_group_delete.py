@@ -7,7 +7,6 @@
 DOCUMENTATION = """
 ---
 module: host_group_delete
-author: Wim Verhaeghe (@rvbd-wimv)
 short_description: delete a hostgroup from Riverbed AppResponse appliance
 options:
     host:

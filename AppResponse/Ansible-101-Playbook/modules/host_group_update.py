@@ -7,7 +7,6 @@
 DOCUMENTATION = """
 ---
 module: host_group_update
-author: Wim Verhaeghe (@rvbd-wimv)
 short_description: Update a host group on the Riverbed AppResponse appliance
 options:
     host:

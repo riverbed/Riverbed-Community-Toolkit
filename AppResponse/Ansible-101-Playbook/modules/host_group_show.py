@@ -7,7 +7,6 @@
 DOCUMENTATION = """
 ---
 module: host_group_show
-author: Wim Verhaeghe (@rvbd-wimv)
 short_description: Show the hostgroups available in a Riverbed AppResponse appliance
 options:
     host:

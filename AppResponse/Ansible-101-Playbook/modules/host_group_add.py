@@ -7,7 +7,6 @@
 DOCUMENTATION = """
 ---
 module: host_group_add
-author: Wim Verhaeghe (@rvbd-wimv)
 short_description: Add a hostgroup to Riverbed AppResponse appliance
 options:
     host:

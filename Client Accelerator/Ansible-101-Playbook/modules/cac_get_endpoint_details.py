@@ -7,7 +7,6 @@
 DOCUMENTATION = """
 ---
 module: cac_get_endpoint_details
-author: Wim Verhaeghe (@rvbd-wimv)
 short_description: HTTP GET specific endpoint details on the Riverbed Client accelerator controller via the REST API
 options:
     host:
