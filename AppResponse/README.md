@@ -2,7 +2,7 @@
 
 Cookbooks for AppResponse, a [Riverbed NPM Solution](https://www.riverbed.com/solutions/network-performance-monitoring.html).
 
-## Ansible playbook example for AppResponse
+## Ansible playbook examples for AppResponse
 
 This [Ansible-101-Playbook](Ansible-101-Playbook) shows how to connect and interact with AppResponse appliances. It is based on the [SteelScript Python Library](https://github.com/riverbed/steelscript).
 
