@@ -1,11 +1,9 @@
-# Author: Wim Verhaeghe (wim.verhaeghe@riverbed.com)
-# Version: 2
-# Client Accelerator Controller API doc: https://support.riverbed.com/apis/_products/SteelCentral_Controller_for_SteelHead_Mobile/index.html
 ---
 - name: REST API CAC
   hosts: localhost
+  connection: local
   vars:
-    host: "https://my_cac_hostname or ip address"
+    host: "https://client_accelerator_controller_ip_or_hostname"
     access_code: "my_access_code"
 
   tasks:
@@ -62,3 +60,13 @@
       register: result
 
     - debug: var=result
+
+    - name: get specific SHM endpoint stats via REST API
+      cac_get_endpoint_details:
+        host: "{{ host }}"
+        id: "272898078"
+        access_code: "{{ access_code }}"
+      register: result
+
+    - name: display SHM endpoint stats
+      debug: var=result

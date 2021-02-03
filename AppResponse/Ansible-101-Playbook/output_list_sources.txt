@@ -1,18 +1,18 @@
 
-PLAY [AppResponce list sources] ****************************************************************************************
+PLAY [AppResponse list sources] ****************************************************************************************
 
 TASK [Gathering Facts] *************************************************************************************************
 ok: [localhost]
 
-TASK [List sources on AppResponce] *************************************************************************************
-changed: [localhost]
+TASK [Get the sources on AppResponse] **********************************************************************************
+ok: [localhost]
 
-TASK [debug] ***********************************************************************************************************
+TASK [List the sources on the AppResponse] *****************************************************************************
 ok: [localhost] => {
     "result": {
-        "changed": true,
+        "changed": false,
         "failed": false,
-        "meta": [
+        "output": [
             [
                 "name",
                 "description",
@@ -26,9 +26,9 @@ ok: [localhost] => {
                     "mon0",
                     "AppResponse Interface (mon0)",
                     "UP",
-                    1257286086,
-                    0,
-                    1992723
+                    40524350630544,
+                    3163998,
+                    68402394586
                 ]
             ],
             [
@@ -49,9 +49,9 @@ ok: [localhost] => {
                         "type": "BPF",
                         "value": ""
                     },
-                    1257635370,
-                    3,
-                    1993266
+                    40524473925856,
+                    5956415,
+                    68399439482
                 ]
             ],
             [
@@ -73,9 +73,9 @@ ok: [localhost] => {
                     ],
                     null,
                     "RUNNING",
-                    "1610381746.000000000",
-                    "1610386557.000000000",
-                    1256988075
+                    "1612190852.000000000",
+                    "1612191732.000000000",
+                    103876321351
                 ]
             ],
             [
@@ -96,13 +96,22 @@ ok: [localhost] => {
                 "modified"
             ],
             []
-        ],
-        "warnings": [
-            "Module did not set no_log for password"
         ]
     }
 }
 
+TASK [Get the sources on AppResponse + print to file] ******************************************************************
+ok: [localhost]
+
+TASK [Display status on writing to output file] ************************************************************************
+ok: [localhost] => {
+    "result": {
+        "changed": false,
+        "failed": false,
+        "msg": "Successfully wrote output to 'my_output_list_sources.txt'"
+    }
+}
+
 PLAY RECAP *************************************************************************************************************
-localhost                  : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+localhost                  : ok=5    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
 

@@ -1,17 +1,31 @@
 ---
-- name: AppResponce list sources
+- name: AppResponse list sources
   hosts: localhost
+  connection: local
   vars:
-    host: "hostname_or_ip_address"
+    host: "some_ipv4_or_hostname_of_AppResponse"
     username: "some_username"
     password: "some_password"
+    file_name: "my_output_list_sources.txt"
 
   tasks:
-    - name: List sources on AppResponce
+    - name: Get the sources on AppResponse
       list_sources:
         host: "{{ host }}"
         username: "{{ username }}"
         password: "{{ password }}"
       register: result
 
-    - debug: var=result
+    - name: List the sources on the AppResponse
+      debug: var=result
+
+    - name: Get the sources on AppResponse + print to file
+      list_sources:
+        host: "{{ host }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+        output_file: "{{ file_name }}"
+      register: result
+
+    - name: Display status on writing to output file
+      debug: var=result
