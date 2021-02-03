@@ -15,8 +15,8 @@ For more details please refer to
 - [API reference](https://support.riverbed.com/apis/_products/SteelCentral_Controller_for_SteelHead_Mobile/index.html)
 - an [excellent blog](https://gestaltit.com/tech-talks/riverbed/riverbed-2020/nwkautomaniac/getting-started-with-the-steelhead-client-accelerator-controller-api-part-1/) that explains everything
 
-## An example of (ansible)[https://www.ansible.com/] playbook interacting with the Client Accelerator Controller
+## An example of an Ansible playbook interacting with the Client Accelerator Controller
 
-This (ansible playbook)[Client Accelerator/Ansible-101-Playbook/] shows how to connect to the Client Accelerator Controller. It uses (SteelScript)[https://github.com/riverbed/steelscript] to interact with the appliance API.
+This [ansible playbook](Client%20Accelerator/Ansible-101-Playbook/) shows how to connect to the Client Accelerator Controller. It uses [SteelScript Python Library](https://github.com/riverbed/steelscript) to interact with the appliance API.
 
 ## Copyright (c) 2021 Riverbed Technology

@@ -5,9 +5,9 @@ Here is a example of an [ansible module](modules/list_sources.py) showing how to
 ## Usage:
 
 ```shell
-#mkdir /usr/lib/python3/dist-packages/ansible/modules/network/riverbed
-#cp modules/list_sources.py /usr/lib/python3/dist-packages/ansible/modules/network/riverbed
-#ansible-playbook list_sources.yml
+mkdir /usr/lib/python3/dist-packages/ansible/modules/network/riverbed
+cp modules/list_sources.py /usr/lib/python3/dist-packages/ansible/modules/network/riverbed
+ansible-playbook list_sources.yml
 ```
 
 ## Example output:
@@ -23,19 +23,16 @@ Here is an example of an [ansible module](modules/host_group_delete.py) deleting
 Here is an example of an [ansible module](modules/host_group_update.py) updating a hostgroup of the AppResponce (AR11).  
 Here is an example of an [ansible module](modules/host_group_upload.py) uploading a list of hostgroups to the AppResponce (AR11).
 
-
 ## Usage:
 
 ```shell
-#mkdir /usr/lib/python3/dist-packages/ansible/modules/network/riverbed
-#cp modules/host_group*.py /usr/lib/python3/dist-packages/ansible/modules/network/riverbed
-#ansible-playbook host_groups.yml
+mkdir /usr/lib/python3/dist-packages/ansible/modules/network/riverbed
+cp modules/host_group*.py /usr/lib/python3/dist-packages/ansible/modules/network/riverbed
+ansible-playbook host_groups.yml
 ```
 
 ## Example output:
 
 [output.txt](output_host_groups.txt)
-
-
 
 ## Copyright (c) 2021 Riverbed Technology

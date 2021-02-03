@@ -1,14 +1,13 @@
-# Remediation scripts
+# Windows Scripts Library
 
-In this repo, you will be able to find examples of Remediation scripts shared by the Riverbed Community
+In this repository part of the [Riverbed Community Toolkit](https://github.com/riverbed/Riverbed-Community-Toolkit), you will find some scripts shared by the [Riverbed Community](https://community.riverbed.com) for Automation, Remediation and Device Healing for Windows. 
 
 Related links:
 
-- Ask the community: https://community.riverbed.com
-- Watch how to Improve Service Desk KPIs with SteelCentral Automated Remediation: https://www.youtube.com/watch?v=01GPFS21A9E
-- Read the manual https://help.aternity.com/search?facetreset=yes&q=remediation
-- Share ideas https://aternity.ideas.riverbed.com 
-- Try Aternity http://riverbed.com/try-aternity
+- Ask the Riverbed Community: https://community.riverbed.com
+- Watch how to Improve Service Desk KPIs with [Aternity Automated Remediation on Youtube](https://www.youtube.com/watch?v=01GPFS21A9E)
+- Read [Aternity remediation manual](https://help.aternity.com/search?facetreset=yes&q=remediation)
+- Get scripts from the [Aternity scripts library on GitHub](https://github.com/Aternity/Remediation-Scripts-Library)
 
 ## How to contribute
 
@@ -41,7 +40,7 @@ Set-ExecutionPolicy Unrestricted -Scope Process
 Output example:
 
 ```output
-    Directory: C:\Riverbed-Community-Toolkit\Aternity\Remediation
+    Directory: C:\Riverbed-Community-Toolkit\Windows\Remediation Scripts
 
 
 Mode                LastWriteTime         Length Name
