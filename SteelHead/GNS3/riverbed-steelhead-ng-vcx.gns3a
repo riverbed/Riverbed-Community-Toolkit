@@ -20,11 +20,11 @@
         },
         {
             "adapter_number": 2,
-            "port_name": "WAN0_0"
+            "port_name": "LAN0_0"
         },
         {
             "adapter_number": 3,
-            "port_name": "LAN0_0"
+            "port_name": "WAN0_0"
         }
     ],
     "qemu": {
@@ -38,13 +38,6 @@
         "kvm": "require"
     },
     "images": [
-        {
-            "filename": "mgmt.qcow2",
-            "version": "9.9.2",
-            "md5sum": "841deecae8e0d5b13aa6bafdf0b2ba97",
-            "filesize": 2059993088,
-            "download_url": "https://support.riverbed.com/content/support/software/steelhead/cx-appliance.html#software-alert"
-        },
         {
             "filename": "mgmt.qcow2",
             "version": "9.10.1",
