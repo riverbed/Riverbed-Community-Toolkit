@@ -20,11 +20,11 @@
         },
         {
             "adapter_number": 2,
-            "port_name": "WAN0_0"
+            "port_name": "LAN0_0"
         },
         {
             "adapter_number": 3,
-            "port_name": "LAN0_0"
+            "port_name": "WAN0_0"
         }
     ],
     "qemu": {
