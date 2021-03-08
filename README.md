@@ -12,7 +12,7 @@ A public toolkit shared by [Riverbed](https://www.riverbed.com) and the [Riverbe
 | [SteelConnect](/SteelConnect) | Scripts, howtos and templates to deploy SteelConnect headend in Azure | Azure, Terraform, PowerShell |
 | [SteelScript](#) | *work in progress* Examples and use-cases based on [SteelScript Python Library](https://github.com/riverbed/steelscript) | Python |
 | [GNS3](/SteelHead/GNS3) | Artifacts to install SteelHead devices in GNS3 projects | GNS3 |
-| [Windows](/Aternity) | Library of Automation and Remediation scripts for Windows Endpoints - including script to interact with Riverbed Client Accelerator agent (a.k.a SteelHead Mobile), Application Signatures for [Aternity EUEM](https://www.aternity.com/) | Azure, Windows, PowerShell  |
+| [Windows](/Aternity) | Library of Automation and Remediation scripts for Windows Endpoints - including script to interact with Riverbed Client Accelerator agent (a.k.a SteelHead Mobile), Application Signatures for [Aternity EUEM](https://www.aternity.com/) | Azure, Windows, PowerShell |
 
 
 ## How to contribute?
