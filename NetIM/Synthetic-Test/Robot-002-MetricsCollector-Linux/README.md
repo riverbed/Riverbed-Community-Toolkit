@@ -54,6 +54,7 @@ netim_core_reachable_ip='10.10.10.148'
 netim_core_user=netimadmin
 netim_agent_version='3.1.5'
 netim_agent_user='netim-agent'
+netim_agent_group='netim-agent'
 
 ################
 
@@ -61,10 +62,10 @@ netim_agent_user='netim-agent'
 useradd --create-home $netim_agent_user
 
 testengine_path='/data1/riverbed/NetIM/latest/external/TestEngine/'
-cd /home/netim-agent
+cd /home/$netim_agent_user
 scp $netim_core_user@$netim_core_reachable_ip:$testengine_path/TestEngine-linux*.zip .
 unzip TestEngine-linux.zip
-chown -R netim-agent:netim-agent /home/$netim_agent_user/Riverbed
+chown -R $netim_agent_user:$netim_agent_group /home/$netim_agent_user/Riverbed
 
 # installer
 cd Riverbed/TE/$netim_agent_version/
