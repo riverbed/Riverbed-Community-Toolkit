@@ -72,12 +72,12 @@ cd Riverbed/TE/$netim_agent_version/
 ./install.sh
 ```
 
-At this point the interactive installer will start asking questions. You can just fill the main parameters and skip other steps.
+At this point the interactive installer will start asking questions. You can just fill the main parameters and skip others.
 
 Main parameters are:
-> 1. NetIMm host: {{netim_core_reachable_ip}
-> 2. user name to which the ownership of the Test Engine files will be set: netim-agent
-> 3. group name to which the ownership of the Test Engine files will be set: netim-agent
+> 1. NetIM host: {{netim_core_reachable_ip}
+> 2. user name to which the ownership of the Test Engine files: netim-agent
+> 3. group name to which the ownership of the Test Engine files: netim-agent
 
 
 ## Metrics collectors
