@@ -1,7 +1,7 @@
 # Riverbed Community Toolkit - NetIM Synthetic Test
 
 - [Overview](#overview)
-- [Robots cookbook](#robot-cookbookx)
+- [Robots Cookbooks](#robots-cookbookx)
 - [Synthetic Test Library](#synthetic-test-library)
 - [How to contribute](#how-to-contribute)
 
@@ -15,7 +15,7 @@ The section [Synthetic Test Library](#synthetic-test-library)  inventories all t
 
 Any contributions are welcome. More details in the [How to contribute](#how-to-contribute)
 
-## ROBOT cookbooks
+## ROBOTS cookbooks
 
 | Robot | SubFolder | Capabilities |
 | --- | --- | --- |
