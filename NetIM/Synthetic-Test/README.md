@@ -21,6 +21,7 @@ Any contributions are welcome. More details in the [How to contribute](#how-to-c
 | --- | --- | --- |
 | Robot Template | [Robot-000-Template](Robot-000-Template) | Template to design new Robot
 | Web Selenium Robot | [Robot-001-WebSelenium](Robot-001-WebSelenium) | <li>Edge and Chrome</li><li>Selenium with Python</li> |
+| Metrics Collector Linux Robot | [Robot-002-MetricsCollector-Linux](Robot-002-MetricsCollector-Linux) | <li>Linux</li><li>Python</li><li>SSH within Python scripts</li> |
 
 ## Synthetic Test Library
 
