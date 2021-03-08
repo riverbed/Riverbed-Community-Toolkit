@@ -7,7 +7,7 @@ Capabilities summary:
 - Windows machine
 - Synthetic Test in a web-browser in Edge or Chrome (Selenium automation with Python scripts)
 
-The next paragraph explains how to setup from scratch on a Windows machine. It inclused the installation of Riverbed and Aternity agents.
+The next paragraph explains how to setup from scratch on a Windows machine. It include the installation of Riverbed NetIM agent.
 
 ## Prerequisites
 
