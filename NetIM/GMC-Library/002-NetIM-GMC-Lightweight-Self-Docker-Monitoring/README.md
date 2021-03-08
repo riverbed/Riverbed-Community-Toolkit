@@ -3,7 +3,7 @@
 ## Description
 
 ### Here is how this GMC setup works for the mtr file based approach the code is in ```scripts_mtr``` folder
-1. Use a Linux machine wiht python3 and [Paramiko](http://www.paramiko.org/) installed.
+1. Use a Linux machine with python3 and [Paramiko](http://www.paramiko.org/) installed.
 1. Add your NetIM nodes into the NetIM inventory keeping in mind the names you assign to the devces in ```n31-netimrvbdlab.json```
 ```curl --insecure --user admin:admin -H 'Content-Type: application/json' -d @n31-netimrvbdlab.json https://10.99.31.75:8543/api/netim/v1/devices```
 1. Verify that the NetIM nodes have made it into NetIM inventory.
