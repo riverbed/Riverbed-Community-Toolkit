@@ -41,7 +41,7 @@
         {
             "filename": "mgmt.qcow2",
             "version": "9.10.1",
-            "md5sum": "C29C209938675212BE5B897B12EEB25B",
+            "md5sum": "c29c209938675212be5b897b12eeb25b",
             "filesize": 2101149696,
             "download_url": "https://support.riverbed.com/content/support/software/steelhead/cx-appliance.html#software-alert"
         },
