@@ -8,7 +8,7 @@ Riverbed provides to the user community some Cloud architecture and implementati
 
 Any contributions, feedbacks and comments are welcome!
 
-![Riverbed Acceleration in Azure](./images/Riverbed-Acceleration-Azure.png)
+![Riverbed Acceleration in Azure](./images/Riverbed-in-the-Clouds.png)
 
 ## Riverbed Acceleration for Any Cloud
 
@@ -17,8 +17,6 @@ The Riverbed Acceleration solution is the market leader with its unique technolo
 Well known for optimization of WAN traffic and on-prem hosted applications, the acceleration solution can also optimize across any network where applications are hosted in cloud infrastructure.
 
 The technical solution exists in different form factors so that it can be deployed and chained in the network path, both client side and server side.
-
-![Acceleration for any Cloud](./images/Riverbed-Acceleration-Any-Cloud.png)
 
 ### Cookbooks for AWS
 
