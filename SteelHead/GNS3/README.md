@@ -45,7 +45,7 @@ For your convenience, we have added an appliance that you can import directly on
 
 
 9. For mgmt.qcow2 (the OS disk), hit Download. The Riverbed Support page gets opened.
-10. Download the KVM image and extract the .tgz archive locally
+10. Download the KVM image and expand the .tgz archive locally to get the mgmt.qcow2 file
 
 11. Back in GNS3, Import and Select the local file
 
