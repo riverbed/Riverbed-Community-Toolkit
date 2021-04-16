@@ -17,7 +17,7 @@ A public toolkit shared by [Riverbed](https://www.riverbed.com) and the [Riverbe
 
 ## How to contribute?
 
-Feel free to submit any code using Pull Request (hit the Fork button at the top right cornet to get a copy of the repo in your own account, modify your own copy of the repo and then create a [pull request from here](https://github.com/riverbed/Riverbed-Community-Toolkit/pulls)) and problems creating [Issues](https://github.com/riverbed/Riverbed-Community-Toolkit/issues).
+Feel free to submit any code using Pull Request (hit the Fork button at the top right corner to get a copy of the repo in your own account, modify your own copy of the repo and then create a [pull request from here](https://github.com/riverbed/Riverbed-Community-Toolkit/pulls)) and problems creating [Issues](https://github.com/riverbed/Riverbed-Community-Toolkit/issues).
 
 Thanks for sharing with the [Riverbed Community](https://community.riverbed.com)!
 
