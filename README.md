@@ -4,7 +4,7 @@ A public toolkit shared by [Riverbed](https://www.riverbed.com) and the [Riverbe
 
 | Folders | Contents | Related 3rd party technology |
 | --- | --- | --- |
-| [Accelerator (SteelHead)](/SteelHead) | Community Cloud Cookbooks: scripts and howto to deploy the Riverbed Accelerator in the Cloud and in your labs | Azure, ARM, PowerShell, AWS, GNS3 |
+| [Cloud Accelerator (SteelHead)](/SteelHead) | Community Cloud Cookbooks: scripts and howto to deploy the Riverbed Accelerator in the Cloud and in your labs | Azure, ARM, PowerShell, AWS, GNS3 |
 | [Client Accelerator](/Client%20Accelerator) | Cookbooks to interact with the REST API, use Ansible with [SteelScript](https://github.com/riverbed/steelscript), deploy the controller appliance with template in the Cloud | Python, Azure, REST, Ansible, Terraform |
 | [Portal](#) | *work in progress* Dashboards examples |  |
 | [NetIM](/NetIM/GMC-Library) | Community library to share extensions for NetIM: GMC metrics, custom mibs, Robots, Synthetic-Test | Azure API, Python |
