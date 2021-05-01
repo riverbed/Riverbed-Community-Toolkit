@@ -8,7 +8,7 @@ The [terraform template](Azure/Terraform) automate a Client Accelerator Controll
 
 ## Interact with the Controller REST API
 
-With [SteelScript](https://github.com/riverbed/steelscript)
+With [SteelScript](https://github.com/riverbed/steelscript) this [cacontroller-rest_api example](https://github.com/riverbed/steelscript-client-accelerator-controller/blob/main/examples/cacontroller-rest_api.py) is easy to use and extend:
 
 ```bash
 python examples/cacontroller-examples/cacontroller-rest_api.py {client accelerator controller fqdn or ip address} --access_code {access_code}
