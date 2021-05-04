@@ -21,8 +21,6 @@ Deploy [Riverbed NetIM](https://www.riverbed.com/products/npm/netim) in your fav
 
 ## Demo
 
-This template is used by the [Deploy Riverbed NetIM in Azure demonstration template](https://github.com/riverbed/Riverbed-Community-Toolkit/tree/master/NetIM/Azure-DeployNetIM).
-
 ## Notes
 
 `Tags: Riverbed,Visibility,NPM,NetIM,Infrastructure,Monitoring`
