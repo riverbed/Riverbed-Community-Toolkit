@@ -4,7 +4,7 @@
 
 [![Visualize](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/visualizebutton.svg?sanitize=true)](http://armviz.io/#/?load=https%3A%2F%2Fraw.githubusercontent.com%2Friverbed%2FRiverbed-Community-Toolkit%2Fmaster%2FNetIM%2FAzure-Cloud-Cookbooks%2F101-netim-simple-demo%2Fazuredeploy.json)
 
-Deploy [Riverbed NetIM](https://www.riverbed.com/products/npm/netim) in your favorite Cloud in just few clicks, ideal to set up a simple demo or test environment with your favorite Infrastructure Monitoring solution.
+Deploy [Riverbed NetIM](https://www.riverbed.com/products/npm/netim) with your own Azure Cloud subscription in just few clicks, ideal to set up a simple demo or test environment with your favorite Infrastructure Monitoring solution.
 
 ## Usage
 
