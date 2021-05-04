@@ -1,4 +1,4 @@
-# Riverbed Community Cookbook - NetIM Simple Demo
+# Riverbed Community Cookbooks - NetIM Simple Demo
 
 [![Deploy to Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Friverbed%2FRiverbed-Community-Toolkit%2Fmaster%2FNetIM%2FAzure-Cloud-Cookbooks%2F101-netim-simple-demo%2Fazuredeploy.json) [![Deploy to Azure Gov](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazuregov.svg?sanitize=true)](https://portal.azure.us/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Friverbed%2FRiverbed-Community-Toolkit%2Fmaster%2FNetIM%2FAzure-Cloud-Cookbooks%2F101-netim-simple-demo%2Fazuredeploy.json)
 
