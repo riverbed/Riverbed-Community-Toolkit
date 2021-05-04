@@ -1,0 +1,443 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.210314",
+  "parameters": {
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "Location for all resources."
+      }
+    },
+    "version" : {
+      "type": "string",
+      "defaultValue": "2.3",
+      "allowedValues" : [
+        "2.3"
+      ],
+      "metadata": {
+        "description": "version of Riverbed NetIM"
+      }        
+    },
+    "existingStorageAccountId" :{
+      "type": "string",
+      "metadata": {
+        "description": "ID of the existing Storage Account having the Blob Container containing all the VHD Blob for NetIM"
+      }
+    },
+    "existingVhdBlobContainerUri" : {
+      "type": "string",
+      "metadata": {
+        "description": "Uri of the existing Blob Container containing all the VHD Blob for NetIM. For example: https://your-storage-account.blob.core.windows.net/vhd"
+      }
+    },
+    "existingDiagStorageUri": {
+      "type": "string",
+      "metadata": {
+        "description": "Uri of an existing Storage Account. For example: https://your-storage-account.blob.core.windows.net"
+      }
+    },
+    "existingVirtualNetworkId": {
+      "type": "string",
+      "metadata": {
+        "description": "Name of the existing VNET"
+      }
+    },
+    "existingSubnetName": {
+      "type": "string",
+      "defaultValue" : "Monitoring",
+      "metadata": {
+        "description": "Name of the subnet in the virtual network you want to use"
+      }
+    },
+    "vmName_NetIMManager": {
+      "type": "string",
+      "defaultValue" : "netim-manager",
+      "metadata": {
+        "description": "Name of the VM for NetIM Manager node"
+      }
+    },
+    "vmName_NetIMWorker": {
+      "type": "string",
+      "defaultValue" : "netim-worker",
+      "metadata": {
+        "description": "Name of the VM for NetIM Worker node"
+      }
+    },
+    "vmName_NetIMCore": {
+      "type": "string",
+      "defaultValue" : "netim-core",
+      "metadata": {
+        "description": "Name of the VM for NetIM Core node"
+      }
+    },
+    "vmSize": {
+      "type": "string",
+      "defaultValue" : "Standard_D4s_v3",
+      "metadata": {
+        "description": "Size of the VM"
+      }
+    },
+    "osDiskSizeGB" : {
+      "type": "int",
+      "defaultValue" : 75,
+      "metadata": {
+        "description": "OS Disk Size"
+      }
+    },
+    "dataDiskSizeGB" : {
+      "type": "int",
+      "defaultValue" : 100,
+      "metadata": {
+        "description": "OS Disk Size"
+      }
+    },
+    "privateIP_NetIMManager" : {
+      "type": "string",
+      "defaultValue" : "10.100.5.11",
+      "metadata":{
+        "description" : "Private IP reserved in the existing subnet range for the Manager"
+      }
+    },
+    "privateIP_NetIMWorker" : {
+      "type": "string",
+      "defaultValue" : "10.100.5.21",
+      "metadata":{
+        "description" : "Private IP reserved in the existing subnet range for the Worker node"
+      }
+    },
+    "privateIP_NetIMCore" : {
+      "type": "string",
+      "defaultValue" : "10.100.5.31",
+      "metadata":{
+        "description" : "Private IP reserved in the existing subnet range for the Core node"
+      }
+    }
+  },
+  "variables": {
+    "nicName_manager": "[concat(parameters('vmName_NetIMManager'), '-nic1')]",
+    "nicName_worker": "[concat(parameters('vmName_NetIMWorker'), '-nic1')]",
+    "nicName_core": "[concat(parameters('vmName_NetIMCore'), '-nic1')]",
+
+    // URI with NetIM 2.3 vhd
+    "osDiskVhdUri_NetIMCore": "[concat(parameters('existingVhdBlobContainerUri'),'/','netim_core_azure_230_977_root.vhd')]",
+    "dataDiskVhdUri_NetIMCore": "[concat(parameters('existingVhdBlobContainerUri'),'/','netim_core_azure_230_977_data1.vhd')]",
+    "osDiskVhdUri_NetIMMicroservices": "[concat(parameters('existingVhdBlobContainerUri'),'/','netim_microservices_azure_230_1068_root.vhd')]",
+    "dataDiskVhdUri_NetIMMicroservices": "[concat(parameters('existingVhdBlobContainerUri'),'/','netim_microservices_azure_230_1068_data1.vhd')]",
+
+    "subnetRef": "[concat(parameters('existingVirtualNetworkId'),'/subnets/',parameters('existingSubnetName'))]",
+    "publicIPAddressName": "netim"
+  },
+  "resources": [
+    {
+      "apiVersion": "2020-05-01",
+      "type": "Microsoft.Network/publicIPAddresses",
+      "name": "[variables('publicIPAddressName')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "publicIPAllocationMethod": "Dynamic"
+      }
+    },
+    {
+      "apiVersion": "2020-05-01",
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[variables('nicName_manager')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Static",
+              "privateIPAddress" : "[parameters('privateIP_NetIMManager')]",
+              "subnet": {
+                "id": "[variables('subnetRef')]"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "2020-05-01",
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[variables('nicName_worker')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Static",
+              "privateIPAddress" : "[parameters('privateIP_NetIMWorker')]",
+              "subnet": {
+                "id": "[variables('subnetRef')]"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "apiVersion": "2020-05-01",
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[variables('nicName_core')]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]"
+      ],
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
+            "properties": {
+              "privateIPAllocationMethod": "Static",
+              "privateIPAddress" : "[parameters('privateIP_NetIMCore')]",
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]"
+              },
+              "subnet": {
+                "id": "[variables('subnetRef')]"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.Compute/disks",
+      "apiVersion": "2019-07-01",
+      "name": "[concat(parameters('vmName_NetIMManager'), '_OS')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "creationData": {
+          "createOption": "Import",
+          "sourceUri": "[variables('osDiskVhdUri_NetIMMicroservices')]",
+          "storageAccountId" : "[parameters('existingStorageAccountId')]"
+        },
+        "diskSizeGB" : "[parameters('osDiskSizeGB')]",
+        "osType": "Linux"
+      }
+    },
+    {
+      "type": "Microsoft.Compute/disks",
+      "apiVersion": "2019-07-01",
+      "name": "[concat(parameters('vmName_NetIMManager'), '_Data')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "creationData": {
+          "createOption": "Import",
+          "sourceUri": "[variables('dataDiskVhdUri_NetIMMicroservices')]",
+          "storageAccountId" : "[parameters('existingStorageAccountId')]"
+        },
+        "diskSizeGB" : "[parameters('dataDiskSizeGB')]"
+      }
+    },
+    {
+      "type": "Microsoft.Compute/disks",
+      "apiVersion": "2019-07-01",
+      "name": "[concat(parameters('vmName_NetIMWorker'), '_OS')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "creationData": {
+          "createOption": "Import",
+          "sourceUri": "[variables('osDiskVhdUri_NetIMMicroservices')]",
+          "storageAccountId" : "[parameters('existingStorageAccountId')]"
+        },
+        "diskSizeGB" : "[parameters('osDiskSizeGB')]",
+        "osType": "Linux"
+      }
+    },
+    {
+      "type": "Microsoft.Compute/disks",
+      "apiVersion": "2019-07-01",
+      "name": "[concat(parameters('vmName_NetIMWorker'), '_Data')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "creationData": {
+          "createOption": "Import",
+          "sourceUri": "[variables('dataDiskVhdUri_NetIMMicroservices')]",
+          "storageAccountId" : "[parameters('existingStorageAccountId')]"
+        },
+        "diskSizeGB" : "[parameters('dataDiskSizeGB')]"
+      }
+    },
+    {
+      "type": "Microsoft.Compute/disks",
+      "apiVersion": "2019-07-01",
+      "name": "[concat(parameters('vmName_NetIMCore'), '_OS')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "creationData": {
+          "createOption": "Import",
+          "sourceUri": "[variables('osDiskVhdUri_NetIMCore')]",
+          "storageAccountId" : "[parameters('existingStorageAccountId')]"
+        },
+        "diskSizeGB" : "[parameters('osDiskSizeGB')]",
+        "osType": "Linux"
+      }
+    },
+    {
+      "type": "Microsoft.Compute/disks",
+      "apiVersion": "2019-07-01",
+      "name": "[concat(parameters('vmName_NetIMCore'), '_Data')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "creationData": {
+          "createOption": "Import",
+          "sourceUri": "[variables('dataDiskVhdUri_NetIMCore')]",
+          "storageAccountId" : "[parameters('existingStorageAccountId')]"
+        },
+        "diskSizeGB" : "[parameters('dataDiskSizeGB')]"
+      }
+    },
+
+    {
+      "apiVersion": "2019-07-01",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "[parameters('vmName_NetIMManager')]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[concat('Microsoft.Network/networkInterfaces/', variables('nicName_manager'))]",
+        "[concat(parameters('vmName_NetIMManager'), '_OS')]",
+        "[concat(parameters('vmName_NetIMManager'), '_Data')]"
+      ],
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[parameters('vmSize')]"
+        },
+        "storageProfile": {
+          "osDisk": {
+            "osType": "Linux",
+            "caching": "ReadWrite",
+            "createOption": "Attach",
+            "managedDisk": {
+              "id": "[resourceId('Microsoft.Compute/disks', concat(parameters('vmName_NetIMManager'), '_OS'))]"
+            }
+          },
+          "dataDisks": [
+            {
+              "lun": 0,
+              "managedDisk": {
+                "id": "[resourceId('Microsoft.Compute/disks', concat(parameters('vmName_NetIMManager'), '_Data'))]"
+              },
+              "caching": "ReadOnly",
+              "createOption": "Attach"
+            }
+          ]
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName_manager'))]"
+            }
+          ]
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled":  true ,
+            "storageUri": "[parameters('existingDiagStorageUri')]"
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "2019-07-01",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "[parameters('vmName_NetIMWorker')]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[concat('Microsoft.Network/networkInterfaces/', variables('nicName_worker'))]",
+        "[concat(parameters('vmName_NetIMWorker'), '_OS')]",
+        "[concat(parameters('vmName_NetIMWorker'), '_Data')]"
+      ],
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[parameters('vmSize')]"
+        },
+        "storageProfile": {
+          "osDisk": {
+            "osType": "Linux",
+            "caching": "ReadWrite",
+            "createOption": "Attach",
+            "managedDisk": {
+              "id": "[resourceId('Microsoft.Compute/disks', concat(parameters('vmName_NetIMWorker'), '_OS'))]"
+            }
+          },
+          "dataDisks": [
+            {
+              "lun": 0,
+              "managedDisk": {
+                "id": "[resourceId('Microsoft.Compute/disks', concat(parameters('vmName_NetIMWorker'), '_Data'))]"
+              },
+              "caching": "ReadOnly",
+              "createOption": "Attach"
+            }
+          ]
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName_worker'))]"
+            }
+          ]
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled":  true ,
+            "storageUri": "[parameters('existingDiagStorageUri')]"
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "2019-07-01",
+      "type": "Microsoft.Compute/virtualMachines",
+      "name": "[parameters('vmName_NetIMCore')]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[concat('Microsoft.Network/networkInterfaces/', variables('nicName_core'))]",
+        "[concat(parameters('vmName_NetIMCore'), '_OS')]",
+        "[concat(parameters('vmName_NetIMCore'), '_Data')]"
+      ],
+      "properties": {
+        "hardwareProfile": {
+          "vmSize": "[parameters('vmSize')]"
+        },
+        "storageProfile": {
+          "osDisk": {
+            "osType": "Linux",
+            "caching": "ReadWrite",
+            "createOption": "Attach",
+            "managedDisk": {
+              "id": "[resourceId('Microsoft.Compute/disks', concat(parameters('vmName_NetIMCore'), '_OS'))]"
+            }
+          },
+          "dataDisks": [
+            {
+              "lun": 0,
+              "managedDisk": {
+                "id": "[resourceId('Microsoft.Compute/disks', concat(parameters('vmName_NetIMCore'), '_Data'))]"
+              },
+              "caching": "ReadOnly",
+              "createOption": "Attach"
+            }
+          ]
+        },
+        "networkProfile": {
+          "networkInterfaces": [
+            {
+              "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName_core'))]"
+            }
+          ]
+        },
+        "diagnosticsProfile": {
+          "bootDiagnostics": {
+            "enabled":  true ,
+            "storageUri": "[parameters('existingDiagStorageUri')]"
+          }
+        }
+      }
+    }
+  ]
+}
