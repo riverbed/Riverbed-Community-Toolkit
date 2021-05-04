@@ -19,7 +19,7 @@
             "type": "int",
             "minValue": 2,
             "maxValue" : 150,
-            "defaultValue": 1,
+            "defaultValue": 2,
             "metadata": {
                 "description": "Count of SteelHead nodes to deploy in the cluster"
             }
