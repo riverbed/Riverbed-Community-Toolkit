@@ -1,6 +1,6 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.191119",
+    "contentVersion": "1.0.0.210504",
     "parameters": {
         "VirtualNetworkId": {
             "type": "string",
@@ -72,15 +72,15 @@
                 "description": "plan for the Riverbed Cloud SteelHead"
             },
             "defaultValue": {
-                "name": "riverbed-steelhead-9-9-1",
+                "name": "riverbed-cloud-accelerator-9-12-0",
                 "publisher": "riverbed",
-                "product": "riverbed-steelhead-9-9-1"
+                "product": "riverbed-cloud-accelerator"
             },
             "allowedValues": [
-                {
-                    "name": "riverbed-steelhead-9-9-1",
+                {                
+                    "name": "riverbed-cloud-accelerator-9-12-0",
                     "publisher": "riverbed",
-                    "product": "riverbed-steelhead-9-9-1"
+                    "product": "riverbed-cloud-accelerator"
                 }
             ]
         },
@@ -91,16 +91,16 @@
             },
             "defaultValue": {
                 "publisher": "riverbed",
-                "offer": "riverbed-steelhead-9-9-1",
-                "sku": "riverbed-steelhead-9-9-1",
-                "version": "1.0.0"
+                "offer": "riverbed-cloud-accelerator",
+                "sku": "riverbed-cloud-accelerator-9-12-0",
+                "version": "latest"
             },
             "allowedValues": [
                 {
                     "publisher": "riverbed",
-                    "offer": "riverbed-steelhead-9-9-1",
-                    "sku": "riverbed-steelhead-9-9-1",
-                    "version": "1.0.0"
+                    "offer": "riverbed-cloud-accelerator",
+                    "sku": "riverbed-cloud-accelerator-9-12-0",
+                    "version": "latest"
                 }
             ]
         },
