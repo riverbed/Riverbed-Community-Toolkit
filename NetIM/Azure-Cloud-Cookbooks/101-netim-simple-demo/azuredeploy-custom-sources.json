@@ -18,14 +18,24 @@
         "metadata": {
           "description": "version of Riverbed NetIM"
         }        
+      },
+      "urlNetIMMicroservicesVHDZipArchive" : {
+        "type": "string",
+        "defaultValue": "https://support.riverbed.com/bin/support/download?sid=qvj9d70gg2uoln7ulahcnae071",
+        "metadata": {
+          "description": "URL of the zip archive containing NetIM microservices VHD images for Azure"
+        }        
+      },
+      "urlNetIMCoreVHDZipArchive" : {
+        "type": "string",
+        "defaultValue": "https://support.riverbed.com/bin/support/download?sid=j80hqlha7cbbqigocrii1kt7uv",
+        "metadata": {
+          "description": "URL of the zip archive containing NetIM core VHD images for Azure"
+        }        
       }
     },
     "functions": [],
     "variables": {
-      // NetIM 2.3 VHD archive sources
-      "urlNetIMMicroservicesVHDZipArchive" : "https://support.riverbed.com/bin/support/download?sid=qvj9d70gg2uoln7ulahcnae071",
-      "urlNetIMCoreVHDZipArchive" : "https://support.riverbed.com/bin/support/download?sid=j80hqlha7cbbqigocrii1kt7uv",
-      // Templates
       "linkedTemplateName_Create-WritableBlobContainerUri": "Create-WritableBlobContainerUri",
       "linkedTemplateName_ImportVHD_NetIMMicroservice": "ImportVHD-FromZipArchiveURL_NetIMMicroservices",
       "linkedTemplateName_ImportVHD_NetIMCore": "ImportVHD-FromZipArchiveURL_NetIMCore",
@@ -80,7 +90,7 @@
               "value" : "[variables('linkedTemplateName_ImportVHD_NetIMMicroservice')]"
             },
             "Source": {
-              "value": "[variables('urlNetIMMicroservicesVHDZipArchive')]"
+              "value": "[parameters('urlNetIMMicroservicesVHDZipArchive')]"
             },
             "Destination": {
               "value": "[reference(variables('linkedTemplateName_Create-WritableBlobContainerUri')).outputs.uriWritableStorageAccountBlobContainerSasToken.value]"
@@ -105,7 +115,7 @@
               "value" : "[variables('linkedTemplateName_ImportVHD_NetIMCore')]"
             },
             "Source": {
-              "value": "[variables('urlNetIMCoreVHDZipArchive')]"
+              "value": "[parameters('urlNetIMCoreVHDZipArchive')]"
             },
             "Destination": {
               "value": "[reference(variables('linkedTemplateName_Create-WritableBlobContainerUri')).outputs.uriWritableStorageAccountBlobContainerSasToken.value]"
