@@ -1,0 +1,206 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.210328",
+    "parameters": {
+      "location": {
+        "type": "string",
+        "defaultValue": "[resourceGroup().location]",
+        "metadata": {
+          "description": "The location in which the resources should be deployed."
+        }
+      },
+      "version" : {
+        "type": "string",
+        "defaultValue": "2.3",
+        "allowedValues" : [
+          "2.3"
+        ],
+        "metadata": {
+          "description": "version of Riverbed NetIM"
+        }        
+      },
+      "urlNetIMMicroservicesVHDZipArchive" : {
+        "type": "string",
+        "defaultValue": "https://support.riverbed.com/bin/support/download?sid=qvj9d70gg2uoln7ulahcnae071",
+        "metadata": {
+          "description": "URL of the zip archive containing NetIM microservices VHD images for Azure"
+        }        
+      },
+      "urlNetIMCoreVHDZipArchive" : {
+        "type": "string",
+        "defaultValue": "https://support.riverbed.com/bin/support/download?sid=j80hqlha7cbbqigocrii1kt7uv",
+        "metadata": {
+          "description": "URL of the zip archive containing NetIM core VHD images for Azure"
+        }        
+      }
+    },
+    "functions": [],
+    "variables": {
+      "linkedTemplateName_Create-WritableBlobContainerUri": "Create-WritableBlobContainerUri",
+      "linkedTemplateName_ImportVHD_NetIMMicroservice": "ImportVHD-FromZipArchiveURL_NetIMMicroservices",
+      "linkedTemplateName_ImportVHD_NetIMCore": "ImportVHD-FromZipArchiveURL_NetIMCore",
+      "linkedTemplateName_vnet-riverbed-headend": "vnet-riverbed-headend",
+      "linkedTemplateName_bastion": "bastion",
+      "linkedTemplateName_netim-simple": "netim-simple"
+    },
+    "resources": [
+      {
+          "apiVersion": "2021-04-01",
+          "name": "pid-03a8e700-0b6f-478c-b76c-2ec100d72540",
+          "type": "Microsoft.Resources/deployments",
+          "properties": {
+              "mode": "Incremental",
+              "template": {
+                  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                  "contentVersion": "1.0.0.0",
+                  "resources": []
+              }
+          }
+      },
+      {
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2021-04-01",
+        "name": "[variables('linkedTemplateName_Create-WritableBlobContainerUri')]",
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri" : "[uri(deployment().properties.templateLink.uri, 'nestedtemplates/Create-WritableBlobContainerUri/azuredeploy.json')]"
+          },
+          "parameters": {
+            "location":{
+              "value":"[parameters('location')]"
+            }
+          }
+        }
+      },
+      {
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2021-04-01",
+        "name": "[variables('linkedTemplateName_ImportVHD_NetIMMicroservice')]",
+        "dependsOn": [ 
+          "[variables('linkedTemplateName_Create-WritableBlobContainerUri')]"
+        ],
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri" : "[uri(deployment().properties.templateLink.uri, 'nestedtemplates/ImportVHD-FromZipArchiveURL/azuredeploy.json')]"
+          },
+          "parameters": {
+            "deploymentScriptName" : {
+              "value" : "[variables('linkedTemplateName_ImportVHD_NetIMMicroservice')]"
+            },
+            "Source": {
+              "value": "[parameters('urlNetIMMicroservicesVHDZipArchive')]"
+            },
+            "Destination": {
+              "value": "[reference(variables('linkedTemplateName_Create-WritableBlobContainerUri')).outputs.uriWritableStorageAccountBlobContainerSasToken.value]"
+            }
+          }
+        }
+      },
+      {
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2021-04-01",
+        "name": "[variables('linkedTemplateName_ImportVHD_NetIMCore')]",
+        "dependsOn": [ 
+          "[variables('linkedTemplateName_Create-WritableBlobContainerUri')]"
+        ],
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri" : "[uri(deployment().properties.templateLink.uri, 'nestedtemplates/ImportVHD-FromZipArchiveURL/azuredeploy.json')]"
+          },
+          "parameters": {
+            "deploymentScriptName" : {
+              "value" : "[variables('linkedTemplateName_ImportVHD_NetIMCore')]"
+            },
+            "Source": {
+              "value": "[parameters('urlNetIMCoreVHDZipArchive')]"
+            },
+            "Destination": {
+              "value": "[reference(variables('linkedTemplateName_Create-WritableBlobContainerUri')).outputs.uriWritableStorageAccountBlobContainerSasToken.value]"
+            }
+          }
+        }
+      },
+      {
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2021-04-01",
+        "name": "[variables('linkedTemplateName_vnet-riverbed-headend')]",
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri" : "[uri(deployment().properties.templateLink.uri, 'nestedtemplates/riverbed-community-toolkit/vnet-riverbed-headend/azuredeploy.json')]"
+          },
+          "parameters": {
+            "location":{
+              "value":"[parameters('location')]"
+            }
+          }
+        }
+      },
+      {
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2021-04-01",
+        "name": "[variables('linkedTemplateName_bastion')]",
+        "dependsOn": [ 
+          "[variables('linkedTemplateName_vnet-riverbed-headend')]"
+        ],
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri" : "[uri(deployment().properties.templateLink.uri, 'nestedtemplates/bastion/azuredeploy.json')]"
+          },
+          "parameters": {
+            "location":{
+              "value":"[parameters('location')]"
+            },
+            "existingVirtualNetworkId" : {
+              "value": "[reference(variables('linkedTemplateName_vnet-riverbed-headend')).outputs.virtualNetworkId.value]"
+            }
+          }
+        }
+      },
+      {
+        "type": "Microsoft.Resources/deployments",
+        "apiVersion": "2021-04-01",
+        "name": "[variables('linkedTemplateName_netim-simple')]",
+        "dependsOn": [ 
+          "[variables('linkedTemplateName_ImportVHD_NetIMMicroservice')]",
+          "[variables('linkedTemplateName_ImportVHD_NetIMCore')]",
+          "[variables('linkedTemplateName_vnet-riverbed-headend')]"
+        ],
+        "properties": {
+          "mode": "Incremental",
+          "templateLink": {
+            "uri" : "[uri(deployment().properties.templateLink.uri, 'nestedtemplates/riverbed-community-toolkit/netim-simple/azuredeploy.json')]"
+          },
+          "parameters": {
+            "location":{
+              "value":"[parameters('location')]"
+            },
+            "version": {
+              "value": "[parameters('version')]"
+            },
+            "existingStorageAccountId" : {
+              "value": "[reference(variables('linkedTemplateName_Create-WritableBlobContainerUri')).outputs.storageAccountId.value]"
+            },
+            "existingVhdBlobContainerUri":{
+              "value": "[reference(variables('linkedTemplateName_Create-WritableBlobContainerUri')).outputs.uriBlobContainer.value]"
+            },
+            "existingDiagStorageUri":{
+              "value": "[reference(variables('linkedTemplateName_Create-WritableBlobContainerUri')).outputs.uriBlobStorage.value]"
+            },
+            "existingVirtualNetworkId" : {
+              "value": "[reference(variables('linkedTemplateName_vnet-riverbed-headend')).outputs.virtualNetworkId.value]"
+            },
+            "existingSubnetName" : {
+              "value": "[reference(variables('linkedTemplateName_vnet-riverbed-headend')).outputs.subnetName_Monitoring.value]"
+            }
+          }
+        }
+      }
+    ],
+    "outputs": {
+    }
+}
