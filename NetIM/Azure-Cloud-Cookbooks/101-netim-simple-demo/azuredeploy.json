@@ -35,7 +35,7 @@
     },
     "resources": [
       {
-          "apiVersion": "2020-06-01",
+          "apiVersion": "2021-04-01",
           "name": "pid-03a8e700-0b6f-478c-b76c-2ec100d72540",
           "type": "Microsoft.Resources/deployments",
           "properties": {
@@ -49,7 +49,7 @@
       },
       {
         "type": "Microsoft.Resources/deployments",
-        "apiVersion": "2020-06-01",
+        "apiVersion": "2021-04-01",
         "name": "[variables('linkedTemplateName_Create-WritableBlobContainerUri')]",
         "properties": {
           "mode": "Incremental",
@@ -65,7 +65,7 @@
       },
       {
         "type": "Microsoft.Resources/deployments",
-        "apiVersion": "2020-06-01",
+        "apiVersion": "2021-04-01",
         "name": "[variables('linkedTemplateName_ImportVHD_NetIMMicroservice')]",
         "dependsOn": [ 
           "[variables('linkedTemplateName_Create-WritableBlobContainerUri')]"
@@ -90,7 +90,7 @@
       },
       {
         "type": "Microsoft.Resources/deployments",
-        "apiVersion": "2020-06-01",
+        "apiVersion": "2021-04-01",
         "name": "[variables('linkedTemplateName_ImportVHD_NetIMCore')]",
         "dependsOn": [ 
           "[variables('linkedTemplateName_Create-WritableBlobContainerUri')]"
@@ -115,7 +115,7 @@
       },
       {
         "type": "Microsoft.Resources/deployments",
-        "apiVersion": "2020-06-01",
+        "apiVersion": "2021-04-01",
         "name": "[variables('linkedTemplateName_vnet-riverbed-headend')]",
         "properties": {
           "mode": "Incremental",
@@ -131,7 +131,7 @@
       },
       {
         "type": "Microsoft.Resources/deployments",
-        "apiVersion": "2020-06-01",
+        "apiVersion": "2021-04-01",
         "name": "[variables('linkedTemplateName_bastion')]",
         "dependsOn": [ 
           "[variables('linkedTemplateName_vnet-riverbed-headend')]"
@@ -153,7 +153,7 @@
       },
       {
         "type": "Microsoft.Resources/deployments",
-        "apiVersion": "2020-06-01",
+        "apiVersion": "2021-04-01",
         "name": "[variables('linkedTemplateName_netim-simple')]",
         "dependsOn": [ 
           "[variables('linkedTemplateName_ImportVHD_NetIMMicroservice')]",
