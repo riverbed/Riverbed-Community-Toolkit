@@ -78,7 +78,7 @@
             "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
             "apiVersion": "2018-11-30",
             "name": "[variables('userAssignedIdentityName')]",
-            "location": "[resourceGroup().location]"
+            "location": "[parameters('location')]"
         },
         {
             "type": "Microsoft.Authorization/roleAssignments",
@@ -107,7 +107,7 @@
                     "type": "blobServices/containers",
                     "apiVersion": "2018-02-01",
                     "dependsOn": [
-                        "[concat('Microsoft.Storage/storageAccounts/', parameters('storageAccountName'))]"
+                        "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
                     ],
                     "properties": {
                         "publicAccess": "Blob"
@@ -119,7 +119,7 @@
             "type": "Microsoft.Resources/deploymentScripts",
             "apiVersion": "2020-10-01",
             "name": "[variables('deploymentScriptName')]",
-            "location": "[resourceGroup().location]",
+            "location": "[parameters('location')]",
             "dependsOn": [
                 "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
             ],
