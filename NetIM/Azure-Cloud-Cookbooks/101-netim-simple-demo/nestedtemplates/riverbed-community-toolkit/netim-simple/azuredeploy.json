@@ -28,13 +28,13 @@
     "existingVhdBlobContainerUri" : {
       "type": "string",
       "metadata": {
-        "description": "Uri of the existing Blob Container containing all the VHD Blob for NetIM. For example: https://your-storage-account.blob.core.windows.net/vhd"
+        "description": "Uri of the existing Blob Container containing all the VHD Blob for NetIM. For example: https://your-storage-account.blob.core. windows.net/vhd"
       }
     },
     "existingDiagStorageUri": {
       "type": "string",
       "metadata": {
-        "description": "Uri of an existing Storage Account. For example: https://your-storage-account.blob.core.windows.net"
+        "description": "Uri of an existing Storage Account. For example: https://your-storage-account.blob.core .windows.net"
       }
     },
     "existingVirtualNetworkId": {
@@ -184,7 +184,7 @@
       "name": "[variables('nicName_core')]",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[concat('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]"
+        "[resourceId('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]"
       ],
       "properties": {
         "ipConfigurations": [
@@ -298,9 +298,9 @@
       "name": "[parameters('vmName_NetIMManager')]",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[concat('Microsoft.Network/networkInterfaces/', variables('nicName_manager'))]",
-        "[concat(parameters('vmName_NetIMManager'), '_OS')]",
-        "[concat(parameters('vmName_NetIMManager'), '_Data')]"
+        "[resourceId('Microsoft.Network/networkInterfaces/', variables('nicName_manager'))]",
+        "[resourceId('Microsoft.Compute/disks/',concat(parameters('vmName_NetIMManager'), '_OS'))]",
+        "[resourceId('Microsoft.Compute/disks/',concat(parameters('vmName_NetIMManager'), '_Data'))]"        
       ],
       "properties": {
         "hardwareProfile": {
@@ -347,9 +347,9 @@
       "name": "[parameters('vmName_NetIMWorker')]",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[concat('Microsoft.Network/networkInterfaces/', variables('nicName_worker'))]",
-        "[concat(parameters('vmName_NetIMWorker'), '_OS')]",
-        "[concat(parameters('vmName_NetIMWorker'), '_Data')]"
+        "[resourceId('Microsoft.Network/networkInterfaces/', variables('nicName_worker'))]",
+        "[resourceId('Microsoft.Compute/disks/',concat(parameters('vmName_NetIMWorker'), '_OS'))]",
+        "[resourceId('Microsoft.Compute/disks/',concat(parameters('vmName_NetIMWorker'), '_Data'))]"
       ],
       "properties": {
         "hardwareProfile": {
@@ -396,9 +396,9 @@
       "name": "[parameters('vmName_NetIMCore')]",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[concat('Microsoft.Network/networkInterfaces/', variables('nicName_core'))]",
-        "[concat(parameters('vmName_NetIMCore'), '_OS')]",
-        "[concat(parameters('vmName_NetIMCore'), '_Data')]"
+        "[resourceId('Microsoft.Network/networkInterfaces/', variables('nicName_core'))]",
+        "[resourceId('Microsoft.Compute/disks/',concat(parameters('vmName_NetIMCore'), '_OS'))]",
+        "[resourceId('Microsoft.Compute/disks/',concat(parameters('vmName_NetIMCore'), '_Data'))]"
       ],
       "properties": {
         "hardwareProfile": {
