@@ -2,7 +2,9 @@
 
 [![Deploy to Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Friverbed%2FRiverbed-Community-Toolkit%2Fmaster%2FNetIM%2FAzure-Cloud-Cookbooks%2F101-netim-simple-demo%2Fazuredeploy.json) [![Deploy to Azure Gov](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazuregov.svg?sanitize=true)](https://portal.azure.us/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Friverbed%2FRiverbed-Community-Toolkit%2Fmaster%2FNetIM%2FAzure-Cloud-Cookbooks%2F101-netim-simple-demo%2Fazuredeploy.json)
 
-Deploy [Riverbed NetIM](https://www.riverbed.com/products/npm/netim) with your own Azure Cloud subscription in just few clicks, ideal to set up a simple demo or test environment for your favorite Infrastructure Monitoring solution.
+Deploy [Riverbed NetIM](https://www.riverbed.com/products/npm/netim) in your own Azure Cloud subscription in just few clicks with the Riverbed Community Toolkit provided by the [Riverbed Community](https://community.riverbed.com/). Ideal to set up a simple demo or test environment for your favorite Infrastructure Monitoring solution.
+
+Please have a try and join the [Riverbed Community](https://community.riverbed.com/) to discuss.
 
 ## Usage
 
