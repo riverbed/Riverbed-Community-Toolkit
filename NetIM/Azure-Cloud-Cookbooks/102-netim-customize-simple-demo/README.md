@@ -14,7 +14,7 @@ This Cookbook is based on the [NetIM Simple Demo cookbook](../101-netim-simple-d
     - Subscription
     - Resource Group: create a new, e.g. Riverbed-NetIM-Custom-Demo
     - Region: Select an Azure Region
-3. Fill the parameters
+3. Fill the parameters with customizations
 4. Hit "Review + create", then hit "Create"
 5. Wait for the deployment, approximately 10 min
 
