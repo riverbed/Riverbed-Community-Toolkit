@@ -5,7 +5,7 @@
 Deploy [Riverbed NetIM](https://www.riverbed.com/products/npm/netim.html) in your own Azure Cloud subscription with the Riverbed Community Toolkit provided by the [Riverbed Community](https://community.riverbed.com/).
 Please have a try and join the [Riverbed Community](https://community.riverbed.com/) to discuss.
 
-This Cookbook is based on the [NetIM Simple Demo cookbook](../101-netim-simple-demo) and allows to do customizations such deploying in an existing Virtual Network, changing IP Addresses or VM Sizing.
+This Cookbook is based on the [NetIM Simple Demo cookbook](../101-netim-simple-demo) and allows to customize it, such as deploying in an existing Virtual Network, changing IP Addresses or VM Sizing.
 
 ## Usage
 
