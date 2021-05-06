@@ -10,7 +10,7 @@ Cookbooks for NetIM, the Infrastructure Monitoring solution of the [Riverbed NPM
 
 [GMC-Library](GMC-Library)
 
-### Synthetic Test and monitoring script
+## Synthetic Test and monitoring script
 
 [Synthetic-Test](Synthetic-Test)
 
