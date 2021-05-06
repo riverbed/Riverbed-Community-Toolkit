@@ -2,9 +2,10 @@
 
 Cookbooks for NetIM, the Infrastructure Monitoring solution of the [Riverbed NPM solution](https://www.riverbed.com/solutions/network-performance-monitoring.html).
 
-## Deploy in Azure
+## Deploy in Azure using Community Cookbooks
 
-[Deploy NetIM in Azure](Azure-Cloud-Cookbooks/101-netim-simple-demo)
+- [101 NetIM Simple Demo](Azure-Cloud-Cookbooks/101-netim-simple-demo)
+- [102 NetIM Customize Simple Demo](Azure-Cloud-Cookbooks/102-netim-customize-simple-demo)
 
 ## Custom metrics library
 
