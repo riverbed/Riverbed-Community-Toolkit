@@ -134,7 +134,7 @@
       "type": "Microsoft.Network/networkSecurityGroups",
       "apiVersion": "2020-11-01",
       "name": "[variables('nsgName_NetIMCore')]",
-      "location": "westeurope",
+      "location": "[parameters('location')]",
       "properties": {
           "securityRules": [
             {
