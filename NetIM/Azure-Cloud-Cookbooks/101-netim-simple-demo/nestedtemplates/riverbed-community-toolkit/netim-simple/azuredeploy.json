@@ -50,6 +50,13 @@
         "description": "Name of the subnet in the virtual network you want to use"
       }
     },
+    "nsgName_NetIMCore": {
+      "type": "string",
+      "defaultValue" : "netim-core",
+      "metadata": {
+        "description": "Name of the NSG VM for NetIM Core node"
+      }
+    },
     "vmName_NetIMManager": {
       "type": "string",
       "defaultValue" : "netim-manager",
@@ -130,6 +137,218 @@
   },
   "resources": [
     {
+      "type": "Microsoft.Network/networkSecurityGroups",
+      "apiVersion": "2020-11-01",
+      "name": "[parameters('nsgName_NetIMCore')]",
+      "location": "westeurope",
+      "properties": {
+          "securityRules": [
+            {
+              "name": "Inbound_SSH",
+              "properties": {
+                  "description": "Demo - Allow any internal inbound SSH connection",
+                  "protocol": "TCP",
+                  "sourcePortRange": "*",
+                  "destinationPortRange": "22",
+                  "destinationAddressPrefix": "*",
+                  "access": "Allow",
+                  "priority": 500,
+                  "direction": "Inbound",
+                  "sourcePortRanges": [],
+                  "destinationPortRanges": [],
+                  "sourceAddressPrefixes": [
+                      "10.0.0.0/8",
+                      "172.16.0.0/12",
+                      "192.168.0.0/16"
+                  ],
+                  "destinationAddressPrefixes": []
+              }
+            },
+            {
+              "name": "Inbound_HTTPS",
+              "properties": {
+                  "description": "Demo - Allow any internal inbound NetIM HTTPS. Webconsole and API",
+                  "protocol": "TCP",
+                  "sourcePortRange": "*",
+                  "destinationPortRange": "8543",
+                  "destinationAddressPrefix": "*",
+                  "access": "Allow",
+                  "priority": 510,
+                  "direction": "Inbound",
+                  "sourcePortRanges": [],
+                  "destinationPortRanges": [],
+                  "sourceAddressPrefixes": [
+                      "10.0.0.0/8",
+                      "172.16.0.0/12",
+                      "192.168.0.0/16"
+                  ],
+                  "destinationAddressPrefixes": []
+              }
+            },
+            {
+              "name": "Inbound_HTTP",
+              "properties": {
+                  "description": "Demo - Allow any internal inbound NetIM HTTP. Webconsole and API",
+                  "protocol": "TCP",
+                  "sourcePortRange": "*",
+                  "destinationPortRange": "9190",
+                  "destinationAddressPrefix": "*",
+                  "access": "Allow",
+                  "priority": 520,
+                  "direction": "Inbound",
+                  "sourcePortRanges": [],
+                  "destinationPortRanges": [],
+                  "sourceAddressPrefixes": [
+                      "10.0.0.0/8",
+                      "172.16.0.0/12",
+                      "192.168.0.0/16"
+                  ],
+                  "destinationAddressPrefixes": []
+              }
+            },
+            {
+              "name": "Inbound_SyntheticTest",
+              "properties": {
+                  "description": "Demo - Allow any internal inbound NetIM Synthetic TestEngine",
+                  "protocol": "TCP",
+                  "sourcePortRange": "*",
+                  "destinationPortRange": "3162",
+                  "destinationAddressPrefix": "*",
+                  "access": "Allow",
+                  "priority": 1010,
+                  "direction": "Inbound",
+                  "sourcePortRanges": [],
+                  "destinationPortRanges": [],
+                  "sourceAddressPrefixes": [
+                      "10.0.0.0/8",
+                      "172.16.0.0/12",
+                      "192.168.0.0/16"
+                  ],
+                  "destinationAddressPrefixes": []
+              }
+            },
+            {
+              "name": "Inbound_SNMP",
+              "properties": {
+                  "description": "Demo - Allow any internal inbound SNMP on standard polling and traps ports",
+                  "protocol": "*",
+                  "sourcePortRange": "*",
+                  "destinationPortRange": "161-162",
+                  "destinationAddressPrefix": "*",
+                  "access": "Allow",
+                  "priority": 1020,
+                  "direction": "Inbound",
+                  "sourcePortRanges": [],
+                  "destinationPortRanges": [],
+                  "sourceAddressPrefixes": [
+                      "10.0.0.0/8",
+                      "172.16.0.0/12",
+                      "192.168.0.0/16"
+                  ],
+                  "destinationAddressPrefixes": []
+              }
+            },
+            {
+              "name": "Inbound_SNMP_special_ports",
+              "properties": {
+                  "description": "Demo - Allow any internal inbound NetIM SNMP Trap",
+                  "protocol": "UDP",
+                  "sourcePortRange": "*",
+                  "destinationPortRange": "8162",
+                  "destinationAddressPrefix": "*",
+                  "access": "Allow",
+                  "priority": 1030,
+                  "direction": "Inbound",
+                  "sourcePortRanges": [],
+                  "destinationPortRanges": [],
+                  "sourceAddressPrefixes": [
+                      "10.0.0.0/8",
+                      "172.16.0.0/12",
+                      "192.168.0.0/16"
+                  ],
+                  "destinationAddressPrefixes": []
+              }
+            },
+            {
+              "name": "Inbound_Syslog",
+              "properties": {
+                  "description": "Demo - Allow any internal inbound NetIM Syslogs",
+                  "protocol": "UDP",
+                  "sourcePortRange": "*",
+                  "destinationPortRange": "8543",
+                  "destinationAddressPrefix": "*",
+                  "access": "Allow",
+                  "priority": 1040,
+                  "direction": "Inbound",
+                  "sourcePortRanges": [],
+                  "destinationPortRanges": [],
+                  "sourceAddressPrefixes": [
+                      "10.0.0.0/8",
+                      "172.16.0.0/12",
+                      "192.168.0.0/16"
+                  ],
+                  "destinationAddressPrefixes": []
+              }
+            },
+            {
+              "name": "Inbound_LUS",
+              "properties": {
+                  "description": "Demo - Allow any internal inbound NetIM LUS connection",
+                  "protocol": "TCP",
+                  "sourcePortRange": "*",
+                  "destinationPortRange": "3100",
+                  "destinationAddressPrefix": "*",
+                  "access": "Allow",
+                  "priority": 2010,
+                  "direction": "Inbound",
+                  "sourcePortRanges": [],
+                  "destinationPortRanges": [],
+                  "sourceAddressPrefixes": [
+                      "10.0.0.0/8",
+                      "172.16.0.0/12",
+                      "192.168.0.0/16"
+                  ],
+                  "destinationAddressPrefixes": []
+              }
+            },
+            {
+              "name": "Inbound_DCL",
+              "properties": {
+                  "description": "Demo - Allow any internal inbound Portal DCL",
+                  "protocol": "TCP",
+                  "sourcePortRange": "*",
+                  "destinationPortRange": "9347",
+                  "destinationAddressPrefix": "*",
+                  "access": "Allow",
+                  "priority": 2020,
+                  "direction": "Inbound",
+                  "sourcePortRanges": [],
+                  "destinationPortRanges": [],
+                  "sourceAddressPrefixes": [
+                      "10.0.0.0/8",
+                      "172.16.0.0/12",
+                      "192.168.0.0/16"
+                  ],
+                  "destinationAddressPrefixes": []
+              }
+            }
+        ]
+      }
+    },
+    {
+        "apiVersion": "2021-04-01",
+        "name": "pid-e7664fe8-a4c0-4cb3-8f58-4059be22c9ca",
+        "type": "Microsoft.Resources/deployments",
+        "properties": {
+            "mode": "Incremental",
+            "template": {
+                "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                "contentVersion": "1.0.0.0",
+                "resources": []
+            }
+        }
+    },
+    {
       "apiVersion": "2020-05-01",
       "type": "Microsoft.Network/publicIPAddresses",
       "name": "[variables('publicIPAddressName')]",
@@ -201,7 +420,10 @@
               }
             }
           }
-        ]
+        ],
+        "networkSecurityGroup": {
+          "id": "[resourceId('Microsoft.Network/networkSecurityGroups',parameters('nsgName_NetIMCore'))]"
+        }
       }
     },
     {
