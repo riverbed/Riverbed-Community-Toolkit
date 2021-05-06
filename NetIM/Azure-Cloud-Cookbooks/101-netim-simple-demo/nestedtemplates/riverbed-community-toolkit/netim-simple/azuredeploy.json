@@ -50,13 +50,6 @@
         "description": "Name of the subnet in the virtual network you want to use"
       }
     },
-    "nsgName_NetIMCore": {
-      "type": "string",
-      "defaultValue" : "netim-core",
-      "metadata": {
-        "description": "Name of the NSG VM for NetIM Core node"
-      }
-    },
     "vmName_NetIMManager": {
       "type": "string",
       "defaultValue" : "netim-manager",
@@ -133,13 +126,14 @@
     "dataDiskVhdUri_NetIMMicroservices": "[concat(parameters('existingVhdBlobContainerUri'),'/','netim_microservices_azure_230_1068_data1.vhd')]",
 
     "subnetRef": "[concat(parameters('existingVirtualNetworkId'),'/subnets/',parameters('existingSubnetName'))]",
-    "publicIPAddressName": "netim"
+    "publicIPAddressName": "netim",
+    "nsgName_NetIMCore": "netim-core"
   },
   "resources": [
     {
       "type": "Microsoft.Network/networkSecurityGroups",
       "apiVersion": "2020-11-01",
-      "name": "[parameters('nsgName_NetIMCore')]",
+      "name": "[variables('nsgName_NetIMCore')]",
       "location": "westeurope",
       "properties": {
           "securityRules": [
@@ -403,7 +397,8 @@
       "name": "[variables('nicName_core')]",
       "location": "[parameters('location')]",
       "dependsOn": [
-        "[resourceId('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]"
+        "[resourceId('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]",
+        "[resourceId('Microsoft.Network/networkSecurityGroups',variables('nsgName_NetIMCore'))]"
       ],
       "properties": {
         "ipConfigurations": [
@@ -422,7 +417,7 @@
           }
         ],
         "networkSecurityGroup": {
-          "id": "[resourceId('Microsoft.Network/networkSecurityGroups',parameters('nsgName_NetIMCore'))]"
+          "id": "[resourceId('Microsoft.Network/networkSecurityGroups',variables('nsgName_NetIMCore'))]"
         }
       }
     },
