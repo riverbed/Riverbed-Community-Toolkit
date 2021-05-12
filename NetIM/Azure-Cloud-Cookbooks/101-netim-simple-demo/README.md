@@ -23,7 +23,7 @@ Please have a try and join the [Riverbed Community](https://community.riverbed.c
 
 ## Usage
 
-![Topology](images/toplogy.png)
+![Topology](images/netim-demo-topology.png)
 
 When deployed, navigate to the resource group, find the virtual machine named "Visibility" and connect to it via the Bastion.
 
