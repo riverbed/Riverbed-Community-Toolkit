@@ -91,9 +91,6 @@
             "uri" : "[uri(deployment().properties.templateLink.uri, 'nestedtemplates/ImportVHD-FromZipArchiveURL/azuredeploy.json')]"
           },
           "parameters": {
-            "deploymentScriptName" : {
-              "value" : "[variables('linkedTemplateName_ImportVHD_NetIMMicroservice')]"
-            },
             "Source": {
               "value": "[variables('urlNetIMMicroservicesVHDZipArchive')]"
             },
@@ -116,9 +113,6 @@
             "uri" : "[uri(deployment().properties.templateLink.uri, 'nestedtemplates/ImportVHD-FromZipArchiveURL/azuredeploy.json')]"
           },
           "parameters": {
-            "deploymentScriptName" : {
-              "value" : "[variables('linkedTemplateName_ImportVHD_NetIMCore')]"
-            },
             "Source": {
               "value": "[variables('urlNetIMCoreVHDZipArchive')]"
             },
