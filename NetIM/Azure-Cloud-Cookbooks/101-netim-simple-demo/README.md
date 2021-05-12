@@ -6,7 +6,7 @@ Deploy [Riverbed NetIM](https://www.riverbed.com/products/npm/netim) in your own
 
 Please have a try and join the [Riverbed Community](https://community.riverbed.com/) to discuss.
 
-## Usage
+## Deployment Steps
 
 1. Hit the "Deploy to Azure" button above
 2. Fill usual fields:
@@ -21,7 +21,9 @@ Please have a try and join the [Riverbed Community](https://community.riverbed.c
 4. Hit "Review + create", then hit "Create"
 5. Wait for the deployment, approximately 30 min to 1h depending on the region.
 
-## Demo
+## Usage
+
+![Topology](images/toplogy.png)
 
 When deployed, navigate to the resource group, find the virtual machine named "Visibility" and connect to it via the Bastion.
 
