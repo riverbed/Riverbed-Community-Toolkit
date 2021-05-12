@@ -23,9 +23,11 @@ Please have a try and join the [Riverbed Community](https://community.riverbed.c
 
 ## Usage
 
+The topology below should be deployed,
+
 ![Topology](images/netim-demo-topology.png)
 
-When deployed, navigate to the resource group, find the virtual machine named "Visibility" and connect to it via the Bastion.
+In the Azure Portal, navigate to the resource group, find the virtual machine named "Visibility" and connect to it via the Bastion.
 
 ![Bastion](images/visibility-connect-bastion.png)
 
