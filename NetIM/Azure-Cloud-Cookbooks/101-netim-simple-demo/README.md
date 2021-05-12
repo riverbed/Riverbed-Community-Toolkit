@@ -25,11 +25,11 @@ Please have a try and join the [Riverbed Community](https://community.riverbed.c
 
 When deployed, navigate to the resource group, find the virtual machine named "Visibility" and connect to it via the Bastion.
 
-[Bastion](images/visibility-connect.jpg)
+![Bastion](images/visibility-connect-bastion.png)
 
 On the Jumpbox you can launch PowerShell and connect each NetIM node with ssh using the standard initial **netimadmin** credential.
 
-The default IP Address are:
+The default IP Addresses for the nodes are:
 
 - 10.100.5.11 : NetIM Manager node
 - 10.100.5.21 : NetIM Worker node
