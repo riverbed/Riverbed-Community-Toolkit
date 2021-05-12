@@ -41,6 +41,8 @@ The default IP Addresses for the nodes are:
 
 When the configuration of the nodes is done. Stay on the Jumpbox to launch the web-browser and connect to the NetIM webconsole https://10.100.5.31:8543 (https on port 8543 of the core node)
 
+![Webconsole](images/netim-demo-webconsole.png)
+
 ## Notes
 
 `Tags: Riverbed,Visibility,NPM,NetIM,Infrastructure,Monitoring`
