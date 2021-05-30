@@ -1,9 +1,9 @@
 {
-    "$schema": "https://aka.ms/azure-quickstart-templates-metadata-schema#",
-    "itemDisplayName": "Riverbed Community Cookbook - NetIM Customize simple demo",
-    "description": "Riverbed Community Cookbook - NetIM Customize simple demo",
-    "summary": "Deploy a customized NetIM simple Demo",
-    "githubUsername": "gwenblum",
-    "dateUpdated": "2021-04-15",
-    "type": "QuickStart"
-  }
+  "$schema": "https://aka.ms/azure-quickstart-templates-metadata-schema#",
+  "itemDisplayName": "Riverbed Community Cookbook - NetIM Customize simple demo",
+  "description": "Riverbed Community Cookbook - NetIM Customize simple demo",
+  "summary": "Deploy a customized NetIM simple Demo",
+  "githubUsername": "gwenblum",
+  "dateUpdated": "2021-04-15",
+  "type": "QuickStart"
+}
