@@ -1,0 +1,9 @@
+{
+    "$schema": "https://aka.ms/azure-quickstart-templates-metadata-schema#",
+    "itemDisplayName": "Riverbed Community Cookbook - AppResponse custom demo",
+    "description": "Riverbed Community Cookbook - AppResponse custom demo",
+    "summary": "Deploy AppResponse custom Demo",
+    "githubUsername": "gwenblum",
+    "dateUpdated": "2021-05-20",
+    "type": "QuickStart"
+  }
