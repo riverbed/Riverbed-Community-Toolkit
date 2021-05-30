@@ -1,13 +1,16 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.210328",
+    "contentVersion": "1.0.0.210530",
     "parameters": {
-      "location": {
+      "version" : {
         "type": "string",
-        "defaultValue": "[resourceGroup().location]",
+        "defaultValue": "2.3",
+        "allowedValues" : [
+          "2.3"
+        ],
         "metadata": {
-          "description": "The location in which the resources should be deployed. Leave [resourceGroup().location] to use the region set for the resource group"
-        }
+          "description": "Version of Riverbed NetIM"
+        }        
       },
       "demoJumpboxUsername" :{
         "type": "string",
@@ -22,20 +25,13 @@
         "metadata": {
           "description": "Password for the demo jumpbox"
         }
-      },
-      "version" : {
-        "type": "string",
-        "defaultValue": "2.3",
-        "allowedValues" : [
-          "2.3"
-        ],
-        "metadata": {
-          "description": "Version of Riverbed NetIM"
-        }        
-      }
+      }      
     },
     "functions": [],
     "variables": {
+      // The location in which the resources should be deployed. Leave [resourceGroup().location] to use the region set for the resource group
+      "location" : "[resourceGroup().location]", 
+
       // NetIM 2.3.0 VHD archive sources
       "urlNetIMMicroservicesVHDZipArchive" : "https://support.riverbed.com/bin/support/download?sid=qvj9d70gg2uoln7ulahcnae071",
       "urlNetIMCoreVHDZipArchive" : "https://support.riverbed.com/bin/support/download?sid=j80hqlha7cbbqigocrii1kt7uv",
@@ -45,7 +41,7 @@
       "linkedTemplateName_ImportVHD_NetIMCore": "ImportVHD-FromZipArchiveURL_NetIMCore",
       "linkedTemplateName_vnet-riverbed-headend": "vnet-riverbed-headend",
       "linkedTemplateName_bastion": "bastion",
-      "linkedTemplateName_steeldemo-visiblity-vm": "steeldemo-visibility-vm",
+      "linkedTemplateName_steeldemo-visibility-vm": "steeldemo-visibility-vm",
       "linkedTemplateName_netim-simple": "netim-simple"
     },
     "resources": [
@@ -68,14 +64,171 @@
         "name": "[variables('linkedTemplateName_Create-WritableBlobContainerUri')]",
         "properties": {
           "mode": "Incremental",
-          "templateLink": {
-            "uri" : "[uri(deployment().properties.templateLink.uri, 'nestedtemplates/Create-WritableBlobContainerUri/azuredeploy.json')]"
-          },
+          "expressionEvaluationOptions": {
+              "scope": "inner"
+          },    
           "parameters": {
             "location":{
-              "value":"[parameters('location')]"
+              "value":"[variables('location')]"
             }
-          }
+          },
+          "template" :
+            {
+                "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                "contentVersion": "1.0.0.210530",
+                "parameters": {
+                    "location": {
+                        "type": "string",
+                        "defaultValue": "francecentral"
+                    },
+                    "storageAccountName": {
+                        "type": "string",
+                        "defaultValue": "[uniqueString(resourceGroup().id)]",
+                        "metadata": {
+                            "description": "Name of Storage Account."
+                        }
+                    },
+                    "blobContainerName": {
+                        "type":"string",
+                        "defaultValue" : "vhd",
+                        "metadata":{
+                            "description" : "Name of the Blob Container"
+                        }
+                    },
+                    "storageAccountKind": {
+                        "type": "string",
+                        "defaultValue" : "StorageV2"
+                    },
+                    "storageAccountSkuName": {
+                        "type": "string",
+                        "defaultValue": "Standard_LRS",
+                        "allowedValues": [
+                            "Standard_LRS",
+                            "Premium_LRS",
+                            "Standard_ZRS",
+                            "Standard_GRS"                               
+                        ],
+                        "metadata": {
+                            "description": "Storage Account SKU"
+                        }
+                    },
+                    "sasTokenDuration" : {
+                        "type": "int",
+                        "defaultValue": 4,
+                        "metadata" : {
+                            "description" : "SAS Token duration (hours)"
+                        }
+                    },
+                    "forceUpdateTag": {
+                        "type": "string",
+                        "defaultValue": "[newGuid()]",
+                        "metadata": {
+                            "description": "forceUpdateTag property, used to force the execution of the script resource when no other properties have changed."
+                    }
+                  }
+                },
+                "variables": {
+                    "deploymentScriptName" : "CreateWritableBlobContainerUri",
+                    "userAssignedIdentityName": "[concat('Create-WritableBlobContainerUri-worker',uniqueString(resourceGroup().id))]",
+                    "roleAssignmentName": "[guid(concat(variables('userAssignedIdentityName'),resourceGroup().id, 'contributor'))]",
+                    "forceUpdateTag" : "[parameters('forceUpdateTag')]"
+                },
+                "resources": [
+                    {
+                        "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+                        "apiVersion": "2018-11-30",
+                        "name": "[variables('userAssignedIdentityName')]",
+                        "location": "[parameters('location')]"
+                    },
+                    {
+                        "type": "Microsoft.Authorization/roleAssignments",
+                        "apiVersion": "2018-09-01-preview",
+                        "name": "[variables('roleAssignmentName')]",
+                        "dependsOn": [ "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('userAssignedIdentityName'))]" ],
+                        "properties": {
+                            "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
+                            "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('userAssignedIdentityName')), '2015-08-31-preview').principalId]",
+                            "scope": "[resourceGroup().id]",
+                            "principalType": "ServicePrincipal"
+                        }
+                    },
+                    {
+                        "apiVersion": "2019-06-01",
+                        "type": "Microsoft.Storage/storageAccounts",
+                        "name": "[parameters('storageAccountName')]",
+                        "location": "[parameters('location')]",
+                        "sku": {
+                            "name": "[parameters('storageAccountSkuName')]"
+                        },
+                        "kind": "[parameters('storageAccountKind')]",
+                        "resources": [
+                            {
+                                "name": "[concat('default/', parameters('blobContainerName'))]",
+                                "type": "blobServices/containers",
+                                "apiVersion": "2018-02-01",
+                                "dependsOn": [
+                                    "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
+                                ],
+                                "properties": {
+                                    "publicAccess": "Blob"
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "type": "Microsoft.Resources/deploymentScripts",
+                        "apiVersion": "2020-10-01",
+                        "name": "[variables('deploymentScriptName')]",
+                        "location": "[parameters('location')]",
+                        "dependsOn": [
+                            "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
+                        ],
+                        "identity": {
+                            "type": "UserAssigned",
+                            "userAssignedIdentities": {
+                                "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities',variables('userAssignedIdentityName'))]": {}
+                            }
+                        },        
+                        "kind": "AzurePowerShell",
+                        "properties": {
+                        "azPowerShellVersion": "5.5", 
+                        "cleanupPreference": "OnSuccess",
+                        "arguments": "[concat('-StorageAccountName \\\"',parameters('storageAccountName'),'\\\"',' ','-BlobContainerName \\\"',parameters('blobContainerName'),'\\\"',' ','-sasTokenDuration \\\"',parameters('SasTokenDuration'),'\\\"')]",
+                        "environmentVariables": [
+                            {
+                                "name": "ResourceGroupName",
+                                "value": "[resourceGroup().name]"
+                            }
+                        ],
+                        "forceUpdateTag": "[variables('forceUpdateTag')]",
+                        "retentionInterval": "PT2H",
+                        "scriptContent" : "param( \n    [string] $StorageAccountName, \n    [string] $BlobContainerName, \n    [int] $SasTokenDuration = 4 \n) \n \n##### Parameters \n \n$StorageAccountName \n$BlobContainerName \n$SasTokenDuration \n$ResourceGroupName = ${Env:ResourceGroupName} \n \n##### Variables \n \n$StartTime = Get-Date \n$EndTime = $startTime.AddHours($SasTokenDuration) \n \n##### Storage account \n \n$StorageAccount = Get-AzStorageAccount -ResourceGroupName $ResourceGroupName -Name $StorageAccountName \n$uriWritableStorageAccountBlobContainerSasToken = New-AzStorageContainerSASToken -FullUri -Name $BlobContainerName -context $StorageAccount.Context  -Permission rawcl  -StartTime $StartTime -ExpiryTime $EndTime \n \n##### Output \n$DeploymentScriptOutputs = @{} \n$DeploymentScriptOutputs['uriWritableStorageAccountBlobContainerSasToken'] = $uriWritableStorageAccountBlobContainerSasToken"
+                        }
+                    }
+                ],
+                "outputs" : {
+                    "uriWritableStorageAccountBlobContainerSasToken": {
+                        "type": "string",
+                        "value": "[reference(variables('deploymentScriptName')).outputs.uriWritableStorageAccountBlobContainerSasToken]"
+                    },
+                    "storageAccountName" : {
+                        "type": "string",
+                        "value": "[parameters('storageAccountName')]"
+                    },
+                    "uriBlobContainer" : {
+                        "type": "string",
+                        "value" : "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))).primaryEndpoints.blob, parameters('blobContainerName'))]"       
+                    },
+                    "uriBlobStorage" : {
+                        "type": "string",
+                        "value" : "[concat(reference(resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))).primaryEndpoints.blob)]"       
+                    },
+                    "storageAccountId" : {
+                        "type" : "string",
+                        "value" : "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
+                    }
+                }
+            }
         }
       },
       {
@@ -87,9 +240,9 @@
         ],
         "properties": {
           "mode": "Incremental",
-          "templateLink": {
-            "uri" : "[uri(deployment().properties.templateLink.uri, 'nestedtemplates/ImportVHD-FromZipArchiveURL/azuredeploy.json')]"
-          },
+          "expressionEvaluationOptions": {
+              "scope": "inner"
+          },    
           "parameters": {
             "Source": {
               "value": "[variables('urlNetIMMicroservicesVHDZipArchive')]"
@@ -97,7 +250,180 @@
             "Destination": {
               "value": "[reference(variables('linkedTemplateName_Create-WritableBlobContainerUri')).outputs.uriWritableStorageAccountBlobContainerSasToken.value]"
             }
-          }
+          },
+          "template" :
+            {
+                "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                "contentVersion": "1.0.0.210511",
+                "parameters": {
+                    "location": {
+                        "type": "string",
+                        "defaultValue": "[resourceGroup().location]",
+                        "metadata": {
+                            "description": "The location in which the resources should be deployed."
+                        }
+                    },
+                    "Source": {
+                        "type": "string",
+                        "metadata": {
+                            "description": "URL of a ZIP archive containing VHD images files. For example: https://provider.com/bin/support/azure-vhd.zip"
+                        }
+                    },
+                    "Destination": {
+                        "type": "string",
+                        "metadata": {
+                            "description": "URI of a Storage Account container with a writable SAS Token. For example: https://blob-storage-name.blob.core.windows.net/container-name?sp=racwl&st=2021-01-01T12:00:00&se=2021-02-01T12:00:00&spr=https&sv=2021-01-01&sig=123412341234"
+                        }
+                    }
+                },
+                "variables": {
+                    "urlVHDZipArchive": "[parameters('Source')]",
+                    "uriWritableStorageAccountBlobContainerSasToken": "[parameters('Destination')]",
+                    "nestedTemplateName_ImportVHD-FromZipArchive": "[concat('ImportVHD-FromZipArchive-',uniqueString(parameters('Source'),uniqueString(parameters('Destination'))))]"
+                },
+                "resources": [
+                    {
+                        "type": "Microsoft.Resources/deployments",
+                        "apiVersion": "2021-04-01",
+                        "name": "[variables('nestedTemplateName_ImportVHD-FromZipArchive')]",
+                        "properties": {
+                            "mode": "Incremental",
+                            "expressionEvaluationOptions": {
+                                "scope": "inner"
+                            },
+                            "parameters": {
+                                "location": {
+                                    "value": "[parameters('location')]"
+                                },
+                                "Source": {
+                                    "value": "[variables('urlVHDZipArchive')]"
+                                },
+                                "Destination": {
+                                    "value": "[variables('uriWritableStorageAccountBlobContainerSasToken')]"
+                                },
+                                "deploymentScriptName": {
+                                    "value": "[variables('nestedTemplateName_ImportVHD-FromZipArchive')]"
+                                }
+                            },
+                            "template": {
+                                "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                                "contentVersion": "1.0.0.210511",
+                                "parameters": {
+                                    "location": {
+                                        "type": "string",
+                                        "defaultValue": "",
+                                        "metadata": {
+                                            "description": "The location in which the resources should be deployed."
+                                        }
+                                    },
+                                    "Source": {
+                                        "type": "string",
+                                        "metadata": {
+                                            "description": "URL of a ZIP archive containing VHD images files. For example: https://provider.com/bin/support/azure-vhd.zip"
+                                        }
+                                    },
+                                    "Destination": {
+                                        "type": "string",
+                                        "metadata": {
+                                            "description": "URI of a Storage Account container with a writable SAS Token. For example: https://blob-storage-name.blob.core.windows.net/container-name?sp=racwl&st=2021-01-01T12:00:00&se=2021-02-01T12:00:00&spr=https&sv=2021-01-01&sig=123412341234"
+                                        }
+                                    },
+                                    "deploymentScriptName": {
+                                        "type": "string",
+                                        "defaultValue": "ImportVHD-FromZipArchiveURL",
+                                        "metadata": {
+                                            "description": "Name of the deployment script"
+                                        }
+                                    },
+                                    "forceUpdateTag": {
+                                        "type": "string",
+                                        "defaultValue": "[newGuid()]",
+                                        "metadata": {
+                                            "description": "forceUpdateTag property, used to force the execution of the script resource when no other properties have changed."
+                                        }
+                                    }
+                                },
+                                "functions": [],
+                                "variables": {
+                                    "urlVHDZipArchive": "[parameters('Source')]",
+                                    "uriWritableStorageAccountBlobContainerSasToken": "[parameters('Destination')]",
+                                    "userAssignedIdentityName": "[concat('ImportVHD-FromZipArchiveURL-worker-',uniqueString(resourceGroup().id))]",
+                                    "roleAssignmentName": "[guid(concat(variables('userAssignedIdentityName'),resourceGroup().id, 'contributor'))]",
+                                    "forceUpdateTag": "[parameters('forceUpdateTag')]"
+                                },
+                                "resources": [
+                                    {
+                                        "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+                                        "apiVersion": "2018-11-30",
+                                        "name": "[variables('userAssignedIdentityName')]",
+                                        "location": "[parameters('location')]"
+                                    },
+                                    {
+                                        "type": "Microsoft.Authorization/roleAssignments",
+                                        "apiVersion": "2018-09-01-preview",
+                                        "name": "[variables('roleAssignmentName')]",
+                                        "dependsOn": [
+                                            "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('userAssignedIdentityName'))]"
+                                        ],
+                                        "properties": {
+                                            "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
+                                            "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('userAssignedIdentityName')), '2015-08-31-preview').principalId]",
+                                            "scope": "[resourceGroup().id]",
+                                            "principalType": "ServicePrincipal"
+                                        }
+                                    },
+                                    {
+                                        "type": "Microsoft.Resources/deploymentScripts",
+                                        "apiVersion": "2020-10-01",
+                                        "name": "[parameters('deploymentScriptName')]",
+                                        "location": "[parameters('location')]",
+                                        "dependsOn": [
+                                            "[resourceId('Microsoft.Authorization/roleAssignments', variables('roleAssignmentName'))]"
+                                        ],
+                                        "identity": {
+                                            "type": "UserAssigned",
+                                            "userAssignedIdentities": {
+                                                "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities',variables('userAssignedIdentityName'))]": {}
+                                            }
+                                        },
+                                        "kind": "AzurePowerShell",
+                                        "properties": {
+                                            "azPowerShellVersion": "5.5",
+                                            "cleanupPreference": "OnSuccess",
+                                            "arguments": "[concat('-Source \\\"',variables('urlVHDZipArchive'),'\\\"',' ','-Destination \\\"',variables('uriWritableStorageAccountBlobContainerSasToken'),'\\\"')]",
+                                            "environmentVariables": [
+                                                {
+                                                    "name": "ResourceGroupName",
+                                                    "value": "[resourceGroup().name]"
+                                                }
+                                            ],
+                                            "forceUpdateTag": "[variables('forceUpdateTag')]",
+                                            "retentionInterval": "PT4H",
+                                            "scriptContent": "param( \n   [string] $Source, \n   [string] $Destination \n ) \n  \n ##### Validate Parameters \n  \n if (! ([System.Uri]::IsWellFormedUriString($Source,[System.UriKind]::Absolute))) { \n   Throw 'The Source URL parameter is probably not well formatted. Please check and retry.' \n } \n  \n if (! ([System.Uri]::IsWellFormedUriString($Destination,[System.UriKind]::Absolute))) { \n   Throw 'The Destination URI parameter is probably not well formatted. The URI of a Storage Account Container with a SAS Token is expected. Please check and retry.' \n } \n  \n ##### Parameters \n  \n $urlVHDZipArchive = $Source \n $uriWritableStorageAccountBlobContainerSasToken = $Destination \n  \n $ResourceGroupName = ${Env:ResourceGroupName} \n  \n ##### Variables \n  \n $base_path='/mnt/azscripts' \n $temp_path='{0}/temp' -f $base_path \n New-Item -Type Directory -ErrorAction SilentlyContinue $temp_path \n  \n $timestamp = Get-Date -Format 'yyMMddHHmmss' \n  \n ##### Prereqs \n  \n Write-Output 'Increase file share quota to 4TB instead of 2GB before downloading and expanding' \n $QuotaGiB = '4096' \n Get-AzStorageAccount -ResourceGroupName $ResourceGroupName | Where-Object { $_.StorageAccountName -like '*azscripts' } | ForEach-Object { \n   $StorageAccount = $_ \n   Get-AzStorageShare -Context $StorageAccount.Context | ForEach-Object {  \n     $Share = $_ \n     Set-AzStorageShareQuota -ShareName $Share.Name -Context $StorageAccount.Context -Quota $QuotaGiB \n   } \n } \n  \n ##### Fetch and process \n  \n Write-Output 'Download the ZIP archive' \n $archive_path='{0}/archive-{1}.zip' -f $temp_path,$timestamp \n # Accelerate file download (initially using Invoke-WebRequest) \n (New-Object System.Net.WebClient).DownloadFile($urlVHDZipArchive, $archive_path) \n  \n Write-Output 'Expand locally' \n $expanded_archive_path ='{0}/expanded-{1}' -f $temp_path,$timestamp \n New-Item -Type Directory -ErrorAction SilentlyContinue $expanded_archive_path \n Expand-Archive -Path $archive_path -DestinationPath $expanded_archive_path -Force \n  \n ##### Upload to Azure Storage account \n  \n Write-Output 'Upload extracted VHD file(s)' \n  \n $DeploymentScriptOutputs = @{} \n $DeploymentScriptOutputs['vhdBlobUriList'] = @{} \n $DeploymentScriptOutputs['vhdBlobSHA256List'] = @{} \n  \n $StorageAccountContainerUri = ($uriWritableStorageAccountBlobContainerSasToken -split [Regex]::Escape('?'))[0] \n $StorageAccountName = (([System.Uri]$uriWritableStorageAccountBlobContainerSasToken).Host -split [Regex]::Escape('.'))[0] \n $ContainerName = ($StorageAccountContainerUri -split '/')[-1]  # Last element \n $StorageAccountContainerSASToken = ($uriWritableStorageAccountBlobContainerSasToken -split [Regex]::Escape('?'))[1] \n $StorageAccountContext = New-AzStorageContext -StorageAccountName $StorageAccountName -SasToken $StorageAccountContainerSASToken \n  \n $vhd_filepath='{0}/*.vhd' -f  $expanded_archive_path \n  \n Get-Item $vhd_filepath | ForEach-Object { \n   $localFilePath = $_ \n   $vhdBlobName = $localFilePath.Name \n   $vhdBlobUri = '{0}/{1}' -f $StorageAccountContainerUri,$vhdBlobName \n  \n   $hash = (Get-FileHash -Algorithm SHA256 -Path $localFilePath).Hash \n   $metadata = @{'SHA256' = $hash; } \n  \n   Write-Output 'Uploading ' + $vhdBlobName \n   Set-AzStorageBlobContent -File $localFilePath -Context $StorageAccountContext -Container $ContainerName -Blob $vhdBlobName -BlobType Page -Metadata $metadata -Force \n   $DeploymentScriptOutputs['vhdBlobUriList'][$vhdBlobName] = $vhdBlobUri \n   $DeploymentScriptOutputs['vhdBlobSHA256List'][$vhdBlobName] = $hash \n } \n "
+                                        }
+                                    }
+                                ],
+                                "outputs": {
+                                    "vhdBlobUriList": {
+                                        "type": "object",
+                                        "value": "[reference(parameters('deploymentScriptName')).outputs.vhdBlobUriList]"
+                                    },
+                                    "vhdBlobSHA256List": {
+                                        "type": "object",
+                                        "value": "[reference(parameters('deploymentScriptName')).outputs.vhdBlobSHA256List]"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "outputs": {
+                    "vhdBlobUriList": {
+                        "type": "object",
+                        "value": "[reference(variables('nestedTemplateName_ImportVHD-FromZipArchive')).outputs.vhdBlobUriList.value]"
+                    }
+                }
+            }
         }
       },
       {
@@ -109,9 +435,9 @@
         ],
         "properties": {
           "mode": "Incremental",
-          "templateLink": {
-            "uri" : "[uri(deployment().properties.templateLink.uri, 'nestedtemplates/ImportVHD-FromZipArchiveURL/azuredeploy.json')]"
-          },
+          "expressionEvaluationOptions": {
+              "scope": "inner"
+          },    
           "parameters": {
             "Source": {
               "value": "[variables('urlNetIMCoreVHDZipArchive')]"
@@ -119,7 +445,180 @@
             "Destination": {
               "value": "[reference(variables('linkedTemplateName_Create-WritableBlobContainerUri')).outputs.uriWritableStorageAccountBlobContainerSasToken.value]"
             }
-          }
+          },
+          "template" :
+            {
+                "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                "contentVersion": "1.0.0.210511",
+                "parameters": {
+                    "location": {
+                        "type": "string",
+                        "defaultValue": "[resourceGroup().location]",
+                        "metadata": {
+                            "description": "The location in which the resources should be deployed."
+                        }
+                    },
+                    "Source": {
+                        "type": "string",
+                        "metadata": {
+                            "description": "URL of a ZIP archive containing VHD images files. For example: https://provider.com/bin/support/azure-vhd.zip"
+                        }
+                    },
+                    "Destination": {
+                        "type": "string",
+                        "metadata": {
+                            "description": "URI of a Storage Account container with a writable SAS Token. For example: https://blob-storage-name.blob.core.windows.net/container-name?sp=racwl&st=2021-01-01T12:00:00&se=2021-02-01T12:00:00&spr=https&sv=2021-01-01&sig=123412341234"
+                        }
+                    }
+                },
+                "variables": {
+                    "urlVHDZipArchive": "[parameters('Source')]",
+                    "uriWritableStorageAccountBlobContainerSasToken": "[parameters('Destination')]",
+                    "nestedTemplateName_ImportVHD-FromZipArchive": "[concat('ImportVHD-FromZipArchive-',uniqueString(parameters('Source'),uniqueString(parameters('Destination'))))]"
+                },
+                "resources": [
+                    {
+                        "type": "Microsoft.Resources/deployments",
+                        "apiVersion": "2021-04-01",
+                        "name": "[variables('nestedTemplateName_ImportVHD-FromZipArchive')]",
+                        "properties": {
+                            "mode": "Incremental",
+                            "expressionEvaluationOptions": {
+                                "scope": "inner"
+                            },
+                            "parameters": {
+                                "location": {
+                                    "value": "[parameters('location')]"
+                                },
+                                "Source": {
+                                    "value": "[variables('urlVHDZipArchive')]"
+                                },
+                                "Destination": {
+                                    "value": "[variables('uriWritableStorageAccountBlobContainerSasToken')]"
+                                },
+                                "deploymentScriptName": {
+                                    "value": "[variables('nestedTemplateName_ImportVHD-FromZipArchive')]"
+                                }
+                            },
+                            "template": {
+                                "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                                "contentVersion": "1.0.0.210511",
+                                "parameters": {
+                                    "location": {
+                                        "type": "string",
+                                        "defaultValue": "",
+                                        "metadata": {
+                                            "description": "The location in which the resources should be deployed."
+                                        }
+                                    },
+                                    "Source": {
+                                        "type": "string",
+                                        "metadata": {
+                                            "description": "URL of a ZIP archive containing VHD images files. For example: https://provider.com/bin/support/azure-vhd.zip"
+                                        }
+                                    },
+                                    "Destination": {
+                                        "type": "string",
+                                        "metadata": {
+                                            "description": "URI of a Storage Account container with a writable SAS Token. For example: https://blob-storage-name.blob.core.windows.net/container-name?sp=racwl&st=2021-01-01T12:00:00&se=2021-02-01T12:00:00&spr=https&sv=2021-01-01&sig=123412341234"
+                                        }
+                                    },
+                                    "deploymentScriptName": {
+                                        "type": "string",
+                                        "defaultValue": "ImportVHD-FromZipArchiveURL",
+                                        "metadata": {
+                                            "description": "Name of the deployment script"
+                                        }
+                                    },
+                                    "forceUpdateTag": {
+                                        "type": "string",
+                                        "defaultValue": "[newGuid()]",
+                                        "metadata": {
+                                            "description": "forceUpdateTag property, used to force the execution of the script resource when no other properties have changed."
+                                        }
+                                    }
+                                },
+                                "functions": [],
+                                "variables": {
+                                    "urlVHDZipArchive": "[parameters('Source')]",
+                                    "uriWritableStorageAccountBlobContainerSasToken": "[parameters('Destination')]",
+                                    "userAssignedIdentityName": "[concat('ImportVHD-FromZipArchiveURL-worker-',uniqueString(resourceGroup().id))]",
+                                    "roleAssignmentName": "[guid(concat(variables('userAssignedIdentityName'),resourceGroup().id, 'contributor'))]",
+                                    "forceUpdateTag": "[parameters('forceUpdateTag')]"
+                                },
+                                "resources": [
+                                    {
+                                        "type": "Microsoft.ManagedIdentity/userAssignedIdentities",
+                                        "apiVersion": "2018-11-30",
+                                        "name": "[variables('userAssignedIdentityName')]",
+                                        "location": "[parameters('location')]"
+                                    },
+                                    {
+                                        "type": "Microsoft.Authorization/roleAssignments",
+                                        "apiVersion": "2018-09-01-preview",
+                                        "name": "[variables('roleAssignmentName')]",
+                                        "dependsOn": [
+                                            "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('userAssignedIdentityName'))]"
+                                        ],
+                                        "properties": {
+                                            "roleDefinitionId": "[resourceId('Microsoft.Authorization/roleDefinitions', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]",
+                                            "principalId": "[reference(resourceId('Microsoft.ManagedIdentity/userAssignedIdentities', variables('userAssignedIdentityName')), '2015-08-31-preview').principalId]",
+                                            "scope": "[resourceGroup().id]",
+                                            "principalType": "ServicePrincipal"
+                                        }
+                                    },
+                                    {
+                                        "type": "Microsoft.Resources/deploymentScripts",
+                                        "apiVersion": "2020-10-01",
+                                        "name": "[parameters('deploymentScriptName')]",
+                                        "location": "[parameters('location')]",
+                                        "dependsOn": [
+                                            "[resourceId('Microsoft.Authorization/roleAssignments', variables('roleAssignmentName'))]"
+                                        ],
+                                        "identity": {
+                                            "type": "UserAssigned",
+                                            "userAssignedIdentities": {
+                                                "[resourceId('Microsoft.ManagedIdentity/userAssignedIdentities',variables('userAssignedIdentityName'))]": {}
+                                            }
+                                        },
+                                        "kind": "AzurePowerShell",
+                                        "properties": {
+                                            "azPowerShellVersion": "5.5",
+                                            "cleanupPreference": "OnSuccess",
+                                            "arguments": "[concat('-Source \\\"',variables('urlVHDZipArchive'),'\\\"',' ','-Destination \\\"',variables('uriWritableStorageAccountBlobContainerSasToken'),'\\\"')]",
+                                            "environmentVariables": [
+                                                {
+                                                    "name": "ResourceGroupName",
+                                                    "value": "[resourceGroup().name]"
+                                                }
+                                            ],
+                                            "forceUpdateTag": "[variables('forceUpdateTag')]",
+                                            "retentionInterval": "PT4H",
+                                            "scriptContent": "param( \n   [string] $Source, \n   [string] $Destination \n ) \n  \n ##### Validate Parameters \n  \n if (! ([System.Uri]::IsWellFormedUriString($Source,[System.UriKind]::Absolute))) { \n   Throw 'The Source URL parameter is probably not well formatted. Please check and retry.' \n } \n  \n if (! ([System.Uri]::IsWellFormedUriString($Destination,[System.UriKind]::Absolute))) { \n   Throw 'The Destination URI parameter is probably not well formatted. The URI of a Storage Account Container with a SAS Token is expected. Please check and retry.' \n } \n  \n ##### Parameters \n  \n $urlVHDZipArchive = $Source \n $uriWritableStorageAccountBlobContainerSasToken = $Destination \n  \n $ResourceGroupName = ${Env:ResourceGroupName} \n  \n ##### Variables \n  \n $base_path='/mnt/azscripts' \n $temp_path='{0}/temp' -f $base_path \n New-Item -Type Directory -ErrorAction SilentlyContinue $temp_path \n  \n $timestamp = Get-Date -Format 'yyMMddHHmmss' \n  \n ##### Prereqs \n  \n Write-Output 'Increase file share quota to 4TB instead of 2GB before downloading and expanding' \n $QuotaGiB = '4096' \n Get-AzStorageAccount -ResourceGroupName $ResourceGroupName | Where-Object { $_.StorageAccountName -like '*azscripts' } | ForEach-Object { \n   $StorageAccount = $_ \n   Get-AzStorageShare -Context $StorageAccount.Context | ForEach-Object {  \n     $Share = $_ \n     Set-AzStorageShareQuota -ShareName $Share.Name -Context $StorageAccount.Context -Quota $QuotaGiB \n   } \n } \n  \n ##### Fetch and process \n  \n Write-Output 'Download the ZIP archive' \n $archive_path='{0}/archive-{1}.zip' -f $temp_path,$timestamp \n # Accelerate file download (initially using Invoke-WebRequest) \n (New-Object System.Net.WebClient).DownloadFile($urlVHDZipArchive, $archive_path) \n  \n Write-Output 'Expand locally' \n $expanded_archive_path ='{0}/expanded-{1}' -f $temp_path,$timestamp \n New-Item -Type Directory -ErrorAction SilentlyContinue $expanded_archive_path \n Expand-Archive -Path $archive_path -DestinationPath $expanded_archive_path -Force \n  \n ##### Upload to Azure Storage account \n  \n Write-Output 'Upload extracted VHD file(s)' \n  \n $DeploymentScriptOutputs = @{} \n $DeploymentScriptOutputs['vhdBlobUriList'] = @{} \n $DeploymentScriptOutputs['vhdBlobSHA256List'] = @{} \n  \n $StorageAccountContainerUri = ($uriWritableStorageAccountBlobContainerSasToken -split [Regex]::Escape('?'))[0] \n $StorageAccountName = (([System.Uri]$uriWritableStorageAccountBlobContainerSasToken).Host -split [Regex]::Escape('.'))[0] \n $ContainerName = ($StorageAccountContainerUri -split '/')[-1]  # Last element \n $StorageAccountContainerSASToken = ($uriWritableStorageAccountBlobContainerSasToken -split [Regex]::Escape('?'))[1] \n $StorageAccountContext = New-AzStorageContext -StorageAccountName $StorageAccountName -SasToken $StorageAccountContainerSASToken \n  \n $vhd_filepath='{0}/*.vhd' -f  $expanded_archive_path \n  \n Get-Item $vhd_filepath | ForEach-Object { \n   $localFilePath = $_ \n   $vhdBlobName = $localFilePath.Name \n   $vhdBlobUri = '{0}/{1}' -f $StorageAccountContainerUri,$vhdBlobName \n  \n   $hash = (Get-FileHash -Algorithm SHA256 -Path $localFilePath).Hash \n   $metadata = @{'SHA256' = $hash; } \n  \n   Write-Output 'Uploading ' + $vhdBlobName \n   Set-AzStorageBlobContent -File $localFilePath -Context $StorageAccountContext -Container $ContainerName -Blob $vhdBlobName -BlobType Page -Metadata $metadata -Force \n   $DeploymentScriptOutputs['vhdBlobUriList'][$vhdBlobName] = $vhdBlobUri \n   $DeploymentScriptOutputs['vhdBlobSHA256List'][$vhdBlobName] = $hash \n } \n "
+                                        }
+                                    }
+                                ],
+                                "outputs": {
+                                    "vhdBlobUriList": {
+                                        "type": "object",
+                                        "value": "[reference(parameters('deploymentScriptName')).outputs.vhdBlobUriList]"
+                                    },
+                                    "vhdBlobSHA256List": {
+                                        "type": "object",
+                                        "value": "[reference(parameters('deploymentScriptName')).outputs.vhdBlobSHA256List]"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                ],
+                "outputs": {
+                    "vhdBlobUriList": {
+                        "type": "object",
+                        "value": "[reference(variables('nestedTemplateName_ImportVHD-FromZipArchive')).outputs.vhdBlobUriList.value]"
+                    }
+                }
+            }
         }
       },
       {
@@ -128,14 +627,250 @@
         "name": "[variables('linkedTemplateName_vnet-riverbed-headend')]",
         "properties": {
           "mode": "Incremental",
-          "templateLink": {
-            "uri" : "[uri(deployment().properties.templateLink.uri, 'nestedtemplates/riverbed-community-toolkit/vnet-riverbed-headend/azuredeploy.json')]"
-          },
+          "expressionEvaluationOptions": {
+              "scope": "inner"
+          },    
           "parameters": {
             "location":{
-              "value":"[parameters('location')]"
+              "value":"[variables('location')]"
             }
-          }
+          },
+          "template" :
+            {
+                "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                "contentVersion": "1.0.0.201115",
+                "parameters": {
+                  "location": {
+                    "type": "string",
+                    "defaultValue": "[resourceGroup().location]",
+                    "metadata": {
+                      "description": "The location in which the resources should be deployed."
+                    }
+                  },
+                  "virtualNetworkName": {
+                    "type": "string",
+                    "metadata": {
+                      "Description": "The name of the Virtual Network to Create"
+                    },
+                    "defaultValue" : "riverbed-community-headend"
+                  },
+                  "virtualNetworkAddressRange": {
+                    "type": "string",
+                    "metadata": {
+                      "Description": "The address range of the new VNET in CIDR format"
+                    },
+                    "defaultValue": "10.100.0.0/16"
+                  },
+                  "subnetName_Management": {
+                    "type": "string",
+                    "metadata": {
+                      "Description": "The name of the subnet for Management"
+                    },
+                    "defaultValue": "Management"
+                  },
+                  "subnetRange_Management": {
+                    "type": "string",
+                    "metadata": {
+                      "Description": "The address range of the subnet created in the new VNET for Management"
+                    },
+                    "defaultValue": "10.100.1.0/24"
+                  },
+                  "subnetName_Control": {
+                    "type": "string",
+                    "metadata": {
+                      "Description": "The name of the subnet for Control"
+                    },
+                    "defaultValue": "Control"
+                  },
+                  "subnetRange_Control": {
+                    "type": "string",
+                    "metadata": {
+                      "Description": "The address range of the subnet created in the new VNET for Control"
+                    },
+                    "defaultValue": "10.100.2.0/24"
+                  },
+                  "subnetName_Analytics": {
+                    "type": "string",
+                    "metadata": {
+                      "Description": "The name of the subnet for Analytics"
+                    },
+                    "defaultValue": "Analytics"
+                  },
+                  "subnetRange_Analytics": {
+                    "type": "string",
+                    "metadata": {
+                      "Description": "The address range of the subnet created in the new VNET for Analytics"
+                    },
+                    "defaultValue": "10.100.3.0/24"
+                  },
+                  "subnetName_Performance": {
+                    "type": "string",
+                    "metadata": {
+                      "Description": "The name of the subnet for Performance"
+                    },
+                    "defaultValue": "Performance"
+                  },
+                  "subnetRange_Performance": {
+                    "type": "string",
+                    "metadata": {
+                      "Description": "The address range of the subnet created in the new VNET for Performance"
+                    },
+                    "defaultValue": "10.100.4.0/24"
+                  },
+                  "subnetName_Monitoring": {
+                    "type": "string",
+                    "metadata": {
+                      "Description": "The name of the subnet for Monitoring"
+                    },
+                    "defaultValue": "Monitoring"
+                  },
+                  "subnetRange_Monitoring": {
+                    "type": "string",
+                    "metadata": {
+                      "Description": "The address range of the subnet created in the new VNET for Monitoring"
+                    },
+                    "defaultValue": "10.100.5.0/24"
+                  },
+                  "subnetName_Workloads": {
+                    "type": "string",
+                    "metadata": {
+                      "Description": "The name of the subnet for Workloads"
+                    },
+                    "defaultValue": "Workloads"
+                  },
+                  "subnetRange_Workloads": {
+                    "type": "string",
+                    "metadata": {
+                      "Description": "The address range of the subnet created in the new VNET for Workloads"
+                    },
+                    "defaultValue": "10.100.50.0/24"
+                  },
+                  "subnetName_Kubernetes": {
+                    "type": "string",
+                    "metadata": {
+                      "Description": "The name of the subnet for Kubernetes"
+                    },
+                    "defaultValue": "Kubernetes"
+                  },
+                  "subnetRange_Kubernetes": {
+                    "type": "string",
+                    "metadata": {
+                      "Description": "The address range of the subnet created in the new VNET for Kubernetes"
+                    },
+                    "defaultValue": "10.100.80.0/24"
+                  },
+                  "subnetName_Accelerator": {
+                    "type": "string",
+                    "metadata": {
+                      "Description": "The name of the subnet for Accelerator"
+                    },
+                    "defaultValue": "Accelerator"
+                  },
+                  "subnetRange_Accelerator": {
+                    "type": "string",
+                    "metadata": {
+                      "Description": "The address range of the subnet created in the new VNET for Accelerator"
+                    },
+                    "defaultValue": "10.100.82.0/24"
+                  },
+                  "subnetRange_Bastion": {
+                    "type": "string",
+                    "metadata": {
+                      "Description": "The address range of the subnet created in the new VNET for Bastion"
+                    },
+                    "defaultValue": "10.100.253.0/24"
+                  }
+                },
+                "resources": [
+                  {
+                    "name": "[parameters('virtualNetworkName')]",
+                    "type": "Microsoft.Network/virtualNetworks",
+                    "location": "[parameters('location')]",
+                    "apiVersion": "2020-05-01",
+                    "properties": {
+                      "addressSpace": {
+                        "addressPrefixes": [
+                          "[parameters('virtualNetworkAddressRange')]"
+                        ]
+                      },
+                      "subnets": [
+                        {
+                          "name": "[parameters('subnetName_Management')]",
+                          "properties": {
+                            "addressPrefix": "[parameters('subnetRange_Management')]"
+                          }
+                        },
+                        {
+                          "name": "[parameters('subnetName_Control')]",
+                          "properties": {
+                            "addressPrefix": "[parameters('subnetRange_Control')]"
+                          }
+                        },
+                        {
+                          "name": "[parameters('subnetName_Analytics')]",
+                          "properties": {
+                            "addressPrefix": "[parameters('subnetRange_Analytics')]"
+                          }
+                        },
+                        {
+                          "name": "[parameters('subnetName_Performance')]",
+                          "properties": {
+                            "addressPrefix": "[parameters('subnetRange_Performance')]"
+                          }
+                        },
+                        {
+                          "name": "[parameters('subnetName_Monitoring')]",
+                          "properties": {
+                            "addressPrefix": "[parameters('subnetRange_Monitoring')]"
+                          }
+                        },
+                        {
+                          "name": "[parameters('subnetName_Workloads')]",
+                          "properties": {
+                            "addressPrefix": "[parameters('subnetRange_Workloads')]"
+                          }
+                        },
+                        {
+                          "name": "[parameters('subnetName_Kubernetes')]",
+                          "properties": {
+                            "addressPrefix": "[parameters('subnetRange_Kubernetes')]"
+                          }
+                        },
+                        {
+                          "name": "[parameters('subnetName_Accelerator')]",
+                          "properties": {
+                            "addressPrefix": "[parameters('subnetRange_Accelerator')]"
+                          }
+                        },
+                        {
+                          "name": "AzureBastionSubnet",
+                          "properties": {
+                            "addressPrefix": "[parameters('subnetRange_Bastion')]"
+                          }
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "outputs": {
+                  "virtualNetworkId" : {
+                    "type" : "string",
+                    "value": "[resourceId('Microsoft.Network/virtualNetworks',parameters('virtualNetworkName'))]"
+                  },
+                  "subnetName_Monitoring" : {
+                    "type" : "string",
+                    "value": "[parameters('subnetName_Monitoring')]"
+                  },
+                  "subnetRef_Monitoring" : {
+                    "type" : "string",
+                    "value": "[resourceId('Microsoft.Network/virtualNetworks/subnets',parameters('virtualNetworkName'),parameters('subnetName_Monitoring'))]"
+                  },
+                  "subnetRef_Bastion" : {
+                    "type" : "string",
+                    "value": "[resourceId('Microsoft.Network/virtualNetworks/subnets',parameters('virtualNetworkName'),'BastionSubnet')]"
+                  }
+                }
+            }
         }
       },
       {
@@ -147,35 +882,104 @@
         ],
         "properties": {
           "mode": "Incremental",
-          "templateLink": {
-            "uri" : "[uri(deployment().properties.templateLink.uri, 'nestedtemplates/bastion/azuredeploy.json')]"
-          },
+          "expressionEvaluationOptions": {
+              "scope": "inner"
+          },    
           "parameters": {
             "location":{
-              "value":"[parameters('location')]"
+              "value":"[variables('location')]"
             },
             "existingVirtualNetworkId" : {
               "value": "[reference(variables('linkedTemplateName_vnet-riverbed-headend')).outputs.virtualNetworkId.value]"
             }
-          }
+          },
+          "template" :
+            {
+                "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+                "contentVersion": "1.0.0.0",
+                "parameters": {
+                    "location": {
+                        "type": "string",
+                        "defaultValue": "[resourceGroup().location]",
+                        "metadata": {
+                            "description": "Azure region for Bastion and virtual network"
+                        }
+                    },
+                    "existingVirtualNetworkId": {
+                        "type": "string",
+                        "metadata": {
+                            "description": "Name of the existing VNET"
+                        }
+                    },
+                    "bastion-host-name": {
+                        "type": "string",
+                        "metadata": {
+                            "description": "Name of Azure Bastion resource"
+                        },
+                        "defaultValue" : "bastion"
+                    }
+                },
+                "variables": {
+                    "public-ip-address-name": "[concat(parameters('bastion-host-name'),'-pip')]",
+                    "subnetRef": "[concat(parameters('existingVirtualNetworkId'),'/subnets/','AzureBastionSubnet')]"
+                },
+                "resources": [
+                    {
+                        "apiVersion": "2020-05-01",
+                        "type": "Microsoft.Network/publicIpAddresses",
+                        "name": "[variables('public-ip-address-name')]",
+                        "location": "[parameters('location')]",
+                        "sku": {
+                            "name": "Standard"
+                        },
+                        "properties": {
+                            "publicIPAllocationMethod": "Static"
+                        }
+                    },
+                    {
+                        "apiVersion": "2020-05-01",
+                        "type": "Microsoft.Network/bastionHosts",
+                        "name": "[parameters('bastion-host-name')]",
+                        "location": "[parameters('location')]",
+                        "dependsOn": [
+                            "[resourceId('Microsoft.Network/publicIpAddresses', variables('public-ip-address-name'))]"
+                        ],
+                        "properties": {
+                            "ipConfigurations": [
+                                {
+                                    "name": "IpConfiguration",
+                                    "properties": {
+                                        "subnet": {
+                                            "id": "[variables('subnetRef')]"
+                                        },
+                                        "publicIPAddress": {
+                                            "id": "[resourceId('Microsoft.Network/publicIpAddresses', variables('public-ip-address-name'))]"
+                                        }
+                                    }
+                                }
+                            ]
+                        }
+                    }
+                ]
+            }
         }
       },
       {
         "type": "Microsoft.Resources/deployments",
         "apiVersion": "2021-04-01",
-        "name": "[variables('linkedTemplateName_steeldemo-visiblity-vm')]",
+        "name": "[variables('linkedTemplateName_steeldemo-visibility-vm')]",
         "dependsOn": [ 
           "[variables('linkedTemplateName_vnet-riverbed-headend')]",
           "[variables('linkedTemplateName_bastion')]"
         ],
         "properties": {
           "mode": "Incremental",
-          "templateLink": {
-            "uri" : "[uri(deployment().properties.templateLink.uri, 'nestedtemplates/riverbed-community-toolkit/steeldemo-visibility-vm/azuredeploy.json')]"
-          },
+          "expressionEvaluationOptions": {
+              "scope": "inner"
+          },    
           "parameters": {
             "location":{
-              "value":"[parameters('location')]"
+              "value":"[variables('location')]"
             },
             "existingVirtualNetworkId" : {
               "value": "[reference(variables('linkedTemplateName_vnet-riverbed-headend')).outputs.virtualNetworkId.value]"
@@ -184,7 +988,7 @@
               "value": "Monitoring"
             },
             "virtualMachineName": {
-              "value": "Visiblity"
+              "value": "Visibility"
             },
             "adminUsername":{
               "value": "[parameters('demoJumpboxUsername')]"
@@ -192,7 +996,165 @@
             "adminPassword":{
               "value": "[parameters('demoJumpboxPassword')]"
             }
-          }
+          },
+          "template" :
+            {
+                "$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                "contentVersion": "1.0.0.210512",
+                "parameters": {
+                    "location": {
+                        "type": "string",
+                        "defaultValue": "[resourceGroup().location]",
+                        "metadata": {
+                            "description": "Location for all resources."
+                        }
+                    },
+                    "existingVirtualNetworkId": {
+                        "type": "string",
+                        "metadata": {
+                            "description": "Name of the existing VNET"
+                        }
+                    },
+                    "existingSubnetName": {
+                        "type": "string",
+                        "defaultValue" : "Monitoring",
+                        "metadata": {
+                            "description": "Name of the subnet in the virtual network you want to use"
+                        }
+                    },
+                    "virtualMachineName": {
+                        "type": "string",
+                        "defaultValue" : "Visibility"
+                    },
+                    "virtualMachineComputerName": {
+                        "type": "string",
+                        "defaultValue" : "[parameters('virtualMachineName')]"
+                    },
+                    "networkInterfaceName": {
+                        "type": "string",
+                        "defaultValue": "[parameters('virtualMachineName')]"
+                    },
+                    "networkSecurityGroupName": {
+                        "type": "string",
+                        "defaultValue": "[parameters('virtualMachineName')]"
+                    },
+                    "osDiskType": {
+                        "type": "string",
+                        "defaultValue": "StandardSSD_LRS"
+                    },
+                    "virtualMachineSize": {
+                        "type": "string",
+                        "defaultValue": "Standard_B4ms"
+                    },
+                    "adminUsername": {
+                        "type": "string",
+                        "defaultValue": "riverbed-community"
+                    },
+                    "adminPassword": {
+                        "type": "secureString"
+                    },
+                    "imageReferenceWindows10SKU" : {
+                        "type": "string",
+                        "defaultValue" : "20h2-ent"
+                    }
+                },
+                "variables": {
+                    "subnetRef": "[concat(parameters('existingVirtualNetworkId'), '/subnets/', parameters('existingSubnetName'))]",
+                    "nsgId": "[resourceId(resourceGroup().name, 'Microsoft.Network/networkSecurityGroups', parameters('networkSecurityGroupName'))]"
+                },
+                "resources": [
+                    {
+                        "name": "[parameters('networkSecurityGroupName')]",
+                        "type": "Microsoft.Network/networkSecurityGroups",
+                        "apiVersion": "2019-02-01",
+                        "location": "[parameters('location')]"
+                    },
+                    {
+                        "name": "[parameters('networkInterfaceName')]",
+                        "type": "Microsoft.Network/networkInterfaces",
+                        "apiVersion": "2018-10-01",
+                        "location": "[parameters('location')]",
+                        "dependsOn": [
+                            "[concat('Microsoft.Network/networkSecurityGroups/', parameters('networkSecurityGroupName'))]"            ],
+                        "properties": {
+                            "ipConfigurations": [
+                                {
+                                    "name": "ipconfig1",
+                                    "properties": {
+                                        "subnet": {
+                                            "id": "[variables('subnetRef')]"
+                                        },
+                                        "privateIPAllocationMethod": "Dynamic"
+                                    }
+                                }
+                            ],
+                            "networkSecurityGroup": {
+                                "id": "[variables('nsgId')]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "[parameters('virtualMachineName')]",
+                        "type": "Microsoft.Compute/virtualMachines",
+                        "apiVersion": "2021-03-01",
+                        "location": "[parameters('location')]",
+                        "dependsOn": [
+                            "[concat('Microsoft.Network/networkInterfaces/', parameters('networkInterfaceName'))]"
+                        ],
+                        "properties": {
+                            "hardwareProfile": {
+                                "vmSize": "[parameters('virtualMachineSize')]"
+                            },
+                            "storageProfile": {
+                                "osDisk": {
+                                    "createOption": "fromImage",
+                                    "managedDisk": {
+                                        "storageAccountType": "[parameters('osDiskType')]"
+                                    }
+                                },
+                                "imageReference": {
+                                    "publisher": "MicrosoftWindowsDesktop",
+                                    "offer": "Windows-10",
+                                    "sku": "[parameters('imageReferenceWindows10SKU')]",
+                                    "version": "latest"
+                                }
+                            },
+                            "networkProfile": {
+                                "networkInterfaces": [
+                                    {
+                                        "id": "[resourceId('Microsoft.Network/networkInterfaces', parameters('networkInterfaceName'))]"
+                                    }
+                                ]
+                            },
+                            "osProfile": {
+                                "computerName": "[parameters('virtualMachineComputerName')]",
+                                "adminUsername": "[parameters('adminUsername')]",
+                                "adminPassword": "[parameters('adminPassword')]",
+                                "windowsConfiguration": {
+                                    "enableAutomaticUpdates": true,
+                                    "provisionVmAgent": true,
+                                    "patchSettings": {
+                                        "enableHotpatching": false,
+                                        "patchMode": "AutomaticByOS"
+                                    }
+                                }
+                            },
+                            "licenseType": "Windows_Client",
+                            "diagnosticsProfile": {
+                                "bootDiagnostics": {
+                                    "enabled": true
+                                }
+                            }
+                        }
+                    }
+                ],
+                "outputs": {
+                    "adminUsername": {
+                        "type": "string",
+                        "value": "[parameters('adminUsername')]"
+                    }
+                }
+            }
         }
       },
       {
@@ -206,12 +1168,12 @@
         ],
         "properties": {
           "mode": "Incremental",
-          "templateLink": {
-            "uri" : "[uri(deployment().properties.templateLink.uri, 'nestedtemplates/riverbed-community-toolkit/netim-simple/azuredeploy.json')]"
+          "expressionEvaluationOptions": {
+              "scope": "inner"
           },
           "parameters": {
             "location":{
-              "value":"[parameters('location')]"
+              "value":"[variables('location')]"
             },
             "version": {
               "value": "[parameters('version')]"
@@ -231,6 +1193,667 @@
             "existingSubnetName" : {
               "value": "[reference(variables('linkedTemplateName_vnet-riverbed-headend')).outputs.subnetName_Monitoring.value]"
             }
+          },
+        "template" :
+          {
+            "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+            "contentVersion": "1.0.0.210530",
+            "parameters": {
+              "location": {
+                "type": "string",
+                "defaultValue": "[resourceGroup().location]",
+                "metadata": {
+                  "description": "Location for all resources."
+                }
+              },
+              "version" : {
+                "type": "string",
+                "defaultValue": "2.3",
+                "allowedValues" : [
+                  "2.3"
+                ],
+                "metadata": {
+                  "description": "version of Riverbed NetIM"
+                }        
+              },
+              "existingStorageAccountId" :{
+                "type": "string",
+                "metadata": {
+                  "description": "Resource Id of the existing Storage Account having the Blob Container containing all the VHD Blob for NetIM. For example: /subscriptions/1234123-1234-1234-13241234/resourceGroups/riverbed-community-appresponse-demo/providers/Microsoft.Storage/storageAccounts/your-storage-account"
+                }
+              },
+              "existingVhdBlobContainerUri" : {
+                "type": "string",
+                "metadata": {
+                  "description": "Uri of the existing Blob Container containing all the VHD Blob for NetIM. For example: https://your-storage-account.blob.core.windows.net/vhd"
+                }
+              },
+              "existingDiagStorageUri": {
+                "type": "string",
+                "metadata": {
+                  "description": "Uri of an existing Storage Account. For example: https://your-storage-account.blob.core.windows.net"
+                }
+              },
+              "existingVirtualNetworkId": {
+                "type": "string",
+                "metadata": {
+                  "description": "Resource Id of the existing VNET. For example: /subscriptions/1234123-1234-1234-13241234/resourceGroups/riverbed-community-appresponse-demo/providers/Microsoft.Network/virtualNetworks/riverbed-community-headend"
+                }
+              },
+              "existingSubnetName": {
+                "type": "string",
+                "defaultValue" : "Monitoring",
+                "metadata": {
+                  "description": "Name of the subnet in the virtual network you want to use"
+                }
+              },
+              "vmName_NetIMManager": {
+                "type": "string",
+                "defaultValue" : "netim-manager",
+                "metadata": {
+                  "description": "Name of the VM for NetIM Manager node"
+                }
+              },
+              "vmName_NetIMWorker": {
+                "type": "string",
+                "defaultValue" : "netim-worker",
+                "metadata": {
+                  "description": "Name of the VM for NetIM Worker node"
+                }
+              },
+              "vmName_NetIMCore": {
+                "type": "string",
+                "defaultValue" : "netim-core",
+                "metadata": {
+                  "description": "Name of the VM for NetIM Core node"
+                }
+              },
+              "vmSize": {
+                "type": "string",
+                "defaultValue" : "Standard_D4s_v3",
+                "metadata": {
+                  "description": "Size of the VM"
+                }
+              },
+              "osDiskSizeGB" : {
+                "type": "int",
+                "defaultValue" : 75,
+                "metadata": {
+                  "description": "OS Disk Size"
+                }
+              },
+              "dataDiskSizeGB" : {
+                "type": "int",
+                "defaultValue" : 100,
+                "metadata": {
+                  "description": "OS Disk Size"
+                }
+              },
+              "privateIP_NetIMManager" : {
+                "type": "string",
+                "defaultValue" : "10.100.5.11",
+                "metadata":{
+                  "description" : "Private IP reserved in the existing subnet range for the Manager"
+                }
+              },
+              "privateIP_NetIMWorker" : {
+                "type": "string",
+                "defaultValue" : "10.100.5.21",
+                "metadata":{
+                  "description" : "Private IP reserved in the existing subnet range for the Worker node"
+                }
+              },
+              "privateIP_NetIMCore" : {
+                "type": "string",
+                "defaultValue" : "10.100.5.31",
+                "metadata":{
+                  "description" : "Private IP reserved in the existing subnet range for the Core node"
+                }
+              }
+            },
+            "variables": {
+              "nicName_manager": "[concat(parameters('vmName_NetIMManager'), '-nic1')]",
+              "nicName_worker": "[concat(parameters('vmName_NetIMWorker'), '-nic1')]",
+              "nicName_core": "[concat(parameters('vmName_NetIMCore'), '-nic1')]",
+
+              // URI with NetIM 2.3 vhd
+              "osDiskVhdUri_NetIMCore": "[concat(parameters('existingVhdBlobContainerUri'),'/','netim_core_azure_230_977_root.vhd')]",
+              "dataDiskVhdUri_NetIMCore": "[concat(parameters('existingVhdBlobContainerUri'),'/','netim_core_azure_230_977_data1.vhd')]",
+              "osDiskVhdUri_NetIMMicroservices": "[concat(parameters('existingVhdBlobContainerUri'),'/','netim_microservices_azure_230_1068_root.vhd')]",
+              "dataDiskVhdUri_NetIMMicroservices": "[concat(parameters('existingVhdBlobContainerUri'),'/','netim_microservices_azure_230_1068_data1.vhd')]",
+
+              "subnetRef": "[concat(parameters('existingVirtualNetworkId'),'/subnets/',parameters('existingSubnetName'))]",
+              "publicIPAddressName": "netim",
+              "nsgName_NetIMCore": "netim-core"
+            },
+            "resources": [
+              {
+                "type": "Microsoft.Network/networkSecurityGroups",
+                "apiVersion": "2020-11-01",
+                "name": "[variables('nsgName_NetIMCore')]",
+                "location": "[parameters('location')]",
+                "properties": {
+                    "securityRules": [
+                      {
+                        "name": "Inbound_SSH",
+                        "properties": {
+                            "description": "Demo - Allow any internal inbound SSH connection",
+                            "protocol": "TCP",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "22",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 500,
+                            "direction": "Inbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [],
+                            "sourceAddressPrefixes": [
+                                "10.0.0.0/8",
+                                "172.16.0.0/12",
+                                "192.168.0.0/16"
+                            ],
+                            "destinationAddressPrefixes": []
+                        }
+                      },
+                      {
+                        "name": "Inbound_HTTPS",
+                        "properties": {
+                            "description": "Demo - Allow any internal inbound NetIM HTTPS. Webconsole and API",
+                            "protocol": "TCP",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "8543",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 510,
+                            "direction": "Inbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [],
+                            "sourceAddressPrefixes": [
+                                "10.0.0.0/8",
+                                "172.16.0.0/12",
+                                "192.168.0.0/16"
+                            ],
+                            "destinationAddressPrefixes": []
+                        }
+                      },
+                      {
+                        "name": "Inbound_HTTP",
+                        "properties": {
+                            "description": "Demo - Allow any internal inbound NetIM HTTP. Webconsole and API",
+                            "protocol": "TCP",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "9190",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 520,
+                            "direction": "Inbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [],
+                            "sourceAddressPrefixes": [
+                                "10.0.0.0/8",
+                                "172.16.0.0/12",
+                                "192.168.0.0/16"
+                            ],
+                            "destinationAddressPrefixes": []
+                        }
+                      },
+                      {
+                        "name": "Inbound_SyntheticTest",
+                        "properties": {
+                            "description": "Demo - Allow any internal inbound NetIM Synthetic TestEngine",
+                            "protocol": "TCP",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "3162",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 1010,
+                            "direction": "Inbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [],
+                            "sourceAddressPrefixes": [
+                                "10.0.0.0/8",
+                                "172.16.0.0/12",
+                                "192.168.0.0/16"
+                            ],
+                            "destinationAddressPrefixes": []
+                        }
+                      },
+                      {
+                        "name": "Inbound_SNMP",
+                        "properties": {
+                            "description": "Demo - Allow any internal inbound SNMP on standard polling and traps ports",
+                            "protocol": "*",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "161-162",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 1020,
+                            "direction": "Inbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [],
+                            "sourceAddressPrefixes": [
+                                "10.0.0.0/8",
+                                "172.16.0.0/12",
+                                "192.168.0.0/16"
+                            ],
+                            "destinationAddressPrefixes": []
+                        }
+                      },
+                      {
+                        "name": "Inbound_SNMP_special_ports",
+                        "properties": {
+                            "description": "Demo - Allow any internal inbound NetIM SNMP Trap",
+                            "protocol": "UDP",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "8162",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 1030,
+                            "direction": "Inbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [],
+                            "sourceAddressPrefixes": [
+                                "10.0.0.0/8",
+                                "172.16.0.0/12",
+                                "192.168.0.0/16"
+                            ],
+                            "destinationAddressPrefixes": []
+                        }
+                      },
+                      {
+                        "name": "Inbound_Syslog",
+                        "properties": {
+                            "description": "Demo - Allow any internal inbound NetIM Syslogs",
+                            "protocol": "UDP",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "8543",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 1040,
+                            "direction": "Inbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [],
+                            "sourceAddressPrefixes": [
+                                "10.0.0.0/8",
+                                "172.16.0.0/12",
+                                "192.168.0.0/16"
+                            ],
+                            "destinationAddressPrefixes": []
+                        }
+                      },
+                      {
+                        "name": "Inbound_LUS",
+                        "properties": {
+                            "description": "Demo - Allow any internal inbound NetIM LUS connection",
+                            "protocol": "TCP",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "3100",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 2010,
+                            "direction": "Inbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [],
+                            "sourceAddressPrefixes": [
+                                "10.0.0.0/8",
+                                "172.16.0.0/12",
+                                "192.168.0.0/16"
+                            ],
+                            "destinationAddressPrefixes": []
+                        }
+                      },
+                      {
+                        "name": "Inbound_DCL",
+                        "properties": {
+                            "description": "Demo - Allow any internal inbound Portal DCL",
+                            "protocol": "TCP",
+                            "sourcePortRange": "*",
+                            "destinationPortRange": "9347",
+                            "destinationAddressPrefix": "*",
+                            "access": "Allow",
+                            "priority": 2020,
+                            "direction": "Inbound",
+                            "sourcePortRanges": [],
+                            "destinationPortRanges": [],
+                            "sourceAddressPrefixes": [
+                                "10.0.0.0/8",
+                                "172.16.0.0/12",
+                                "192.168.0.0/16"
+                            ],
+                            "destinationAddressPrefixes": []
+                        }
+                      }
+                  ]
+                }
+              },
+              {
+                  "apiVersion": "2021-04-01",
+                  "name": "pid-e7664fe8-a4c0-4cb3-8f58-4059be22c9ca",
+                  "type": "Microsoft.Resources/deployments",
+                  "properties": {
+                      "mode": "Incremental",
+                      "template": {
+                          "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                          "contentVersion": "1.0.0.0",
+                          "resources": []
+                      }
+                  }
+              },
+              {
+                "apiVersion": "2020-05-01",
+                "type": "Microsoft.Network/publicIPAddresses",
+                "name": "[variables('publicIPAddressName')]",
+                "location": "[parameters('location')]",
+                "properties": {
+                  "publicIPAllocationMethod": "Dynamic"
+                }
+              },
+              {
+                "apiVersion": "2020-05-01",
+                "type": "Microsoft.Network/networkInterfaces",
+                "name": "[variables('nicName_manager')]",
+                "location": "[parameters('location')]",
+                "properties": {
+                  "ipConfigurations": [
+                    {
+                      "name": "ipconfig1",
+                      "properties": {
+                        "privateIPAllocationMethod": "Static",
+                        "privateIPAddress" : "[parameters('privateIP_NetIMManager')]",
+                        "subnet": {
+                          "id": "[variables('subnetRef')]"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "apiVersion": "2020-05-01",
+                "type": "Microsoft.Network/networkInterfaces",
+                "name": "[variables('nicName_worker')]",
+                "location": "[parameters('location')]",
+                "properties": {
+                  "ipConfigurations": [
+                    {
+                      "name": "ipconfig1",
+                      "properties": {
+                        "privateIPAllocationMethod": "Static",
+                        "privateIPAddress" : "[parameters('privateIP_NetIMWorker')]",
+                        "subnet": {
+                          "id": "[variables('subnetRef')]"
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "apiVersion": "2020-05-01",
+                "type": "Microsoft.Network/networkInterfaces",
+                "name": "[variables('nicName_core')]",
+                "location": "[parameters('location')]",
+                "dependsOn": [
+                  "[resourceId('Microsoft.Network/publicIPAddresses/', variables('publicIPAddressName'))]",
+                  "[resourceId('Microsoft.Network/networkSecurityGroups',variables('nsgName_NetIMCore'))]"
+                ],
+                "properties": {
+                  "ipConfigurations": [
+                    {
+                      "name": "ipconfig1",
+                      "properties": {
+                        "privateIPAllocationMethod": "Static",
+                        "privateIPAddress" : "[parameters('privateIP_NetIMCore')]",
+                        "publicIPAddress": {
+                          "id": "[resourceId('Microsoft.Network/publicIPAddresses',variables('publicIPAddressName'))]"
+                        },
+                        "subnet": {
+                          "id": "[variables('subnetRef')]"
+                        }
+                      }
+                    }
+                  ],
+                  "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups',variables('nsgName_NetIMCore'))]"
+                  }
+                }
+              },
+              {
+                "type": "Microsoft.Compute/disks",
+                "apiVersion": "2019-07-01",
+                "name": "[concat(parameters('vmName_NetIMManager'), '_OS')]",
+                "location": "[parameters('location')]",
+                "properties": {
+                  "creationData": {
+                    "createOption": "Import",
+                    "sourceUri": "[variables('osDiskVhdUri_NetIMMicroservices')]",
+                    "storageAccountId" : "[parameters('existingStorageAccountId')]"
+                  },
+                  "diskSizeGB" : "[parameters('osDiskSizeGB')]",
+                  "osType": "Linux"
+                }
+              },
+              {
+                "type": "Microsoft.Compute/disks",
+                "apiVersion": "2019-07-01",
+                "name": "[concat(parameters('vmName_NetIMManager'), '_Data')]",
+                "location": "[parameters('location')]",
+                "properties": {
+                  "creationData": {
+                    "createOption": "Import",
+                    "sourceUri": "[variables('dataDiskVhdUri_NetIMMicroservices')]",
+                    "storageAccountId" : "[parameters('existingStorageAccountId')]"
+                  },
+                  "diskSizeGB" : "[parameters('dataDiskSizeGB')]"
+                }
+              },
+              {
+                "type": "Microsoft.Compute/disks",
+                "apiVersion": "2019-07-01",
+                "name": "[concat(parameters('vmName_NetIMWorker'), '_OS')]",
+                "location": "[parameters('location')]",
+                "properties": {
+                  "creationData": {
+                    "createOption": "Import",
+                    "sourceUri": "[variables('osDiskVhdUri_NetIMMicroservices')]",
+                    "storageAccountId" : "[parameters('existingStorageAccountId')]"
+                  },
+                  "diskSizeGB" : "[parameters('osDiskSizeGB')]",
+                  "osType": "Linux"
+                }
+              },
+              {
+                "type": "Microsoft.Compute/disks",
+                "apiVersion": "2019-07-01",
+                "name": "[concat(parameters('vmName_NetIMWorker'), '_Data')]",
+                "location": "[parameters('location')]",
+                "properties": {
+                  "creationData": {
+                    "createOption": "Import",
+                    "sourceUri": "[variables('dataDiskVhdUri_NetIMMicroservices')]",
+                    "storageAccountId" : "[parameters('existingStorageAccountId')]"
+                  },
+                  "diskSizeGB" : "[parameters('dataDiskSizeGB')]"
+                }
+              },
+              {
+                "type": "Microsoft.Compute/disks",
+                "apiVersion": "2019-07-01",
+                "name": "[concat(parameters('vmName_NetIMCore'), '_OS')]",
+                "location": "[parameters('location')]",
+                "properties": {
+                  "creationData": {
+                    "createOption": "Import",
+                    "sourceUri": "[variables('osDiskVhdUri_NetIMCore')]",
+                    "storageAccountId" : "[parameters('existingStorageAccountId')]"
+                  },
+                  "diskSizeGB" : "[parameters('osDiskSizeGB')]",
+                  "osType": "Linux"
+                }
+              },
+              {
+                "type": "Microsoft.Compute/disks",
+                "apiVersion": "2019-07-01",
+                "name": "[concat(parameters('vmName_NetIMCore'), '_Data')]",
+                "location": "[parameters('location')]",
+                "properties": {
+                  "creationData": {
+                    "createOption": "Import",
+                    "sourceUri": "[variables('dataDiskVhdUri_NetIMCore')]",
+                    "storageAccountId" : "[parameters('existingStorageAccountId')]"
+                  },
+                  "diskSizeGB" : "[parameters('dataDiskSizeGB')]"
+                }
+              },
+
+              {
+                "apiVersion": "2019-07-01",
+                "type": "Microsoft.Compute/virtualMachines",
+                "name": "[parameters('vmName_NetIMManager')]",
+                "location": "[parameters('location')]",
+                "dependsOn": [
+                  "[resourceId('Microsoft.Network/networkInterfaces/', variables('nicName_manager'))]",
+                  "[resourceId('Microsoft.Compute/disks/',concat(parameters('vmName_NetIMManager'), '_OS'))]",
+                  "[resourceId('Microsoft.Compute/disks/',concat(parameters('vmName_NetIMManager'), '_Data'))]"        
+                ],
+                "properties": {
+                  "hardwareProfile": {
+                    "vmSize": "[parameters('vmSize')]"
+                  },
+                  "storageProfile": {
+                    "osDisk": {
+                      "osType": "Linux",
+                      "caching": "ReadWrite",
+                      "createOption": "Attach",
+                      "managedDisk": {
+                        "id": "[resourceId('Microsoft.Compute/disks', concat(parameters('vmName_NetIMManager'), '_OS'))]"
+                      }
+                    },
+                    "dataDisks": [
+                      {
+                        "lun": 0,
+                        "managedDisk": {
+                          "id": "[resourceId('Microsoft.Compute/disks', concat(parameters('vmName_NetIMManager'), '_Data'))]"
+                        },
+                        "caching": "ReadOnly",
+                        "createOption": "Attach"
+                      }
+                    ]
+                  },
+                  "networkProfile": {
+                    "networkInterfaces": [
+                      {
+                        "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName_manager'))]"
+                      }
+                    ]
+                  },
+                  "diagnosticsProfile": {
+                    "bootDiagnostics": {
+                      "enabled":  true ,
+                      "storageUri": "[parameters('existingDiagStorageUri')]"
+                    }
+                  }
+                }
+              },
+              {
+                "apiVersion": "2019-07-01",
+                "type": "Microsoft.Compute/virtualMachines",
+                "name": "[parameters('vmName_NetIMWorker')]",
+                "location": "[parameters('location')]",
+                "dependsOn": [
+                  "[resourceId('Microsoft.Network/networkInterfaces/', variables('nicName_worker'))]",
+                  "[resourceId('Microsoft.Compute/disks/',concat(parameters('vmName_NetIMWorker'), '_OS'))]",
+                  "[resourceId('Microsoft.Compute/disks/',concat(parameters('vmName_NetIMWorker'), '_Data'))]"
+                ],
+                "properties": {
+                  "hardwareProfile": {
+                    "vmSize": "[parameters('vmSize')]"
+                  },
+                  "storageProfile": {
+                    "osDisk": {
+                      "osType": "Linux",
+                      "caching": "ReadWrite",
+                      "createOption": "Attach",
+                      "managedDisk": {
+                        "id": "[resourceId('Microsoft.Compute/disks', concat(parameters('vmName_NetIMWorker'), '_OS'))]"
+                      }
+                    },
+                    "dataDisks": [
+                      {
+                        "lun": 0,
+                        "managedDisk": {
+                          "id": "[resourceId('Microsoft.Compute/disks', concat(parameters('vmName_NetIMWorker'), '_Data'))]"
+                        },
+                        "caching": "ReadOnly",
+                        "createOption": "Attach"
+                      }
+                    ]
+                  },
+                  "networkProfile": {
+                    "networkInterfaces": [
+                      {
+                        "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName_worker'))]"
+                      }
+                    ]
+                  },
+                  "diagnosticsProfile": {
+                    "bootDiagnostics": {
+                      "enabled":  true ,
+                      "storageUri": "[parameters('existingDiagStorageUri')]"
+                    }
+                  }
+                }
+              },
+              {
+                "apiVersion": "2019-07-01",
+                "type": "Microsoft.Compute/virtualMachines",
+                "name": "[parameters('vmName_NetIMCore')]",
+                "location": "[parameters('location')]",
+                "dependsOn": [
+                  "[resourceId('Microsoft.Network/networkInterfaces/', variables('nicName_core'))]",
+                  "[resourceId('Microsoft.Compute/disks/',concat(parameters('vmName_NetIMCore'), '_OS'))]",
+                  "[resourceId('Microsoft.Compute/disks/',concat(parameters('vmName_NetIMCore'), '_Data'))]"
+                ],
+                "properties": {
+                  "hardwareProfile": {
+                    "vmSize": "[parameters('vmSize')]"
+                  },
+                  "storageProfile": {
+                    "osDisk": {
+                      "osType": "Linux",
+                      "caching": "ReadWrite",
+                      "createOption": "Attach",
+                      "managedDisk": {
+                        "id": "[resourceId('Microsoft.Compute/disks', concat(parameters('vmName_NetIMCore'), '_OS'))]"
+                      }
+                    },
+                    "dataDisks": [
+                      {
+                        "lun": 0,
+                        "managedDisk": {
+                          "id": "[resourceId('Microsoft.Compute/disks', concat(parameters('vmName_NetIMCore'), '_Data'))]"
+                        },
+                        "caching": "ReadOnly",
+                        "createOption": "Attach"
+                      }
+                    ]
+                  },
+                  "networkProfile": {
+                    "networkInterfaces": [
+                      {
+                        "id": "[resourceId('Microsoft.Network/networkInterfaces',variables('nicName_core'))]"
+                      }
+                    ]
+                  },
+                  "diagnosticsProfile": {
+                    "bootDiagnostics": {
+                      "enabled":  true ,
+                      "storageUri": "[parameters('existingDiagStorageUri')]"
+                    }
+                  }
+                }
+              }
+            ]
           }
         }
       }
