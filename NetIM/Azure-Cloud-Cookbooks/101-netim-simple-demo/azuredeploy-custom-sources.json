@@ -51,7 +51,7 @@
       "linkedTemplateName_ImportVHD_NetIMCore": "ImportVHD-FromZipArchiveURL_NetIMCore",
       "linkedTemplateName_vnet-riverbed-headend": "vnet-riverbed-headend",
       "linkedTemplateName_bastion": "bastion",
-      "linkedTemplateName_steeldemo-visiblity-vm": "steeldemo-visibility-vm",
+      "linkedTemplateName_steeldemo-visibility-vm": "steeldemo-visibility-vm",
       "linkedTemplateName_netim-simple": "netim-simple"
     },
     "resources": [
@@ -977,7 +977,7 @@
       {
         "type": "Microsoft.Resources/deployments",
         "apiVersion": "2021-04-01",
-        "name": "[variables('linkedTemplateName_steeldemo-visiblity-vm')]",
+        "name": "[variables('linkedTemplateName_steeldemo-visibility-vm')]",
         "dependsOn": [ 
           "[variables('linkedTemplateName_vnet-riverbed-headend')]",
           "[variables('linkedTemplateName_bastion')]"
@@ -998,7 +998,7 @@
               "value": "Monitoring"
             },
             "virtualMachineName": {
-              "value": "Visiblity"
+              "value": "Visibility"
             },
             "adminUsername":{
               "value": "[parameters('demoJumpboxUsername')]"
