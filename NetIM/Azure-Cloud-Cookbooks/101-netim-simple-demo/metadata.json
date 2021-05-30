@@ -1,6 +1,6 @@
 {
     "$schema": "https://aka.ms/azure-quickstart-templates-metadata-schema#",
-    "itemDisplayName": "riverbed-community-netim-demo",
+    "itemDisplayName": "Riverbed Community Cookbook - NetIM simple demo",
     "description": "Riverbed Community Cookbook - NetIM simple demo",
     "summary": "Deploy a NetIM simple Demo",
     "githubUsername": "gwenblum",
