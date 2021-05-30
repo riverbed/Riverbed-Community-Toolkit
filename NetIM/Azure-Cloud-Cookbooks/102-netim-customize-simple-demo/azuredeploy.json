@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
-  "contentVersion": "1.0.0.210314",
+  "contentVersion": "1.0.0.210530",
   "parameters": {
     "location": {
       "type": "string",
@@ -22,25 +22,25 @@
     "existingStorageAccountId" :{
       "type": "string",
       "metadata": {
-        "description": "ID of the existing Storage Account having the Blob Container containing all the VHD Blob for NetIM"
+        "description": "Resource Id of the existing Storage Account having the Blob Container containing all the VHD Blob for NetIM. For example: /subscriptions/1234123-1234-1234-13241234/resourceGroups/riverbed-community-appresponse-demo/providers/Microsoft.Storage/storageAccounts/mystorageaccount"
       }
     },
     "existingVhdBlobContainerUri" : {
       "type": "string",
       "metadata": {
-        "description": "Uri of the existing Blob Container containing all the VHD Blob for NetIM. For example: https://your-storage-account.blob.core. windows.net/vhd"
+        "description": "Uri of the existing Blob Container containing all the VHD Blob for NetIM. For example: https://your-storage-account.blob.core.windows.net/vhd"
       }
     },
     "existingDiagStorageUri": {
       "type": "string",
       "metadata": {
-        "description": "Uri of an existing Storage Account. For example: https://your-storage-account.blob.core .windows.net"
+        "description": "Uri of an existing Storage Account. For example: https://your-storage-account.blob.core.windows.net"
       }
     },
     "existingVirtualNetworkId": {
       "type": "string",
       "metadata": {
-        "description": "Name of the existing VNET"
+        "description": "Resource Id of the existing VNET. For example: /subscriptions/1234123-1234-1234-13241234/resourceGroups/riverbed-community-appresponse-demo/providers/Microsoft.Network/virtualNetworks/riverbed-community-headend"
       }
     },
     "existingSubnetName": {
