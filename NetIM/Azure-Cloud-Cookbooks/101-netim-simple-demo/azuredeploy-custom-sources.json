@@ -901,6 +901,18 @@
             },
             "existingVirtualNetworkId" : {
               "value": "[reference(variables('linkedTemplateName_vnet-riverbed-headend')).outputs.virtualNetworkId.value]"
+            },
+            "existingSubnetName" : {
+              "value": "Monitoring"
+            },
+            "virtualMachineName": {
+              "value": "Visiblity"
+            },
+            "adminUsername":{
+              "value": "[parameters('demoJumpboxUsername')]"
+            },
+            "adminPassword":{
+              "value": "[parameters('demoJumpboxPassword')]"
             }
           },
           "template" :
@@ -1165,76 +1177,6 @@
                     }
                 }
             }
-        }
-      },
-      {
-        "type": "Microsoft.Resources/deployments",
-        "apiVersion": "2021-04-01",
-        "name": "[variables('linkedTemplateName_steeldemo-visiblity-vm')]",
-        "dependsOn": [ 
-          "[variables('linkedTemplateName_vnet-riverbed-headend')]",
-          "[variables('linkedTemplateName_bastion')]"
-        ],
-        "properties": {
-          "mode": "Incremental",
-          "templateLink": {
-            "uri" : "[uri(deployment().properties.templateLink.uri, 'nestedtemplates/riverbed-community-toolkit/steeldemo-visibility-vm/azuredeploy.json')]"
-          },
-          "parameters": {
-            "location":{
-              "value":"[parameters('location')]"
-            },
-            "existingVirtualNetworkId" : {
-              "value": "[reference(variables('linkedTemplateName_vnet-riverbed-headend')).outputs.virtualNetworkId.value]"
-            },
-            "existingSubnetName" : {
-              "value": "Monitoring"
-            },
-            "virtualMachineName": {
-              "value": "Visiblity"
-            },
-            "adminUsername":{
-              "value": "[parameters('demoJumpboxUsername')]"
-            },
-            "adminPassword":{
-              "value": "[parameters('demoJumpboxPassword')]"
-            }
-          }
-        }
-      },
-      {
-        "type": "Microsoft.Resources/deployments",
-        "apiVersion": "2021-04-01",
-        "name": "[variables('linkedTemplateName_steeldemo-visiblity-vm')]",
-        "dependsOn": [ 
-          "[variables('linkedTemplateName_vnet-riverbed-headend')]",
-          "[variables('linkedTemplateName_bastion')]"
-        ],
-        "properties": {
-          "mode": "Incremental",
-          "templateLink": {
-            "uri" : "[uri(deployment().properties.templateLink.uri, 'nestedtemplates/riverbed-community-toolkit/steeldemo-visibility-vm/azuredeploy.json')]"
-          },
-          "parameters": {
-            "location":{
-              "value":"[parameters('location')]"
-            },
-            "existingVirtualNetworkId" : {
-              "value": "[reference(variables('linkedTemplateName_vnet-riverbed-headend')).outputs.virtualNetworkId.value]"
-            },
-            "existingSubnetName" : {
-              "value": "Monitoring"
-            },
-            "virtualMachineName": {
-              "value": "Visiblity"
-            },
-            "adminUsername":{
-              "value": "[parameters('demoJumpboxUsername')]"
-            },
-            "adminPassword":{
-              "value": "[parameters('demoJumpboxPassword')]"
-            }
-          }
         }
       },
       {
