@@ -4,7 +4,7 @@ Cookbooks for AppResponse, a [Riverbed NPM Solution](https://www.riverbed.com/so
 
 ## Azure Cloud Cookbooks
 
-The cookbooks [AppResponse Simple Demo](101-appresponse-simple-demo) and [AppResponse Custom](102-appresponse-custom) allow to deploy AppResponse appliance in Azure.
+The cookbooks [AppResponse Simple Demo](Azure-Cloud-Cookbooks/101-appresponse-simple-demo) and [AppResponse Custom](Azure-Cloud-Cookbooks/102-appresponse-custom) allow to deploy AppResponse appliance in Azure.
 
 ## Ansible playbook examples for AppResponse
 
