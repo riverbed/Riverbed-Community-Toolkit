@@ -11,10 +11,9 @@ Please have a try and join the [Riverbed Community](https://community.riverbed.c
 1. Hit the "Deploy to Azure" button above
 2. Fill usual fields:
     - Subscription
-    - Resource Group: create a new, e.g. Riverbed-NetIM-Demo
-    - Region: Select an Azure Region
+    - Resource Group: create a new, for example Riverbed-NetIM-Demo
+    - Region: Select an Azure Region, for example francecentral
 3. Fill the parameters
-    - Location: leave as it is or set an Azure Region to deploy the resources, e.g. francecentral
     - Jumpbox Username: Default is riverbed-community
     - Jumpbox Password: Set a password with enough complexity (8 characters lengths, 1 or more numeric, 1 or more special char)
     - Version: Select the NetIM version among the version supported by the template
