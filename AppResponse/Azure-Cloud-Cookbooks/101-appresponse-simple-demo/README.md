@@ -6,6 +6,10 @@ Deploy [Riverbed AppResponse](https://www.riverbed.com/products/npm/appresponse)
 
 Please have a try and join the [Riverbed Community](https://community.riverbed.com/) to discuss.
 
+A simple topology with an AppResponse VM appliance and a Windows VM will be created.
+
+![Topology diagram](images/appresponse-simple-demo.svg)
+
 ## Deployment Steps
 
 1. Hit the "Deploy to Azure" button above
@@ -20,17 +24,13 @@ Please have a try and join the [Riverbed Community](https://community.riverbed.c
     - Demo Jumpbox Username: Default is riverbed-community
     - Demo Jumpbox Password: Set a password with enough complexity (8 characters lengths, 1 or more numeric, 1 or more special characters)
 4. Hit "Review + create", then hit "Create"
-5. Wait for the deployment, approximately 30 min to 1h depending on the region.
+5. Wait for the deployment, approximately 5 to 10 min depending on the region.
 
 ## Usage
 
-When the deployment is done, grab the the default admin credential from the deployment outputs. They will be required to log on the appliance webconsole
+When the deployment is done, you can grab the the default admin credential from the deployment outputs. They will be required next to log on the appliance webconsole
 
 ![Grab outputs](images/appresponse-simple-demo-outputs.png)
-
-A simple topology with an AppResponse VM appliance and a Windows VM will have been created.
-
-![Topology diagram](images/appresponse-simple-demo.svg)
 
 In the Azure Portal, navigate to the resource group. Then find the virtual machine named "Visibility" and connect via the Bastion using the Jumpbox username and password set in the deployment steps.
 
