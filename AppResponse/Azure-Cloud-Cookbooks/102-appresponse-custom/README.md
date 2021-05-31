@@ -9,7 +9,7 @@ This Cookbook is used in the [AppResponse Simple Demo cookbook](../101-apprespon
 
 ## Prerequisites
 
-- The VHD source image of AppResponse appliance must have been imported in an accessible Blob Container of Storage Account.
+- The VHD source image of AppResponse appliance must have been imported in a Blob Container of a Storage Account on which you have access permissions
 
 - Existing Virtual Network (VNET) and subnet to deploy the appliance
 
