@@ -28,7 +28,7 @@ When the deployment is done, grab the the default admin credential from the depl
 
 A simple topology with an AppResponse VM appliance and a Windows VM will have been created.
 
-[Topology diagram](/images/appresponse-simple-demo.svg)
+![Topology diagram](/images/appresponse-simple-demo.svg)
 
 In the Azure Portal, navigate to the resource group. Then find the virtual machine named "Visibility" and connect via the Bastion using the Jumpbox username and password set in the deployment steps.
 
