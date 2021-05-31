@@ -36,7 +36,7 @@ In the Azure Portal, navigate to the resource group. Then find the virtual machi
 
 ![Bastion](images/visibility-connect-bastion.png)
 
-On the Jumpbox you can launch the web browser, navigate to the AppResponse webconsole url https://10.100.5.51 and log in with the initial admin credential of the appliance (grabbed earlier from the deployment output).
+On the Jumpbox you can launch the web browser, navigate to the AppResponse webconsole url https://10.100.5.51 and log in with the initial admin credential of the appliance (previously grabbed from the deployment outputs).
 
 ![AppResponse first login inside Bastion](images/appresponse-simple-demo-bastion-login.png)
 
