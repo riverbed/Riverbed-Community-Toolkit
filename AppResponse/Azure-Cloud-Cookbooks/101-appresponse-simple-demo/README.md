@@ -2,11 +2,11 @@
 
 [![Deploy to Azure](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazure.svg?sanitize=true)](https://portal.azure.com/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Friverbed%2FRiverbed-Community-Toolkit%2Fmaster%2FAppResponse%2FAzure-Cloud-Cookbooks%2F101-appresponse-simple-demo%2Fazuredeploy.json) [![Deploy to Azure Gov](https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/1-CONTRIBUTION-GUIDE/images/deploytoazuregov.svg?sanitize=true)](https://portal.azure.us/#create/Microsoft.Template/uri/https%3A%2F%2Fraw.githubusercontent.com%2Friverbed%2FRiverbed-Community-Toolkit%2Fmaster%2FAppResponse%2FAzure-Cloud-Cookbooks%2F101-appresponse-simple-demo%2Fazuredeploy.json)
 
-![Topology diagram](images/appresponse-simple-demo.svg)
-
 Deploy a simple demo topology for [Riverbed AppResponse](https://www.riverbed.com/products/npm/appresponse) in your own Azure Cloud subscription in just few clicks with the Riverbed Community Toolkit provided by the [Riverbed Community](https://community.riverbed.com/).
 
 Have a try and join the [Riverbed Community](https://community.riverbed.com/) to discuss.
+
+![Topology diagram](images/appresponse-simple-demo.svg)
 
 ## Deployment Steps
 
