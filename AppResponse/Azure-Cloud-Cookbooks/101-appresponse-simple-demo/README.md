@@ -26,6 +26,8 @@ Please have a try and join the [Riverbed Community](https://community.riverbed.c
 
 When the deployment is done, grab the the default admin credential from the deployment outputs. They will be required to log on the appliance webconsole
 
+![Grab outputs](images/appresponse-simple-demo-outputs.png)
+
 A simple topology with an AppResponse VM appliance and a Windows VM will have been created.
 
 ![Topology diagram](images/appresponse-simple-demo.svg)
@@ -35,6 +37,9 @@ In the Azure Portal, navigate to the resource group. Then find the virtual machi
 ![Bastion](images/visibility-connect-bastion.png)
 
 On the Jumpbox you can launch the web browser, navigate to the AppResponse webconsole url https://10.100.5.51 and log in with the initial admin credential of the appliance (grabbed earlier from the deployment output).
+
+![AppResponse first login inside Bastion](images/appresponse-simple-demo-bastion-login.png)
+
 
 ## Notes
 
