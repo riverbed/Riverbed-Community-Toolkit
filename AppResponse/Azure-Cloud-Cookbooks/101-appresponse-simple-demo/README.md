@@ -6,7 +6,7 @@ Deploy [Riverbed AppResponse](https://www.riverbed.com/products/npm/appresponse)
 
 Please have a try and join the [Riverbed Community](https://community.riverbed.com/) to discuss.
 
-A simple topology with an AppResponse VM appliance and a Windows VM will be created.
+Hit the "Deploy to Azure" button above to deploy a simple topology with an AppResponse VM appliance and a Windows VM.
 
 ![Topology diagram](images/appresponse-simple-demo.svg)
 
