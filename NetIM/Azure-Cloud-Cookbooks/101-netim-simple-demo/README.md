@@ -22,7 +22,7 @@ Please have a try and join the [Riverbed Community](https://community.riverbed.c
 
 ## Usage
 
-The topology below should be deployed,
+The topology below will be deployed,
 
 ![Topology](images/netim-demo-topology.png)
 
