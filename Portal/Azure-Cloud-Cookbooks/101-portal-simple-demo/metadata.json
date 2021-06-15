@@ -1,0 +1,9 @@
+{
+    "$schema": "https://aka.ms/azure-quickstart-templates-metadata-schema#",
+    "itemDisplayName": "Riverbed Community Cookbook - Portal simple demo",
+    "description": "Riverbed Community Cookbook - Portal simple demo",
+    "summary": "Deploy Portal simple Demo",
+    "githubUsername": "gwenblum",
+    "dateUpdated": "2021-03-15",
+    "type": "QuickStart"
+  }
