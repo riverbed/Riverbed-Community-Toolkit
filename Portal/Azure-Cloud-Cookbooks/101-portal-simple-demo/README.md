@@ -25,13 +25,15 @@ Please have a try and join the [Riverbed Community](https://community.riverbed.c
 
 When the deployment is done, grab the the default admin credential from the deployment outputs. They will be required to log on the appliance webconsole
 
+![Outputs](images/outputs.png)
+
 A simple topology with an Portal VM appliance and a Windows VM will have been created.
 
 In the Azure Portal, navigate to the resource group. Then find the virtual machine named "Visibility" and connect via the Bastion using the Jumpbox username and password set in the deployment steps.
 
-| Connect from Azure Portal | Open Session| 
+| Connect from Azure Portal | Open Session | 
 | --- | --- |
-![Bastion](images/visibility-connect-bastion.png) | ![Session](images/visibility-bastion-session.png)
+| ![Bastion](images/visibility-connect-bastion.png) | ![Session](images/visibility-bastion-session.png) |
 
 On the Jumpbox you can launch the web browser, navigate to the Portal webconsole url https://10.100.5.11 and log in with the initial admin credential of the appliance (grabbed earlier from the deployment output).
 
