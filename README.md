@@ -6,7 +6,7 @@ A public toolkit shared by [Riverbed](https://www.riverbed.com) and the [Riverbe
 | --- | --- | --- |
 | [Cloud Accelerator (SteelHead)](/SteelHead) | Community Cloud Cookbooks: scripts and howto to deploy the Riverbed Accelerator in the Cloud and in your labs | Azure, ARM, PowerShell, AWS, GNS3 |
 | [Client Accelerator](/Client%20Accelerator) | Cookbooks to interact with the REST API, use Ansible with [SteelScript](https://github.com/riverbed/steelscript), deploy the controller appliance with template in the Cloud | Python, Azure, REST, Ansible, Terraform |
-| [Portal](/Portal) | Cloud Cookbooks and *work in progress* Dashboards examples | Azure, ARM |
+| [Portal](/Portal/101-portal-simple-demo) | Cloud Cookbooks and *work in progress* Dashboards examples | Azure, ARM |
 | [NetIM](/NetIM) | Cloud Cookbooks and Community library to share extensions for NetIM: GMC metrics, custom mibs, Robots, Synthetic-Test | Azure API, ARM, PowerShell, Python |
 | [AppResponse](/AppResponse) | Cloud Cookbooks for Azure. Ansible playbook example based on [SteelScript Python Library](https://github.com/riverbed/steelscript)| Ansible, Python, REST API |
 | [SteelConnect](/SteelConnect) | Scripts, howtos and templates to deploy SteelConnect headend in Azure | Azure, Terraform, PowerShell |
