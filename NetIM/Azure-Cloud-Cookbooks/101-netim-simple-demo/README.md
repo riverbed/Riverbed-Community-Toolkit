@@ -22,7 +22,7 @@ Please have a try and join the [Riverbed Community](https://community.riverbed.c
 
 ## Usage
 
-The topology below should be deployed,
+The topology below will be deployed,
 
 ![Topology](images/netim-demo-topology.png)
 
@@ -38,7 +38,7 @@ The default IP Addresses for the nodes are:
 - 10.100.5.21 : NetIM Worker node
 - 10.100.5.31 : NetIM Core node
 
-When the configuration of the nodes is done. Stay on the Jumpbox to launch the web-browser and connect to the NetIM webconsole https://10.100.5.31:8543 (https on port 8543 of the core node)
+When the configuration of the nodes is done, stay on the Jumpbox to launch the web-browser and connect to the NetIM webconsole https://10.100.5.31:8543 (https on port 8543 of the core node)
 
 ![Webconsole](images/netim-demo-webconsole.png)
 
