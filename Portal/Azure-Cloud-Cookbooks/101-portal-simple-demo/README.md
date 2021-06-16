@@ -33,11 +33,11 @@ A simple topology with an Portal VM appliance and a Windows VM will have been cr
 
 In the Azure Portal, navigate to the resource group. Then find the virtual machine named "Visibility" and connect via the Bastion using the Jumpbox username and password set in the deployment steps.
 
-| Connect from Azure Portal | Open Session | 
+| Connect from Azure Portal | Open Session |
 | --- | --- |
 | ![Bastion](images/visibility-connect-bastion.png) | ![Session](images/visibility-bastion-session.png) |
 
-On the Jumpbox you can launch the web browser, navigate to the Portal webconsole url https://10.100.5.11 and log in with the initial admin credential of the appliance (grabbed earlier from the deployment output).
+On the Jumpbox you can launch the web browser, navigate to the Portal webconsole url https://10.100.5.10 and log in with the initial admin credential of the appliance (grabbed earlier from the deployment output).
 
 ![Portal Cloudy](images/visibility-potal-login.png)
 
