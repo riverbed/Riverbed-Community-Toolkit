@@ -100,7 +100,8 @@ BOOTSTRAP_CONFIG_PROMPT_REGEX = '.* \(config\) # '
 BOOTSTRAP_PASSWORD_PROMPT_REGEX = '[pP]assword: '
 BOOTSTRAP_PROMPT_REGEX_LIST = [BOOTSTRAP_LOGIN_PROMPT_REGEX, BOOTSTRAP_CLI_PROMPT_REGEX, BOOTSTRAP_ENABLE_PROMPT_REGEX, BOOTSTRAP_CONFIG_PROMPT_REGEX]
 
-BOOTSTRAP_COMMAND = "/usr/bin/ssh -o 'StrictHostKeyChecking no' -o 'UserKnownHostsFile /dev/null' "
+BOOTSTRAP_SSH_COMMAND = "/usr/bin/ssh -o 'StrictHostKeyChecking no' -o 'UserKnownHostsFile /dev/null' "
+BOOTSTRAP_CONSOLE_COMMAND = "/usr/bin/ssh -o 'StrictHostKeyChecking no' -o 'UserKnownHostsFile /dev/null' "
 
 BOOTSTRAP_ENABLE = 'enable'
 BOOTSTRAP_CONFIG = 'configure terminal'
@@ -206,7 +207,7 @@ class BootstrapApp(object):
 		import pexpect
 
 		try:
-			command = BOOTSTRAP_COMMAND
+			command = BOOTSTRAP_SSH_COMMAND
 			args = [f"{self.username}@{ip}", "-p 22"]
 			ssh_session = pexpect.spawn(command, args=args, timeout=450, encoding='utf-8')
 		except NameError as e:
@@ -251,8 +252,9 @@ class BootstrapApp(object):
 		import pexpect
 
 		try:
-			terminal = pexpect.spawn(f"ssh -o 'StrictHostKeyChecking no' -o 'UserKnownHostsFile /dev/null' "
-				f"{self.terminal_ip} -p {self.terminal_port}", timeout=450, encoding='utf-8') 	
+			command = BOOTSTRAP_CONSOLE_COMMAND
+			args = [f"{self.terminal_ip}", f"-p {self.terminal_port}"]
+			terminal = pexpect.spawn(command, args=args, timeout=450, encoding='utf-8') 	
 		except:
 			return None
 
