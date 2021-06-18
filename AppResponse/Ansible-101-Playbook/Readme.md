@@ -47,4 +47,12 @@ cp modules/bootstrap.py /usr/lib/python3/dist-packages/ansible/modules/network/r
 ansible-playbook bootstrap.yml
 ```
 
+## Requirements
+
+Requires Python modules (with their related dependencies):
+	ansible
+	pexpect
+	requests
+	
+
 ## Copyright (c) 2021 Riverbed Technology
