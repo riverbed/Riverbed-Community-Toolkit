@@ -350,9 +350,8 @@ class BootstrapApp(object):
 				status = False
 
 			if status == False:
-				module.exit_json(changed=False,output='Factory reset failed to complete as expected.')
-				return
-
+				return False, "Factory reset did not complete as expected."
+ 
 		# Run setup wizard
 		self.wizard()
 
@@ -361,6 +360,8 @@ class BootstrapApp(object):
 
 		# Logout
 		self.logout()
+
+		return True, "Bootstrap complete."
 
 def main():
 	# Creating an Ansible module
@@ -407,7 +408,7 @@ def main():
 			reset=module.params['reset'])
 
 		# Run
-		bootstrap.run() 
+		success, msg = bootstrap.run() 
 	except pexpect.TIMEOUT as e:
 		module.fail_json(msg=f"pexpect.TIMEOUT: Unexpected timeout waiting for prompt or command: {e}")
 	except pexpect.EOF as e:
@@ -417,7 +418,7 @@ def main():
 	except RuntimeError as e:
 		module.fail_json(msg=f"RuntimeError: {e}")
 
-	module.exit_json(changed=True,output='')
+	module.exit_json(changed=success,output=msg)
 
 if __name__ == '__main__':
 	main()
