@@ -1,0 +1,15 @@
+---
+- name: AppResponse bootstrap
+  hosts: localhost
+  connection: local
+
+  tasks:
+  - name: Bootstrap task
+    bootstrap:
+      hostname: "10.1.150.210"
+      username: "admin"
+      password: "admin"
+      dhcp_ip: "10.1.150.210"
+      ip: "10.1.150.210"
+      mask: "255.255.255.0"
+      gateway: "10.1.150.1"
