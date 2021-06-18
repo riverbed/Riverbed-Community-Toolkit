@@ -9,7 +9,7 @@ A public toolkit shared by [Riverbed](https://www.riverbed.com) and the [Riverbe
 | [Portal](/Portal/Azure-Cloud-Cookbooks/101-portal-simple-demo) | Cloud Cookbooks and *work in progress* Dashboards examples | Azure, ARM |
 | [NetIM](/NetIM) | Cloud Cookbooks and Community library to share extensions for NetIM: GMC metrics, custom mibs, Robots, Synthetic-Test | Azure API, ARM, PowerShell, Python |
 | [AppResponse](/AppResponse) | Cloud Cookbooks for Azure. Ansible playbook example based on [SteelScript Python Library](https://github.com/riverbed/steelscript)| Ansible, Python, REST API |
-| [NetProfiler](/NetProfiler) | Cloud Cookbooks for Azure. | Terraform |
+| [NetProfiler](/NetProfiler/103-netprofiler-terraform-template) | Cloud Cookbooks for Azure. | Terraform |
 | [SteelConnect](/SteelConnect) | Scripts, howtos and templates to deploy SteelConnect headend in Azure | Azure, Terraform, PowerShell |
 | [SteelScript](#) | *work in progress* Examples and use-cases based on [SteelScript Python Library](https://github.com/riverbed/steelscript) | Python |
 | [Windows](/Aternity) | Library of Automation and Remediation scripts for Windows Endpoints - including script to interact with Riverbed Client Accelerator agent (a.k.a SteelHead Mobile), Application Signatures for [Aternity EUEM](https://www.aternity.com/) | Azure, Windows, PowerShell |
