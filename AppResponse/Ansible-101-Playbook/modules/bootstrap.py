@@ -364,7 +364,6 @@ class BootstrapApp(object):
 		if self.reset == True:
 			try:
 				status = self.factory_reset()
-				status = True
 			except:
 				status = False
 
