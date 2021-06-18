@@ -1,0 +1,40 @@
+subscriptionid="some subscription id"
+resource_group="some resource group name"
+
+npm_lab_vnet="npm_vnet"
+npm_lab_vnet_range="192.168.0.0/24"
+
+scnp_subnet="scnp_subnet"
+scnp_subnet_range="192.168.0.0/28"
+scnp_private_ip="192.168.0.5"
+
+scfg_subnet="scfg_subnet"
+scfg_subnet_range="192.168.0.16/28"
+scfg_private_ip="192.168.0.20"
+
+srv_subnet="srv_subnet"
+srv_subnet_range="192.168.0.32/28"
+srv_private_ip="192.168.0.36"
+
+hostname_scnp_vm="SCNP-VM"
+hostname_scfg_vm="SCFG-VM"
+scnp_product="netprofiler"
+scnp_product_version="latest"
+scnp_sku="scnp-ve-base"
+scfg_sku="scfg-ve-base"
+scfg_product="flowgateway"
+scfg_product_version="latest"
+
+scnp_username="mazu"
+scfg_username="mazu"
+scnp_password="some secret password"
+scfg_password="some secret password"
+
+hostname_srv_vm="SRV-VM"
+srv_publisher="canonical"
+srv_offer="0001-com-ubuntu-pro-trusty"
+srv_sku="pro-14_04-lts"
+srv_product_version="14.04.20200601"
+srv_product="0001-com-ubuntu-pro-trusty"
+srv_username="srvadmin"
+srv_password="some secret password"
