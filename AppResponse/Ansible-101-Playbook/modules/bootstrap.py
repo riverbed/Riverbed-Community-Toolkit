@@ -60,6 +60,7 @@ EXAMPLES = """
 		password: admin
 		terminal_ip: 192.168.1.1
 		terminal_port: 8000
+		terminal_password: admin
 		ip: 10.1.1.2
 		mask: 255.255.255.0
 		gateway: 10.1.1.1
@@ -74,17 +75,15 @@ EXAMPLES = """
 		ip: 10.1.1.2
 		mask: 255.255.255.0
 		gateway: 10.1.1.1
+		reset: True
 
 """
 RETURN = r'''
 output:
 	description: Result of bootstrap operation
-	returned: success
-	type: list
-msg:
-	description: Status
-	returned: success
+	returned: always
 	type: str
+	sample: Bootstrap complete.
 '''
 
 BOOTSTRAP_CONNECTION_TERMINAL = 'TERMINAL'
@@ -93,17 +92,35 @@ BOOTSTRAP_CONNECTION_SSH = 'SSH'
 BOOTSTRAP_TERMINAL_PASSWORD_PROMPT = 'Password: '
 BOOTSTRAP_TERMINAL_PASSWORD_REQUEST = 'Enter Terminal Password: '
 
-BOOTSTRAP_CONSOLE_LOGIN_PROMPT_REGEX = '.* login: '
-BOOTSTRAP_CONSOLE_CLI_PROMPT_REGEX = '.* > '
-BOOTSTRAP_CONSOLE_ENABLE_PROMPT_REGEX = '.* # '
-BOOTSTRAP_CONSOLE_CONFIG_PROMPT_REGEX = '.* \(config\) # '
-BOOTSTRAP_CONSOLE_PROMPT_REGEX_LIST = [BOOTSTRAP_CONSOLE_LOGIN_PROMPT_REGEX, BOOTSTRAP_CONSOLE_CLI_PROMPT_REGEX, BOOTSTRAP_CONSOLE_ENABLE_PROMPT_REGEX, BOOTSTRAP_CONSOLE_CONFIG_PROMPT_REGEX]
-BOOTSTRAP_CONSOLE_PASSWORD_PROMPT_REGEX = 'Password: '
 
-BOOTSTRAP_SSH_CLI_PROMPT_REGEX = '.* > '
-BOOTSTRAP_SSH_ENABLE_PROMPT_REGEX = '.* # '
-BOOTSTRAP_SSH_CONFIG_PROMPT_REGEX = '.* \(config\) # '
-BOOTSTRAP_SSH_PASSWORD_PROMPT_REGEX = '.* password:'
+BOOTSTRAP_LOGIN_PROMPT_REGEX = '.* login: '
+BOOTSTRAP_CLI_PROMPT_REGEX = '.* > '
+BOOTSTRAP_ENABLE_PROMPT_REGEX = '.* # '
+BOOTSTRAP_CONFIG_PROMPT_REGEX = '.* \(config\) # '
+BOOTSTRAP_PASSWORD_PROMPT_REGEX = '[pP]assword: '
+BOOTSTRAP_PROMPT_REGEX_LIST = [BOOTSTRAP_LOGIN_PROMPT_REGEX, BOOTSTRAP_CLI_PROMPT_REGEX, BOOTSTRAP_ENABLE_PROMPT_REGEX, BOOTSTRAP_CONFIG_PROMPT_REGEX]
+
+BOOTSTRAP_COMMAND = "/usr/bin/ssh -o 'StrictHostKeyChecking no' -o 'UserKnownHostsFile /dev/null' "
+
+BOOTSTRAP_ENABLE = 'enable'
+BOOTSTRAP_CONFIG = 'configure terminal'
+
+BOOTSTRAP_RESET = 'system reset-factory'
+BOOTSTRAP_CONFIRM = 'confirm'
+
+BOOTSTRAP_WIZARD = 'wizard'
+BOOTSTRAP_WIZARD_HOSTNAME_REGEX = 'Hostname.*: '
+BOOTSTRAP_WIZARD_DHCP_REGEX = 'Primary interface DHCP.*: '
+BOOTSTRAP_WIZARD_IPADDRESS_REGEX = 'Primary interafce IP address.*: '
+BOOTSTRAP_WIZARD_SUBNETMASK_REGEX = 'Primary interface subnet mask.*: '
+BOOTSTRAP_WIZARD_AUX_REGEX = 'Aux interface enabled.*: '
+BOOTSTRAP_WIZARD_DEFAULTGATEWAY_REGEX = 'Default gateway.*: '
+BOOTSTRAP_WIZARD_DNSSERVER_REGEX = 'DNS servers.*: '
+BOOTSTRAP_WIZARD_DNSDOMAINNAMES_REGEX = 'DNS domain names.*: '
+BOOTSTRAP_WIZARD_TIMEZONE_REGEX = 'Timezone.*: '
+BOOTSTRAP_WIZARD_QUIT_REGEX = "Enter 'quit' to quit without changing.*"
+
+BOOTSTRAP_EXIT = 'exit'
 
 class BootstrapApp(object):
 
@@ -189,9 +206,9 @@ class BootstrapApp(object):
 		import pexpect
 
 		try:
-			command = "/usr/bin/ssh -o 'StrictHostKeyChecking no' -o 'UserKnownHostsFile /dev/null' " 
-			command = command + f"{self.username}@{ip} -p 22"
-			ssh_session = pexpect.spawn(command, timeout=450, encoding='utf-8')
+			command = BOOTSTRAP_COMMAND
+			args = [f"{self.username}@{ip}", "-p 22"]
+			ssh_session = pexpect.spawn(command, args=args, timeout=450, encoding='utf-8')
 		except NameError as e:
 			return None
 		except:
@@ -218,15 +235,15 @@ class BootstrapApp(object):
 		except:
 			return None
 
-		ssh_session.expect(BOOTSTRAP_SSH_PASSWORD_PROMPT_REGEX)
+		ssh_session.expect(BOOTSTRAP_PASSWORD_PROMPT_REGEX)
 		ssh_session.sendline(self.password)
-		ssh_session.expect(BOOTSTRAP_SSH_CLI_PROMPT_REGEX)
+		ssh_session.expect(BOOTSTRAP_CLI_PROMPT_REGEX)
 		if '> ' in ssh_session.after:
-			ssh_session.sendline('enable')
-			ssh_session.expect(BOOTSTRAP_SSH_ENABLE_PROMPT_REGEX)
+			ssh_session.sendline(BOOTSTRAP_ENABLE)
+			ssh_session.expect(BOOTSTRAP_ENABLE_PROMPT_REGEX)
 		if '# ' in ssh_session.after and '(config)' not in ssh_session.after:
-			ssh_session.sendline('configure terminal')
-			ssh_session.expect(BOOTSTRAP_SSH_CONFIG_PROMPT_REGEX)
+			ssh_session.sendline(BOOTSTRAP_CONFIG)
+			ssh_session.expect(BOOTSTRAP_CONFIG_PROMPT_REGEX)
 
 		return ssh_session
 
@@ -254,28 +271,28 @@ class BootstrapApp(object):
 		console = self.terminal_login()
 
 		console.sendline()
-		console.expect(BOOTSTRAP_CONSOLE_PROMPT_REGEX_LIST, timeout=timeout)
+		console.expect(BOOTSTRAP_PROMPT_REGEX_LIST, timeout=timeout)
 		if 'login: ' in console.after:
 			console.sendline(self.username)
-			console.expect(BOOTSTRAP_CONSOLE_PASSWORD_PROMPT)
+			console.expect(BOOTSTRAP_PASSWORD_PROMPT)
 			console.sendline(self.password)
-			console.expect(BOOTSTRAP_CONSOLE_CLI_PROMPT_REGEX)
+			console.expect(BOOTSTRAP_CLI_PROMPT_REGEX)
 		if '> ' in console.after:
-			console.sendline('enable')
-			console.expect(BOOTSTRAP_CONSOLE_ENABLE_PROMPT_REGEX)
+			console.sendline(BOOTSTRAP_ENABLE)
+			console.expect(BOOTSTRAP_ENABLE_PROMPT_REGEX)
 		if '# ' in console.after and '(config)' not in console.after:
-			console.sendline('configure terminal')
-			console.expect(BOOTSTRAP_CONSOLE_CONFIG_PROMPT_REGEX)
+			console.sendline(BOOTSTRAP_CONFIG)
+			console.expect(BOOTSTRAP_CONFIG_PROMPT_REGEX)
 
 		return console
 
 	def factory_reset(self):
 		import pexpect
 
-		self.child.sendline('system reset-factory')
+		self.child.sendline(BOOTSTRAP_RESET)
 		time.sleep(5) # In testing, expect does not work here so need to sleep and send confirm
-		self.child.sendline('confirm')
-		self.child.expect(BOOTSTRAP_CONSOLE_PROMPT_REGEX_LIST)
+		self.child.sendline(BOOTSTRAP_CONFIRM)
+		self.child.expect(BOOTSTRAP_PROMPT_REGEX_LIST)
 
 		try:
 			if 'Confirmed - the system will now reboot' in self.child.after.decode('utf-8'):
@@ -291,31 +308,31 @@ class BootstrapApp(object):
 	def wizard(self):
 		import pexpect
 
-		self.child.sendline('wizard')
+		self.child.sendline(BOOTSTRAP_WIZARD)
 
-		self.child.expect('Hostname.*: ')
+		self.child.expect(BOOTSTRAP_WIZARD_HOSTNAME_REGEX)
 		self.child.sendline(self.hostname)
-		self.child.expect('Primary interface DHCP.*: ')
+		self.child.expect(BOOTSTRAP_WIZARD_DHCP_REGEX)
 		self.child.sendline("no")
-		self.child.expect('Primary interface IP address.*: ')
+		self.child.expect(BOOTSTRAP_WIZARD_IPADDRESS_REGEX)
 		self.child.sendline(self.ip)
-		self.child.expect('Primary interface subnet mask.*: ')
+		self.child.expect(BOOTSTRAP_WIZARD_SUBNETMASK_REGEX)
 		self.child.sendline(self.mask)
-		self.child.expect('Aux interface enabled.*: ')
+		self.child.expect(BOOTSTRAP_WIZARD_AUX_REGEX)
 		self.child.sendline("no")
-		self.child.expect('Default gateway.*: ')
+		self.child.expect(BOOTSTRAP_WIZARD_DEFAULTGATEWAY_REGEX)
 		self.child.sendline(self.gateway)
-		self.child.expect('DNS servers.*: ')
+		self.child.expect(BOOTSTRAP_WIZARD_DNSSERVERS_REGEX)
 		self.child.sendline()
-		self.child.expect('DNS domain names.*: ')
+		self.child.expect(BOOTSTRAP_WIZARD_DNSDOMAINNAMES_REGEX)
 		self.child.sendline()
-		self.child.expect('Timezone.*: ')
+		self.child.expect(BOOTSTRAP_WIZARD_TIMEZONE_REGEX)
 		self.child.sendline("UTC")
-		self.child.expect("Enter 'quit' to quit without changing.*")
+		self.child.expect(BOOTSTRAP_WIZARD_QUIT_REGEX)
 
 		try:
 			self.child.sendline('save')
-			self.child.expect(BOOTSTRAP_CONSOLE_CONFIG_PROMPT_REGEX)
+			self.child.expect(BOOTSTRAP_CONFIG_PROMPT_REGEX)
 		except pexpect.EOF:
 			if self.connection_type == BOOTSTRAP_CONNECTION_SSH:
 				self.wait(20)
@@ -326,15 +343,15 @@ class BootstrapApp(object):
 		for drive in drives:
 			self.child.sendline(f'storage data_section {drive} reinitialize mode RAID0')
 			self.wait()
-			self.child.expect(BOOTSTRAP_CONSOLE_CONFIG_PROMPT_REGEX)
+			self.child.expect(BOOTSTRAP_CONFIG_PROMPT_REGEX)
 
 	def logout(self):
 		import pexpect
 		try:
-			self.child.sendline('exit')
-			self.child.expect(BOOTSTRAP_CONSOLE_ENABLE_PROMPT_REGEX)
-			self.child.sendline('exit')
-			self.child.expect([BOOTSTRAP_CONSOLE_LOGIN_PROMPT_REGEX, pexpect.EOF], timeout=None)
+			self.child.sendline(BOOTSTRAP_EXIT)
+			self.child.expect(BOOTSTRAP_ENABLE_PROMPT_REGEX)
+			self.child.sendline(BOOTSTRAP_EXIT)
+			self.child.expect([BOOTSTRAP_LOGIN_PROMPT_REGEX, pexpect.EOF], timeout=None)
 			self.child.close()
 		except:
 			raise
