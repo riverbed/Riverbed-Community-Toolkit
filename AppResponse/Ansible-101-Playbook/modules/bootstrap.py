@@ -53,7 +53,7 @@ options:
 """
 EXAMPLES = """
 #Usage Example 1
-	- name: Bootstrap the AppResponse appliance
+	- name: Bootstrap the AppResponse appliance using terminal server connected to console port
 	  bootstrap:
 		host: appresponse01
 		username: admin
@@ -66,7 +66,7 @@ EXAMPLES = """
 		gateway: 10.1.1.1
 
 #Usage Example 2
-	- name: Bootstrap the AppResponse appliance
+	- name: Bootstrap the AppResponse appliance using SSH to DHCP IP address
 	  bootstrap
 		host: appresponse02
 		username: admin
@@ -123,7 +123,7 @@ BOOTSTRAP_WIZARD_DNSDOMAINNAMES_REGEX = u'DNS domain names.*: '
 BOOTSTRAP_WIZARD_TIMEZONE_REGEX = u'Timezone.*: '
 BOOTSTRAP_WIZARD_QUIT_REGEX = u"Enter 'quit' to quit without changing.*"
 
-BOOTSTRAP_EXIT = 'exit'
+BOOTSTRAP_EXIT = u'exit'
 
 BOOTSTRAP_TEST_HOSTNAME = 'appresponse'
 BOOTSTRAP_TEST_USERNAME = 'admin'
@@ -152,6 +152,7 @@ class BootstrapApp(object):
 		self.gateway = gateway
 		self.reset = reset
 
+		# If there is a terminal IP address set, prefer that as the connection
 		if self.terminal_ip != None:
 			self.connection_type = BOOTSTRAP_CONNECTION_TERMINAL
 			try:
@@ -159,6 +160,7 @@ class BootstrapApp(object):
 			except:
 				raise RuntimeError('ERROR: Unable to complete login through terminal')
 			self.child = self.console
+		# Otherwise, prefer DHCP and then static IP
 		elif self.dhcp_ip != None or self.ip != None:
 			self.connection_type = BOOTSTRAP_CONNECTION_SSH
 			try:
@@ -221,7 +223,7 @@ class BootstrapApp(object):
 			self.ssh_to_ip = self.appresponse_ssh_login(ip=ip, password=password, timeout=600)
 			self.child = self.ssh_to_ip
 
-	def ssh_login(self, ip):
+	def ssh_login(self, ip, timeout=450):
 		import pexpect
 		import sys
 
@@ -229,7 +231,7 @@ class BootstrapApp(object):
 		try:
 			command = BOOTSTRAP_SSH_COMMAND
 			args = BOOTSTRAP_SSH_ARGS + ["{0}@{1}".format(self.username, ip), "-p 22"]
-			ssh_session = pexpect.spawn(command, args=args, timeout=450, encoding='utf-8')
+			ssh_session = pexpect.spawn(command, args=args, timeout=timeout, encoding='utf-8')
 		except NameError as e:
 			raise Exception("Failed SSH login using args '{}' with message '{}'".format(args, sys.exc_info()))
 		except:
@@ -262,7 +264,7 @@ class BootstrapApp(object):
 		ssh_session.expect(BOOTSTRAP_CLI_PROMPT_REGEX)
 		if u'> ' in ssh_session.after:
 			ssh_session.sendline(BOOTSTRAP_ENABLE)
-			ssh_session.expect(BOOTSTRAP_ENABLE_PROMPT_REGEX)
+			ssh_session.expect(BOOTSTRAP_ENABLE_PROMPT_REGEX) # Leaving default timeout of 30 seconds
 		if u'# ' in ssh_session.after and u'(config)' not in ssh_session.after:
 			ssh_session.sendline(BOOTSTRAP_CONFIG)
 			ssh_session.expect(BOOTSTRAP_CONFIG_PROMPT_REGEX)
@@ -353,13 +355,13 @@ class BootstrapApp(object):
 		self.child.expect(BOOTSTRAP_WIZARD_HOSTNAME_REGEX)
 		self.child.sendline(self.hostname)
 		self.child.expect(BOOTSTRAP_WIZARD_DHCP_REGEX)
-		self.child.sendline("no")
+		self.child.sendline(u"no")
 		self.child.expect(BOOTSTRAP_WIZARD_IPADDRESS_REGEX)
 		self.child.sendline(self.ip)
 		self.child.expect(BOOTSTRAP_WIZARD_SUBNETMASK_REGEX)
 		self.child.sendline(self.mask)
 		self.child.expect(BOOTSTRAP_WIZARD_AUX_REGEX)
-		self.child.sendline("no")
+		self.child.sendline(u"no")
 		self.child.expect(BOOTSTRAP_WIZARD_DEFAULTGATEWAY_REGEX)
 		self.child.sendline(self.gateway)
 		self.child.expect(BOOTSTRAP_WIZARD_DNSSERVERS_REGEX)
@@ -367,11 +369,11 @@ class BootstrapApp(object):
 		self.child.expect(BOOTSTRAP_WIZARD_DNSDOMAINNAMES_REGEX)
 		self.child.sendline()
 		self.child.expect(BOOTSTRAP_WIZARD_TIMEZONE_REGEX)
-		self.child.sendline("UTC")
+		self.child.sendline(u"UTC")
 		self.child.expect(BOOTSTRAP_WIZARD_QUIT_REGEX)
 
 		try:
-			self.child.sendline("save")
+			self.child.sendline(u"save")
 
 			if self.connection_type == BOOTSTRAP_CONNECTION_TERMINAL:
 				self.child.expect(BOOTSTRAP_CONFIG_PROMPT_REGEX)
@@ -398,7 +400,7 @@ class BootstrapApp(object):
 	def init_drives(self):
 		drives = self.drives()
 		for drive in drives:
-			self.child.sendline('storage data_section {} reinitialize mode RAID0'.format(drive))
+			self.child.sendline(u'storage data_section {} reinitialize mode RAID0'.format(drive))
 			self.wait()
 			self.child.expect(BOOTSTRAP_CONFIG_PROMPT_REGEX)
 
@@ -476,10 +478,15 @@ def main():
 	try:
 		# Initialize connection to appliance
 		bootstrap = BootstrapApp(hostname=module.params['hostname'], 
-			username=module.params['username'], password=module.params['password'],
-			terminal_ip=module.params['terminal_ip'], terminal_port=module.params['terminal_port'],
+			username=module.params['username'], 
+			password=module.params['password'],
+			terminal_ip=module.params['terminal_ip'], 
+			terminal_port=module.params['terminal_port'],
+			terminal_password=module.params['terminal_password'],
 			dhcp_ip=module.params['dhcp_ip'],
-			ip=module.params['ip'], mask=module.params['mask'], gateway=module.params['gateway'], 
+			ip=module.params['ip'], 
+			mask=module.params['mask'], 
+			gateway=module.params['gateway'], 
 			reset=module.params['reset'])
 
 		# Run
