@@ -1,6 +1,6 @@
 {
     "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.210504",
+    "contentVersion": "1.0.0.210629",
     "parameters": {
         "VirtualNetworkId": {
             "type": "string",
@@ -136,7 +136,19 @@
         "diagnosticsStorageAccountName": "[concat(uniquestring(resourceGroup().id), 'diag')]"
     },
     "resources": [
-
+        {
+          "apiVersion": "2021-04-01",
+          "name": "pid-b5078f14-1cc3-4e4b-add8-8796c86ca173",
+          "type": "Microsoft.Resources/deployments",
+          "properties": {
+              "mode": "Incremental",
+              "template": {
+                  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+                  "contentVersion": "1.0.0.0",
+                  "resources": []
+              }
+          }
+        },
         {
             "condition" : "[variables('RequiresLoadbalancer')]",
             "type": "Microsoft.Network/loadBalancers",
@@ -274,7 +286,7 @@
             "name": "[variables('availabilitySetName')]",
             "type": "Microsoft.Compute/availabilitySets",
             "apiVersion": "2019-03-01",
-            "location": "[resourceGroup().location]",
+            "location": "[parameters('location')]",
             "properties": {
               "platformFaultDomainCount": 2,
               "platformUpdateDomainCount": 5
