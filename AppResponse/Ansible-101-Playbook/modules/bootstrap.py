@@ -119,6 +119,7 @@ BOOTSTRAP_CONFIG = u'configure terminal'
 BOOTSTRAP_RESET = u'system reset-factory'
 BOOTSTRAP_CONFIRM = u'confirm'
 BOOTSTRAP_DEFAULT_PASSWORD = u'admin'
+BOOTSTRAP_RESET_WAIT = 20 # increments of 30 seconds; 10 = 5 minutes, 20 = 10 minutes, etc.
 
 BOOTSTRAP_WIZARD = u'wizard'
 BOOTSTRAP_WIZARD_HOSTNAME_REGEX = u'Hostname.*: '
@@ -134,16 +135,6 @@ BOOTSTRAP_WIZARD_QUIT_REGEX = u"Enter 'quit' to quit without changing.*"
 
 BOOTSTRAP_EXIT = u'exit'
 
-BOOTSTRAP_TEST_HOSTNAME = 'appresponse'
-BOOTSTRAP_TEST_USERNAME = 'admin'
-BOOTSTRAP_TEST_DHCPIP = '10.1.150.115'
-BOOTSTRAP_TEST_TERMINALUSERNAME = 'admin'
-BOOTSTRAP_TEST_TERMINALIP = '192.168.1.1'
-BOOTSTRAP_TEST_TERMINALPORT = '2020'
-BOOTSTRAP_TEST_IP = '10.1.150.210'
-BOOTSTRAP_TEST_MASK = '255.255.255.0'
-BOOTSTRAP_TEST_GATEWAY = '10.1.150.1'
-BOOTSTRAP_TEST_RESET = False
 
 class BootstrapApp(object):
 
@@ -252,7 +243,7 @@ class BootstrapApp(object):
 		ssh_session = None
 		try:
 			command = BOOTSTRAP_SSH_COMMAND
-			args = BOOTSTRAP_SSH_ARGS + ["{0}@{1}".format(self.username, ip), "-p 22"]
+			args = BOOTSTRAP_SSH_ARGS + ["{}@{}".format(self.username, ip), "-p 22"]
 			if self.pexpect_version['major'] <= 3:
 				ssh_session = pexpect.spawn(command, args=args, timeout=timeout)
 			else:
@@ -298,13 +289,11 @@ class BootstrapApp(object):
 
 	def terminal_login(self):
 		import pexpect
+		import sys
 
 		try:
 			command = BOOTSTRAP_CONSOLE_COMMAND
-			if self.terminal_username == None:
-				args = BOOTSTRAP_CONSOLE_ARGS + ["{}".format(self.terminal_ip), "-p {}".format(self.terminal_port)]
-			else:
-				args = BOOTSTRAP_CONSOLE_ARGS + ["{1}@{2}".format(self.terminal_username, self.terminal_ip), "-p {}".format(self.terminal_port)]
+			args = BOOTSTRAP_CONSOLE_ARGS + ["{}@{}".format(self.terminal_username, self.terminal_ip), "-p {}".format(self.terminal_port)]
 			if self.pexpect_version['major'] <= 3:
 				terminal = pexpect.spawn(command, args=args, timeout=450)
 			else:
@@ -360,7 +349,7 @@ class BootstrapApp(object):
 		try:
 			if u'Confirmed - the system will now reboot' in self.child.after.decode('utf-8'):
 				# Assume that reboot is occurring
-				self.wait(0, 12)
+				self.wait(0, BOOTSTRAP_RESET_WAIT)
 
 				# When done waiting, if there was an SSH connection open, it has closed, so reconnect with default password after reset
 				if self.connection_type == BOOTSTRAP_CONNECTION_SSH:
@@ -467,7 +456,10 @@ class BootstrapApp(object):
 		self.wizard()
 
 		# Initialize drives
-		self.init_drives()
+		try:
+			self.init_drives()
+		except:
+			raise RuntimeError("Failed to initialize drives. It is likely that script cannot reach newly assigned IP address. Please check connectivity.")
 
 		# Logout
 		self.logout()
@@ -535,6 +527,7 @@ def main():
 		module.fail_json(msg="pexpect.TIMEOUT: Unexpected timeout waiting for prompt or command: {}".format(e))
 	except pexpect.EOF as e:
 		module.fail_json(msg="pexpect.EOF: Unexpected program termination: {}".format(e))
+	# Does not seem to be supported in earlier versions of pexpect
 	#except pexpect.exceptions.ExceptionPexpect as e:
 	#	module.fail_json(msg="pexpect.exceptions.{0}: {1}".format(type(e).__name__, e))
 	except RuntimeError as e:
@@ -544,7 +537,18 @@ def main():
 
 	module.exit_json(changed=success,output=msg)
 
-def test():
+BOOTSTRAP_TEST_HOSTNAME = 'appresponse'
+BOOTSTRAP_TEST_USERNAME = 'admin'
+BOOTSTRAP_TEST_DHCPIP = '10.1.150.115'
+BOOTSTRAP_TEST_TERMINALUSERNAME = 'admin'
+BOOTSTRAP_TEST_TERMINALIP = '192.168.1.1'
+BOOTSTRAP_TEST_TERMINALPORT = '2020'
+BOOTSTRAP_TEST_IP = '10.1.150.210'
+BOOTSTRAP_TEST_MASK = '255.255.255.0'
+BOOTSTRAP_TEST_GATEWAY = '10.1.150.1'
+BOOTSTRAP_TEST_RESET = False
+
+def test(terminal=True):
 	# Check that the dependencies are present to avoid an exception in execution
 	try:
 		import pexpect
@@ -565,22 +569,36 @@ def test():
 		print("Required Python modules could not be imported.")
 
 	try:
-		print("Enter password for test appliance")
+		if terminal == True:
+			print("Enter password for terminal '{}' for username '{}'".format(BOOTSTRAP_TEST_TERMINALIP, BOOTSTRAP_TEST_TERMINALUSERNAME))
+			terminal_password = getpass()
+		print("Enter password for appliance '{}'".format(BOOTSTRAP_TEST_TERMINALIP))
 		password = getpass()
-		# Initialize connection to appliance
-		bootstrap = BootstrapApp(hostname=BOOTSTRAP_TEST_HOSTNAME,
-			username=BOOTSTRAP_TEST_USERNAME, 
-			password=password,
-			dhcp_ip=BOOTSTRAP_TEST_DHCPIP,
-			#terminal_ip=BOOTSTRAP_TEST_TERMINALIP,
-			#terminal_port=BOOTSTRAP_TEST_TERMINALPORT,
-			#terminal_username=BOOTSTRAP_TEST_TERMINALUSERNAME,
-			#terminal_password=BOOTSTRAP_TEST_TERMINALPASSWORD,
-			ip=BOOTSTRAP_TEST_IP, 
-			mask=BOOTSTRAP_TEST_MASK,
-			gateway=BOOTSTRAP_TEST_GATEWAY,
-			reset=BOOTSTRAP_TEST_RESET)
-
+		
+		if terminal == True:
+			# Initialize connection to appliance
+			bootstrap = BootstrapApp(hostname=BOOTSTRAP_TEST_HOSTNAME,
+				username=BOOTSTRAP_TEST_USERNAME, 
+				password=password,
+				terminal_ip=BOOTSTRAP_TEST_TERMINALIP,
+				terminal_port=BOOTSTRAP_TEST_TERMINALPORT,
+				terminal_username=BOOTSTRAP_TEST_TERMINALUSERNAME,
+				terminal_password=terminal_password,
+				ip=BOOTSTRAP_TEST_IP, 
+				mask=BOOTSTRAP_TEST_MASK,
+				gateway=BOOTSTRAP_TEST_GATEWAY,
+				reset=BOOTSTRAP_TEST_RESET)
+		else:
+			# Initialize connection to appliance
+			bootstrap = BootstrapApp(hostname=BOOTSTRAP_TEST_HOSTNAME,
+				username=BOOTSTRAP_TEST_USERNAME, 
+				password=password,
+				dhcp_ip=BOOTSTRAP_TEST_DHCPIP,
+				ip=BOOTSTRAP_TEST_IP, 
+				mask=BOOTSTRAP_TEST_MASK,
+				gateway=BOOTSTRAP_TEST_GATEWAY,
+				reset=BOOTSTRAP_TEST_RESET)
+			
 		# Run
 		success, msg = bootstrap.run() 
 	except pexpect.TIMEOUT as e:
@@ -591,16 +609,17 @@ def test():
 		print("pexpect.EOF: Unexpected program termination: {}".format(e))
 		print("Failure")
 		return
-	except pexpect.exceptions.ExceptionPexpect as e:
-		print("pexpect.exceptions.{0}: {1}".format(type(e).__name__, e))
-		print("Failure")
-		return
+	# Does not seem to be supported in earlier versions of pexpect
+	#except pexpect.exceptions.ExceptionPexpect as e:
+	#	print("pexpect.exceptions.{0}: {1}".format(type(e).__name__, e))
+	#	print("Failure")
+	#	return
 	except RuntimeError as e:
 		print("RuntimeError: {}".format(e))
 		print("Failure")
 		return
 	except:
-		print("Unexpected error: {}".format(sys.exc_info()[0]))
+		print("Unexpected error: {}".format(sys.exc_info()))
 		print("Failure")
 		return
 
@@ -611,3 +630,11 @@ def test():
 
 if __name__ == '__main__':
 	main()
+
+	# Comment out main() and remove comments from test() to be able to execute Python code directly using <python bootstrap.py>.
+	# This allows the code to be executed separately without being executed as an Ansible module.
+	# Edit the global BOOTSTRAP_TEST* parameters that are specified above the test () function to specify the parameters to use in the test.
+	# The passwords will be requested at the command line upon execution.
+	# Specifying terminal=True connects to the bootstrapped system using a terminal server, while specifying terminal=False connects directly to the DHCP IP over SSH.
+	# test(terminal=True)
+	# test(terminal=False)
