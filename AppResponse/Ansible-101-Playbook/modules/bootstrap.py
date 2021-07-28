@@ -327,6 +327,8 @@ class BootstrapApp(object):
 			console.expect(BOOTSTRAP_PASSWORD_PROMPT)
 			console.sendline(self.password)
 			console.expect(BOOTSTRAP_CLI_PROMPT_REGEX)
+			if u'login: ' in console.after:
+				raise Exception("Failed AppResponse login through terminal server for '{self.username}'")
 		if u'> ' in console.after:
 			console.sendline(BOOTSTRAP_ENABLE)
 			console.expect(BOOTSTRAP_ENABLE_PROMPT_REGEX)
