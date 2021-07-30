@@ -6,7 +6,7 @@
 
 DOCUMENTATION = """
 ---
-module: bootstrap
+module: appresponse_bootstrap
 short_description: Configure the initial AppResponse appliance settings.
 options:
 	hostname:
@@ -62,7 +62,7 @@ options:
 EXAMPLES = """
 #Usage Example 1
 	- name: Bootstrap the AppResponse appliance using terminal server connected to console port
-	  bootstrap:
+	  appresponse_bootstrap:
 		host: appresponse01
 		username: admin
 		password: admin
@@ -76,7 +76,7 @@ EXAMPLES = """
 
 #Usage Example 2
 	- name: Bootstrap the AppResponse appliance using SSH to DHCP IP address
-	  bootstrap
+	  appresponse_bootstrap
 		host: appresponse02
 		username: admin
 		password: admin
