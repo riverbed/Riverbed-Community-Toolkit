@@ -324,7 +324,7 @@ class BootstrapApp(object):
 		console.expect(BOOTSTRAP_PROMPT_REGEX_LIST, timeout=timeout)
 		if u'login: ' in console.after:
 			console.sendline(self.username)
-			console.expect(BOOTSTRAP_PASSWORD_PROMPT)
+			console.expect(BOOTSTRAP_PASSWORD_PROMPT_REGEX)
 			console.sendline(self.password)
 			console.expect(BOOTSTRAP_CLI_PROMPT_REGEX)
 			if u'login: ' in console.after:
