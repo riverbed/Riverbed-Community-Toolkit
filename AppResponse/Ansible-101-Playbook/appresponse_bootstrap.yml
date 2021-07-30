@@ -5,7 +5,7 @@
 
   tasks:
   - name: Bootstrap task
-    bootstrap:
+    appresponse_bootstrap:
       hostname: "appresponse"
       username: "admin"
       password: "admin"
