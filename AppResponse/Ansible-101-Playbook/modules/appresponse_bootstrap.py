@@ -647,7 +647,7 @@ def test(terminal=True):
 
 
 if __name__ == '__main__':
-	#main()
+	main()
 
 	# Comment out main() and remove comments from test() to be able to execute Python code directly using <python bootstrap.py>.
 	# This allows the code to be executed separately without being executed as an Ansible module.
@@ -655,4 +655,4 @@ if __name__ == '__main__':
 	# The passwords will be requested at the command line upon execution.
 	# Specifying terminal=True connects to the bootstrapped system using a terminal server, while specifying terminal=False connects directly to the DHCP IP over SSH.
 	# test(terminal=True)
-	test(terminal=False)
+	# test(terminal=False)
