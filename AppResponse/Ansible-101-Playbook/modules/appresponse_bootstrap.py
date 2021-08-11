@@ -410,10 +410,12 @@ class BootstrapApp(object):
 		self.child.expect(BOOTSTRAP_WIZARD_TIMEZONE_REGEX)
 		self.child.sendline(u"UTC")
 		
-		self.child.expect(BOOTSTRAP_WIZARD_CONFIGURE_STORAGE_UNITS_REGEX)
-		self.child.sendline(u"no")
-
-		self.child.expect(BOOTSTRAP_WIZARD_QUIT_REGEX)
+		option = self.child.expect([BOOTSTRAP_WIZARD_CONFIGURE_STORAGE_UNITS_REGEX, BOOTSTRAP_WIZARD_QUIT_REGEX])
+		# If appliance has storage units, then send 'no' for configuring the SUs and wait for final quit;
+		# If wizard ends, then continue without doing anything
+		if option == 0:
+			self.child.sendline(u"no")
+			self.child.expect(BOOTSTRAP_WIZARD_QUIT_REGEX)
 
 		try:
 			self.child.sendline(u"save")
