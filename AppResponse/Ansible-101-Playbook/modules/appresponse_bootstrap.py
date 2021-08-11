@@ -230,9 +230,9 @@ class BootstrapApp(object):
 		self.wait(count+1, limit)
 
 	def reconnect(self, ip=None, password=None, ssh_to_terminal_still_active=True):
-		# No changes should be required if going through a terminal server
+		# SSH session should still be up if going through a terminal server
 		if self.connection_type == BOOTSTRAP_CONNECTION_TERMINAL:
-			self.console = self.appresponse_console_login(ssh_to_terminal_still_active=ssh_to_terminal_still_active)
+			self.console = self.appresponse_console_login(password=password, ssh_to_terminal_still_active=ssh_to_terminal_still_active)
 			self.child = self.console
 		elif self.connection_type == BOOTSTRAP_CONNECTION_SSH:
 			self.ssh_to_ip = self.appresponse_ssh_login(ip=ip, password=password, timeout=600)
@@ -314,7 +314,7 @@ class BootstrapApp(object):
 
 		return terminal
 
-	def appresponse_console_login(self, timeout=-1, ssh_to_terminal_still_active=False):
+	def appresponse_console_login(self, password=None, timeout=-1,  ssh_to_terminal_still_active=False):
 		
 		import pexpect
 
@@ -331,7 +331,10 @@ class BootstrapApp(object):
 		if u'login: ' in console.after:
 			console.sendline(self.username)
 			console.expect(BOOTSTRAP_PASSWORD_PROMPT_REGEX)
-			console.sendline(self.password)
+			if password == None:
+				console.sendline(self.password)
+			else:
+				console.sendline(password)
 			console.expect(BOOTSTRAP_CLI_PROMPT_REGEX)
 			if u'Password: ' in console.after:
 				raise Exception("Failed AppResponse login through terminal server for '{}'".format(self.username))
@@ -368,7 +371,7 @@ class BootstrapApp(object):
 					else:
 						self.reconnect(ip=self.ip, password=BOOTSTRAP_DEFAULT_PASSWORD)
 				elif self.connection_type == BOOTSTRAP_CONNECTION_TERMINAL:
-					self.reconnect()
+					self.reconnect(password=BOOTSTRAP_DEFAULT_PASSWORD)
 
 				return True
 			else:
@@ -406,8 +409,10 @@ class BootstrapApp(object):
 		self.child.sendline()
 		self.child.expect(BOOTSTRAP_WIZARD_TIMEZONE_REGEX)
 		self.child.sendline(u"UTC")
-		self.child.expect(BOOTSTRAP_WIZARD_CONFIGURE_STORAGE_UNITS_REGEX)
-		self.child.sendline(u"no")
+		
+		#self.child.expect(BOOTSTRAP_WIZARD_CONFIGURE_STORAGE_UNITS_REGEX)
+		#self.child.sendline(u"no")
+
 		self.child.expect(BOOTSTRAP_WIZARD_QUIT_REGEX)
 
 		try:
@@ -642,7 +647,7 @@ def test(terminal=True):
 
 
 if __name__ == '__main__':
-	main()
+	#main()
 
 	# Comment out main() and remove comments from test() to be able to execute Python code directly using <python bootstrap.py>.
 	# This allows the code to be executed separately without being executed as an Ansible module.
@@ -650,4 +655,4 @@ if __name__ == '__main__':
 	# The passwords will be requested at the command line upon execution.
 	# Specifying terminal=True connects to the bootstrapped system using a terminal server, while specifying terminal=False connects directly to the DHCP IP over SSH.
 	# test(terminal=True)
-	# test(terminal=False)
+	test(terminal=False)
