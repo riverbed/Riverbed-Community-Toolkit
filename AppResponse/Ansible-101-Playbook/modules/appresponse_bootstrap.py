@@ -131,6 +131,7 @@ BOOTSTRAP_WIZARD_DEFAULTGATEWAY_REGEX = u'Default gateway.*: '
 BOOTSTRAP_WIZARD_DNSSERVERS_REGEX = u'DNS servers.*: '
 BOOTSTRAP_WIZARD_DNSDOMAINNAMES_REGEX = u'DNS domain names.*: '
 BOOTSTRAP_WIZARD_TIMEZONE_REGEX = u'Timezone.*: '
+BOOTSTRAP_WIZARD_CONFIGURE_STORAGE_UNITS_REGEX = u'Configure Storage Units.* .*: '
 BOOTSTRAP_WIZARD_QUIT_REGEX = u"Enter 'quit' to quit without changing.*"
 
 BOOTSTRAP_EXIT = u'exit'
@@ -209,7 +210,7 @@ class BootstrapApp(object):
 		session.headers.update({"Content-Type": "application/json"})
 		data = {"user_credentials": {"username": self.username, "password": self.password}}
 
-		resp = session.post('https://' + ip + '/api/mgmt.aaa/1.0/token', data=json.dumps(data))
+		resp = session.post('https://' + ip + '/api/mgmt.aaa/2.0/token', data=json.dumps(data))
 		session.headers.update({"Authorization": "Bearer " + json.loads(resp.content)['access_token']})
 		services = {}
 		for service in json.loads(session.get('https://' + ip + '/api/common/1.0/services').content):
@@ -231,6 +232,7 @@ class BootstrapApp(object):
 	def reconnect(self, ip=None, password=None):
 		# No changes should be required if going through a terminal server
 		if self.connection_type == BOOTSTRAP_CONNECTION_TERMINAL:
+			self.ssh_to_ip = self.appresponse_console_login(ssh_to_terminal_still_active=True)
 			self.child = self.console
 		elif self.connection_type == BOOTSTRAP_CONNECTION_SSH:
 			self.ssh_to_ip = self.appresponse_ssh_login(ip=ip, password=password, timeout=600)
@@ -312,11 +314,15 @@ class BootstrapApp(object):
 
 		return terminal
 
-	def appresponse_console_login(self, timeout=-1):
+	def appresponse_console_login(self, timeout=-1, ssh_to_terminal_still_active=False):
+		
 		import pexpect
 
 		try:
-			console = self.terminal_login()
+			if ssh_to_terminal_still_active == False:
+				console = self.terminal_login()
+			else:
+				console = self.ssh_to_ip
 		except:
 			raise
 
@@ -327,8 +333,8 @@ class BootstrapApp(object):
 			console.expect(BOOTSTRAP_PASSWORD_PROMPT_REGEX)
 			console.sendline(self.password)
 			console.expect(BOOTSTRAP_CLI_PROMPT_REGEX)
-			if u'login: ' in console.after:
-				raise Exception("Failed AppResponse login through terminal server for '{self.username}'")
+			if u'Password: ' in console.after:
+				raise Exception("Failed AppResponse login through terminal server for '{}'".format(self.username))
 		if u'> ' in console.after:
 			console.sendline(BOOTSTRAP_ENABLE)
 			console.expect(BOOTSTRAP_ENABLE_PROMPT_REGEX)
@@ -397,6 +403,8 @@ class BootstrapApp(object):
 		self.child.sendline()
 		self.child.expect(BOOTSTRAP_WIZARD_TIMEZONE_REGEX)
 		self.child.sendline(u"UTC")
+		self.child.expect(BOOTSTRAP_WIZARD_CONFIGURE_STORAGE_UNITS_REGEX)
+		self.child.sendline(u"no")
 		self.child.expect(BOOTSTRAP_WIZARD_QUIT_REGEX)
 
 		try:
@@ -574,7 +582,7 @@ def test(terminal=True):
 		if terminal == True:
 			print("Enter password for terminal '{}' for username '{}'".format(BOOTSTRAP_TEST_TERMINALIP, BOOTSTRAP_TEST_TERMINALUSERNAME))
 			terminal_password = getpass()
-		print("Enter password for appliance '{}'".format(BOOTSTRAP_TEST_TERMINALIP))
+		print("Enter password for AppResponse appliance '{}'".format(BOOTSTRAP_TEST_HOSTNAME))
 		password = getpass()
 		
 		if terminal == True:
