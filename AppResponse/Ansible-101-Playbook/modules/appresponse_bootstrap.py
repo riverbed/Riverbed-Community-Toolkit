@@ -232,7 +232,7 @@ class BootstrapApp(object):
 	def reconnect(self, ip=None, password=None):
 		# No changes should be required if going through a terminal server
 		if self.connection_type == BOOTSTRAP_CONNECTION_TERMINAL:
-			self.ssh_to_ip = self.appresponse_console_login(ssh_to_terminal_still_active=True)
+			self.console = self.appresponse_console_login(ssh_to_terminal_still_active=True)
 			self.child = self.console
 		elif self.connection_type == BOOTSTRAP_CONNECTION_SSH:
 			self.ssh_to_ip = self.appresponse_ssh_login(ip=ip, password=password, timeout=600)
@@ -322,7 +322,7 @@ class BootstrapApp(object):
 			if ssh_to_terminal_still_active == False:
 				console = self.terminal_login()
 			else:
-				console = self.ssh_to_ip
+				console = self.console
 		except:
 			raise
 
