@@ -229,10 +229,10 @@ class BootstrapApp(object):
 		time.sleep(30)
 		self.wait(count+1, limit)
 
-	def reconnect(self, ip=None, password=None):
+	def reconnect(self, ip=None, password=None, ssh_to_terminal_still_active=True):
 		# No changes should be required if going through a terminal server
 		if self.connection_type == BOOTSTRAP_CONNECTION_TERMINAL:
-			self.console = self.appresponse_console_login(ssh_to_terminal_still_active=True)
+			self.console = self.appresponse_console_login(ssh_to_terminal_still_active=ssh_to_terminal_still_active)
 			self.child = self.console
 		elif self.connection_type == BOOTSTRAP_CONNECTION_SSH:
 			self.ssh_to_ip = self.appresponse_ssh_login(ip=ip, password=password, timeout=600)
@@ -367,12 +367,15 @@ class BootstrapApp(object):
 						self.reconnect(ip=self.dhcp_ip, password=BOOTSTRAP_DEFAULT_PASSWORD)
 					else:
 						self.reconnect(ip=self.ip, password=BOOTSTRAP_DEFAULT_PASSWORD)
+				elif self.connection_type == BOOTSTRAP_CONNECTION_TERMINAL:
+					self.reconnect()
+
 				return True
 			else:
 				return False
 		except pexpect.EOF:
 			self.child.close()
-			self.reconnect(BOOTSTRAP_DEFAULT_PASSWORD)
+			self.reconnect(password=BOOTSTRAP_DEFAULT_PASSWORD)
 			return True
 		except:
 			raise RuntimeError(sys.exc_info())
