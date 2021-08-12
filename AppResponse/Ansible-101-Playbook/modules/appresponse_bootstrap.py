@@ -371,7 +371,11 @@ class BootstrapApp(object):
 					else:
 						self.reconnect(ip=self.ip, password=BOOTSTRAP_DEFAULT_PASSWORD)
 				elif self.connection_type == BOOTSTRAP_CONNECTION_TERMINAL:
-					self.reconnect(password=BOOTSTRAP_DEFAULT_PASSWORD)
+					# In testing on some terminal servers, the pexpect does not show the login prompt in the buffer, instead showing an active connection
+					# As a result, the choice is being made to support the broader set of terminal servers to force the existing terminal server
+					# connection to close and re-open a new connection to the terminal server to reach the associated console port
+					self.child.close()
+					self.reconnect(password=BOOTSTRAP_DEFAULT_PASSWORD, ssh_to_terminal_still_active=False)
 
 				return True
 			else:
