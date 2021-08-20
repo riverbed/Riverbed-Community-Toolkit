@@ -7,15 +7,15 @@ The python script searches through the packet buffer of the appliance and loops 
 Make sure the ```ar11.py``` file is present in the same directory along with the script itself.
 Ensure you provide the AR11 IP address or FQDN here
 
-![ar11 address](ar11_line_code.png)
+![ar11 address](images/ar11_line_code.png)
 
 as well as the IP addresses of conversation endpoints
 
-![ip conversation](ip_conv_line_code.png)
+![ip conversation](images/ip_conv_line_code.png)
 
 The credentials supplied here
 
-![creds](creds_line_code.png)
+![creds](images/creds_line_code.png)
 
 and finally, simply run
 
@@ -24,7 +24,7 @@ python download_ip_conversation.py
 ```
 ## Example output:
 
-![sample output](output.png)
+![sample output](images/output.png)
 
 ## Requirements
 
