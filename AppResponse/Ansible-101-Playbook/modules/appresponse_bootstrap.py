@@ -370,19 +370,18 @@ class BootstrapApp(object):
 				# Assume that reboot is occurring
 				self.wait(0, self.reset_wait_time * 2)
 
+				# In testing on some terminal servers, the pexpect does not show the login prompt in the buffer, instead showing an active connection
+				# As a result, the choice is being made to support the broader set of terminal servers to force the existing terminal server
+				# connection to close and re-open a new connection to the terminal server to reach the associated console port
+				self.child.close()
 				# When done waiting, if there was an SSH connection open, it has closed, so reconnect with default password after reset
 				if self.connection_type == BOOTSTRAP_CONNECTION_SSH:
-					self.child.close()
 					# Factory reset will choose DHCP; assume connection to DHCP IP or that expected static IP is also DHCP IP
 					if self.dhcp_ip != None:
 						self.reconnect(ip=self.dhcp_ip, password=BOOTSTRAP_DEFAULT_PASSWORD)
 					else:
 						self.reconnect(ip=self.ip, password=BOOTSTRAP_DEFAULT_PASSWORD)
 				elif self.connection_type == BOOTSTRAP_CONNECTION_TERMINAL:
-					# In testing on some terminal servers, the pexpect does not show the login prompt in the buffer, instead showing an active connection
-					# As a result, the choice is being made to support the broader set of terminal servers to force the existing terminal server
-					# connection to close and re-open a new connection to the terminal server to reach the associated console port
-					self.child.close()
 					self.reconnect(password=BOOTSTRAP_DEFAULT_PASSWORD, ssh_to_terminal_still_active=False)
 
 				return True
@@ -390,7 +389,11 @@ class BootstrapApp(object):
 				return False
 		except pexpect.EOF:
 			self.child.close()
-			self.reconnect(password=BOOTSTRAP_DEFAULT_PASSWORD)
+			if self.connection_type == BOOTSTRAP_CONNECTION_SSH:
+				if self.dhcp_ip != None:
+					self.reconnect(ip=self.dhcp_ip, password=BOOTSTRAP_DEFAULT_PASSWORD)
+				else:
+					self.reconnect(ip=self.ip, password=BOOTSTRAP_DEFAULT_PASSWORD)
 			return True
 		except:
 			raise RuntimeError(sys.exc_info())
@@ -512,14 +515,14 @@ def main():
 		"password": {"required":True, "type":"str", "no_log":True},
 		"terminal_username": {"required":False, "type":str},
 		"terminal_ip": {"required":False, "type":"str"},
-		"terminal_port": {"required":False, "type":"str"},
+		"terminal_port": {"required":False, "type":"int"},
 		"terminal_password": {"required":False, "type":"str", "no_log":True},
 		"dhcp_ip": {"required":False, "type":"str"},
 		"ip": {"required":True, "type":"str"},
 		"mask": {"required":True, "type":"str"},
 		"gateway": {"required":True, "type":"str"},
 		"reset": {"required":False, "type":"bool", "default":"False"},
-		"reset_wait_time": {"required":False, "type":"str"}}
+		"reset_wait_time": {"required":False, "type":"int", "default":10}}
 	required_together = [["terminal_ip", "terminal_port", "terminal_password"]]
 	required_one_of = [["dhcp_ip", "terminal_ip"]]
 	module = AnsibleModule(argument_spec=arg_dict, required_together=required_together, required_one_of=required_one_of, supports_check_mode=False)
@@ -570,6 +573,8 @@ def main():
 	#	module.fail_json(msg="pexpect.exceptions.{0}: {1}".format(type(e).__name__, e))
 	except RuntimeError as e:
 		module.fail_json(msg="RuntimeError: {}".format(e))
+	except TypeError as e:
+		module.fail_json(msg="TypeError: {}".format(e))
 	except:
 		module.fail_json(msg="Unexpected error: {}".format(sys.exc_info()[0]))
 
