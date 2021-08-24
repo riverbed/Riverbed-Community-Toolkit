@@ -57,6 +57,10 @@ options:
 		description:
 			- True, if performing a factory-reset on the device during bootstrap; false by default
 		required: False
+	reset_wait_time:
+		description:
+			- Time, in minutes, to wait after factory-reset before continuing with script
+		required: False
 	
 """
 EXAMPLES = """
@@ -85,6 +89,7 @@ EXAMPLES = """
 		mask: 255.255.255.0
 		gateway: 10.1.1.1
 		reset: True
+		reset_wait_time: 10
 
 """
 RETURN = r'''
@@ -119,7 +124,7 @@ BOOTSTRAP_CONFIG = u'configure terminal'
 BOOTSTRAP_RESET = u'system reset-factory'
 BOOTSTRAP_CONFIRM = u'confirm'
 BOOTSTRAP_DEFAULT_PASSWORD = u'admin'
-BOOTSTRAP_RESET_WAIT = 20 # increments of 30 seconds; 10 = 5 minutes, 20 = 10 minutes, etc.
+BOOTSTRAP_RESET_WAIT = 10 # increments of 1 minute
 
 BOOTSTRAP_WIZARD = u'wizard'
 BOOTSTRAP_WIZARD_HOSTNAME_REGEX = u'Hostname.*: '
@@ -131,6 +136,7 @@ BOOTSTRAP_WIZARD_DEFAULTGATEWAY_REGEX = u'Default gateway.*: '
 BOOTSTRAP_WIZARD_DNSSERVERS_REGEX = u'DNS servers.*: '
 BOOTSTRAP_WIZARD_DNSDOMAINNAMES_REGEX = u'DNS domain names.*: '
 BOOTSTRAP_WIZARD_TIMEZONE_REGEX = u'Timezone.*: '
+BOOTSTRAP_WIZARD_CONFIGURE_STORAGE_UNITS_REGEX = u'Configure Storage Units.* .*: '
 BOOTSTRAP_WIZARD_QUIT_REGEX = u"Enter 'quit' to quit without changing.*"
 
 BOOTSTRAP_EXIT = u'exit'
@@ -138,7 +144,7 @@ BOOTSTRAP_EXIT = u'exit'
 
 class BootstrapApp(object):
 
-	def __init__(self, hostname=None, username=None, password=None, terminal_ip=None, terminal_port=None, terminal_username=None, terminal_password=None, dhcp_ip=None, ip=None, mask=None, gateway=None, reset=False):
+	def __init__(self, hostname=None, username=None, password=None, terminal_ip=None, terminal_port=None, terminal_username=None, terminal_password=None, dhcp_ip=None, ip=None, mask=None, gateway=None, reset=False, reset_wait_time=BOOTSTRAP_RESET_WAIT):
 
 		import pexpect
 		import sys
@@ -155,6 +161,7 @@ class BootstrapApp(object):
 		self.mask = mask
 		self.gateway = gateway
 		self.reset = reset
+		self.reset_wait_time = int(reset_wait_time)
 
 		self.pexpect_version = {}
 		version_split = pexpect.__version__.split('.')
@@ -197,7 +204,7 @@ class BootstrapApp(object):
 		if self.child == None:
 			raise RuntimeError('ERROR: Unable to create initial connection to AppResponse appliance')
 
-	def drives(self, ip=None):
+	def drives(self, ip=None, password=None):
 		import requests
 		import json
 
@@ -207,9 +214,11 @@ class BootstrapApp(object):
 		session = requests.Session()
 		session.verify = False
 		session.headers.update({"Content-Type": "application/json"})
-		data = {"user_credentials": {"username": self.username, "password": self.password}}
+		if password == None:
+			password = self.password
+		data = {"user_credentials": {"username": self.username, "password": password}}
 
-		resp = session.post('https://' + ip + '/api/mgmt.aaa/1.0/token', data=json.dumps(data))
+		resp = session.post('https://' + ip + '/api/mgmt.aaa/2.0/token', data=json.dumps(data))
 		session.headers.update({"Authorization": "Bearer " + json.loads(resp.content)['access_token']})
 		services = {}
 		for service in json.loads(session.get('https://' + ip + '/api/common/1.0/services').content):
@@ -228,9 +237,10 @@ class BootstrapApp(object):
 		time.sleep(30)
 		self.wait(count+1, limit)
 
-	def reconnect(self, ip=None, password=None):
-		# No changes should be required if going through a terminal server
+	def reconnect(self, ip=None, password=None, ssh_to_terminal_still_active=True):
+		# SSH session should still be up if going through a terminal server
 		if self.connection_type == BOOTSTRAP_CONNECTION_TERMINAL:
+			self.console = self.appresponse_console_login(password=password, ssh_to_terminal_still_active=ssh_to_terminal_still_active)
 			self.child = self.console
 		elif self.connection_type == BOOTSTRAP_CONNECTION_SSH:
 			self.ssh_to_ip = self.appresponse_ssh_login(ip=ip, password=password, timeout=600)
@@ -312,11 +322,15 @@ class BootstrapApp(object):
 
 		return terminal
 
-	def appresponse_console_login(self, timeout=-1):
+	def appresponse_console_login(self, password=None, timeout=-1,  ssh_to_terminal_still_active=False):
+		
 		import pexpect
 
 		try:
-			console = self.terminal_login()
+			if ssh_to_terminal_still_active == False:
+				console = self.terminal_login()
+			else:
+				console = self.console
 		except:
 			raise
 
@@ -325,10 +339,13 @@ class BootstrapApp(object):
 		if u'login: ' in console.after:
 			console.sendline(self.username)
 			console.expect(BOOTSTRAP_PASSWORD_PROMPT_REGEX)
-			console.sendline(self.password)
+			if password == None:
+				console.sendline(self.password)
+			else:
+				console.sendline(password)
 			console.expect(BOOTSTRAP_CLI_PROMPT_REGEX)
-			if u'login: ' in console.after:
-				raise Exception("Failed AppResponse login through terminal server for '{self.username}'")
+			if u'Password: ' in console.after:
+				raise Exception("Failed AppResponse login through terminal server for '{}'".format(self.username))
 		if u'> ' in console.after:
 			console.sendline(BOOTSTRAP_ENABLE)
 			console.expect(BOOTSTRAP_ENABLE_PROMPT_REGEX)
@@ -351,22 +368,32 @@ class BootstrapApp(object):
 		try:
 			if u'Confirmed - the system will now reboot' in self.child.after.decode('utf-8'):
 				# Assume that reboot is occurring
-				self.wait(0, BOOTSTRAP_RESET_WAIT)
+				self.wait(0, self.reset_wait_time * 2)
 
+				# In testing on some terminal servers, the pexpect does not show the login prompt in the buffer, instead showing an active connection
+				# As a result, the choice is being made to support the broader set of terminal servers to force the existing terminal server
+				# connection to close and re-open a new connection to the terminal server to reach the associated console port
+				self.child.close()
 				# When done waiting, if there was an SSH connection open, it has closed, so reconnect with default password after reset
 				if self.connection_type == BOOTSTRAP_CONNECTION_SSH:
-					self.child.close()
 					# Factory reset will choose DHCP; assume connection to DHCP IP or that expected static IP is also DHCP IP
 					if self.dhcp_ip != None:
 						self.reconnect(ip=self.dhcp_ip, password=BOOTSTRAP_DEFAULT_PASSWORD)
 					else:
 						self.reconnect(ip=self.ip, password=BOOTSTRAP_DEFAULT_PASSWORD)
+				elif self.connection_type == BOOTSTRAP_CONNECTION_TERMINAL:
+					self.reconnect(password=BOOTSTRAP_DEFAULT_PASSWORD, ssh_to_terminal_still_active=False)
+
 				return True
 			else:
 				return False
 		except pexpect.EOF:
 			self.child.close()
-			self.reconnect(BOOTSTRAP_DEFAULT_PASSWORD)
+			if self.connection_type == BOOTSTRAP_CONNECTION_SSH:
+				if self.dhcp_ip != None:
+					self.reconnect(ip=self.dhcp_ip, password=BOOTSTRAP_DEFAULT_PASSWORD)
+				else:
+					self.reconnect(ip=self.ip, password=BOOTSTRAP_DEFAULT_PASSWORD)
 			return True
 		except:
 			raise RuntimeError(sys.exc_info())
@@ -397,7 +424,13 @@ class BootstrapApp(object):
 		self.child.sendline()
 		self.child.expect(BOOTSTRAP_WIZARD_TIMEZONE_REGEX)
 		self.child.sendline(u"UTC")
-		self.child.expect(BOOTSTRAP_WIZARD_QUIT_REGEX)
+		
+		option = self.child.expect([BOOTSTRAP_WIZARD_CONFIGURE_STORAGE_UNITS_REGEX, BOOTSTRAP_WIZARD_QUIT_REGEX])
+		# If appliance has storage units, then send 'no' for configuring the SUs and wait for final quit;
+		# If wizard ends, then continue without doing anything
+		if option == 0:
+			self.child.sendline(u"no")
+			self.child.expect(BOOTSTRAP_WIZARD_QUIT_REGEX)
 
 		try:
 			self.child.sendline(u"save")
@@ -424,8 +457,8 @@ class BootstrapApp(object):
 		except:
 			raise RuntimeError(sys.exc_info())
 
-	def init_drives(self):
-		drives = self.drives()
+	def init_drives(self, password=None):
+		drives = self.drives(password=password)
 		for drive in drives:
 			self.child.sendline(u'storage data_section {} reinitialize mode RAID0'.format(drive))
 			self.wait()
@@ -459,7 +492,11 @@ class BootstrapApp(object):
 
 		# Initialize drives
 		try:
-			self.init_drives()
+			# If system was reset, use default password as defined in global variable BOOTSTRAP_DEFAULT_PASSWORD
+			if self.reset == True:
+				self.init_drives(password=BOOTSTRAP_DEFAULT_PASSWORD)
+			else:
+				self.init_drives()
 		except:
 			raise RuntimeError("Failed to initialize drives. It is likely that script cannot reach newly assigned IP address. Please check connectivity.")
 
@@ -478,13 +515,14 @@ def main():
 		"password": {"required":True, "type":"str", "no_log":True},
 		"terminal_username": {"required":False, "type":str},
 		"terminal_ip": {"required":False, "type":"str"},
-		"terminal_port": {"required":False, "type":"str"},
+		"terminal_port": {"required":False, "type":"int"},
 		"terminal_password": {"required":False, "type":"str", "no_log":True},
 		"dhcp_ip": {"required":False, "type":"str"},
 		"ip": {"required":True, "type":"str"},
 		"mask": {"required":True, "type":"str"},
 		"gateway": {"required":True, "type":"str"},
-		"reset": {"required":False, "type":"bool", "default":"False"}}
+		"reset": {"required":False, "type":"bool", "default":"False"},
+		"reset_wait_time": {"required":False, "type":"int", "default":10}}
 	required_together = [["terminal_ip", "terminal_port", "terminal_password"]]
 	required_one_of = [["dhcp_ip", "terminal_ip"]]
 	module = AnsibleModule(argument_spec=arg_dict, required_together=required_together, required_one_of=required_one_of, supports_check_mode=False)
@@ -521,7 +559,8 @@ def main():
 			ip=module.params['ip'], 
 			mask=module.params['mask'], 
 			gateway=module.params['gateway'], 
-			reset=module.params['reset'])
+			reset=module.params['reset'],
+			reset_wait_time=module.params['reset_wait_time'])
 
 		# Run
 		success, msg = bootstrap.run() 
@@ -534,6 +573,8 @@ def main():
 	#	module.fail_json(msg="pexpect.exceptions.{0}: {1}".format(type(e).__name__, e))
 	except RuntimeError as e:
 		module.fail_json(msg="RuntimeError: {}".format(e))
+	except TypeError as e:
+		module.fail_json(msg="TypeError: {}".format(e))
 	except:
 		module.fail_json(msg="Unexpected error: {}".format(sys.exc_info()[0]))
 
@@ -549,6 +590,7 @@ BOOTSTRAP_TEST_IP = '10.1.150.210'
 BOOTSTRAP_TEST_MASK = '255.255.255.0'
 BOOTSTRAP_TEST_GATEWAY = '10.1.150.1'
 BOOTSTRAP_TEST_RESET = False
+BOOTSTRAP_TEST_RESET_WAIT_TIME = 6
 
 def test(terminal=True):
 	# Check that the dependencies are present to avoid an exception in execution
@@ -574,7 +616,7 @@ def test(terminal=True):
 		if terminal == True:
 			print("Enter password for terminal '{}' for username '{}'".format(BOOTSTRAP_TEST_TERMINALIP, BOOTSTRAP_TEST_TERMINALUSERNAME))
 			terminal_password = getpass()
-		print("Enter password for appliance '{}'".format(BOOTSTRAP_TEST_TERMINALIP))
+		print("Enter password for AppResponse appliance '{}'".format(BOOTSTRAP_TEST_HOSTNAME))
 		password = getpass()
 		
 		if terminal == True:
@@ -589,7 +631,8 @@ def test(terminal=True):
 				ip=BOOTSTRAP_TEST_IP, 
 				mask=BOOTSTRAP_TEST_MASK,
 				gateway=BOOTSTRAP_TEST_GATEWAY,
-				reset=BOOTSTRAP_TEST_RESET)
+				reset=BOOTSTRAP_TEST_RESET,
+				reset_wait_time=BOOTSTRAP_TEST_RESET_WAIT_TIME)
 		else:
 			# Initialize connection to appliance
 			bootstrap = BootstrapApp(hostname=BOOTSTRAP_TEST_HOSTNAME,
@@ -599,7 +642,8 @@ def test(terminal=True):
 				ip=BOOTSTRAP_TEST_IP, 
 				mask=BOOTSTRAP_TEST_MASK,
 				gateway=BOOTSTRAP_TEST_GATEWAY,
-				reset=BOOTSTRAP_TEST_RESET)
+				reset=BOOTSTRAP_TEST_RESET,
+				reset_wait_time=BOOTSTRAP_TEST_RESET_WAIT_TIME)
 			
 		# Run
 		success, msg = bootstrap.run() 
