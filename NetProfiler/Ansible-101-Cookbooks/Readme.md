@@ -1,7 +1,7 @@
 # 1. Ansible Netprofiler module - Hostgroup (create, update) from json file
 
-Here is a example of an [ansible module](modules/create_hostgroup_from_json) creating a Hostgroup on the Netprofiler.
-Here is a example of an [ansible module](modules/update_hostgroup_from_json) updating a Hostgroup on the Netprofiler.
+Here is a example of an [ansible module](modules/create_hostgroup_from_json) creating a Hostgroup on the Netprofiler.  
+Here is a example of an [ansible module](modules/update_hostgroup_from_json) updating a Hostgroup on the Netprofiler.  
 
 ## Usage:
 
