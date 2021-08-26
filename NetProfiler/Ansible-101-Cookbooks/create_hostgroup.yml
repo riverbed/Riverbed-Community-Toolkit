@@ -1,0 +1,28 @@
+---
+- name: REST API Netprofiler
+  hosts: localhost
+  connection: local
+  vars:
+    host: "some ip"
+    access_code: "some Oath2 code="
+    json_file: "import.json"
+
+  tasks:
+    - name: Create Hostgroup via REST API
+      block:
+        - name: Create Hostgroup from JSON file
+          create_hostgroup_from_json:
+            host: "{{ host }}"
+            access_code: "{{ access_code }}"
+            json_file: "{{ json_file }}"
+          register: result
+
+      rescue:
+        - name: Update Hostgroup from JSON file
+          update_hostgroup_from_json:
+            host: "{{ host }}"
+            access_code: "{{ access_code }}"
+            json_file: "{{ json_file }}"
+          register: result
+
+    - debug: var=result
