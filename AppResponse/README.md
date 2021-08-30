@@ -10,4 +10,8 @@ The cookbooks [AppResponse Simple Demo](Azure-Cloud-Cookbooks/101-appresponse-si
 
 This [Ansible-101-Playbook](Ansible-101-Playbook) shows how to connect and interact with AppResponse appliances. It is based on the [SteelScript Python Library](https://github.com/riverbed/steelscript).
 
+## Miscelaneous scipts for AppResponse
+
+This [Miscellaneous-Library](Miscellaneous-Scripts) contains examples for various Miscelaneous scripted  workflows accomplished with [Riverbed NPM Solutions](https://www.riverbed.com/solutions/network-performance-monitoring.html).
+
 ## Copyright (c) 2021 Riverbed Technology

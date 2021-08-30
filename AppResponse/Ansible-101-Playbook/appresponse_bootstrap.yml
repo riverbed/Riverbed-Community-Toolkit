@@ -1,0 +1,17 @@
+---
+- name: AppResponse bootstrap
+  hosts: localhost
+  connection: local
+
+  tasks:
+  - name: Bootstrap task
+    appresponse_bootstrap:
+      hostname: "appresponse"
+      username: "admin"
+      password: "admin"
+      dhcp_ip: "10.1.150.115"
+      ip: "10.1.150.210"
+      mask: "255.255.255.0"
+      gateway: "10.1.150.1"
+      reset: false
+      reset_wait_time: 10

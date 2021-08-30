@@ -290,7 +290,6 @@ resource "azurerm_virtual_machine_data_disk_attachment" "attach_scnp_datadisk2" 
   caching            = "ReadWrite"
 }
 
-
 #Create a virtual machine SCFG
 resource "azurerm_virtual_machine" "scfg_virtual_machine" {
     name = var.hostname_scfg_vm
