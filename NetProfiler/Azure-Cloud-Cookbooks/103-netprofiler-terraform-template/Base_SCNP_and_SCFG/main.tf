@@ -263,7 +263,7 @@ resource "azurerm_managed_disk" "scnp_datadisk1" {
   resource_group_name  = azurerm_resource_group.rg.name
   storage_account_type = "StandardSSD_LRS"
   create_option        = "Empty"
-  disk_size_gb         = 250
+  disk_size_gb         = 500
 }
 
 #Shot term cache
@@ -276,6 +276,19 @@ resource "azurerm_managed_disk" "scnp_datadisk2" {
   disk_size_gb         = 250
 }
 
+resource "azurerm_virtual_machine_data_disk_attachment" "attach_scnp_datadisk1" {
+  managed_disk_id    = azurerm_managed_disk.scnp_datadisk1.id
+  virtual_machine_id = azurerm_virtual_machine.scnp_virtual_machine.id
+  lun                = "0"
+  caching            = "ReadWrite"
+}
+
+resource "azurerm_virtual_machine_data_disk_attachment" "attach_scnp_datadisk2" {
+  managed_disk_id    = azurerm_managed_disk.scnp_datadisk2.id
+  virtual_machine_id = azurerm_virtual_machine.scnp_virtual_machine.id
+  lun                = "1"
+  caching            = "ReadWrite"
+}
 
 #Create a virtual machine SCFG
 resource "azurerm_virtual_machine" "scfg_virtual_machine" {
@@ -323,7 +336,7 @@ os_profile_linux_config {
 }
 
 #Buffered Flow Data
-resource "azurerm_managed_disk" "sh_datadisk1" {
+resource "azurerm_managed_disk" "scfg_datadisk1" {
   name                 = "${var.hostname_scfg_vm}-disk1"
   location             = azurerm_resource_group.rg.location
   resource_group_name  = azurerm_resource_group.rg.name
@@ -332,6 +345,12 @@ resource "azurerm_managed_disk" "sh_datadisk1" {
   disk_size_gb         = 250
 }
 
+resource "azurerm_virtual_machine_data_disk_attachment" "attach_scfg_datadisk1" {
+  managed_disk_id    = azurerm_managed_disk.scfg_datadisk1.id
+  virtual_machine_id = azurerm_virtual_machine.scfg_virtual_machine.id
+  lun                = "0"
+  caching            = "ReadWrite"
+}
 
 
 #Create a virtual machine SRV

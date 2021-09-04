@@ -1,0 +1,24 @@
+
+PLAY [REST API Netprofiler] ********************************************************************************************
+
+TASK [Gathering Facts] *************************************************************************************************
+ok: [localhost]
+
+TASK [Create Hostgroup from JSON file] *********************************************************************************
+fatal: [localhost]: FAILED! => {"changed": false, "msg": "EPG hostgroup already exists!", "reason": "409 A host group type named 'ByEPG' already exists"}
+
+TASK [Update Hostgroup from JSON file] *********************************************************************************
+ok: [localhost]
+
+TASK [debug] ***********************************************************************************************************
+ok: [localhost] => {
+    "result": {
+        "changed": false,
+        "failed": false,
+        "output": "Hostgroup ByEPG successfully updated"
+    }
+}
+
+PLAY RECAP *************************************************************************************************************
+localhost                  : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=1    ignored=0   
+
