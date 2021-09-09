@@ -61,7 +61,7 @@ resource "azurerm_public_ip" "scnp_ip" {
     location                     = azurerm_resource_group.rg.location
     resource_group_name          = azurerm_resource_group.rg.name
     allocation_method            = "Dynamic"
-    domain_name_label            = "scnp-npm-lab-ch"
+    domain_name_label            = var.domain_label_scnp
 }
 
 #Create public ip address for SCFG
@@ -70,7 +70,7 @@ resource "azurerm_public_ip" "scfg_ip" {
     location                     = azurerm_resource_group.rg.location
     resource_group_name          = azurerm_resource_group.rg.name
     allocation_method            = "Dynamic"
-    domain_name_label            = "scfg-npm-lab-ch"
+    domain_name_label            = var.domain_label_scfg
 }
 
 #Create public ip address for SRV
@@ -79,7 +79,7 @@ resource "azurerm_public_ip" "srv_ip" {
     location                     = azurerm_resource_group.rg.location
     resource_group_name          = azurerm_resource_group.rg.name
     allocation_method            = "Dynamic"
-    domain_name_label            = "srv-npm-lab-ch"
+    domain_name_label            = var.domain_label_srv
 }
 
 

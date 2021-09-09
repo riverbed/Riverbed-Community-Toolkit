@@ -1,6 +1,19 @@
+#The following variables need to be modified
 subscriptionid="some subscription id"
 resource_group="some resource group name"
+domain_label_scnp ="scnp-mynpm-lab"
+domain_label_scfg ="scfg-mynpm-lab"
+domain_label_srv ="srv-mynpm-lab"
 
+#The supplied password must be between 6-72 characters long and must satisfy at least 3 of password complexity requirements from the following:
+#Contains an uppercase character, Contains a lowercase character, Contains a numeric digit, Contains a special character,
+#Control characters are not allowed
+scnp_password="some secret password"
+scfg_password="some secret password"
+srv_password="some secret password"
+
+
+#The following variables can be kept as-is
 npm_lab_vnet="npm_vnet"
 npm_lab_vnet_range="192.168.0.0/24"
 
@@ -27,8 +40,6 @@ scfg_product_version="latest"
 
 scnp_username="mazu"
 scfg_username="mazu"
-scnp_password="some secret password"
-scfg_password="some secret password"
 
 hostname_srv_vm="SRV-VM"
 srv_publisher="canonical"
@@ -37,4 +48,3 @@ srv_sku="pro-14_04-lts"
 srv_product_version="14.04.20200601"
 srv_product="0001-com-ubuntu-pro-trusty"
 srv_username="srvadmin"
-srv_password="some secret password"
