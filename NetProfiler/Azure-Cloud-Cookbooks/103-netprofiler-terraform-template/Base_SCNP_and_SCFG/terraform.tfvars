@@ -1,6 +1,9 @@
 #The following variables need to be modified
 subscriptionid="some subscription id"
 resource_group="some resource group name"
+domain_label_scnp ="scnp-mynpm-lab"
+domain_label_scfg ="scfg-mynpm-lab"
+domain_label_srv ="srv-mynpm-lab"
 
 #The supplied password must be between 6-72 characters long and must satisfy at least 3 of password complexity requirements from the following:
 #Contains an uppercase character, Contains a lowercase character, Contains a numeric digit, Contains a special character,

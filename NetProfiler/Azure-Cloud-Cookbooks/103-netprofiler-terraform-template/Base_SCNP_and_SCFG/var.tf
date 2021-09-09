@@ -7,6 +7,9 @@ variable resource_group {}
 
 variable npm_lab_vnet {}
 variable npm_lab_vnet_range {}
+variable domain_label_scnp {}
+variable domain_label_scfg {}
+variable domain_label_srv {}
 
 variable scnp_subnet {}
 variable scnp_subnet_range {}
