@@ -48,7 +48,7 @@ Modify the docker-compose file environment variables APIC_URL, APIC_LOGIN and AP
 
 Start the docker-compose file:
 ```
-docker-compose -f docker-compose-final.yml up
+docker-compose -f docker-compose-final.yml up -d
 ```
 Verify that all 3 containers are up adn running:
 ```
