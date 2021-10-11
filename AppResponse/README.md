@@ -14,4 +14,9 @@ This [Ansible-101-Playbook](Ansible-101-Playbook) shows how to connect and inter
 
 This [Miscellaneous-Library](Miscellaneous-Scripts) contains examples for various Miscelaneous scripted  workflows accomplished with [Riverbed NPM Solutions](https://www.riverbed.com/solutions/network-performance-monitoring.html).
 
+## Cisco ACI integration example for AppResponse
+This [Cisco ACI integration](Cisco-ACI_Integration) shows how to connect to Cisco ACI extract the endpoints and load them into AppReponse as hostgroups. Ansible modules used are based on the [SteelScript Python Library](https://github.com/riverbed/steelscript).
+
+
+
 ## Copyright (c) 2021 Riverbed Technology

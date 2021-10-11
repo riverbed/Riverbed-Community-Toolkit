@@ -1,5 +1,5 @@
-# Netprofiler Cisco ACI integration
-The following cookbook contains a description of a workflow on how to add **Netprofiler** Hostgroups based on the endpoints connected to **Cisco ACI**.
+# AppResponse Cisco ACI integration
+The following cookbook contains a description of a workflow on how to add **AppResponse (AR11)** Hostgroups based on the endpoints connected to **Cisco ACI**.
 
 ## Workflow overview
 
@@ -72,11 +72,12 @@ select * from endpoints limit 10;
 exit
 exit
 ```
-Modify the [create-hostgroups.yml](app/create-hostgroups.yml) file with the Netprofiler details:
+Modify the [create-hostgroups.yml](app/create-hostgroups.yml) file with the AppResponse details:
 ```
   vars:
-    host: "Netprofiler ipv4 address"
-    access_code: "Oauth access code"
+    host: "AppResponse ipv4 address"
+    username: "AppResponse username"
+    password: "AppResponse password"
     tenant: "myTenant"
 ```
 Run the ansible-playbook:
