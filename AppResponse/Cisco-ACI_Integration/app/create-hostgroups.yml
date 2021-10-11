@@ -33,11 +33,11 @@
     - debug: var=result
 
     - name: Create Hostgroups from TXT file
-        host_group_upload:
-          host: "{{ host }}"
-          username: "{{ username }}"
-          password: "{{ password }}"
-          hostgroup_file: "{{ json_file }}"
-        register: result
+      host_group_upload:
+        host: "{{ host }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+        hostgroup_file: "{{ json_file }}"
+      register: result
 
     - debug: var=result
