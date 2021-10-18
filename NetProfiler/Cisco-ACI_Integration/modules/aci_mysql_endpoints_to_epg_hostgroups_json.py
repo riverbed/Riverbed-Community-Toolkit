@@ -88,6 +88,7 @@ import json
 import mysql.connector # pip install mysql-connector-python
 import sys
 import fileinput
+import re
 from ansible.module_utils.basic import AnsibleModule
 
 class ACIMysqlEnpointsApp():
@@ -130,15 +131,20 @@ class ACIMysqlEnpointsApp():
     def get_all_endpoints_for_epg(self,_epg,_app):
         mydb = mysql.connector.connect(host=self._mysql_host, user=self._mysql_username, passwd=self._mysql_pass, database=self._mysql_db)
         cursor = mydb.cursor(dictionary=True)
-        sql = "Select distinct ip,app,epg from "+self._mysql_table+" where epg like '"+_epg[0]+"' and app like '"+_app[0]+"' and tenant like '"+self._tenant+"';"
+        sql = "Select distinct ip,app,epg from "+self._mysql_table+" where epg like '"+_epg[0]+"' and app like '"+_app[0]+"' and tenant like '"+self._tenant+"' and ip not like '0.0.0.0';"
         cursor.execute(sql)
         rows = cursor.fetchall()
         my_epg_list = []
         my_epg_line = {}
+        regexp = re.compile('[^0-9a-zA-Z_.-]')
         for line in rows:
-            my_epg_line['name']=line['app']+"_"+line['epg']
-            my_epg_line['cidr']=line['ip']+"/32"
-            my_epg_list.append(my_epg_line.copy())
+            special_char = False
+            if regexp.search(line['app']) or regexp.search(line['epg']):
+                special_char = True
+            if not special_char:
+                my_epg_line['name']=line['app']+"_"+line['epg']
+                my_epg_line['cidr']=line['ip']+"/32"
+                my_epg_list.append(my_epg_line.copy())
         return my_epg_list
 
     def get_all_endpoints_for_epg_ar11(self, _epg, _app):
@@ -146,14 +152,19 @@ class ACIMysqlEnpointsApp():
                                        database=self._mysql_db)
         cursor = mydb.cursor(dictionary=True)
         sql = "Select distinct ip,app,epg from " + self._mysql_table + " where epg like '" + _epg[
-            0] + "' and app like '" + _app[0] + "' and tenant like '" + self._tenant + "';"
+            0] + "' and app like '" + _app[0] + "' and tenant like '" + self._tenant + "' and ip not like '0.0.0.0';"
         cursor.execute(sql)
         rows = cursor.fetchall()
         my_epg_list = []
+        special_char = False
+        regexp = re.compile('[^0-9a-zA-Z_.-]')
         if rows:
-            my_epg_list.append(rows[0]['app'] + "_" + rows[0]['epg'])
-            for line in rows:
-                my_epg_list.append(line['ip'])
+            if regexp.search(rows[0]['app']) or regexp.search(rows[0]['epg']):
+                special_char = True
+            if not special_char:
+                my_epg_list.append(rows[0]['app'] + "_" + rows[0]['epg'])
+                for line in rows:
+                    my_epg_list.append(line['ip'])
         return my_epg_list
 
     def add_json_file(self,_all_endpoints):
