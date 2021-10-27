@@ -18,7 +18,7 @@ services:
         ipv4_address: 172.18.0.2
  
   mysql:
-    image: mysql:latest
+    image: mysql:8.0
     container_name: mysql_db
     environment:
       - MYSQL_ROOT_HOST=%
@@ -28,7 +28,7 @@ services:
         ipv4_address: 172.18.0.3
     
   ansible:
-    image: m_ansible:aci
+    image: m_ansible:ar11
     container_name: ansible
     command: "sleep infinity"
     volumes:

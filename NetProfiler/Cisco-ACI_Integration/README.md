@@ -32,7 +32,7 @@ MariaDB [endpointtracker]> desc endpoints;
 
 Before starting the [docker-compose](docker-compose-final.yml) file the custom Ansible container needs to be build with the following [docker-file](dockerfile-ansible).
 ```
-docker build -t m_ansible:aci -f dockerfile-ansible .
+docker build -t m_ansible:netprofiler -f dockerfile-ansible .
 ```
 Verify that the container image is existing:
 ```
@@ -58,9 +58,10 @@ c44e76fe01c9   dockercisco/acitoolkit   "sleep infinity"         32 seconds ago 
 008a14bc3c98   m_ansible:aci            "sleep infinity"         32 seconds ago   Up 31 seconds                         ansible
 dc237249a07a   mysql:latest             "docker-entrypoint.s…"   32 seconds ago   Up 31 seconds   3306/tcp, 33060/tcp   mysql_db
 ```
-Connect to the acitoolkit container and execute the python script that gets the endpoint information and writes it back to the MySQL database:
+Connect to the acitoolkit container and install the [mysql-connector](https://pypi.org/project/mysql-connector-python/) package for remote database connection and execute the python script that gets the endpoint information and writes it back to the MySQL database:
 ```
 docker exec -ti acitoolkit /bin/bash
+apt-get update && apt-get install -y python-pip && pip install mysql-connector-python==8.0.21
 cd applications/endpointtracker/
 python aci-endpoint-tracker.py
 ```
