@@ -1,0 +1,63 @@
+
+PLAY [Import Hostgroup ByLocation from Netprofiler and Import into NetIM] **********************************************
+
+TASK [Gathering Facts] *************************************************************************************************
+ok: [localhost]
+
+TASK [Create IP subnet to Group mappings txt file] *********************************************************************
+changed: [localhost]
+
+TASK [Display file creation result] ************************************************************************************
+ok: [localhost] => {
+    "results": {
+        "changed": true,
+        "failed": false,
+        "output": "IP_Subnet_to_Group_Mapping file append.txt Created!"
+    }
+}
+
+TASK [copy file to location] *******************************************************************************************
+changed: [localhost]
+
+TASK [Display file copy result] ****************************************************************************************
+ok: [localhost] => {
+    "result": {
+        "changed": true,
+        "cmd": "sshpass -p secretpass scp -o StrictHostKeyChecking=no append.txt netimadmin@10.10.10.10:/tmp",
+        "delta": "0:00:01.738026",
+        "end": "2021-11-09 16:54:37.625386",
+        "failed": false,
+        "rc": 0,
+        "start": "2021-11-09 16:54:35.887360",
+        "stderr": "Warning: Permanently added '10.10.10.10' (ECDSA) to the list of known hosts.",
+        "stderr_lines": [
+            "Warning: Permanently added '10.10.10.10' (ECDSA) to the list of known hosts."
+        ],
+        "stdout": "",
+        "stdout_lines": []
+    }
+}
+
+TASK [append result to IP_Subnet_to_group_mapping.tx] ******************************************************************
+changed: [localhost]
+
+TASK [Display file paste result] ***************************************************************************************
+ok: [localhost] => {
+    "result": {
+        "changed": true,
+        "cmd": "sshpass -p secretpass ssh netimadmin@10.10.10.10 -o StrictHostKeyChecking=no \"bash; cd /data1/riverbed/NetIM/2.*/lib/xml/res; cat /tmp/append.txt >> IP_Subnet_to_Group_Mapping.txt\"",
+        "delta": "0:00:01.429750",
+        "end": "2021-11-09 16:54:39.268309",
+        "failed": false,
+        "rc": 0,
+        "start": "2021-11-09 16:54:37.838559",
+        "stderr": "",
+        "stderr_lines": [],
+        "stdout": "",
+        "stdout_lines": []
+    }
+}
+
+PLAY RECAP *************************************************************************************************************
+localhost                  : ok=7    changed=3    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
