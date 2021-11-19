@@ -3,14 +3,12 @@
 Dedicated to the Aternity Community, this repo contains technical contributions that help customers, partners and engineers to customize and leverage Aternity DEM products.
 For example: custom scripts, custom synthetic test, cookbooks, howtos and more.
 
-To use the following you need to 
+To use the contents you will need active licenses of the products. Please go https://www.aternity.com/ for Product Downloads, Documentations, Trainings and Support.
 
 
 | ID | Description | DEM | Tags | 
 | --- | --- | --- | --- |
-| 101 | Quickstart to instrument a dotnet and dig into the app internals | Aternity APM | dotnet, C#, PowerShell |
-
-
+| 101 | Quickstart to instrument a dotnet and dig into the app internals on a windows server | Aternity APM | dotnet, C#, PowerShell, Windows Server 2019 |
 
 
 
