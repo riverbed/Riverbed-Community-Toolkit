@@ -5,7 +5,7 @@ This is a cookbook for a simple setup with [Aternity APM](https://www.aternity.c
 ## Prerequisites
 
 1. an Aternity APM account
-2. a Windows Server virtual machine ready to use, for example an instance in the Cloud (AWS, Azure,...)
+2. a Windows Server virtual machine ready to use, for example a Windows Server 2019 instance in the Cloud (AWS, Azure,...)
 3. *optionaly* a fileshare accessible from your server, for example a storage account or S3 bucket.
 
 ## Step by Step
