@@ -20,7 +20,7 @@ This is a cookbook for a simple setup with Aternity APM to instrument a dotnet w
 
 Links: https://dotnet.microsoft.com/download/dotnet/3.1
 
-### Grab the script and set variable
+### Grab the script and set the variables
 
 1. Start a fresh Windows Server, for example an instance in the Cloud (AWS, Azure,...)
 
