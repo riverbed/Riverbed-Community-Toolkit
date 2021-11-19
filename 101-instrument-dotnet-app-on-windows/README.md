@@ -20,9 +20,9 @@ This is a cookbook for a simple setup with [Aternity APM](https://www.aternity.c
 
 Links: https://dotnet.microsoft.com/download/dotnet/3.1
 
-### Grab the script and set the variables
+### Grab the Setup script and configure the variables before running it
 
-1. Start a fresh Windows Server, for example an instance in the Cloud (AWS, Azure,...)
+1. Start a fresh Windows Server
 
 2. Run a PowerShell as admin to run the script [Setup.ps1](Setup.ps1)
 
