@@ -1,5 +1,7 @@
 # 101-instrument-dotnet-app-on-windows
 
+This is a cookbook for a simple setup with Aternity APM to instrument a dotnet web application on a windows server.
+
 ## Prerequisites
 
 1. an Aternity APM account
@@ -10,8 +12,8 @@
 
 ### Go to Aternity APM webconsole (in Aternity APM > Agents > Install Agents)
 
-1. Find your **CustomerID**, for example 12341234-12341234-13241234
-2. Grab **SaaS Analysis Server Host**, for agents.apm.myaccount.aternity.com
+1. Find your **CustomerID**, for example *12341234-12341234-13241234*
+2. Grab **SaaS Analysis Server Host**, for *agents.apm.myaccount.aternity.com*
 3. Download the Windows Latest Agent installer and store in your favorite storage, for example in an S3 bucket (AWS).
 
 ### Download the installer for dotnet SDK
