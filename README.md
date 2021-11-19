@@ -8,7 +8,7 @@ Please visit https://www.aternity.com/ for Product Downloads, Documentations, Tr
 
 | ID | Description | DEM | Tags | 
 | --- | --- | --- | --- |
-| 101 | Quickstart to instrument a dotnet and dig into the app internals on a windows server | Aternity APM | dotnet, C#, PowerShell, Windows Server 2019 |
+| 101 | Quickstart to instrument a dotnet app and dig into the app internals on a windows server | Aternity APM | dotnet, C#, PowerShell, Windows Server 2019 |
 
 
 
