@@ -18,6 +18,8 @@ This is a cookbook for a simple setup with Aternity APM to instrument a dotnet w
 
 ### Download the installer for dotnet SDK
 
+Links: https://dotnet.microsoft.com/download/dotnet/3.1
+
 ### Grab the script and set variable
 
 1. Start a fresh Windows Server, for example an instance in the Cloud (AWS, Azure,...)
