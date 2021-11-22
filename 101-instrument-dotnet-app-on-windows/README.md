@@ -10,7 +10,9 @@ This is a cookbook for a simple setup to instrument a dotnet web application on 
 
 ## Step by Step
 
-### Go to Aternity APM webconsole (in Aternity APM > Agents > Install Agents)
+### Connect to Aternity APM webconsole
+
+Navigate to Aternity APM > Agents > Install Agents:
 
 1. Find your **CustomerID**, for example *12341234-12341234-13241234*
 2. Grab **SaaS Analysis Server Host**, for *agents.apm.myaccount.aternity.com*
