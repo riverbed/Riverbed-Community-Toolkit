@@ -3,7 +3,7 @@
 Dedicated to the Aternity Community, this repo contains technical contributions that help customers, partners and engineers to customize and leverage Aternity DEM products.
 For example: custom scripts, custom synthetic test, cookbooks, howtos and more.
 
-Please visit https://www.aternity.com/ for Product Downloads, Trials, Documentations, Trainings and Support. To use the contents you will need active licenses of the Aternity DEM products. 
+Please visit https://www.aternity.com/ for Product Downloads, [Free Trials](https://www.aternity.com/free-trial/), Documentations, Trainings and Support. To use the contents you will need active licenses of the Aternity DEM products. 
 
 ## Content
 
