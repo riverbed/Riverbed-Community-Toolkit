@@ -6,7 +6,7 @@ This is a cookbook for a simple setup to instrument a dotnet web application on 
 
 1. an Aternity APM account
 2. a Windows Server virtual machine ready to use, for example a Windows Server 2019 instance in the Cloud (AWS, Azure,...)
-3. *optionaly* a fileshare accessible from your server, for example a storage account or S3 bucket.
+3. *optionally* a fileshare accessible from your server, for example a storage account or S3 bucket.
 
 ## Step by Step
 
@@ -34,10 +34,14 @@ Store the installer package in your favorite storage, for example in a Storage A
 1. Start a fresh Windows Server
 2. Run a PowerShell as admin to run the script [Setup.ps1](Setup.ps1)
 
-You will need to adapt the script [Setup.ps1](Setup.ps1) before using it:
+You will need to adapt the script [Setup.ps1](Setup.ps1) before running it on the Windows Server machine:
 
 - Replace {{my-S3-BUCKET}} with the storage url to fetch packages
 - Replace {{my-CustomerId}} and {{my-SaaSAnalysisServerHost}} with your Aternity APM informations
+
+## It is ready! 
+
+You can now start instrumenting the app. Please visit (Aternity)[https://www.aternity.com/] if your need Support or Training.
 
 #### License
 Copyright (c) 2021 Aternity. The contents provided here are licensed under the terms and conditions of the MIT License accompanying the software ("License"). The scripts are distributed "AS IS" as set forth in the License. The script also include certain third party code. All such third party code is also distributed "AS IS" and is licensed by the respective copyright holders under the applicable terms and conditions (including, without limitation, warranty and liability disclaimers) identified in the license notices accompanying the software.
