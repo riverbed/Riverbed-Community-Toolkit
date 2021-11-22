@@ -1,6 +1,6 @@
 # 101-instrument-dotnet-app-on-windows
 
-This is a cookbook for a simple setup with [Aternity APM](https://www.aternity.com/application-performance-monitoring/) to instrument a dotnet web application on a windows server.
+This is a cookbook for a simple setup to instrument a dotnet web application on a Windows Server with [Aternity APM](https://www.aternity.com/application-performance-monitoring/).
 
 ## Prerequisites
 
@@ -14,20 +14,27 @@ This is a cookbook for a simple setup with [Aternity APM](https://www.aternity.c
 
 1. Find your **CustomerID**, for example *12341234-12341234-13241234*
 2. Grab **SaaS Analysis Server Host**, for *agents.apm.myaccount.aternity.com*
-3. Download the **Windows Latest Agent** installer and store in your favorite storage, for example in an S3 bucket (AWS).
+3. Download the **Windows Latest Agent** installer 
 
 ### Download the installer for dotnet SDK
 
-Links: https://dotnet.microsoft.com/download/dotnet/3.1
+Go to https://dotnet.microsoft.com/download/dotnet/3.1 to download the latest.
+
+### Store the installers into your storage url
+
+Store the installer package in your favorite storage, for example in a Storage Account container (Azure) or S3 bucket (AWS). Then, grab the URLs to be used in the next step.
+
+1. Aternity APM Windows Latest Agent
+2. dotnet SDK installer
 
 ### Grab the Setup script and configure the variables before running it
 
 1. Start a fresh Windows Server
-
 2. Run a PowerShell as admin to run the script [Setup.ps1](Setup.ps1)
 
-You will need to adapt the script:
-- Replace {{my-S3-BUCKET}} with your storage url
+You will need to adapt the script [Setup.ps1](Setup.ps1) before using it:
+
+- Replace {{my-S3-BUCKET}} with the storage url to fetch packages
 - Replace {{my-CustomerId}} and {{my-SaaSAnalysisServerHost}} with your Aternity APM informations
 
 #### License
