@@ -1,6 +1,6 @@
 # 101-instrument-dotnet-app-on-windows
 
-To start instrumenting with [Aternity APM](https://www.aternity.com/application-performance-monitoring/), this cookbook help to setup a simple dotnet web application on a Windows Server with Aternity APM agent.
+This cookbook helps to setup a simple dotnet web application on a Windows Server with the Aternity APM agent, to start practicing the Digital Experience Monitoring (DEM) with [Aternity APM](https://www.aternity.com/application-performance-monitoring/).
 
 ## Prerequisites
 
