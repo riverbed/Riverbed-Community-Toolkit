@@ -20,7 +20,7 @@ Navigate to Aternity APM > Agents > Install Agents:
 
 ### Download the installer for dotnet SDK
 
-Go to https://dotnet.microsoft.com/download/dotnet/3.1 to download the latest.
+Go to https://dotnet.microsoft.com/download/dotnet/3.1 to download the latest installer for Windows.
 
 ### Store the installers into your storage url
 
