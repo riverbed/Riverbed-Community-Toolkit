@@ -15,7 +15,7 @@ This cookbook helps to setup a simple dotnet web application on a Windows Server
 Navigate to Aternity APM > Agents > Install Agents:
 
 1. Find your **CustomerID**, for example *12341234-12341234-13241234*
-2. Grab **SaaS Analysis Server Host**, for *agents.apm.myaccount.aternity.com*
+2. Grab **SaaS Analysis Server Host**, for example *agents.apm.myaccount.aternity.com*
 3. Download the **Windows Latest Agent** installer 
 
 ### Download the installer for dotnet SDK
