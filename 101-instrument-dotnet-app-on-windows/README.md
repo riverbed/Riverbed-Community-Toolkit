@@ -16,11 +16,11 @@ Navigate to Aternity APM > Agents > Install Agents:
 
 1. Find your **CustomerID**, for example *12341234-12341234-13241234*
 2. Grab **SaaS Analysis Server Host**, for example *agents.apm.myaccount.aternity.com*
-3. Download the **Windows Latest Agent** installer 
+3. Download the **Windows Latest Agent** installer, for example *AppInternals_Agent_12.1.0.597_Win.exe*
 
 ### Download the installer for dotnet SDK
 
-Go to https://dotnet.microsoft.com/download/dotnet/3.1 to download the latest installer for Windows.
+Go to https://dotnet.microsoft.com/download/dotnet/3.1 to download the latest installer for Windows, for example *dotnet-sdk-3.1.415-win-x64.exe*
 
 ### Store the installers into your storage
 
