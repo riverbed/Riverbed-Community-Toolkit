@@ -22,7 +22,7 @@ Navigate to Aternity APM > Agents > Install Agents:
 
 Go to https://dotnet.microsoft.com/download/dotnet/3.1 to download the latest installer for Windows.
 
-### Store the installers into your storage url
+### Store the installers into your storage
 
 Store the installer package in your favorite storage, for example in a Storage Account container (Azure) or S3 bucket (AWS). Then, grab the URLs to be used in the next step.
 
