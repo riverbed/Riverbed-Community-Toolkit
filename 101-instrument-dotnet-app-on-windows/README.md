@@ -32,12 +32,8 @@ Store the installer package in your favorite storage, for example in a Storage A
 ### Grab the Setup script and configure the variables before running it
 
 1. Start a fresh Windows Server
-2. Run a PowerShell as admin to run the script [Setup.ps1](Setup.ps1)
-
-You will need to adapt the script [Setup.ps1](Setup.ps1) before running it on the Windows Server machine:
-
-- Replace {{my-S3-BUCKET}} with the storage url to fetch packages
-- Replace {{my-CustomerId}} and {{my-SaaSAnalysisServerHost}} with your Aternity APM informations
+2. Fetch the script [Setup.ps1](Setup.ps1) and configure variables (replace *{{my-S3-BUCKET}}* with the storage url to fetch packages, *{{my-CustomerId}}* and *{{my-SaaSAnalysisServerHost}}* with your Aternity APM informations)
+3. Execute the script with PowerShell (run as admin)
 
 ## It is ready! 
 
