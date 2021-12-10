@@ -1,0 +1,290 @@
+---
+- name: NSG flow export Azure deployment
+  hosts: localhost
+  connection: local
+  vars:
+    networkwatcher_region: "some region name"         #ex. westeurope
+    resource_group: "some resource group name"        #Resource group to monitor (export flows from)
+    nsg_flow_log_name: "NSGflowlogs"                  #Name of the NSG flow log file
+    nsg_to_monitor: "some nsg name"                   #nsg from which to export flow (nsg must be part of the resource group)
+    service_plan_name: "MyServicePlan"                #Service plan name
+    function_app_name: "nsgflowexport"                #Function app name
+    function_app_zip: "NSG_Flow_Exporter.zip"         #Full path of NGSexporter.zip file
+    flow_gateway_ip: "some flowgateway ipv4"          #Flow Gateway ip address (public one for Azure)
+    flow_gateway_port: "2055"                         #default netflow port to Flow gateway is 2055
+    vnet_integration_vnet_name: "flow_net"
+    vnet_net: "192.168.25.0/24"                       #not used net + subnet
+    vnet_subnet: "192.168.25.0/24"
+
+  tasks:
+    - name: NetworkWatcher validation
+      block:
+      - name: Check if NetworkWatcher is enable for provided region
+        shell:
+          cmd: az network watcher list --query "[].[location]" | grep "{{ networkwatcher_region }}"
+        register: result
+        args:
+          executable: /bin/bash
+      - debug: var=result.stdout
+
+      rescue:
+      - name: Enable NetworkWatcher if not enabled for provided region
+        shell:
+          cmd: az network watcher configure -g NetworkWatcherRG -l "{{ networkwatcher_region }}" --enabled
+        args:
+          executable: /bin/bash
+
+    - name: Microsoft Insight validation
+      shell:
+        cmd: az provider list -o table | grep insight | awk '{print $3}'
+      args:
+        executable: /bin/bash
+      register: result
+
+    - name: Register Insight if unregistered
+      when: result.stdout == 'NotRegistered'
+      shell:
+        cmd: az provider register --namespace 'microsoft.insights'
+      args:
+        executable: /bin/bash
+
+    - name: Generate Random ID
+      shell:
+        cmd: cat /dev/urandom | tr -dc 'a-z0-9' | fold -w 6 | head -n 1
+      args:
+        executable: /bin/bash
+      register: storage_result
+
+    - name: Create Storage account
+      vars:
+        storage_id: "{{ storage_result.stdout }}"
+      shell:
+        cmd: >
+          az storage account create -n nsgflowstorage"{{ storage_id }}"
+          -g "{{ resource_group }}"
+          --kind StorageV2
+          -l "{{ networkwatcher_region }}"
+          --hns false
+      args:
+        executable: /bin/bash
+
+    - name: Create NSG flow log
+      vars:
+        storage_id: "{{ storage_result.stdout }}"
+      shell:
+        cmd: >
+          az network watcher flow-log create
+          -l "{{ networkwatcher_region }}"
+          -g "{{ resource_group }}"
+          --name "{{ nsg_flow_log_name }}"
+          --nsg "{{ nsg_to_monitor }}"
+          --storage-account nsgflowstorage"{{ storage_id }}"
+          --log-version 2
+          --retention 1
+      args:
+        executable: /bin/bash
+
+    - name: Create Service Plan
+      shell:
+        cmd: >
+          az appservice plan create
+          -g "{{ resource_group }}"
+          -n "{{ service_plan_name }}"
+          -l "{{ networkwatcher_region }}"
+          --is-linux
+          --sku P1V2
+      args:
+        executable: /bin/bash
+
+    - name: Create Storage account for Function APP
+      vars:
+        storage_id: "{{ storage_result.stdout }}"
+      shell:
+        cmd: >
+          az storage account create
+          -n functionappstorage"{{ storage_id }}"
+          -g "{{ resource_group }}"
+          --kind StorageV2
+          -l "{{ networkwatcher_region }}"
+          --hns false
+      args:
+        executable: /bin/bash
+
+    - name: Create function APP
+      vars:
+        storage_id: "{{ storage_result.stdout }}"
+      shell:
+        cmd: >
+          az functionapp create
+          -g "{{ resource_group }}"
+          --plan "{{ service_plan_name }}"
+          -n "{{ function_app_name }}""{{ storage_id }}"
+          -s functionappstorage"{{ storage_id }}"
+          --runtime dotnet
+          --os-type linux
+          --functions-version 3
+      args:
+        executable: /bin/bash
+
+    - name: Get NSG flow logs storage account connection string
+      vars:
+        storage_id: "{{ storage_result.stdout }}"
+      shell:
+        cmd: >
+          az storage account show-connection-string
+          --name nsgflowstorage"{{ storage_id }}"
+          --resource-group "{{ resource_group }}"
+          -o table | head -3 | tail -1
+      args:
+        executable: /bin/bash
+      register: access_key
+
+    - name: Wait until Function APP is created completely
+      pause:
+        minutes: 2
+
+    - name: Deploy the function APP (upload code)
+      vars:
+        storage_id: "{{ storage_result.stdout }}"
+        ansible_command_timeout: 30
+      shell:
+        cmd: >
+          az functionapp deployment source config-zip
+          -g "{{ resource_group }}"
+          -n "{{ function_app_name }}""{{ storage_id }}"
+          --src "{{ function_app_zip }}"
+      args:
+        executable: /bin/bash
+      environment:
+        SCM_DO_BUILD_DURING_DEPLOYMENT: true
+        ENABLE_ORYX_BUILD: true
+      register: function_result
+      retries: 3
+      delay: 10
+      until: function_result.stdout | length > 0
+
+    - name: Set Flowgateway destination IP
+      vars:
+        storage_id: "{{ storage_result.stdout }}"
+      shell:
+        cmd: >
+          az functionapp config appsettings set
+          --name "{{ function_app_name }}""{{ storage_id }}"
+          --resource-group "{{ resource_group }}"
+          --settings "DESTINATION_IP=""{{ flow_gateway_ip }}"
+      args:
+        executable: /bin/bash
+
+    - name: Set Flowgateway PORT
+      vars:
+        storage_id: "{{ storage_result.stdout }}"
+      shell:
+        cmd: >
+          az functionapp config appsettings set
+          --name "{{ function_app_name }}""{{ storage_id }}"
+          --resource-group "{{ resource_group }}"
+          --settings "DESTINATION_PORT=""{{ flow_gateway_port }}"
+      args:
+        executable: /bin/bash
+
+    - name: Set NSG connection string
+      vars:
+        storage_id: "{{ storage_result.stdout }}"
+        conn_str: "{{ access_key.stdout }}"
+      shell:
+        cmd: >
+          az functionapp config appsettings set
+          --name "{{ function_app_name }}""{{ storage_id }}"
+          --resource-group "{{ resource_group }}"
+          --settings "NSG_FLOWLOG_CONN_STR=""{{ conn_str }}"
+      args:
+        executable: /bin/bash
+
+    - name: Create VNET for Function APP integration
+      shell:
+        cmd: >
+          az network vnet create
+          -g "{{ resource_group }}"
+          -n "{{ vnet_integration_vnet_name }}"
+          --address-prefix "{{ vnet_net }}"
+          --subnet-name flow_subnet
+          --subnet-prefix "{{ vnet_subnet }}"
+      args:
+        executable: /bin/bash
+
+    - name: Add Vnet to Function APP
+      vars:
+        storage_id: "{{ storage_result.stdout }}"
+      shell:
+        cmd: >
+          az functionapp vnet-integration add
+          -g "{{ resource_group }}"
+          -n "{{ function_app_name }}""{{ storage_id }}"
+          --vnet "{{ vnet_integration_vnet_name }}"
+          --subnet flow_subnet
+      args:
+        executable: /bin/bash
+
+    - name: Create Public ip address for NAT gateway
+      shell:
+        cmd: >
+          az network public-ip create
+          -g "{{ resource_group }}"
+          -n Outbound-IP
+          --allocation-method static
+          --sku standard
+      args:
+        executable: /bin/bash
+
+    - name: Create NAT Gateway
+      shell:
+        cmd: >
+          az network nat gateway create
+          --resource-group "{{ resource_group }}"
+          --name myNatGateway
+          --location "{{ networkwatcher_region }}"
+          --public-ip-addresses Outbound-IP
+          --idle-timeout 4
+      args:
+        executable: /bin/bash
+
+    - name: Update NAT gateway
+      shell:
+        cmd: >
+          az network vnet subnet update
+          --resource-group "{{ resource_group }}"
+          --vnet-name "{{ vnet_integration_vnet_name }}"
+          --name flow_subnet
+          --nat-gateway myNatGateway
+      args:
+        executable: /bin/bash
+
+    - name: Set Function APP route all parameter
+      vars:
+        storage_id: "{{ storage_result.stdout }}"
+      shell:
+        cmd: >
+          az functionapp config appsettings set
+          --name "{{ function_app_name }}""{{ storage_id }}"
+          --resource-group "{{ resource_group }}"
+          --settings "WEBSITE_VNET_ROUTE_ALL=1"
+      args:
+        executable: /bin/bash
+
+    - name: Restart the Function APP
+      vars:
+        storage_id: "{{ storage_result.stdout }}"
+      shell:
+        cmd: >
+          az functionapp restart
+          --name "{{ function_app_name }}""{{ storage_id }}"
+          --resource-group "{{ resource_group }}"
+      args:
+        executable: /bin/bash
+
+    - debug:
+        msg:
+          - "Run the following command when upload failed:"
+          - "az functionapp deployment source config-zip -g {{ resource_group }} -n {{ function_app_name }}{{ storage_result.stdout }} --src {{ function_app_zip }}"
+          - "Todo!!! Create the service principal for the polling of the Netprofiler"
+
