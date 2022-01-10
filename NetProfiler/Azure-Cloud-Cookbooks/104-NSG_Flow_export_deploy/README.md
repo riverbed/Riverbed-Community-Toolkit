@@ -49,11 +49,11 @@ root@2db982bf41ce:/app# vi NSG.yml
 
 ### Step 7 - Run the Ansible playbook
 ```
-root@2db982bf41ce:/app# ansible-playbook -T 20 NSG.flow
+root@2db982bf41ce:/app# ansible-playbook -T 20 NSG.yml
 ```
 or run verbose
 ```
-root@2db982bf41ce:/app# ansible-playbook -vvv -T 20 NSG.flow
+root@2db982bf41ce:/app# ansible-playbook -vvv -T 20 NSG.yml
 ```
 
 ### Step 8 - Verify that the function app is uploaded correctly
