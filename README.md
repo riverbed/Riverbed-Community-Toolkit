@@ -10,6 +10,7 @@ Please visit [Aternity](https://www.aternity.com) for Solutions resources, [Free
 | ID | Description | DEM | Tags | Last update |
 | --- | --- | --- | --- | --- | 
 | [101](101-instrument-dotnet-app-on-windows) | Quickstart to instrument a dotnet app on a windows server with Aternity APM | [Aternity APM](https://www.aternity.com/application-performance-monitoring/) | dotnet, WebApp, C#, PowerShell, Windows Server 2019 | nov. 2021 |
+| [102](102-instrument-spring-petclinic-microservices) | Quickstart Zipkin distributed tracing of a Java microservices app, sending data to the Aternity APM webconsole | [Aternity APM](https://www.aternity.com/application-performance-monitoring/) | Java, WebApp, Microservices, Docker | jan. 2022 |
 
 Contributions can be submitted via  [Issues](https://github.com/Aternity/Tech-Community/issues) and [Pull Request](https://github.com/Aternity/Tech-Community/pulls).
 
