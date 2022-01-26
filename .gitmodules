@@ -1,3 +1,4 @@
 [submodule "102-opentelemetry-spring-demo-app/spring-petclinic-ms"]
 	path = 102-opentelemetry-spring-demo-app/spring-petclinic-ms
 	url = https://github.com/spring-petclinic/spring-petclinic-microservices
+
