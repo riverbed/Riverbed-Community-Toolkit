@@ -26,7 +26,7 @@ For example using git from a shell:
 git clone https://github.com/Aternity/Tech-Community.git
 ```
 
-Or download the zip archive of the [Aternity Tech-Community repository](https://github.com/Aternity/Tech-Community) from GitHub.
+Or download the zip archive of the [Aternity Tech-Community repository](https://github.com/Aternity/Tech-Community) from GitHub (Code button > Download ZIP).
 
 ### Configure the Aternity OpenTelemetry Collector with your CustomerID & SaaS Analysis Server Host
 
