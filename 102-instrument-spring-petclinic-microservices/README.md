@@ -1,6 +1,6 @@
 # 102-instrument-spring-petclinic-microservices
 
-This cookbook helps to setup a simple Java microservices application on a Docker host with the Aternity APM collector, to start practicing Digital Experience Monitoring (DEM) with [Aternity APM](https://www.aternity.com/application-performance-monitoring/).
+This cookbook helps to setup a simple Java microservices application on a Docker host with the [Aternity APM collector](https://hub.docker.com/r/aternity/apm-collector), to start practicing Digital Experience Monitoring (DEM) with [Aternity APM](https://www.aternity.com/application-performance-monitoring/).
 
 ## Prerequisites
 
