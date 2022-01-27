@@ -20,7 +20,7 @@ Navigate to Aternity APM (for example [https://apm.myaccount.aternity.com](https
 
 ### Configure the Aternity OpenTelemetry Collector with your CustomerID & SaaS Analysis Server Host
 
-Download a local copy of the file [docker-compose.yml](docker-compose.yml), for example in a folder `Tech-Community/102-opentelemetry-spring-demo-app`
+Download a local copy of the file [docker-compose.yml](docker-compose.yml), for example in the directory `Tech-Community/102-opentelemetry-spring-demo-app`
 
 Edit the YAML file docker-compose.yml and in the *tracing-server* section, replace the following tokens with the information from step [1] and save:
 1. `${ATERNITY_CUSTOMER_ID}`
