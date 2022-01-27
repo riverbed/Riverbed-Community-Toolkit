@@ -46,13 +46,19 @@ docker-compose up
 
 Browse http://localhost:8080 and click around to generate some telemetry that will be collected by the Aternity APM OpenTelemetry Collector
 
-### Go to Aternity APM webconsole to visualize and analyze the traces collected for every transactions
+### Open the Aternity APM webconsole to visualize and analyze the traces collected for every transactions
 
 The [Aternity APM OpenTelemetry Collector](https://hub.docker.com/r/aternity/apm-collector) keeps 100% of the traces to provide full fidelity analysis. There is no data sampling.
 
 Please visit [Aternity](https://www.aternity.com/) if your need Support or Training.
 
-### Stop the application
+#### FAQ
+
+- How to stop the containers of the app?
+
+Press CTRL + C in the shell where it is running.
+
+Or in a shell, go to the folder where you keep the [docker-compose.yml](docker-compose.yml) and run:
 
 ```shell
 docker-compose down
