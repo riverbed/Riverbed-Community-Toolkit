@@ -2,10 +2,16 @@
 # 102-opentelemetry-spring-demo-app
 # version: 22.1.27
 #
+# Define the containers of the Spring PetClinic Microservices application using Aternity APM OpenTelemetry Collector for the tracing-server
+# Reference:
+# * https://github.com/spring-petclinic/spring-petclinic-microservices/blob/master/docker-compose.yml
+# * https://hub.docker.com/r/aternity/apm-collector
+# * https://www.aternity.com/application-performance-monitoring
+#
 # Usage:
 #   docker-compose up
 # 
-# Example PowerShell
+# Example in PowerShell
 #   $env:ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
 #   $env:ATERNITY_CUSTOMER_ID="12341234-12341234-13241234"
 #   docker-compose up
