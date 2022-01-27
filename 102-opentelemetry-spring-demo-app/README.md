@@ -36,7 +36,7 @@ Go into the folder where you keep the [docker-compose.yml](docker-compose.yml) f
 cd Tech-Community/102-opentelemetry-spring-demo-app
 ```
 
-Sart the containers:
+Start the containers:
 
 ```shell
 docker-compose up
