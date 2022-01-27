@@ -1,6 +1,6 @@
 # 102-opentelemetry-spring-demo-app
 
-This cookbook helps to setup Java microservices application on a Docker host with the [Aternity APM OpenTelemetry collector container](https://hub.docker.com/r/aternity/apm-collector), to start practicing Digital Experience Monitoring (DEM) with [Aternity APM](https://www.aternity.com/application-performance-monitoring/) and [OpenTelemetry](https://opentelemetry.io/).
+This cookbook helps to setup Java microservices application with the [Aternity APM OpenTelemetry collector container](https://hub.docker.com/r/aternity/apm-collector) on a Docker host, to start practicing Digital Experience Monitoring (DEM) with [Aternity APM](https://www.aternity.com/application-performance-monitoring/) and [OpenTelemetry](https://opentelemetry.io/).
 
 The sample app is a famous Java Community application called [Spring PetClinic](https://github.com/spring-petclinic). It is using [ZipKin](https://zipkin.io/) instrumentation and libraries.
 
@@ -44,11 +44,11 @@ docker-compose up
 
 ### Exercise the application
 
-Go to http://localhost:8080 and click around to generate some telemetry.
+Browse http://localhost:8080 and click around to generate some telemetry that will be collected by the Aternity APM OpenTelemetry Collector
 
 ### Go to Aternity APM webconsole to visualize and analyze the traces collected for every transactions
 
-The Aternity APM OpenTelemetry Collector keeps 100% of the traces.
+The [Aternity APM OpenTelemetry Collector](https://hub.docker.com/r/aternity/apm-collector) keeps 100% of the traces to provide full fidelity analysis. There is no data sampling.
 
 Please visit [Aternity](https://www.aternity.com/) if your need Support or Training.
 
