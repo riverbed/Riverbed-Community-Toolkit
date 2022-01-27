@@ -2,7 +2,7 @@
 
 This cookbook helps to setup Java microservices application with the [Aternity APM OpenTelemetry collector container](https://hub.docker.com/r/aternity/apm-collector) on a Docker host, to start practicing Digital Experience Monitoring (DEM) with [Aternity APM](https://www.aternity.com/application-performance-monitoring/) and [OpenTelemetry](https://opentelemetry.io/).
 
-The sample app is the famous Java Community application called [Spring PetClinic Microservices](https://github.com/spring-petclinic/spring-petclinic-microservices). It uses [ZipKin](https://zipkin.io/) instrumentation and libraries.
+The sample app is the famous Java Community application called [Spring PetClinic Microservices](https://github.com/spring-petclinic/spring-petclinic-microservices). It uses [ZipKin](https://zipkin.io/) instrumentation and libraries. The [Aternity APM OpenTelemetry collector](https://hub.docker.com/r/aternity/apm-collector) takes the Tracing Server role.
 
 ## Prerequisites
 
