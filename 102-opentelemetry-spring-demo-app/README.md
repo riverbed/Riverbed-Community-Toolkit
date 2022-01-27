@@ -50,11 +50,13 @@ Browse http://localhost:8080 and click around to generate some telemetry that wi
 
 The [Aternity APM OpenTelemetry Collector](https://hub.docker.com/r/aternity/apm-collector) keeps 100% of the traces to provide full fidelity analysis. There is no data sampling.
 
+## Notes 
+
+### Support
+
 Please visit [Aternity](https://www.aternity.com/) if your need Support or Training.
 
-#### FAQ
-
-- How to stop the containers of the app?
+### Stop the containers of the app
 
 Press CTRL + C in the shell where it is running.
 
