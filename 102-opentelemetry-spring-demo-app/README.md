@@ -4,6 +4,8 @@ This cookbook helps to setup Java microservices application with the [Aternity A
 
 The sample app is the famous Java Community application called [Spring PetClinic Microservices](https://github.com/spring-petclinic/spring-petclinic-microservices). Composed of multiple services that run in containers, like Config, Discovery Server, Customers, Vets, Visits and API, it uses [ZipKin](https://zipkin.io/) instrumentation to export some application telemetry (traces for the service calls). The [Aternity APM OpenTelemetry collector](https://hub.docker.com/r/aternity/apm-collector) takes the Tracing Server role.
 
+The [Aternity APM OpenTelemetry Collector](https://hub.docker.com/r/aternity/apm-collector) keeps 100% of the traces to provide full fidelity for application performance and behavior analysis. There is no data sampling.
+
 ## Prerequisites
 
 1. an Aternity APM account
@@ -74,8 +76,6 @@ Browse http://localhost:8080 and click around to generate some telemetry that wi
 ![spring petclinic](images/spring-petclinic.png)
 
 ### Open the Aternity APM webconsole to visualize and analyze the traces collected for every transactions
-
-The [Aternity APM OpenTelemetry Collector](https://hub.docker.com/r/aternity/apm-collector) keeps 100% of the traces to provide full fidelity for application performance and behavior analysis. There is no data sampling.
 
 Search transactions:
 
