@@ -51,7 +51,7 @@ For example:
 ```
 
 
-### Start the `spring-petclinit-microservices` app instrumented with OpenTelemetry
+### Start the `spring-petclinit-microservices` app
 
 Open a shell
 
@@ -81,7 +81,7 @@ Search transactions:
 
 ![Aternity APM OpenTelemetry every transaction](images/aternity-apm-webconsoles-every-transactions.png)
 
-Browse the spans for every transaction:
+Browse the spans for the selected transaction:
 
 ![Aternity APM OpenTelemetry Span Browser](images/aternity-apm-spring-transaction-details-span-browser.png)
 
