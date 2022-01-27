@@ -55,7 +55,7 @@ For example:
 
 Open a shell
 
-Go into the folder where you keep the [docker-compose.yml](docker-compose.yml) file you just configured. For example:
+Go in the folder where you keep the [docker-compose.yml](docker-compose.yml) file you just configured. For example:
 
 ```shell
 cd Tech-Community/102-opentelemetry-spring-demo-app
