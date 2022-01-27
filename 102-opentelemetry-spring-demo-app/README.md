@@ -6,6 +6,8 @@ The sample app is the famous Java Community application called [Spring PetClinic
 
 The [Aternity APM OpenTelemetry Collector](https://hub.docker.com/r/aternity/apm-collector) keeps 100% of the traces to provide full fidelity for application performance and behavior analysis. There is no data sampling.
 
+![diagram](images/102-diagram.png)
+
 ## Prerequisites
 
 1. an Aternity APM account (SaaS)
