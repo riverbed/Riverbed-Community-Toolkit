@@ -56,7 +56,7 @@ The [Aternity APM OpenTelemetry Collector](https://hub.docker.com/r/aternity/apm
 
 Please visit [Aternity](https://www.aternity.com/) if your need Support or Training.
 
-### Stop the containers of the app
+### Stop the app and all the containers
 
 Press CTRL + C in the shell where it is running.
 
