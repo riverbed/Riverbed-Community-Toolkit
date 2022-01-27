@@ -7,40 +7,30 @@ The sample app is a famous Java Community application called [Spring PetClinic](
 ## Prerequisites
 
 1. an Aternity APM account
-2. a Docker host
+2. a Docker host, for example [Docker Desktop](https://www.docker.com/products/docker-desktop)
 
 ## Step by Step
 
 ### Connect to Aternity APM webconsole
 
-Navigate to Aternity APM > Agents > Install Agents:
+Navigate to Aternity APM (for example [https://apm.myaccount.aternity.com](https://apm.myaccount.aternity.com)) > Agents > Install Agents:
 
 1. Find your **CustomerID**, for example *12341234-12341234-13241234*
 2. Grab **SaaS Analysis Server Host**, for example *agents.apm.myaccount.aternity.com*
 
-### Fetch the code
-
-For example using git from a shell:
-
-```shell
-git clone https://github.com/Aternity/Tech-Community.git
-```
-
-Or download the zip archive of the [Aternity Tech-Community repository](https://github.com/Aternity/Tech-Community) from GitHub (Code button > Download ZIP).
-
 ### Configure the Aternity OpenTelemetry Collector with your CustomerID & SaaS Analysis Server Host
 
-Go to the directory `Tech-Community directory` and `102-opentelemetry-spring-demo-app`.
+Download a local copy of the file [docker-compose.yml](docker-compose.yml), for example in a folder `Tech-Community/102-opentelemetry-spring-demo-app`
 
-Edit the [docker-compose.yml](docker-compose.yml) file
-
-In the tracing-server section, replace the following tokens with the information from step [1] and save:
+Edit the file docker-compose.yml and in the *tracing-server* section, replace the following tokens with the information from step [1] and save:
 1. `<customerId>` 
 2. `<SaaSAnalysisServerHost>` 
 
 ### Start the `spring-petclinit-microservices` app instrumented with OpenTelemetry
 
-In your shell, go to the cookbook directory:
+Open a shell
+
+Go into the folder where you keep the [docker-compose.yml](docker-compose.yml) file you just configured. For example:
 
 ```shell
 cd Tech-Community/102-opentelemetry-spring-demo-app
@@ -54,11 +44,11 @@ docker-compose up
 
 ### Exercise the application
 
-Go to http://localhost:8080 and click around. 
+Go to http://localhost:8080 and click around to generate some telemetry.
 
-### Connect to the Aternity APM webconsole to analyze evethe OpenTelemetry transactions
+### Go to Aternity APM webconsole to visualize and analyze the traces collected for every transactions
 
-Navigate to your Aternity APM url, for example [https://apm.myaccount.aternity.com](https://apm.myaccount.aternity.com)
+The Aternity APM OpenTelemetry Collector keeps 100% of the traces.
 
 Please visit [Aternity](https://www.aternity.com/) if your need Support or Training.
 
