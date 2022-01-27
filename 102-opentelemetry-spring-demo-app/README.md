@@ -75,7 +75,7 @@ Browse http://localhost:8080 and click around to generate some telemetry that wi
 
 ### Open the Aternity APM webconsole to visualize and analyze the traces collected for every transactions
 
-The [Aternity APM OpenTelemetry Collector](https://hub.docker.com/r/aternity/apm-collector) keeps 100% of the traces to provide full fidelity analysis. There is no data sampling.
+The [Aternity APM OpenTelemetry Collector](https://hub.docker.com/r/aternity/apm-collector) keeps 100% of the traces to provide full fidelity for application performance and behavior analysis. There is no data sampling.
 
 Search transactions:
 
