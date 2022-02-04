@@ -17,9 +17,7 @@
 #   docker-compose up
 #
 # Example in Unix
-#   ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com" \
-#   ATERNITY_CUSTOMER_ID="12341234-12341234-13241234" 
-#   docker-compose up
+#   ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com" ATERNITY_CUSTOMER_ID="12341234-12341234-13241234" docker-compose up
 #
 
 version: '2'
