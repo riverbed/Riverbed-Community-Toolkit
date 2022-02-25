@@ -91,7 +91,7 @@ Browse the spans for the selected transaction:
 
 ### Support
 
-Please visit [Aternity website](https://www.aternity.com/) if your need Support or Training.
+Please visit [Aternity website](https://www.aternity.com/) if you need support and learn more about [OpenTelemetry with Aternity APM](https://help.aternity.com/bundle/console_install_ost_guide_2022y_console_saas/page/console/topics/apm_ost_ig_intro.html)
 
 ### Stop the app and all the containers
 
