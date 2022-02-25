@@ -28,6 +28,9 @@ RUN npm install @opentelemetry/exporter-zipkin
 RUN npm install express axios
 COPY *.js ./
 
+# TODO: remove this patch when docker build "subdir not supported yet" issue is fixed
+COPY 104-opentelemetry-zipkin-nodejs-app/*.js ./
+
 ENV OTEL_SERVICE_NAME="service104-js"
 ENV OTEL_EXPORTER_ZIPKIN_ENDPOINT="http://aternity-opentelemetry-collector:9411/api/v2/spans"
 
