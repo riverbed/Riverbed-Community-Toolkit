@@ -77,7 +77,7 @@ Browse http://localhost:8080 and click around to generate some telemetry that wi
 
 ![spring petclinic](images/spring-petclinic.png)
 
-### Open the Aternity APM webconsole to visualize and analyze the traces collected for every transactions
+### Open the Aternity APM webconsole to visualize and analyze the traces collected for every transaction
 
 Search transactions:
 
