@@ -1,0 +1,24 @@
+# Aternity Tech-Community
+# 105-opentelemetry-go-app
+
+# Exporter
+EXPORTER: otlp
+
+# Jaeger endpoint
+JAEGER_ENDPOINT: http://localhost:14268/api/traces
+
+# Zipkin endpoint
+ZIPKIN_ENDPOINT: http://localhost:9411/api/v2/spans
+
+# OTLP endpoint
+OTLP_ENDPOINT: localhost:4318
+OTLP_URL: /v1/traces
+
+# Server configurations
+FRONTEND_SERVER: localhost
+FRONTEND_PORT: 8081
+BACKEND_SERVER: localhost
+BACKEND_PORT: 9000
+
+# Sleep millis
+SLEEP: 5

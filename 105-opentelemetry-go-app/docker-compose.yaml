@@ -1,0 +1,77 @@
+# Aternity Tech-Community
+# 105-opentelemetry-go-app
+# version: 22.03.01
+#
+# Simple 2 tier Go application using the OpenTelemetry SDK. Capable of showing distributed traces
+# using the Otlp, Jaeger, or Zipkin formats.
+#
+# Reference:
+# * https://hub.docker.com/r/aternity/apm-collector
+# * https://www.aternity.com/application-performance-monitoring
+#
+# Usage:
+#   docker-compose up
+#
+# Example in Unix
+#   ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com" ATERNITY_CUSTOMER_ID="12341234-12341234-13241234" \
+#     docker-compose up
+#
+
+version: '2'
+
+services:
+
+  opentelemetry-collector:
+    image: aternity/apm-collector:latest
+    container_name: aternity-opentelemetry-collector
+    environment:
+      - SERVER_URL=wss://${ATERNITY_SAAS_SERVER_HOST}/?RPM_AGENT_CUSTOMER_ID=${ATERNITY_CUSTOMER_ID}
+
+  service105-go-backend:
+    depends_on:
+      - opentelemetry-collector
+    command: backend
+    container_name: opentelemetry-go-backend
+    environment:
+#      EXPORTER: otlp
+#      OTLP_ENDPOINT: aternity-opentelemetry-collector:4318
+      EXPORTER: jaeger
+      JAEGER_ENDPOINT: http://aternity-opentelemetry-collector:14268/api/traces
+#      EXPORTER: zipkin
+#      ZIPKIN_ENDPOINT: http://aternity-opentelemetry-collector:9411/api/v2/spans
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+  service105-go-frontend:
+    depends_on:
+      - service105-go-backend
+    command: frontend
+    container_name: opentelemetry-go-frontend
+    environment:
+#      EXPORTER: otlp
+#      OTLP_ENDPOINT: aternity-opentelemetry-collector:4318
+      EXPORTER: jaeger
+      JAEGER_ENDPOINT: http://aternity-opentelemetry-collector:14268/api/traces
+#      EXPORTER: zipkin
+#      ZIPKIN_ENDPOINT: http://aternity-opentelemetry-collector:9411/api/v2/spans
+      BACKEND_SERVER: opentelemetry-go-backend
+    ports:
+      - 8081:8081
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+  service105-traffic-generator:
+    depends_on:
+      - service105-go-frontend
+    image: alpine/curl:latest
+    container_name: traffic-generator
+    command: >
+      /bin/sh -c "
+        sleep 5;
+        while :; do
+          curl http://opentelemetry-go-frontend:8081/ > /dev/null 2>&1;
+          sleep 5;
+        done
+      "
