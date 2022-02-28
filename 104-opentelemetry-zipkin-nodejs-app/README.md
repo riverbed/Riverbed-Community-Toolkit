@@ -24,10 +24,10 @@ Those information are required to activate the Aternity OpenTelemetry Collector 
 
 ### 2. Start the containers
 
-Download a local copy of the  [docker-compose.yml](docker-compose.yml) file, for example in the directory `Tech-Community/104-opentelemetry-zipkin-nodejs-app`
+Download a local copy of the  [docker-compose.yaml](docker-compose.yaml) file, for example in the directory `Tech-Community/104-opentelemetry-zipkin-nodejs-app`
 
 
-Start the containers using the [docker-compose.yml](docker-compose.yml), for example with Bash:
+Start the containers using the [docker-compose.yaml](docker-compose.yaml), for example with Bash:
 
 ```bash
 cd Tech-Community/104-opentelemetry-zipkin-nodejs-app
@@ -77,7 +77,7 @@ Search transaction, browse the spans for the selected transaction :
 
 Press CTRL + C in the shell where it is running.
 
-Or in a shell, go to the folder where you keep the [docker-compose.yml](docker-compose.yml) and run:
+Or in a shell, go to the folder where you keep the [docker-compose.yaml](docker-compose.yaml) and run:
 
 ```shell
 docker-compose down
@@ -112,7 +112,7 @@ services:
       - "9411:9411/tcp"
 ```
 
-In the [docker-compose.yml](docker-compose.yml) above, the `SERVER_URL` has been defined by two *docker compose variables*, to ease external configuration (ATERNITY_SAAS_SERVER_HOST and ATERNITY_CUSTOMER_ID). It can also be hard-coded, like this this:
+In the [docker-compose.yaml](docker-compose.yaml) above, the `SERVER_URL` has been defined by two *docker compose variables*, to ease external configuration (ATERNITY_SAAS_SERVER_HOST and ATERNITY_CUSTOMER_ID). It can also be hard-coded, like this this:
 
 ```yaml
       SERVER_URL: "wss://agents.apm.myaccount.aternity.com/?RPM_AGENT_CUSTOMER_ID=12341234-12341234-13241234"
