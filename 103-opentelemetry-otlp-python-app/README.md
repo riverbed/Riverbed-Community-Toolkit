@@ -24,7 +24,7 @@ Those information are required to activate the Aternity OpenTelemetry Collector 
 
 ### 2. Start the containers
 
-Get a local copy of the [docker-compose.yml](docker-compose.yml) file. 
+Get a local copy of the [docker-compose.yaml](docker-compose.yaml) file. 
 
 Edit the file if you want to manually configure the `SERVER_URL` variable, replacing *ATERNITY_SAAS_SERVER_HOST* and *ATERNITY_CUSTOMER_ID* with actual values. The remaining is all set to pull the container image from [DockerHub](https://hub.docker.com/r/aternity/apm-collector) and receive telemetry on the OTLP protobuf 4318/tcp port.
 
@@ -50,7 +50,7 @@ Then, start the containers from the shell. The collector can be configured at th
 For example using Bash:
 
 ```bash
-# Go to the directory that contains docker-compose.yml
+# Go to the directory that contains docker-compose.yaml
 cd Tech-Community/103-opentelemetry-otlp-python-app
 
 # Configure the environment variables for the Aternity OpenTelemetry Collector
@@ -64,7 +64,7 @@ docker-compose up
 Using PowerShell:
 
 ```PowerShell
-# Go to the directory that contains docker-compose.yml
+# Go to the directory that contains docker-compose.yaml
 cd Tech-Community/103-opentelemetry-otlp-python-app
 
 # Configure the environement variable for the Aternity OpenTelemetry Collector
@@ -101,7 +101,7 @@ Search transaction, browse the spans for the selected transaction :
 
 Press CTRL + C in the shell where it is running.
 
-Or in a shell, go to the folder where you keep the [docker-compose.yml](docker-compose.yml) and run:
+Or in a shell, go to the folder where you keep the [docker-compose.yaml](docker-compose.yaml) and run:
 
 ```shell
 docker-compose down
