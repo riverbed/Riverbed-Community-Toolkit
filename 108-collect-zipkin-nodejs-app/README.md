@@ -24,7 +24,7 @@ Those information are required to activate the Aternity OpenTelemetry Collector 
 
 ### 2. Start the containers
 
-Download a local copy of the  [docker-compose.yaml](docker-compose.yaml) file, for example in the directory `Tech-Community/104-opentelemetry-zipkin-nodejs-app`
+Download a local copy of the  [docker-compose.yaml](docker-compose.yaml) file, for example in the directory `Tech-Community/108-collect-zipkin-nodejs-app`
 
 Start the containers using the [docker-compose.yaml](docker-compose.yaml), for example with Bash:
 
