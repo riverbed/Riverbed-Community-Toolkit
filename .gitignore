@@ -2,3 +2,6 @@
 .idea
 *.iml
 .env
+
+# Mac system files
+.DS_store
