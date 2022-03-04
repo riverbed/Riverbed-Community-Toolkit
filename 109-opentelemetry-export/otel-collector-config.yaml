@@ -1,0 +1,43 @@
+# otel-collector-config.yaml
+#
+# Aternity Tech-Community
+# 109-opentelemetry-export
+# version: 22.3.1
+#
+# OpenTelemetry Collector Configuration
+#
+# ref. https://opentelemetry.io/docs/collector/configuration/
+
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: "0.0.0.0:4317"
+
+exporters:
+
+  otlphttp:
+    endpoint: http://aternity-opentelemetry-collector:4318
+
+  jaeger:
+    endpoint: jaeger-all-in-one:14250
+    insecure: true
+
+  zipkin:
+    endpoint: http://zipkin-all-in-one:9411/api/v2/spans
+
+  logging:
+    loglevel: debug
+
+processors:
+
+extensions:
+  health_check:
+
+service:
+  extensions: [health_check]
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: []
+      exporters: [otlphttp,jaeger,zipkin,logging]
