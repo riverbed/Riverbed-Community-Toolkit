@@ -24,7 +24,7 @@ Those information are required to activate the Aternity OpenTelemetry Collector 
 
 ### 2. Start the containers
 
-Download a local copy of the  [docker-compose.yaml](docker-compose.yaml) file, for example in the directory `Tech-Community/109-opentelemetry-export`
+Download a local copy of the files [docker-compose.yaml](docker-compose.yaml) and [otel-collector-config.yaml](otel-collector-config.yaml), for example in the directory `Tech-Community/109-opentelemetry-export`
 
 Start the containers using the [docker-compose.yaml](docker-compose.yaml), for example with Bash:
 
@@ -54,7 +54,7 @@ docker-compose up
 
 ![Aternity APM OpenTelemetry traces](images/aternity-opentelemetry-service109-js-transactions.png)
 
-## Notes 
+## Notes
 
 ### Stop the app and all the containers
 
