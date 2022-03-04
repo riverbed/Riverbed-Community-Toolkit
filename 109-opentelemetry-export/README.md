@@ -2,7 +2,7 @@
 
 In this cookbook the OpenTelemetry Collector receives OTLP-gRPC telemetry from a Go app and exports it using other protocols (OLTP-http, Jaeger and Zipkin) to different collectors: [Aternity OpenTelemetry Collector](https://hub.docker.com/r/aternity/apm-collector), Jaeger all-in-one and also a Zipkin all-in-one.
 
-The Go app is a simple demo application provided by the [OpenTelemetry project](https://github.com/open-telemetry).
+The Go app is a simple demo application provided by the [OpenTelemetry project](https://github.com/open-telemetry). In the cookbook it is set to run indefinitely to generate telemetry.
 
 ![diagram](images/109-diagram.png)
 
