@@ -2,7 +2,7 @@
 #
 # Aternity Tech-Community
 # 104-opentelemetry-zipkin-nodejs-app
-# version: 22.2.24
+# version: 22.3.8
 #
 # Compose file to use with the cookbook 104
 #
@@ -28,7 +28,7 @@ services:
     # Aternity OpenTelemetry Collector
     # https://hub.docker.com/r/aternity/apm-collector
 
-    image: registry.hub.docker.com/aternity/apm-collector:2022.3.0-3
+    image: registry.hub.docker.com/aternity/apm-collector:2022.4.0-4
 
     container_name: aternity-opentelemetry-collector       
 
