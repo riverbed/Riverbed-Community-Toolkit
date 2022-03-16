@@ -5,20 +5,25 @@
 EXPORTER: otlp
 
 # Jaeger endpoint
-JAEGER_ENDPOINT: http://localhost:14268/api/traces
+JAEGER_PORT: 14268
+JAEGER_PATH: /api/traces
 
 # Zipkin endpoint
-ZIPKIN_ENDPOINT: http://localhost:9411/api/v2/spans
+ZIPKIN_PORT: 9411
+ZIPKIN_PATH: /api/v2/spans
 
 # OTLP endpoint
-OTLP_ENDPOINT: localhost:4318
-OTLP_URL: /v1/traces
+OTLP_PORT: 4318
+OTLP_PATH: /v1/traces
+
+# Aternity APM collector configuration
+ATERNITY_COLLECTOR_SERVICE_HOST: localhost
 
 # Server configurations
-FRONTEND_SERVER: localhost
-FRONTEND_PORT: 8081
-BACKEND_SERVER: localhost
-BACKEND_PORT: 9000
+FRONTEND_SERVICE_HOST: localhost
+FRONTEND_SERVICE_PORT: 8081
+BACKEND_SERVICE_HOST: localhost
+BACKEND_SERVICE_PORT: 9000
 
 # Sleep millis
 SLEEP: 5

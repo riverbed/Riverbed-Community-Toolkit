@@ -1,0 +1,41 @@
+# Aternity Tech-Community
+# 105-opentelemetry-go-app
+# version: 22.03.15
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+spec:
+  type: ClusterIP
+  ports:
+    - port: 9000
+  selector:
+    app: go-backend
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-backend
+spec:
+  selector:
+    matchLabels:
+      app: go-backend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: go-backend
+    spec:
+      containers:
+        - name: go-backend
+          image: smlobo/opentelemetry-go-example
+          args: ["backend"]
+          ports:
+            - containerPort: 9000
+#          imagePullPolicy: Never
+          env:
+            - name: EXPORTER
+#              value: "otlp"
+              value: "jaeger"
+#              value: "zipkin"

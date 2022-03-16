@@ -1,0 +1,25 @@
+# Aternity Tech-Community
+# 105-opentelemetry-go-app
+# version: 22.03.15
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: traffic-generator
+spec:
+  selector:
+    matchLabels:
+      app: traffic-generator
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: traffic-generator
+    spec:
+      containers:
+        - name: traffic-generator
+          image: alpine/curl:latest
+          command:
+            - /bin/sh
+            - -c
+            - "while :; do sleep 5; curl http://${FRONTEND_SERVICE_HOST}:${FRONTEND_SERVICE_PORT}; done"

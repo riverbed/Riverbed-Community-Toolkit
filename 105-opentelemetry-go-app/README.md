@@ -89,6 +89,17 @@ The cookbook contains few files:
   - the instrumented 2-tier Go `backend` web app
   - the Aternity OpenTelemetry Collector
   - the load generator
+    
+### Kubernetes
+
+This example can also be executed on a K8s cluster.
+
+Steps:
+```shell
+% <edit kubernetes/aternity-collector.yml
+   with your Aternity SaaS Analysis Server host & customer id>
+% kubectl apply -f kubernetes/
+```
 
 #### License
 

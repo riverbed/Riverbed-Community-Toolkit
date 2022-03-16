@@ -45,10 +45,10 @@ func main() {
 	appconfig.SetupConfig()
 
 	if os.Args[1] == "frontend" {
-		feP, _ := strconv.Atoi(appconfig.Config["FRONTEND_PORT"])
+		feP, _ := strconv.Atoi(appconfig.Config["FRONTEND_SERVICE_PORT"])
 		setup("frontend", apphandler.FrontendHandler(), uint16(feP))
 	} else if os.Args[1] == "backend" {
-		beP, _ := strconv.Atoi(appconfig.Config["BACKEND_PORT"])
+		beP, _ := strconv.Atoi(appconfig.Config["BACKEND_SERVICE_PORT"])
 		setup("backend", apphandler.BackendHandler(), uint16(beP))
 	}
 }
