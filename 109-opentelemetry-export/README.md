@@ -50,7 +50,7 @@ $env:ATERNITY_CUSTOMER_ID="12341234-12341234-13241234"
 docker-compose up
 ```
 
-### Open the Aternity APM webconsole to visualize and analyze the traces collected for every transactions
+### Open the Aternity APM webconsole to visualize and analyze the traces collected for every transaction
 
 ![Aternity APM OpenTelemetry traces](images/aternity-opentelemetry-service109-js-transactions.png)
 
