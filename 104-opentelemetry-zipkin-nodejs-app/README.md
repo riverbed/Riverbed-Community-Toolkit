@@ -65,7 +65,7 @@ For example using curl:
 curl http://localhost:8104/fetch
 ```
 
-### 4. Open the Aternity APM webconsole to visualize and analyze the traces collected for every transactions
+### 4. Open the Aternity APM webconsole to visualize and analyze the traces collected for every transaction
 
 Search transaction, browse the spans for the selected transaction :
 
