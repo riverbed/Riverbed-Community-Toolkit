@@ -56,7 +56,7 @@ There is an in-built load generator in the `docker-compose` startup. If you want
 curl http://localhost:8081/
 ```
 
-### 4. Open the Aternity APM webconsole to visualize and analyze the traces collected for every transactions
+### 4. Open the Aternity APM webconsole to visualize and analyze the traces collected for every transaction
 
 Search transaction, browse the spans for the selected transaction :
 
