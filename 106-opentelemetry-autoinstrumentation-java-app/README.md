@@ -21,9 +21,9 @@ Navigate to Aternity APM (for example [https://apm.myaccount.aternity.com](https
 
 Download the source, for example [right-click here](https://github.com/Aternity/Tech-Community/archive/refs/heads/main.zip) to download zip archive and exand it locally.
 
-### Step 3 - Start the containers and the app
+### Step 3 - Start the containers
 
-In a shell, go to the Cookbook folder, configure the Aternity APM OpenTelemetry Collector using the environment variable, ATERNITY_SAAS_SERVER_HOST and ATERNITY_CUSTOMER_ID, and starts all the containers with docker-compose.
+In a shell, go to the Cookbook folder, configure the Aternity APM OpenTelemetry Collector using the environment variables, ATERNITY_SAAS_SERVER_HOST and ATERNITY_CUSTOMER_ID, and starts all the containers with docker-compose.
 
 ```bash
 # Go to the directory that contains the cookbook
