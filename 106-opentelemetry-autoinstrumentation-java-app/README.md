@@ -1,7 +1,10 @@
 # 106-opentelemetry-autoinstrumentation-java-app
 
-A simple Java application is launched with OpenTelemetry automatic instrumentation and configured with multiple telemetry exporters to demonstrate at the same time logging on the console, OTLP-gRPC telemetry export to the Aternity APM OpenTelemetry Collector and Jaeger telemetry export
+A simple Java application is launched with [OpenTelemetry](https://opentelemetry.io/) automatic instrumentation. The OpenTelemetry instrumentation is configured with multiple telemetry exporters. In parallel it is logging telemetry on the console, exporting to a local [jaeger](https://www.jaegertracing.io), and also exporting to the Aternity APM SaaS backend via the [Aternity APM OpenTelemetry collector container](https://hub.docker.com/r/aternity/apm-collector).
 
+For this cookbook the [Aternity APM OpenTelemetry collector container](https://hub.docker.com/r/aternity/apm-collector) is configured to receive OTLP-gRPC but it also supports OTLP-http, jaeger and even zipkin telemetry.
+
+![diagram](images/106-diagram.png)
 
 ## Prerequisites
 
