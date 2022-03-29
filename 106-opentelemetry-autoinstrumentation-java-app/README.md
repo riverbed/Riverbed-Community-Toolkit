@@ -19,7 +19,7 @@ Navigate to Aternity APM (for example [https://apm.myaccount.aternity.com](https
 
 ### Step 2 - Get the sources
 
-Download the source, for example [right-click here](https://github.com/Aternity/Tech-Community/archive/refs/heads/main.zip) to download zip archive and exand it locally.
+Download the source, for example [right-click here](https://github.com/Aternity/Tech-Community/archive/refs/heads/main.zip) to download zip archive and expand it locally.
 
 ### Step 3 - Start the containers
 
