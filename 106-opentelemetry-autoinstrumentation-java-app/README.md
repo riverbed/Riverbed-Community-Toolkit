@@ -57,8 +57,7 @@ docker-compose up
 
 ### Step 4 - Open the Aternity APM webconsole to visualize and analyze the traces collected for every transaction
 
-In the Search, transaction will appear with the instance name "service106-java-otlp"
-Search transactions 
+In the Search, the transactions will appear with the instance name "service106-java-otlp"
 
 #### License
 
