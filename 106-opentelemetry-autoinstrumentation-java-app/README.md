@@ -27,7 +27,7 @@ In a shell, go to the Cookbook folder, configure the Aternity APM OpenTelemetry 
 
 ```bash
 # Go to the directory that contains the cookbook
-cd Tech-Community\Tech-Community-main\106-opentelemetry-autoinstrumentation-java-app
+cd Tech-Community-main\106-opentelemetry-autoinstrumentation-java-app
 
 # Configure the environment variables for the Aternity OpenTelemetry Collector
 export ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
