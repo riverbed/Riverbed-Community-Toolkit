@@ -71,13 +71,13 @@ $env:ATERNITY_CUSTOMER_ID="12341234-12341234-13241234"
 docker-compose up
 ```
 
-## Step 4 - Exercise the application
+### Step 4 - Exercise the application
 
 Browse http://localhost:8080 and click around to generate some telemetry that will be collected by the Aternity APM OpenTelemetry Collector
 
 ![spring petclinic](images/spring-petclinic.png)
 
-## Step 5 - Open the Aternity APM webconsole to visualize and analyze the traces collected for every transaction
+### Step 5 - Open the Aternity APM webconsole to visualize and analyze the traces collected for every transaction
 
 Search transactions:
 
