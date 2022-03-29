@@ -25,6 +25,8 @@ Download the source, for example [right-click here](https://github.com/Aternity/
 
 In a shell, go to the Cookbook folder, configure the Aternity APM OpenTelemetry Collector using the environment variables, ATERNITY_SAAS_SERVER_HOST and ATERNITY_CUSTOMER_ID, and starts all the containers with docker-compose.
 
+For example using Bash:
+
 ```bash
 # Go to the directory that contains the cookbook
 cd Tech-Community-main\106-opentelemetry-autoinstrumentation-java-app
