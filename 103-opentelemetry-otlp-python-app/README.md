@@ -33,7 +33,7 @@ services:
 
   opentelemetry-collector:
     
-    image: registry.hub.docker.com/aternity/apm-collector:2022.3.0-3
+    image: registry.hub.docker.com/aternity/apm-collector:2022.4.0-4
     
     container_name: aternity-opentelemetry-collector       
     
