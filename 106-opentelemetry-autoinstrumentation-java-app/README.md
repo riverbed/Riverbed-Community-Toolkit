@@ -22,7 +22,25 @@ Navigate to Aternity APM (for example [https://apm.myaccount.aternity.com](https
 
 ### Step 2 - Get the sources
 
-Download the source, for example [right-click here](https://github.com/Aternity/Tech-Community/archive/refs/heads/main.zip) to download zip archive and expand it locally.
+Download the sources, for example [right-click here](https://github.com/Aternity/Tech-Community/archive/refs/heads/main.zip) to download the zip archive, and expand it locally.
+
+Edit the [docker-compose.yaml](docker-compose.yaml) file if you want to manually configure the `SERVER_URL` variable, replacing *ATERNITY_SAAS_SERVER_HOST* and *ATERNITY_CUSTOMER_ID* with actual values. The remaining is all set to pull the container image from [DockerHub](https://hub.docker.com/r/aternity/apm-collector) and receive telemetry on the OTLP gRPC port, 4317/tcp.
+
+```yaml
+services:
+     
+  aternity-opentelemetry-collector:
+
+    image: registry.hub.docker.com/aternity/apm-collector:2022.4.0-4
+    
+    environment:
+    
+      SERVER_URL: "wss://${ATERNITY_SAAS_SERVER_HOST}/?RPM_AGENT_CUSTOMER_ID=${ATERNITY_CUSTOMER_ID}"
+    
+    ports:
+    
+      - "4317:4317/tcp"
+```
 
 ### Step 3 - Start the containers
 
@@ -58,6 +76,44 @@ docker-compose up
 ### Step 4 - Open the Aternity APM webconsole to visualize and analyze the traces collected for every transaction
 
 In the Search, the transactions will appear with the instance name "service106-java-otlp"
+
+## Notes 
+
+### Stop the app and all the containers
+
+Press CTRL + C in the shell where it is running.
+
+Or in a shell, go to the folder where you keep the [docker-compose.yaml](docker-compose.yaml) and run:
+
+```shell
+docker-compose down
+```
+
+### How to launch myapp.jar with automatic instrumentation and multiple exporters?
+
+Here is a sample in Bash that shows how to run a java app (myapp.jar) with OpenTelemetry automatic instrumentation and multiple exporters: logging on the console, otlp-grpc and jaeger. In this example the jaeger and otlp-grpc OpenTelemetry endpoints are running on the localhost.
+
+```bash
+# Configure OpenTelemetry instrumentation (OTEL_TRACES_EXPORTER default is "OTLP")
+OTEL_SERVICE_NAME="service106-java-otlp"
+OTEL_TRACES_EXPORTER=logging,otlp,jaeger
+
+## OTLP-gRPC
+OTEL_EXPORTER_OTLP_PROTOCOL="grpc"
+OTEL_EXPORTER_OTLP_ENDPOINT="http://localhost:4317"
+
+## Jaeger
+OTEL_EXPORTER_JAEGER_ENDPOINT="http://localhost:14250"
+
+# Inject OpenTelemetry automatic instrumentation
+curl -OL https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/download/v1.12.1/opentelemetry-javaagent.jar
+JAVA_TOOL_OPTIONS="-javaagent:./opentelemetry-javaagent.jar"
+
+# Run the app
+java -jar myapp.jar
+```
+
+More details about java instrumentation are available on the [OpenTelemetry docs page](https://opentelemetry.io/docs/).
 
 #### License
 
