@@ -95,7 +95,7 @@ Here is a sample in Bash that shows how to run a java app (myapp.jar) with OpenT
 
 ```bash
 # Configure OpenTelemetry instrumentation (OTEL_TRACES_EXPORTER default is "OTLP")
-OTEL_SERVICE_NAME="service106-java-otlp"
+OTEL_SERVICE_NAME="myapp"
 OTEL_TRACES_EXPORTER=logging,otlp,jaeger
 
 ## OTLP-gRPC
