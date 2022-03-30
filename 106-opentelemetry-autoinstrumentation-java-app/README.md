@@ -77,7 +77,7 @@ docker-compose up
 
 ### Step 4 - Open the Aternity APM webconsole to visualize and analyze the traces collected for every transaction
 
-The app simply fetches a page from a url, parses the contents and exits. To generate telemetry, the app container is set to restart indifinitely (alwayson).
+The app simply fetches a page from a url, parses the contents and exits. To generate telemetry, the app container is set *alwayson* in the [docker-compose.xml](docker-compose.xml) to restart indifinitely.
 
 In Aternity Web console, in the Search tab, the transactions will appear with the instance name "service106-java-otlp"
 
