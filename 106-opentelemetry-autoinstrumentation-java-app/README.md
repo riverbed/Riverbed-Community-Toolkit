@@ -42,7 +42,7 @@ services:
       - "4317:4317/tcp"
 ```
 
-The sources of the Java application consists in a single file [cookbook106.java](src/main/java/com/aternity/community/cookbook106/cookbook106.java), a standard Maven pom.xlm file, and a Dockerfile to build an image. The build will be done automatically when starting the containers with docker-compose in the next step.
+The sources of the Java application consists in a single Java file [cookbook106.java](src/main/java/com/aternity/community/cookbook106/cookbook106.java), a standard Maven pom.xlm file, and a Dockerfile to build an image. The build will be done automatically when starting the containers with docker-compose in the next step. 
 
 ### Step 3 - Start the containers
 
@@ -77,7 +77,9 @@ docker-compose up
 
 ### Step 4 - Open the Aternity APM webconsole to visualize and analyze the traces collected for every transaction
 
-In the Search tab, the transactions will appear with the instance name "service106-java-otlp"
+The app simply fetches a page from a url, parses the contents and exits. To generate telemetry, the app container will restart indifinitely.
+
+In Aternity Web console, in the Search tab, the transactions will appear with the instance name "service106-java-otlp"
 
 ![Aternity APM OpenTelemetry traces](images/aternity-opentelemetry-service106-java-transactions.png)
 
