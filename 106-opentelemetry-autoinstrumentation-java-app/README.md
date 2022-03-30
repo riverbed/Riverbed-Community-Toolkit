@@ -91,7 +91,7 @@ docker-compose down
 
 ### How to launch myapp.jar with automatic instrumentation and multiple exporters?
 
-Here is a sample in Bash that shows how to run a java app (myapp.jar) with OpenTelemetry automatic instrumentation and multiple exporters: logging on the console, otlp-grpc and jaeger. In this example the jaeger and otlp-grpc OpenTelemetry endpoints are running on the localhost.
+Here is a sample in Bash that shows how to run a java app (myapp.jar) with OpenTelemetry automatic instrumentation and multiple exporters: logging on the console, otlp-grpc and jaeger. In this example the jaeger and otlp-grpc OpenTelemetry endpoints are running on the localhost. OpenTelemetry exporters are configured using environment variables. The automatic instrumentation will be downloaded ([opentelemetry-javaagent.jar](https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/download/v1.12.1/opentelemetry-javaagent.jar) and injected using the JAVA_TOOL_OPTIONS environment variable.
 
 ```bash
 # Configure OpenTelemetry instrumentation (OTEL_TRACES_EXPORTER default is "OTLP")
