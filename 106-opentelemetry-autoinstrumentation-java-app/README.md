@@ -77,6 +77,8 @@ docker-compose up
 
 In the Search, the transactions will appear with the instance name "service106-java-otlp"
 
+![Aternity APM OpenTelemetry traces](images/aternity-opentelemetry-service106-java-transactions.png)
+
 ## Notes 
 
 ### Stop the app and all the containers
