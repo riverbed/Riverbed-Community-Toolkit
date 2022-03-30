@@ -1,0 +1,140 @@
+# Aternity Tech-Community
+# 201-instrument-jav-spring-demo-app
+# version: 22.03.30
+#
+# Define the containers of the Spring PetClinic Microservices application using Aternity APM
+# Reference:
+# * https://github.com/spring-petclinic/spring-petclinic-microservices/blob/master/docker-compose.yml
+# * https://www.aternity.com/application-performance-monitoring
+#
+# Usage:
+#   docker-compose up
+# 
+# Example in Unix
+#   ATERNITY_SAAS_SERVER_HOST="psockets.apm.myaccount.aternity.com" \
+#     ATERNITY_CUSTOMER_ID="12345678-1234-1234-1234-123456789abc" docker-compose up
+#
+
+version: '2'
+
+services:
+
+  config-server:
+    image: springcommunity/spring-petclinic-config-server
+    container_name: config-server
+    mem_limit: 512M
+    ports:
+     - 8888:8888
+
+  discovery-server:
+    image: springcommunity/spring-petclinic-discovery-server
+    container_name: discovery-server
+    mem_limit: 512M
+    depends_on:
+      - config-server
+    entrypoint: ["./dockerize","-wait=tcp://config-server:8888","-timeout=60s","--","java", "org.springframework.boot.loader.JarLauncher"]
+    ports:
+     - 8761:8761
+    environment:
+      - RVBD_ANALYSIS_SERVER=${ATERNITY_SAAS_SERVER_HOST}
+      - RVBD_CUSTOMER_ID=${ATERNITY_CUSTOMER_ID}
+      - JAVA_TOOL_OPTIONS=-agentpath:/agent/lib/libAwProfile64.so
+      - RVBD_AGENT_FILES=1
+      - RVBD_APP_INSTANCE=discovery-server
+    volumes:
+      - ./agent:/agent
+
+  customers-service:
+    image: springcommunity/spring-petclinic-customers-service
+    container_name: customers-service
+    mem_limit: 512M
+    depends_on:
+     - config-server
+     - discovery-server
+    entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java", "org.springframework.boot.loader.JarLauncher", "--spring.zipkin.enabled=false"]
+    ports:
+    - 8081:8081
+    environment:
+      - RVBD_ANALYSIS_SERVER=${ATERNITY_SAAS_SERVER_HOST}
+      - RVBD_CUSTOMER_ID=${ATERNITY_CUSTOMER_ID}
+      - JAVA_TOOL_OPTIONS=-agentpath:/agent/lib/libAwProfile64.so
+      - RVBD_AGENT_FILES=1
+      - RVBD_APP_INSTANCE=customers-service
+    volumes:
+      - ./agent:/agent
+
+  visits-service:
+    image: springcommunity/spring-petclinic-visits-service
+    container_name: visits-service
+    mem_limit: 512M
+    depends_on:
+     - config-server
+     - discovery-server
+    entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java", "org.springframework.boot.loader.JarLauncher", "--spring.zipkin.enabled=false"]
+    ports:
+     - 8082:8082
+    environment:
+      - RVBD_ANALYSIS_SERVER=${ATERNITY_SAAS_SERVER_HOST}
+      - RVBD_CUSTOMER_ID=${ATERNITY_CUSTOMER_ID}
+      - JAVA_TOOL_OPTIONS=-agentpath:/agent/lib/libAwProfile64.so
+      - RVBD_AGENT_FILES=1
+      - RVBD_APP_INSTANCE=visits-service
+    volumes:
+      - ./agent:/agent
+
+  vets-service:
+    image: springcommunity/spring-petclinic-vets-service
+    container_name: vets-service
+    mem_limit: 512M
+    depends_on:
+     - config-server
+     - discovery-server
+    entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java", "org.springframework.boot.loader.JarLauncher", "--spring.zipkin.enabled=false"]
+    ports:
+     - 8083:8083
+    environment:
+      - RVBD_ANALYSIS_SERVER=${ATERNITY_SAAS_SERVER_HOST}
+      - RVBD_CUSTOMER_ID=${ATERNITY_CUSTOMER_ID}
+      - JAVA_TOOL_OPTIONS=-agentpath:/agent/lib/libAwProfile64.so
+      - RVBD_AGENT_FILES=1
+      - RVBD_APP_INSTANCE=vets-service
+    volumes:
+      - ./agent:/agent
+
+  api-gateway:
+    image: springcommunity/spring-petclinic-api-gateway
+    container_name: api-gateway
+    mem_limit: 512M
+    depends_on:
+     - config-server
+     - discovery-server
+    entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java", "org.springframework.boot.loader.JarLauncher", "--spring.zipkin.enabled=false"]
+    ports:
+     - 8080:8080
+    environment:
+      - RVBD_ANALYSIS_SERVER=${ATERNITY_SAAS_SERVER_HOST}
+      - RVBD_CUSTOMER_ID=${ATERNITY_CUSTOMER_ID}
+      - JAVA_TOOL_OPTIONS=-agentpath:/agent/lib/libAwProfile64.so
+      - RVBD_AGENT_FILES=1
+      - RVBD_APP_INSTANCE=api-gateway
+    volumes:
+      - ./agent:/agent
+
+  admin-server:
+    image: springcommunity/spring-petclinic-admin-server
+    container_name: admin-server
+    mem_limit: 512M
+    depends_on:
+     - config-server
+     - discovery-server
+    entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java", "org.springframework.boot.loader.JarLauncher"]
+    ports:
+     - 9090:9090
+    environment:
+      - RVBD_ANALYSIS_SERVER=${ATERNITY_SAAS_SERVER_HOST}
+      - RVBD_CUSTOMER_ID=${ATERNITY_CUSTOMER_ID}
+      - JAVA_TOOL_OPTIONS=-agentpath:/agent/lib/libAwProfile64.so
+      - RVBD_AGENT_FILES=1
+      - RVBD_APP_INSTANCE=admin-server
+    volumes:
+      - ./agent:/agent
