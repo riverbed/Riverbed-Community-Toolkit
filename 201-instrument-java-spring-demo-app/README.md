@@ -21,7 +21,7 @@ Navigate to Aternity APM (for example [https://apm.myaccount.aternity.com](https
 
 1. Find your **CustomerID**, for example *12341234-1234-1234-1234-123456789abc*
 2. Grab **SaaS Analysis Server Host**, for example *agents.apm.myaccount.aternity.com*
-3. Obtain the psockets url replacing *agents* with *psockets*, for example *psockets.apm.myaccount.aternity.com*
+3. Obtain the **psockets host name** replacing *agents* with *psockets*, for example *psockets.apm.myaccount.aternity.com*
 4. Download the Aternity APM Java Agent
 
 ### Step 2: Get the docker-compose
