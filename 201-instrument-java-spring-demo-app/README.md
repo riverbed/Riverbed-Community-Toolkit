@@ -82,7 +82,7 @@ docker-compose up
 
 ### Exercise the application
 
-Browse http://localhost:8080 and click around to generate some telemetry that will be collected by the Aternity APM OpenTelemetry Collector
+Browse http://localhost:8080 and click around to generate load and transactions that will be monitored by Aternity APM
 
 ![spring petclinic](images/spring-petclinic.png)
 
