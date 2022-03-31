@@ -20,8 +20,9 @@ Here, the [Aternity APM](https://www.aternity.com/apm) agent is injected in each
 Navigate to Aternity APM (for example [https://apm.myaccount.aternity.com](https://apm.myaccount.aternity.com)) > Agents > Install Agents:
 
 1. Find your **CustomerID**, for example *12341234-1234-1234-1234-123456789abc*
-2. Grab **SaaS Analysis Server Host**, for example *agents.apm.myaccount.aternity.com* (IMPORTANT: Replace *agents* with *psockets*)
-3. Download the Aternity APM Java Agent, and unzip it in the directory with the `docker-compose.yml` file.
+2. Grab **SaaS Analysis Server Host**, for example *agents.apm.myaccount.aternity.com*
+3. Obtain the psocket url replacing *agents* with *psockets*, for example *psockets.apm.myaccount.aternity.com*
+4. Download the Aternity APM Java Agent
 
 ### Step 2: Get the docker-compose
 
