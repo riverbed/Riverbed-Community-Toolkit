@@ -6,6 +6,8 @@ The demo app is the famous Java Community application called [Spring PetClinic M
 
 Here, the [Aternity APM](https://www.aternity.com/apm) agent is injected in each service, enabling automatic instrumentation and performance monitoring. 
 
+![diagram](images/201-diagram.png)
+
 ## Prerequisites
 
 1. an Aternity APM account (SaaS)
