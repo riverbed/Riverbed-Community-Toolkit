@@ -25,11 +25,11 @@ Navigate to Aternity APM (for example [https://apm.myaccount.aternity.com](https
 
 Download a local copy of the file [docker-compose.yml](docker-compose.yml), for example in the directory `Tech-Community/201-instrument-java-spring-demo-app`
 
-The [docker-compose.yml](docker-compose.yml) defines environment variable and mounts volume to each Java service to be be instrumentde.
+In the [docker-compose.yml](docker-compose.yml), for each service, the auto-instrumentation configuration consist in few environment variables and a volume to mount the agent.
 
 ```yaml
   cool-java-service:
-    image: aternity/apm-collector
+    image: myapp/cool-java-service
     entrypoint: ["java", "-jar", "MyCoolService.jar"]
     environment:
       - RVBD_ANALYSIS_SERVER=${ATERNITY_SAAS_SERVER_HOST}
@@ -45,7 +45,7 @@ The CustomerID and SaaS Analysis Server Host can be defined manually, replacing 
 
 ```yaml
   cool-java-service:
-    image: aternity/apm-collector
+    image: myapp/cool-java-service
     entrypoint: ["java", "-jar", "MyCoolService.jar"]
     environment:
       - RVBD_ANALYSIS_SERVER=psockets.apm.myaccount.aternity.com
