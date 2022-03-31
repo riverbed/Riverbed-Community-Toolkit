@@ -42,7 +42,7 @@ services:
       - "4317:4317/tcp"
 ```
 
-The sources of the Java application consists in a single Java file [cookbook106.java](src/main/java/com/aternity/community/cookbook106/cookbook106.java), a standard Maven pom.xlm file, and a Dockerfile to build an image (packaging the app and injecting the OpenTelemety instrumentation agent for Java [opentelemetry-javaagent.jar](https://github.com/open-telemetry/opentelemetry-java-instrumentation)). The build will be done automatically when starting the containers with docker-compose in the next step. 
+The sources of the Java application consists in a single Java file [cookbook106.java](src/main/java/com/aternity/community/cookbook106/cookbook106.java), a standard Maven pom.xlm file, and a Dockerfile to build an image (packaging the app and injecting the OpenTelemetry instrumentation agent for Java [opentelemetry-javaagent.jar](https://github.com/open-telemetry/opentelemetry-java-instrumentation)). The build will be done automatically when starting the containers with docker-compose in the next step. 
 
 ### Step 3 - Start the containers
 
