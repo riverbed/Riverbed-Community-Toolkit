@@ -13,7 +13,7 @@ Here, the [Aternity APM](https://www.aternity.com/apm) agent is injected in each
 
 ## Step by Step
 
-### Connect to Aternity APM webconsole
+### Step 1: Connect to Aternity APM webconsole
 
 Navigate to Aternity APM (for example [https://apm.myaccount.aternity.com](https://apm.myaccount.aternity.com)) > Agents > Install Agents:
 
@@ -21,11 +21,11 @@ Navigate to Aternity APM (for example [https://apm.myaccount.aternity.com](https
 2. Grab **SaaS Analysis Server Host**, for example *agents.apm.myaccount.aternity.com* (IMPORTANT: Replace *agents* with *psockets*)
 3. Download the Aternity APM Java Agent, and unzip it in the directory with the `docker-compose.yml` file.
 
-### Configure the Aternity agent with your CustomerID & SaaS Analysis Server Host
+### Step 2: Get the docker-compose
 
-Download a local copy of the file [docker-compose.yml](docker-compose.yml), for example in the directory `Tech-Community/201-instrument-java-spring-demo-app`
+Download a local copy of the file [docker-compose.yml](docker-compose.yml), for example  [right-click here to download](https://raw.githubusercontent.com/Aternity/Tech-Community/main/201-instrument-java-spring-demo-app/docker-compose.yml) and save it in the directory `Tech-Community/201-instrument-java-spring-demo-app`
 
-In the [docker-compose.yml](docker-compose.yml), for each service, the auto-instrumentation configuration consist in few environment variables and a volume to mount the agent.
+In the [docker-compose.yml](docker-compose.yml), for each service, the auto-instrumentation configuration consists in few environment variables set with CustomerID and SaaS Analysis Server Host psockets endpoint, and a volume that mounts the agent.
 
 ```yaml
   cool-java-service:
@@ -58,7 +58,7 @@ The CustomerID and SaaS Analysis Server Host can be defined manually, replacing 
 ```
 
 
-### Start the `spring-petclinit-microservices` app
+### Step 3: Start the containers
 
 Open a shell
 
@@ -80,13 +80,13 @@ Start the containers:
 docker-compose up
 ```
 
-### Exercise the application
+### Step 4: Exercise the application
 
 Browse http://localhost:8080 and click around to generate load and transactions that will be monitored by Aternity APM
 
 ![spring petclinic](images/spring-petclinic.png)
 
-### Open the Aternity APM webconsole to visualize and analyze the traces collected for every transaction
+### Step 5: Open the Aternity APM webconsole to visualize and analyze the traces collected for every transaction
 
 View the entire applications:
 
