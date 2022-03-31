@@ -1,6 +1,6 @@
 # Aternity Tech-Community
 # 201-instrument-jav-spring-demo-app
-# version: 22.03.30
+# version: 22.03.31
 #
 # Define the containers of the Spring PetClinic Microservices application using Aternity APM
 # Reference:
@@ -10,29 +10,35 @@
 # Usage:
 #   docker-compose up
 # 
+# Example in PowerShell
+#   $env:ATERNITY_SAAS_SERVER_HOST="psockets.apm.myaccount.aternity.com"
+#   $env:ATERNITY_CUSTOMER_ID="12341234-12341234-13241234"
+#   docker-compose up
+#
 # Example in Unix
-#   ATERNITY_SAAS_SERVER_HOST="psockets.apm.myaccount.aternity.com" \
-#     ATERNITY_CUSTOMER_ID="12345678-1234-1234-1234-123456789abc" docker-compose up
+#   ATERNITY_SAAS_SERVER_HOST="psockets.apm.myaccount.aternity.com" ATERNITY_CUSTOMER_ID="12341234-12341234-13241234" docker-compose up
 #
 
-version: '2'
+version: '3.8'
 
 services:
 
   config-server:
     image: springcommunity/spring-petclinic-config-server
     container_name: config-server
-    mem_limit: 512M
+    mem_reservation: 200M
+    mem_limit: 256M
     ports:
      - 8888:8888
 
   discovery-server:
     image: springcommunity/spring-petclinic-discovery-server
     container_name: discovery-server
-    mem_limit: 512M
+    mem_reservation: 200M
+    mem_limit: 256M
     depends_on:
       - config-server
-    entrypoint: ["./dockerize","-wait=tcp://config-server:8888","-timeout=60s","--","java", "org.springframework.boot.loader.JarLauncher"]
+    entrypoint: ["./dockerize","-wait=tcp://config-server:8888","-timeout=60s","--","java","-Xmx128m","-XshowSettings:vm","org.springframework.boot.loader.JarLauncher"]
     ports:
      - 8761:8761
     environment:
@@ -47,11 +53,12 @@ services:
   customers-service:
     image: springcommunity/spring-petclinic-customers-service
     container_name: customers-service
-    mem_limit: 512M
+    mem_reservation: 200M
+    mem_limit: 256M
     depends_on:
      - config-server
      - discovery-server
-    entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java", "org.springframework.boot.loader.JarLauncher", "--spring.zipkin.enabled=false"]
+    entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java","-Xmx128m","-XshowSettings:vm","org.springframework.boot.loader.JarLauncher", "--spring.zipkin.enabled=false"]
     ports:
     - 8081:8081
     environment:
@@ -66,11 +73,12 @@ services:
   visits-service:
     image: springcommunity/spring-petclinic-visits-service
     container_name: visits-service
-    mem_limit: 512M
+    mem_reservation: 200M
+    mem_limit: 256M
     depends_on:
      - config-server
      - discovery-server
-    entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java", "org.springframework.boot.loader.JarLauncher", "--spring.zipkin.enabled=false"]
+    entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java","-Xmx128m","-XshowSettings:vm","org.springframework.boot.loader.JarLauncher", "--spring.zipkin.enabled=false"]
     ports:
      - 8082:8082
     environment:
@@ -85,11 +93,12 @@ services:
   vets-service:
     image: springcommunity/spring-petclinic-vets-service
     container_name: vets-service
-    mem_limit: 512M
+    mem_reservation: 200M
+    mem_limit: 256M
     depends_on:
      - config-server
      - discovery-server
-    entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java", "org.springframework.boot.loader.JarLauncher", "--spring.zipkin.enabled=false"]
+    entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java","-Xmx128m","-XshowSettings:vm","org.springframework.boot.loader.JarLauncher", "--spring.zipkin.enabled=false"]
     ports:
      - 8083:8083
     environment:
@@ -104,11 +113,12 @@ services:
   api-gateway:
     image: springcommunity/spring-petclinic-api-gateway
     container_name: api-gateway
-    mem_limit: 512M
+    mem_reservation: 200M
+    mem_limit: 300M
     depends_on:
      - config-server
      - discovery-server
-    entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java", "org.springframework.boot.loader.JarLauncher", "--spring.zipkin.enabled=false"]
+    entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java","-Xmx128m","-XshowSettings:vm","org.springframework.boot.loader.JarLauncher", "--spring.zipkin.enabled=false"]
     ports:
      - 8080:8080
     environment:
@@ -123,11 +133,12 @@ services:
   admin-server:
     image: springcommunity/spring-petclinic-admin-server
     container_name: admin-server
-    mem_limit: 512M
+    mem_reservation: 200M
+    mem_limit: 256M
     depends_on:
      - config-server
      - discovery-server
-    entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java", "org.springframework.boot.loader.JarLauncher"]
+    entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java","-Xmx128m","-XshowSettings:vm","org.springframework.boot.loader.JarLauncher"]
     ports:
      - 9090:9090
     environment:
