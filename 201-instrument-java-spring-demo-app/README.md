@@ -71,7 +71,7 @@ Go in the folder where you keep the [docker-compose.yml](docker-compose.yml) fil
 cd Tech-Community/201-instrument-java-spring-demo-app
 ```
 
-Download and unzip an Aternity APM Java Agent
+Unzip the zip archive of the Aternity APM Java Agent, it will be expanded in a subdirectory */agent*
 
 ```shell
 unzip aternity-apm-jida-linux-xx.x.x_BLxxx.zip
