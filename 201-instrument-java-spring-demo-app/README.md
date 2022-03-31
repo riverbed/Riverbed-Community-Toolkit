@@ -1,8 +1,10 @@
 # 201-instrument-java-spring-demo-app
 
-This cookbook helps to setup Java microservices application with the Aternity Java APM Agent.
+This cookbook shows how to setup Aternity Java APM agent auto-instrumentation on a Java app.
 
-The sample app is the famous Java Community application called [Spring PetClinic Microservices](https://github.com/spring-petclinic/spring-petclinic-microservices). Composed of multiple services that run in containers, like Config, Discovery Server, Customers, Vets, Visits and API, it uses [ZipKin](https://zipkin.io/) instrumentation to export some application telemetry (traces for the service calls). The [Aternity APM OpenTelemetry collector](https://hub.docker.com/r/aternity/apm-collector) is integrated in the architecture, it also runs in a container, taking the role of the Tracing Server to collect and store the telemetry in the Aternity APM backend (SaaS). 
+The demo app is the famous Java Community application called [Spring PetClinic Microservices](https://github.com/spring-petclinic/spring-petclinic-microservices), we also use to app in [Cookbook 102](../102-opentelemetry-spring-demo-app). The app is composed of multiple services that run in containers, like Config, Discovery Server, Customers, Vets, Visits and API.
+
+Here, the [Aternity APM](https://www.aternity.com/apm) agent is injected in each service, enabling automatic instrumentation and performance monitoring. 
 
 ## Prerequisites
 
@@ -19,13 +21,11 @@ Navigate to Aternity APM (for example [https://apm.myaccount.aternity.com](https
 2. Grab **SaaS Analysis Server Host**, for example *agents.apm.myaccount.aternity.com* (IMPORTANT: Replace *agents* with *psockets*)
 3. Download the Aternity APM Java Agent, and unzip it in the directory with the `docker-compose.yml` file.
 
-### Configure the Aternity OpenTelemetry Collector with your CustomerID & SaaS Analysis Server Host
+### Configure the Aternity agent with your CustomerID & SaaS Analysis Server Host
 
 Download a local copy of the file [docker-compose.yml](docker-compose.yml), for example in the directory `Tech-Community/201-instrument-java-spring-demo-app`
 
-Edit the YAML file docker-compose.yml adding the following environment & mounted volume to each Java service you would like to instrument. Replace the following tokens with the information from the [previous step](#connect-to-aternity-apm-webconsole) and save:
-1. `${ATERNITY_CUSTOMER_ID}`
-2. `${ATERNITY_SAAS_SERVER_HOST}`  
+The [docker-compose.yml](docker-compose.yml) defines environment variable and mounts volume to each Java service to be be instrumentde.
 
 ```yaml
   cool-java-service:
@@ -41,7 +41,7 @@ Edit the YAML file docker-compose.yml adding the following environment & mounted
       - ./agent:/agent
 ```
 
-For example:
+The CustomerID and SaaS Analysis Server Host can be defined manually, replacing ATERNITY_SAAS_SERVER_HOST and ATERNITY_CUSTOMER_ID directly in the file like this:
 
 ```yaml
   cool-java-service:
@@ -69,6 +69,7 @@ cd Tech-Community/201-instrument-java-spring-demo-app
 ```
 
 Download and unzip an Aternity APM Java Agent
+
 ```shell
 unzip aternity-apm-jida-linux-xx.x.x_BLxxx.zip
 ```
