@@ -1,6 +1,6 @@
 # 107-opentelemetry-autoinstrumentation-nodejs-app
 
-In this cookbok, the [OpenTelemetry](https://opentelemetry.io/) automatic instrumentation is injected in a simple **nodejs** webapp (based on Express). And [Aternity APM](https://www.aternity.com/apm) collects the OTLP telemetry with the [Aternity OpenTelemetry Collector container](https://hub.docker.com/r/aternity/apm-collector).
+In this cookbok, the [OpenTelemetry](https://opentelemetry.io/) automatic instrumentation is added to a simple **nodejs** webapp (based on Express). And [Aternity APM](https://www.aternity.com/apm) collects the OTLP telemetry with the [Aternity OpenTelemetry Collector container](https://hub.docker.com/r/aternity/apm-collector).
 
 This cookbook differs from the [cookbook 104](../104-opentelemetry-zipkin-nodejs-app), where instrumentation is manual and exports Zipkin telemetry.
 
