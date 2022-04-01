@@ -1,0 +1,71 @@
+# docker-compose.yaml
+#
+# Aternity Tech-Community
+# 107-opentelemetry-autoinstrumentation-nodejs-app
+# version: 22.4.1
+#
+# Compose file to use with the cookbook 107
+#
+# Usage
+#   docker-compose up
+#
+# Example in Bash
+#   export ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
+#   export ATERNITY_CUSTOMER_ID="12341234-12341234-13241234"
+#   docker-compose up
+#
+# Example in PowerShell
+#   $env:ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
+#   $env:ATERNITY_CUSTOMER_ID="12341234-12341234-13241234"
+#   docker-compose up
+
+version: "3.8"
+
+services:
+
+  opentelemetry-collector:
+
+    # Aternity OpenTelemetry Collector
+    # https://hub.docker.com/r/aternity/apm-collector
+
+    image: registry.hub.docker.com/aternity/apm-collector:2022.4.0-4
+
+    container_name: aternity-opentelemetry-collector       
+
+    environment:
+    
+      SERVER_URL: "wss://${ATERNITY_SAAS_SERVER_HOST}/?RPM_AGENT_CUSTOMER_ID=${ATERNITY_CUSTOMER_ID}"
+    
+    ports:
+
+      # Uncomment the telemetry protocol used by the application
+
+      # OpenTelemetry, https://opentelemetry.io
+      # - "4318:4318/tcp"     # OpenTelemetry OTLP JSON/Protobuf over HTTP
+      # - "55681:55681/tcp" # OpenTelemetry OTLP JSON/Protobuf over HTTP
+      - "4317:4317/tcp"   # OpenTelemetry OTLP over gRPC
+      
+      # Jaeger, https://www.jaegertracing.io
+      # - "14268:14268/tcp" # Jaeger Thrift Binary over HTTP
+      # - "6831:6831/udp"   # Jaeger Thrift Compact
+      # - "6832:6832/udp"   # Jaeger Thrift Binary
+      
+      # Zipkin, https://zipkin.io
+      # - "9411:9411/tcp"   # Zipkin v2 json/protobuf and v1 json/thrift
+      # - "5775:5775/udp"   # Jaeger's Thrift support for Zipkin v1
+
+
+  service107_js:   
+    
+    environment:  
+    
+      OTEL_EXPORTER_ZIPKIN_ENDPOINT: http://aternity-opentelemetry-collector:9411/api/v2/spans
+      OTEL_EXPORTER_OTLP_ENDPOINT: aternity-opentelemetry-collector:4317
+      OTEL_SERVICE_NAME: service107_js
+
+    ports:
+      - "8107:80"
+
+    build:
+      context: https://github.com/Aternity/Tech-Community.git#main
+      dockerfile: 107-opentelemetry-autoinstrumentation-nodejs-app
