@@ -67,7 +67,7 @@ Browse the local urls
 
 ### Step4. Open the Aternity APM webconsole to visualize and analyze the traces collected for every transaction
 
-![Aternity APM OpenTelemetry traces](images/aternity-opentelemetry-service110-js-transactions.png)
+![Aternity APM OpenTelemetry traces](images/aternity-opentelemetry-service110-php-transactions.png)
 
 ## Notes
 
