@@ -20,7 +20,7 @@ The [Aternity APM OpenTelemetry Collector](https://hub.docker.com/r/aternity/apm
 Navigate to Aternity APM (for example [https://apm.myaccount.aternity.com](https://apm.myaccount.aternity.com)) > Agents > Install Agents:
 
 1. Find your **CustomerID**, for example *12341234-12341234-13241234*
-2. Grab **SaaS Analysis Server Host**, for example *agents.apm.myaccount.aternity.com*
+2. Grab the **SaaS Analysis Server Host** starting with "agents.apm", for example *agents.apm.myaccount.aternity.com*
 
 ### Step 2 - Get the docker-compose
 
