@@ -9,7 +9,7 @@ Please visit [Aternity](https://www.aternity.com) for Solutions resources, [Free
 
 | ID | Description | DEM | Tags | Last update |
 | --- | --- | --- | --- | --- | 
-| [101](101-instrument-dotnet-app-on-windows) | Quickstart to instrument a dotnet app on a windows server with Aternity APM | [Aternity APM](https://www.aternity.com/application-performance-monitoring/) | dotnet, WebApp, C#, PowerShell, Windows Server 2019 | nov. 2021 |
+| [101](101-instrument-dotnet-app-on-windows) | Quickstart to instrument a dotnet app on a windows server with Aternity APM | [Aternity APM](https://www.aternity.com/application-performance-monitoring/) | APM agent for Windows, dotnet, WebApp, C#, PowerShell, Windows Server 2019 | nov. 2021 |
 | [102](102-opentelemetry-spring-demo-app) | Quickstart OpenTelemetry Distributed tracing / Java microservices demo app with [Aternity OpenTelemetry Collector](https://hub.docker.com/r/aternity/apm-collector) | [Aternity APM](https://www.aternity.com/application-performance-monitoring/) | OpenTelemetry, ZipKin, Java, WebApp, Microservices, Docker | mar. 2022 |
 | [103](103-opentelemetry-otlp-python-app) | A simple Python web app exporting OTLP telemetry to the [Aternity OpenTelemetry Collector](https://hub.docker.com/r/aternity/apm-collector) | [Aternity APM](https://www.aternity.com/application-performance-monitoring/) | OpenTelemetry, OTLP, Python, WebApp, Microservices, Docker | mar. 2022 |
 | [104](104-opentelemetry-zipkin-nodejs-app) | A Nodejs web app exporting Zipkin telemetry to the [Aternity OpenTelemetry Collector](https://hub.docker.com/r/aternity/apm-collector) | [Aternity APM](https://www.aternity.com/application-performance-monitoring/) | OpenTelemetry, Zipkin, Javascript, Nodejs, Docker | mar. 2022 |
@@ -20,7 +20,7 @@ Please visit [Aternity](https://www.aternity.com) for Solutions resources, [Free
 | [109](109-opentelemetry-export) | Chaining the collectors. The [Aternity OpenTelemetry Collector](https://hub.docker.com/r/aternity/apm-collector) receives native OTLP traces exported by the OTel collector | [Aternity APM](https://www.aternity.com/application-performance-monitoring/) | OpenTelemetry, OTel Collector, Go, Docker | mar. 2022 |
 | [110](110-opentelemetry-php-app) | Some PHP samples exporting OTLP and Zipkin telemetry to the [Aternity OpenTelemetry Collector](https://hub.docker.com/r/aternity/apm-collector) | [Aternity APM](https://www.aternity.com/application-performance-monitoring/) | OpenTelemetry, PHP, Apache, OTLP, Zipkin, Docker | apr. 2022 |
 | [201](201-instrument-java-spring-demo-app) | Quickstart automatic instrumentation with Java app / Java microservices demo app | [Aternity APM](https://www.aternity.com/application-performance-monitoring/) | APM agentless, Java, automatic instrumentation, Profiler, WebApp, Microservices, Docker | apr. 2022 |
-| [202](202-instrument-spring-demo-app) | *in progress* | [Aternity APM](https://www.aternity.com/application-performance-monitoring/) | APM agent, Java, automatic instrumentation, Profiler, WebApp, Microservices, Docker | apr. 2022 |
+| [202](202-instrument-spring-demo-app) | *in progress* | [Aternity APM](https://www.aternity.com/application-performance-monitoring/) | APM agent for Linux, Java, automatic instrumentation, Profiler, WebApp, Microservices, Docker | apr. 2022 |
 
 Contributions can be submitted via  [Issues](https://github.com/Aternity/Tech-Community/issues) and [Pull Request](https://github.com/Aternity/Tech-Community/pulls). The team will usually give feedback in the day.
 
