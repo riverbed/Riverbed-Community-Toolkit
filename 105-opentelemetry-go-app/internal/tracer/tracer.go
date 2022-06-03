@@ -1,10 +1,16 @@
 // Aternity Tech-Community
 // 105-opentelemetry-go-app
+// version: 22.06.3
 
 package tracer
 
 import (
 	"context"
+	"io"
+	"log"
+	appconfig "opentelemetry-go-example/internal/config"
+	"os"
+
 	"go.opentelemetry.io/contrib/propagators/b3"
 	"go.opentelemetry.io/otel"
 	"go.opentelemetry.io/otel/attribute"
@@ -15,30 +21,26 @@ import (
 	"go.opentelemetry.io/otel/exporters/zipkin"
 	"go.opentelemetry.io/otel/sdk/resource"
 	"go.opentelemetry.io/otel/sdk/trace"
-	"io"
-	"log"
-	appconfig "opentelemetry-go-example/internal/config"
-	"os"
 )
 
-func InitTracerProvider(serviceName string) (*trace.TracerProvider) {
-	// The B3 HTTP header propagation
-	b3Propagator := b3.New()
-	otel.SetTextMapPropagator(b3Propagator)
+func InitTracerProvider() *trace.TracerProvider {
+	ctx := context.Background()
 
 	// Desired exporter
 	var exp trace.SpanExporter
 	var err error
-	switch appconfig.Config["EXPORTER"] {
+	switch appconfig.Config["OTEL_TRACES_EXPORTER"] {
 	case "jaeger":
 		exp, err = jaegerExporter()
+	case "stdout", "console":
+		exp, err = stdouttrace.New(stdouttrace.WithPrettyPrint())
 	case "file":
-		file, err := os.Create(serviceName + "-traces.txt")
-		if err != nil {
-			log.Fatal(err)
+		file, err_file := os.Create("traces.txt")
+		if err_file != nil {
+			log.Fatal(err_file)
 		}
 		exp, err = fileExporter(file)
-		// Can't close file after this function. Don't bother closing.
+		// Can't close file after this function. Don't bother closing :)
 		//defer file.Close()
 	case "zipkin":
 		exp, err = zipkinExporter()
@@ -49,29 +51,51 @@ func InitTracerProvider(serviceName string) (*trace.TracerProvider) {
 		log.Fatal(err)
 	}
 
-	// Set the service name - and any other attributes.
-	resources, err := resource.New(
-		context.Background(),
+	res, err := resource.New(
+		ctx,
 		resource.WithAttributes(
-			attribute.String("service.name", serviceName),
-			attribute.String("library.language", "go"),
+			attribute.String("aternity.tech-community.cookbook.id", "105"),
 		),
+		resource.WithTelemetrySDK(),
+		resource.WithOS(),
 	)
+
 	if err != nil {
 		log.Fatal("Could not set resources: ", err)
 	}
 
-	// Set the main batched tracer provider
-	tp := trace.NewTracerProvider(
-		trace.WithBatcher(exp),
-		trace.WithResource(resources),
-	)
+	// Register the trace exported with a batcher (TraceProvider)
+	// No sampling (i.e. keep every sample :))
+
+	var tp *trace.TracerProvider
+	if appconfig.Config["ADD_CONSOLE_EXPORTER"] != "on" {
+		tp = trace.NewTracerProvider(
+			trace.WithSampler(trace.AlwaysSample()),
+			trace.WithBatcher(exp),
+			trace.WithResource(res),
+		)
+	} else {
+		// ADD_CONSOLE_EXPORTER, add an exporter to display traces on the stdout (console)
+		var exp_console, _ = stdouttrace.New(stdouttrace.WithPrettyPrint())
+
+		tp = trace.NewTracerProvider(
+			trace.WithSampler(trace.AlwaysSample()),
+			trace.WithBatcher(exp),
+			trace.WithResource(res),
+			trace.WithBatcher(exp_console),
+		)
+	}
+
 	otel.SetTracerProvider(tp)
+
+	// The B3 HTTP header propagation
+	b3Propagator := b3.New()
+	otel.SetTextMapPropagator(b3Propagator)
 
 	return tp
 }
 
-// Console exporter.
+// File exporter.
 func fileExporter(w io.Writer) (trace.SpanExporter, error) {
 	return stdouttrace.New(
 		stdouttrace.WithWriter(w),
@@ -93,11 +117,11 @@ func zipkinExporter() (trace.SpanExporter, error) {
 		":" + appconfig.Config["ZIPKIN_PORT"] + appconfig.Config["ZIPKIN_PATH"])
 }
 
-// OTLP exporter
+// OTLP http exporter
 func otlpExporter() (trace.SpanExporter, error) {
 	client := otlptracehttp.NewClient(otlptracehttp.WithInsecure(),
-		otlptracehttp.WithEndpoint(appconfig.Config["ATERNITY_COLLECTOR_SERVICE_HOST"] +
-			":" + appconfig.Config["OTLP_PORT"]),
+		otlptracehttp.WithEndpoint(appconfig.Config["ATERNITY_COLLECTOR_SERVICE_HOST"]+
+			":"+appconfig.Config["OTLP_PORT"]),
 		otlptracehttp.WithURLPath(appconfig.Config["OTLP_PATH"]))
 	return otlptrace.New(context.Background(), client)
 }

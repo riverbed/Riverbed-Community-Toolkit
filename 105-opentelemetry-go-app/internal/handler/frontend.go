@@ -1,17 +1,19 @@
 // Aternity Tech-Community
 // 105-opentelemetry-go-app
+// version: 22.06.3
 
 package handler
 
 import (
 	"fmt"
-	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
-	"go.opentelemetry.io/otel"
 	"io/ioutil"
 	"log"
 	"net/http"
 	appconfig "opentelemetry-go-example/internal/config"
 	"time"
+
+	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
+	"go.opentelemetry.io/otel"
 )
 
 func FrontendHandler() http.HandlerFunc {
@@ -25,7 +27,7 @@ func FrontendHandler() http.HandlerFunc {
 		time.Sleep(duration)
 
 		// Now start a child span
-		_, span := otel.Tracer("otel-go-frontend").Start(r.Context(), "frontend-work")
+		_, span := otel.Tracer(appconfig.Config["OTEL_SERVICE_NAME"]).Start(r.Context(), "frontend-work")
 
 		// Add an event
 		time.Sleep(duration)

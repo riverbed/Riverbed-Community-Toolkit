@@ -1,12 +1,12 @@
 // Aternity Tech-Community
 // 105-opentelemetry-go-app
+// version: 22.06.3
 
 package main
 
 import (
 	"context"
 	"fmt"
-	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 	"log"
 	"net/http"
 	appconfig "opentelemetry-go-example/internal/config"
@@ -14,17 +14,19 @@ import (
 	apptracer "opentelemetry-go-example/internal/tracer"
 	"os"
 	"strconv"
+
+	"go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp"
 )
 
 func setup(name string, handlerFunction http.HandlerFunc, port uint16) {
-	tp := apptracer.InitTracerProvider("go-" + name + "-service")
+	tp := apptracer.InitTracerProvider()
 	defer func() {
 		if err := tp.Shutdown(context.Background()); err != nil {
 			log.Fatal(err)
 		}
 	}()
 
-	wrappedHandler := otelhttp.NewHandler(handlerFunction, name + "-handler")
+	wrappedHandler := otelhttp.NewHandler(handlerFunction, name+"-handler")
 
 	http.Handle("/", wrappedHandler)
 

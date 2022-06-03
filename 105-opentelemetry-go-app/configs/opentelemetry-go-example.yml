@@ -1,8 +1,9 @@
 # Aternity Tech-Community
 # 105-opentelemetry-go-app
+# version: 22.06.3
 
 # Exporter
-EXPORTER: otlp
+OTEL_TRACES_EXPORTER: otlp
 
 # Jaeger endpoint
 JAEGER_PORT: 14268
@@ -12,12 +13,15 @@ JAEGER_PATH: /api/traces
 ZIPKIN_PORT: 9411
 ZIPKIN_PATH: /api/v2/spans
 
-# OTLP endpoint
+# OTLP http endpoint
 OTLP_PORT: 4318
 OTLP_PATH: /v1/traces
 
 # Aternity APM collector configuration
 ATERNITY_COLLECTOR_SERVICE_HOST: localhost
+
+# Service name
+OTEL_SERVICE_NAME: service105-go
 
 # Server configurations
 FRONTEND_SERVICE_HOST: localhost
@@ -27,3 +31,5 @@ BACKEND_SERVICE_PORT: 9000
 
 # Sleep millis
 SLEEP: 5
+
+ADD_CONSOLE_EXPORTER: "off"

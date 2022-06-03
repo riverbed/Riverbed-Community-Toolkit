@@ -1,15 +1,17 @@
 // Aternity Tech-Community
 // 105-opentelemetry-go-app
+// version: 22.06.3
 
 package handler
 
 import (
 	"fmt"
-	"go.opentelemetry.io/otel"
 	"log"
 	"net/http"
 	appconfig "opentelemetry-go-example/internal/config"
 	"time"
+
+	"go.opentelemetry.io/otel"
 )
 
 func BackendHandler() http.HandlerFunc {
@@ -23,7 +25,7 @@ func BackendHandler() http.HandlerFunc {
 		time.Sleep(duration)
 
 		// Now start a child span
-		_, span := otel.Tracer("otel-go-backend").Start(r.Context(), "backend-work")
+		_, span := otel.Tracer(appconfig.Config["OTEL_SERVICE_NAME"]).Start(r.Context(), "backend-work")
 
 		time.Sleep(duration)
 		span.AddEvent("backend-job")

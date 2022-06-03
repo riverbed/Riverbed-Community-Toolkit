@@ -1,6 +1,6 @@
 # Aternity Tech-Community
 # 105-opentelemetry-go-app
-# version: 22.03.01
+# version: 22.06.03
 #
 # Simple 2 tier Go application using the OpenTelemetry SDK. Capable of showing distributed traces
 # using the Otlp, Jaeger, or Zipkin formats.
@@ -13,11 +13,14 @@
 #   docker-compose up
 #
 # Example in Unix
-#   ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com" ATERNITY_CUSTOMER_ID="12341234-12341234-13241234" \
-#     docker-compose up
+#   ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com" ATERNITY_CUSTOMER_ID="12341234-12341234-13241234" docker-compose up
 #
+# Example PowerShell
+#   $env:ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
+#   $env:ATERNITY_CUSTOMER_ID="ATERNITY_CUSTOMER_ID="12341234-12341234-13241234"
+#   docker-compose up
 
-version: '2'
+version: '3.8'
 
 services:
 
@@ -33,9 +36,9 @@ services:
     command: backend
     container_name: opentelemetry-go-backend
     environment:
-#      EXPORTER: otlp
-#      EXPORTER: jaeger
-      EXPORTER: zipkin
+      OTEL_SERVICE_NAME: service105-go-backend
+      OTEL_TRACES_EXPORTER: otlp  # otlp, jaeger, zipkin, file
+      ADD_CONSOLE_EXPORTER: "off" # "on", "off"
       ATERNITY_COLLECTOR_SERVICE_HOST: aternity-collector
     build:
       context: .
@@ -47,9 +50,9 @@ services:
     command: frontend
     container_name: opentelemetry-go-frontend
     environment:
-#      EXPORTER: otlp
-#      EXPORTER: jaeger
-      EXPORTER: zipkin
+      OTEL_SERVICE_NAME: service105-go-frontend
+      OTEL_TRACES_EXPORTER: otlp  # otlp, jaeger, zipkin, file
+      ADD_CONSOLE_EXPORTER: "off" # "on", "off"
       ATERNITY_COLLECTOR_SERVICE_HOST: aternity-collector
       BACKEND_SERVICE_HOST: opentelemetry-go-backend
     ports:
