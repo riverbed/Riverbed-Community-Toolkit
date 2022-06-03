@@ -982,7 +982,7 @@
                 },
                 "privateIP" : {
                   "type": "string",
-                  "defaultValue" : "10.100.5.11",
+                  "defaultValue" : "10.100.5.5",
                   "metadata":{
                     "description" : "Private IP reserved in the existing subnet range for Portal"
                   }

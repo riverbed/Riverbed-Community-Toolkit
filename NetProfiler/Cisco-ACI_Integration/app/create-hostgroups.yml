@@ -1,0 +1,51 @@
+---
+- name: REST API Netprofiler
+  hosts: localhost
+  connection: local
+  vars:
+    host: "Netprofiler ipv4 address"
+    access_code: "Oauth access code"
+    tenant: "myTenant"
+    mysql_host: "172.18.0.3"
+    mysql_username: "root"
+    mysql_pass: "password"
+    mysql_db: "endpointtracker"
+    mysql_table: "endpoints"
+    json_file: "import.json"
+    is_netprofiler: "True"
+    is_ar11: "False"
+
+  tasks:
+    - name: Import and Create Hostgroup File
+      aci_mysql_endpoints_to_epg_hostgroups_json:
+        mysql_host: "{{ mysql_host }}"
+        mysql_username: "{{ mysql_username }}"
+        mysql_pass: "{{ mysql_pass }}"
+        mysql_db: "{{ mysql_db }}"
+        mysql_table: "{{ mysql_table }}"
+        tenant: "{{ tenant }}"
+        json_file: "{{ json_file }}"
+        is_netprofiler: "{{ is_netprofiler }}"
+        is_ar11: "{{ is_ar11 }}"
+      register: result
+
+    - debug: var=result
+
+    - name: Create Hostgroup via REST API
+      block:
+        - name: Create Hostgroup from JSON file
+          create_hostgroup_from_json:
+            host: "{{ host }}"
+            access_code: "{{ access_code }}"
+            json_file: "{{ json_file }}"
+          register: result
+
+      rescue:
+        - name: Update Hostgroup from JSON file
+          update_hostgroup_from_json:
+            host: "{{ host }}"
+            access_code: "{{ access_code }}"
+            json_file: "{{ json_file }}"
+          register: result
+
+    - debug: var=result

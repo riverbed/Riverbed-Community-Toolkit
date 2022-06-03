@@ -36,7 +36,7 @@ The technical solution exists in different form factors so that it can be deploy
 
 ### Cookbooks for GNS3
 
-- [GNS3 Deploy Accelerator virtual appliance in your labs (VPN or SD-WAN)](GNS3/)
+- [GNS3 - Deploy Accelerator virtual appliance in your labs)](GNS3/)
 
 ## License
 

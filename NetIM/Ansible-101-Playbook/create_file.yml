@@ -1,0 +1,41 @@
+---
+- name: Import Hostgroup 'ByLocation' from Netprofiler and Import into NetIM
+  hosts: localhost
+  connection: local
+  vars:
+    netprofiler: "https://netprofiler ip or fqdn"
+    access_code: "OAuth access code"
+    netim: "netim ip or fqdn"
+    netim_username: "netimadmin"
+    netim_password: "some password"
+    filename: "append.txt"
+
+  tasks:
+    - name: Create IP subnet to Group mappings txt file
+      create_ip_subnet_to_group_mapping:
+        netprofiler: "{{ netprofiler }}"
+        access_code: "{{ access_code }}"
+      register: results
+
+    - name: Display file creation result 
+      debug: var=results
+
+    - name: copy file to location
+      shell:
+        cmd: sshpass -p {{ netim_password }} scp -o StrictHostKeyChecking=no {{ filename }} {{netim_username}}@{{ netim }}:/tmp
+      args:
+        executable: /bin/bash
+      register: result
+
+    - name: Display file copy result
+      debug: var=result
+
+    - name: append result to IP_Subnet_to_group_mapping.tx
+      shell:
+        cmd: sshpass -p {{ netim_password }} ssh {{ netim_username}}@{{ netim }} -o StrictHostKeyChecking=no "bash; cd /data1/riverbed/NetIM/2.*/lib/xml/res; cat /tmp/append.txt >> IP_Subnet_to_Group_Mapping.txt"
+      args:
+        executable: /bin/bash
+      register: result
+
+    - name: Display file paste result
+      debug: var=result
