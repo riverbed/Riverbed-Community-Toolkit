@@ -5,7 +5,7 @@ Riverbed shares some cookbooks with the user community to help integrating Steel
 
 ### Cookbooks for AWS
 
-- [AWS-103 - Deploying Accelerator and SteelConnect-EX SD-WAN gateway](SteelHead/AWS-Cloud-Cookbooks/103-sconex-and-cloud-accelerator)
+- [AWS-103 - Deploying Accelerator and SteelConnect-EX SD-WAN gateway](../SteelHead/AWS-Cloud-Cookbooks/103-sconex-and-cloud-accelerator)
 
 ### Cookbooks for Azure
 
