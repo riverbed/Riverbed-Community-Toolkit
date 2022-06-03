@@ -33,7 +33,7 @@ This cookbook assumes the following prerequisite are met:
 1. General familiarity with SteelConnect EX deployments.
 2. A working SteelConnect EX Headend service, including Director and controller.
 3. A post-staging device template and device group have been created that the AWS SD-WAN gateway will be assigned to.
-4. The AWS marketplace terms for both the Riverbed SD-WAN gateway and Cloud Accelerator products have been accepted (Navigate to https://aws.amazon.com/marketplace/search/results?searchTerms=riverbed, select **Riverbed SteelConnect EX FlexVNF** item and hit **Continue to subscribe** and then **Accept terms**, and repeat for **Riverbed Steelhead 9.9.1**)
+4. The AWS marketplace terms for both the Riverbed SD-WAN gateway and Cloud Accelerator products have been accepted (Navigate to https://aws.amazon.com/marketplace/search/results?searchTerms=riverbed, select **Riverbed SteelConnect EX FlexVNF** item, hit **Continue to subscribe** button and then **Accept Terms**. Repeat and select **Riverbed Steelhead 9.9.1**)
 
 ## Deployment
 
@@ -49,9 +49,7 @@ Upload the following template file, which defines the parameters and resources r
 
 [CloudFormation Template: 2BOX SCONEX + CLOUD ACCELERATOR](aws-sconex-wanopt.json)
 
-Click Next to go to Specify stack details, where you must assign values to the template parameters. 
-
-Provide your values such as stack name, owner name, and SSH key pair. You can leave default parameters as is, unless you would prefer to use different values.
+Click Next to go to Specify stack details, where you must assign values to the template parameters. Provide your values such as stack name, owner name, and SSH key pair. You can leave default parameters as is, unless you would prefer to use different values.
 
 Click Next to change any other configuration parameters. 
 
@@ -78,8 +76,8 @@ To obtain the device serial number, look up the SteelConnect EX device's public 
 Once at the device's remote shell, enter the CLI and run the following command to get the serial number:
 
 ```
-    admin@flexvnf-cli> show system details | grep Serial
-       Serial number       <serial number>
+admin@flexvnf-cli> show system details | grep Serial
+    Serial number       <serial number>
 ```
 
 
@@ -96,7 +94,7 @@ admin@flexvnf-cli> request erase running-config
 Allow a few minutes for the services to restart, and then run the staging script:
 
 ```
-    sudo /opt/versa/scripts/staging.py -l SDWAN-Branch@Riverbed.com -r <controller_name>-staging@Riverbed.com -n <serial_number> -c <controller_WAN_IP> -w 1 -s <EX_WAN_IP/netmask> -g <gateway_IP>
+sudo /opt/versa/scripts/staging.py -l SDWAN-Branch@Riverbed.com -r <controller_name>-staging@Riverbed.com -n <serial_number> -c <controller_WAN_IP> -w 1 -s <EX_WAN_IP/netmask> -g <gateway_IP>
 
 - controller\_name = hostname of the SD-WAN controller configured in the post-staging template
 - serial\_number = serial number of the AWS SteelConnect EX SD-WAN gateway
