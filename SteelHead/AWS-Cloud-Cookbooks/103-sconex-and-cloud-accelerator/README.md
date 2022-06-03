@@ -51,11 +51,9 @@ Upload the following template file, which defines the parameters and resources r
 
 Click Next to go to Specify stack details, where you must assign values to the template parameters. Provide your values such as stack name, owner name, and SSH key pair. You can leave default parameters as is, unless you would prefer to use different values.
 
-Click Next to change any other configuration parameters. 
+Click Next to change any other configuration parameters. When finished, click Create Stack.
 
-When finished, click Create Stack.
-
-When the stack successfully completes launching, new Cloud Accelerator and SteelConnect EX FlexVNF instances will be running.
+The full deployment takes up to 15 minutes. When the stack successfully completes launching, new Cloud Accelerator and SteelConnect EX FlexVNF instances will be running.
 
 ## Post-deployment Steps
 
