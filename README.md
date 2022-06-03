@@ -12,7 +12,7 @@ A public toolkit shared by [Riverbed](https://www.riverbed.com) and the [Riverbe
 | [NetProfiler](/NetProfiler) | Deploy the Netprofiler with Terraform template in the Azure Cloud. Ansible playbook example based on [SteelScript Python Library](https://github.com/riverbed/steelscript)| Ansible, Terraform |
 | [SteelConnect](/SteelConnect) | Scripts, howtos and templates to deploy SteelConnect headend in Azure | Azure, Terraform, PowerShell |
 | [SteelScript](#) | *work in progress* Examples and use-cases based on [SteelScript Python Library](https://github.com/riverbed/steelscript) | Python |
-| [Aternity](https://github.com/Aternity/Tech-Community) | The [Aternity Tech-Community](https://github.com/Aternity/Tech-Community) is sharing cookbooks and technical contents for [Aternity DEM](https://www.aternity.com/): EUEM, APM, User Journey Intelligence and more | OpenTelemetry, code instrumentation, API, Windows, Linux, PowerShell |
+| [Aternity](https://github.com/Aternity/Tech-Community) | The [Aternity Tech-Community](https://github.com/Aternity/Tech-Community) is sharing cookbooks and technical contents for [Aternity DEM](https://www.aternity.com/): EUEM, APM and User Journey Intelligence | OpenTelemetry, code instrumentation, API, Windows, Linux, PowerShell |
 
 
 
