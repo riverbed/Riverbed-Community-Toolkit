@@ -12,7 +12,8 @@ A public toolkit shared by [Riverbed](https://www.riverbed.com) and the [Riverbe
 | [NetProfiler](/NetProfiler) | Deploy the Netprofiler with Terraform template in the Azure Cloud. Ansible playbook example based on [SteelScript Python Library](https://github.com/riverbed/steelscript)| Ansible, Terraform |
 | [SteelConnect](/SteelConnect) | Scripts, howtos and templates to deploy SteelConnect headend in Azure | Azure, Terraform, PowerShell |
 | [SteelScript](#) | *work in progress* Examples and use-cases based on [SteelScript Python Library](https://github.com/riverbed/steelscript) | Python |
-| [Windows](/Aternity) | Library of Automation and Remediation scripts for Windows Endpoints - including script to interact with Riverbed Client Accelerator agent (a.k.a SteelHead Mobile), Application Signatures for [Aternity EUEM](https://www.aternity.com/) | Azure, Windows, PowerShell |
+| [Aternity](https://github.com/Aternity/Tech-Community) | The [Aternity Tech-Community](https://github.com/Aternity/Tech-Community) is sharing cookbooks and technical contents for [Aternity DEM](https://www.aternity.com/): EUEM, APM and User Journey Intelligence | OpenTelemetry, code instrumentation, API, Windows, Linux, PowerShell |
+
 
 
 ## How to contribute?
@@ -26,4 +27,5 @@ Thanks for sharing with the [Riverbed Community](https://community.riverbed.com)
 ## License
 
 Copyright (c) 2021 Riverbed Technology, Inc.
+
 The scripts provided here are licensed under the terms and conditions of the MIT License accompanying the software ("License"). The scripts are distributed "AS IS" as set forth in the License. The script also include certain third party code. All such third party code is also distributed "AS IS" and is licensed by the respective copyright holders under the applicable terms and conditions (including, without limitation, warranty and liability disclaimers) identified in the license notices accompanying the software.
