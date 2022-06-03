@@ -31,6 +31,7 @@ The technical solution exists in different form factors so that it can be deploy
 
 - [AWS-101 - Deploying Accelerator in existing VPC having a gateway appliance (VPN or SD-WAN)](AWS-Cloud-Cookbooks/101-service-chain-gw-appliance.md)
 - [AWS-102 - Create VPC, Subnets, Workload, Acceleration and service chain with gateway appliance](AWS-Cloud-Cookbooks/102-vpc-and-service-chain-gw-appliance.md)
+- [AWS-103 - Deploying Accelerator and SteelConnect-EX SD-WAN gateway](AWS-Cloud-Cookbooks/103-sconex-and-cloud-accelerator)
 
 *Other topics in preparation: AWS Gateway Load Balancer, AWS Transit Gateway, VPC ingress routing*
 
