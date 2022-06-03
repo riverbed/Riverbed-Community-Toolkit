@@ -33,7 +33,7 @@ This cookbook assumes the following prerequisite are met:
 1. General familiarity with SteelConnect EX deployments.
 2. A working SteelConnect EX Headend service, including Director and controller.
 3. A post-staging device template and device group have been created that the AWS SD-WAN gateway will be assigned to.
-4. The AWS marketplace terms for both the Riverbed SD-WAN gateway and Cloud Accelerator products have been accepted (Navigate to https://aws.amazon.com/marketplace/search/results?searchTerms=riverbed, select **Riverbed SteelConnect EX FlexVNF** item, hit **Continue to subscribe** button and then **Accept Terms**. Repeat and select **Riverbed Steelhead 9.9.1**)
+4. The AWS marketplace terms for both the Riverbed SD-WAN gateway and Cloud Accelerator products have been accepted ([Search Riverbed on AWS MarketPlace](https://aws.amazon.com/marketplace/search/results?searchTerms=riverbed), select **Riverbed SteelConnect EX FlexVNF** product, hit **Continue to subscribe** button and then **Accept Terms**. Repeat and select **Riverbed Steelhead 9.9.1** product)
 
 ## Deployment
 
