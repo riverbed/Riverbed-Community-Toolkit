@@ -1,6 +1,6 @@
 # 110-opentelemetry-php-app
 
-This cookbook runs multiple containers on a Docker host. A container of the Apache http server exposes a web listener to serve some PHP samples and another container continuously connects to it to generate traffic. The PHP samples are manually instrumented with OpenTelemetry and different exporters, OTLP http and also Zipkin. The [Aternity OpenTelemetry Collector container](https://hub.docker.com/r/aternity/apm-collector) collects all traces, every span without sampling, and send it to the Aternity SaaS backend. 
+This cookbook runs multiple containers on a Docker host. A container of the Apache http server exposes a web listener to serve some PHP samples and another container continuously connects to it to generate traffic. The PHP samples are manually instrumented with OpenTelemetry and different exporters, OTLP http and also Zipkin. The [Aternity OpenTelemetry Collector container](https://hub.docker.com/r/aternity/apm-collector) collects all traces, every span without sampling, and sends the spans to the Aternity SaaS backend. 
 
 ![diagram](images/110-diagram.png)
 
