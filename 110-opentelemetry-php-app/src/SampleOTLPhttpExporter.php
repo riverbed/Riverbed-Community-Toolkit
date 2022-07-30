@@ -4,13 +4,13 @@
 #
 # Aternity Tech-Community
 # 110-opentelemetry-php-app
-# version: 22.7.30
+# version: 22.7.31
 #
 # Sample app instrumented with OpenTelemetry (https://opentelemetry.io/)
 #
 # Configured using OpenTelemetry environment variables:
 #   * OTEL_SERVICE_NAME set with service name for example, "service110-php"
-#   * OTEL_EXPORTER_OTLP_ENDPOINT set with OTLP http endpoint for example http://aternity-opentelemetry-collector:4318/v1/traces
+#   * OTEL_EXPORTER_OTLP_ENDPOINT set with OTLP http endpoint for example http://aternity-opentelemetry-collector:4318
 
 ############################################
 
