@@ -2,7 +2,7 @@
 #
 # Aternity Tech-Community
 # 110-opentelemetry-php-app
-# version: 22.4.11
+# version: 22.7.30
 #
 # Compose file to use with the cookbook 110
 #
@@ -70,7 +70,7 @@ services:
 
       OTEL_EXPORTER_ZIPKIN_ENDPOINT: http://aternity-opentelemetry-collector:9411/api/v2/spans
 
-      OTEL_EXPORTER_OTLP_ENDPOINT: http://aternity-opentelemetry-collector:4318/v1/traces
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://aternity-opentelemetry-collector:4318
       
       
     command: >
