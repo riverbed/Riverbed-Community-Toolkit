@@ -116,7 +116,7 @@ On the application container side, the `OTEL_EXPORTER_OTLP_ENDPOINT` environment
     
     environment:  
     
-      OTEL_EXPORTER_OTLP_ENDPOINT: http://aternity-opentelemetry-collector:4318/v1/traces
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://aternity-opentelemetry-collector:4318
 
       OTEL_SERVICE_NAME: service103_python
 ```

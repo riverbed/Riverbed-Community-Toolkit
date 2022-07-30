@@ -2,7 +2,7 @@
 #
 # Aternity Tech-Community
 # 103-opentelemetry-otlp-python-app
-# version: 22.3.8
+# version: 22.7.30
 #
 # Usage
 #   docker-compose up
@@ -56,7 +56,7 @@ services:
     
     environment:  
     
-      OTEL_EXPORTER_OTLP_ENDPOINT: http://aternity-opentelemetry-collector:4318/v1/traces
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://aternity-opentelemetry-collector:4318
 
       OTEL_SERVICE_NAME: service103_python
 
@@ -71,7 +71,7 @@ services:
       bash -c "
         
         # Install prepreqs
-        pip install -q opentelemetry-distro opentelemetry-exporter-otlp opentelemetry-propagator-b3 opentelemetry-instrumentation-flask flask requests  > /dev/null 2>&1 ;
+        pip install -q opentelemetry-distro[otlp] opentelemetry-instrumentation opentelemetry-instrumentation-flask flask requests  > /dev/null 2>&1 ;
         
         # Fetch the app
         curl -s -o app.py $$PY_APP_URL ;
