@@ -32,7 +32,7 @@ MariaDB [endpointtracker]> desc endpoints;
 
 Before starting the [docker-compose](docker-compose-final.yml) file the custom Ansible container needs to be build with the following [docker-file](dockerfile-ansible).
 ```
-docker build -t m_ansible:netprofiler -f dockerfile-ansible .
+docker build -t m_ansible:aci -f dockerfile-ansible .
 ```
 Verify that the container image is existing:
 ```

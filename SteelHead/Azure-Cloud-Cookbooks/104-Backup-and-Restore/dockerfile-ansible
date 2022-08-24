@@ -1,0 +1,15 @@
+FROM ubuntu:20.04
+
+RUN apt-get update && apt-get -y upgrade && \
+    apt-get install --no-install-recommends -y software-properties-common && \
+    apt-get install --no-install-recommends -y python3-pip build-essential python3-dev && \
+    apt-get install --no-install-recommends -y ansible python3-paramiko sshpass ssh && \
+    apt-get install --no-install-recommends -y vim telnet curl iputils-ping
+
+RUN pip3 install requests==2.25.1
+RUN pip3 install azure-cli
+RUN pip3 install steelscript
+
+WORKDIR /app
+
+CMD ["sleep infinity"]

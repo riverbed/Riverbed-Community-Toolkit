@@ -1,0 +1,64 @@
+#before executing this playbook be sure to be logged into azure, az login -u myusername@mydomain.com
+---
+- name: Cloud SteelHead Backup and Snapshot
+  hosts: localhost
+  connection: local
+  vars:
+    steelhead_name: "Steelhead-name"                           #Steelhead to backup
+    resource_group: "my_resource_group"                        #Resource group to monitor (export flows from)
+
+  tasks:
+    - name: Verify if Cloud Steelhead is running
+      shell:
+        cmd: az vm list --resource-group {{ resource_group }} -d --query "[?contains(name, '{{ steelhead_name }}')].[powerState]" -o tsv
+      register: result
+      args:
+        executable: /bin/bash
+    - debug: var=result.stdout
+
+    - name: Shutdown Cloud SteelHead if running
+      when: result.stdout == "VM running"
+      shell:
+        cmd: az vm stop --name {{ steelhead_name }} --resource-group {{ resource_group }}
+      args:
+        executable: /bin/bash
+    - debug:
+        msg: SteelHead Shutdown
+
+    - name: Get the OSDiskid
+      shell:
+        cmd: az vm show -g {{ resource_group }} -n {{ steelhead_name }} --query "storageProfile.osDisk.managedDisk.id" -o tsv
+      args:
+        executable: /bin/bash
+      register: osdiskid_result
+
+    - name: Create a SNAPshot from the OSDisk
+      vars:
+        m_OSDiskid: "{{ osdiskid_result.stdout}}"
+      shell:
+        cmd: az snapshot create -g {{ resource_group }} --source {{ m_OSDiskid }} --name {{ steelhead_name }}-osDisk-backup-{{ ansible_date_time.epoch }}
+      args:
+        executable: /bin/bash
+
+    - name: Get the DataDiskid
+      shell:
+        cmd: az vm show -g {{ resource_group }} -n {{ steelhead_name }} --query "storageProfile.dataDisks[].managedDisk.id" -o tsv
+      args:
+        executable: /bin/bash
+      register: datadiskid_result
+
+    - name: Create a SNAPshot from the DataDisk
+      vars:
+        m_DataDiskid: "{{ datadiskid_result.stdout}}"
+      shell:
+        cmd: az snapshot create -g {{ resource_group }} --source {{ m_DataDiskid }} --name {{ steelhead_name }}-DataDisk-backup-{{ ansible_date_time.epoch }}
+      args:
+        executable: /bin/bash
+
+    - name: Start the Cloud SteelHead
+      shell:
+        cmd: az vm start --name {{ steelhead_name }} --resource-group {{ resource_group }}
+      args:
+        executable: /bin/bash
+    - debug:
+        msg: SteelHead Started
