@@ -1,0 +1,130 @@
+#before executing this playbook be sure to be logged into azure, az login -u myusername@mydomain.com
+---
+- name: Cloud SteelHead Backup and Snapshot
+  hosts: localhost
+  connection: local
+  vars:
+    steelhead_name: "SteelHead_Nmae"                                       #Steelhead name to restore
+    resource_group: "myresource_group"                                       #Resource group to put the restore steelhead
+    osdisk_snapshotname: "Name-osDisk-backup-epoch"
+    datadisk_snapshotname: "Name-DataDisk-backup-epoch"
+    NSG_group: "my_nsg_group"
+    vnet_name: "my_vnet"
+    subnet_name: "my_subnet"
+    vm_size: "Standard_A2m_v2"                                         #size of the original steelhead ex. Standard A2m v2
+
+  tasks:
+    - name: Get the SNAPshot id of the OSDisk
+      shell:
+        cmd: az snapshot show -n {{ osdisk_snapshotname }} -g {{ resource_group }} --query [id] -o tsv
+      register: osdisksnapshot_id
+      args:
+        executable: /bin/bash
+    - debug: var=osdisksnapshot_id.stdout
+
+    - name: Get the SKU from the SNAPSHot OSDisk
+      shell:
+        cmd: az snapshot show -g {{ resource_group }} -n {{ osdisk_snapshotname }} --query "sku.name" -o tsv
+      register: osdisk_sku
+      args:
+        executable: /bin/bash
+
+    - name: Get the size from the SNAPSHot OSDisk
+      shell:
+        cmd: az snapshot show -g {{ resource_group }} -n {{ osdisk_snapshotname }} --query "diskSizeGb" -o tsv
+      register: osdisk_size
+      args:
+        executable: /bin/bash
+
+    - name: Get the SNAPShot id of the DataDisk
+      shell:
+        cmd: az snapshot show -n {{ datadisk_snapshotname }} -g {{ resource_group }} --query [id] -o tsv
+      register: datadisksnapshot_id
+      args:
+        executable: /bin/bash
+    - debug:
+        msg: datadisksnapshot_id.stdout
+
+    - name: Get the SKU from the SNAPSHot DataDisk
+      shell:
+        cmd: az snapshot show -g {{ resource_group }} -n {{ datadisk_snapshotname }} --query "sku.name" -o tsv
+      register: datadisk_sku
+      args:
+        executable: /bin/bash
+
+    - name: Get the size from the SNAPSHot DataDisk
+      shell:
+        cmd: az snapshot show -g {{ resource_group }} -n {{ datadisk_snapshotname }} --query "diskSizeGb" -o tsv
+      register: datadisk_size
+      args:
+        executable: /bin/bash
+
+    - name: Create a new Managed disk using OSDisk SNAPShot ID
+      vars:
+        osdiskid: "{{ osdisksnapshot_id.stdout }}"
+        osdisksku: "{{ osdisk_sku.stdout }}"
+        osdisksize: "{{ osdisk_size.stdout }}"
+      shell:
+        cmd: az disk create -g {{ resource_group }} --name {{ steelhead_name}}-OSDisk --sku {{ osdisksku }} --size-gb {{ osdisksize }} --source {{ osdiskid }}
+      args:
+        executable: /bin/bash
+    - debug:
+        msg: Managed OSdisk created
+
+    - name: Create a new Managed disk using DataDisk SNAPShot ID
+      vars:
+        datadiskid: "{{ datadisksnapshot_id.stdout }}"
+        datadisksku: "{{ datadisk_sku.stdout }}"
+        datadisksize: "{{ datadisk_size.stdout }}"
+      shell:
+        cmd: az disk create -g {{ resource_group }} --name {{ steelhead_name}}-DataDisk --sku {{ datadisksku }} --size-gb {{ datadisksize }} --source {{ datadiskid }}
+      args:
+        executable: /bin/bash
+    - debug:
+        msg: Managed Datadisk created
+
+    - name: Get Purchase plan name from OSDisk
+      shell:
+        cmd: az snapshot show -g {{ resource_group }} -n {{ osdisk_snapshotname }} --query "purchasePlan.name" -o tsv
+      register: planname
+      args:
+        executable: /bin/bash
+
+    - name: Get Purchase plan product from OSDisk
+      shell:
+        cmd: az snapshot show -g {{ resource_group }} -n {{ osdisk_snapshotname }} --query "purchasePlan.product" -o tsv
+      register: planproduct
+      args:
+        executable: /bin/bash
+
+    - name: Get Purchase plan publisher from OSDisk
+      shell:
+        cmd: az snapshot show -g {{ resource_group }} -n {{ osdisk_snapshotname }} --query "purchasePlan.publisher" -o tsv
+      register: planpub
+      args:
+        executable: /bin/bash
+
+    - name: Create new SteelHead with the new OSDisk and DataDisk
+      vars:
+        plan_name: "{{ planname.stdout }}"
+        plan_publisher: "{{ planpub.stdout }}"
+        plan_product: "{{ planproduct.stdout }}"
+      shell:
+        cmd: >
+          az vm create -n {{ steelhead_name }}
+          -g {{ resource_group }}
+          --attach-os-disk {{ steelhead_name}}-OSDisk
+          --attach-data-disks {{ steelhead_name }}-DataDisk
+          --os-type Linux
+          --plan-name {{ plan_name }}
+          --plan-product {{ plan_product }}
+          --plan-publisher {{ plan_publisher }}
+          --nsg {{ NSG_group }}
+          --vnet-name {{ vnet_name }}
+          --subnet {{ subnet_name }}
+          --size {{ vm_size }}
+      args:
+        executable: /bin/bash
+
+    - debug:
+        msg: Restore of the steelhead {{ steelhead_name }} can take up to 10min.
