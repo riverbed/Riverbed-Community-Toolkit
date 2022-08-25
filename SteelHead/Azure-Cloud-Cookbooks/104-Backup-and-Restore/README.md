@@ -1,8 +1,8 @@
-# Backup and restore of a Cloud SteelHead using Azure snopshots
+# Backup and restore of a Cloud SteelHead using Azure snapshots
 The following cookbook contains a description of ansible playbooks that backup and restore a **Cloud SteelHead**.
 
 ## Backup or Restore the Cloud SteelHead using a docker container
-Backup workflow consists of the following parts:  
+Backup and Restore workflow consists of the following parts:  
 1. Docker container which runs [Ansible](https://www.ansible.com/)
 
 ### Clone the Repo to your favourite location
