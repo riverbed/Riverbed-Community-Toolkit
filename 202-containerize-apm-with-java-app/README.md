@@ -17,13 +17,13 @@ In the Aternity APM webconsole, navigate to CONFIGURE > AGENTS > Install Agents 
 
 1. Find your **Customer Id**, for example *12341234-12341234-13241234*
 2. Find the **SaaS Analysis Server Host** and obtain the **SaaS Psockets Server host** replacing *agents* by *psockets*. For example if the analysis server host is *agents.apm.my_environment.aternity.com* then the SaaS Psockets Server host is *psockets.apm.my_environment.aternity.com*
-3. Download the **Aternity APM Java agent for Linux** package or contact [Riverbed support](https://support.riverbed.com/) to obtain a copy, for example *aternity-apm-jida-linux-12.18.0_BL546.zip*
+3. Download the **Aternity APM Java agent for Linux** package. If the link is not there yet in your environment, just contact [Riverbed support](https://support.riverbed.com/) to obtain a copy, for example *aternity-apm-jida-linux-12.18.0_BL546.zip*
 
 ### Step 2. Prepare the image
 
-1. Save the package of the Aternity APM Java agent for Linux in local folder, for example in "Tech-Community/202-containerize-apm-with-java-app", and rename the file as "aternity-apm-jida-linux.zip" - just removing the suffix part that is the version number.
+1. Save the package of the Aternity APM Java agent for Linux in local folder, for example in "Tech-Community/202-containerize-apm-with-java-app", and **rename the file as aternity-apm-jida-linux.zip** - just removing the suffix part that is the version number.
 
-2. Download the [Dockerfile](https://raw.githubusercontent.com/Aternity/Tech-Community/tree/main/202-containerize-apm-with-java-app/Dockerfile).
+2. Download the [Dockerfile](https://raw.githubusercontent.com/Aternity/Tech-Community/main/202-containerize-apm-with-java-app/Dockerfile).
 
 3. Open a shell in your local folder, and just execute the build command.
 
