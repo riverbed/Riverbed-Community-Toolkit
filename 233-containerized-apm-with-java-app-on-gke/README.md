@@ -74,7 +74,7 @@ gcloud builds submit --config cloudbuild.yaml --substitutions _APM_PACKAGE_GSUTI
 
 Based on the [Dockerfile](Dockerfile), it is building a Docker image that will contain the Java application and the Aternity APM Java agent library for Linux. When the build is done, the image will be stored in the Artifact Registry.
 
-## Step 5. Configure and deploy the application
+## Step 5. Configure the Kubernetes manifest and deploy
 
 1. With the Cloud Shell Editor, edit the Kubernetes manifest [app-k8s.yaml](app-k8s.yaml) to configure the environment variables of your Aternity APM SaaS account and also the path of the image we just built:
 
