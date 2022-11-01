@@ -95,7 +95,7 @@ In your web browser, open the http url using the external IP address, for exampl
 
 ## Step 7. Aternity APM webconsole 
 
-Go to the Aternity APM webconsole to observe the transactions of that instance.
+Go to the Aternity APM webconsole to observe the application with every transaction and every instance.
 
 ## Cleanup
 
