@@ -14,7 +14,7 @@ With this setup, the pods and nodes of the Kubernetes cluster can scaleout, the 
 
 [![Open in Cloud Shell](https://www.gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/Aternity/Tech-Community&tutorial=233-containerized-apm-with-java-app-on-gke/README.md)
 
-## Step 1. Get Aternity APM installation infos
+## Step 1. Get Aternity APM details
 
 In the Aternity APM webconsole, navigate to CONFIGURE > AGENTS > Install Agents and in the Agent Installation Steps section,
 
