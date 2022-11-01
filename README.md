@@ -21,7 +21,7 @@ Please visit [Aternity](https://www.aternity.com) for Solutions resources, [Free
 | [110](110-opentelemetry-php-app) | Some PHP samples exporting OTLP and Zipkin telemetry to the [Aternity OpenTelemetry Collector](https://hub.docker.com/r/aternity/apm-collector) | [Aternity APM](https://www.aternity.com/application-performance-monitoring/) | OpenTelemetry, PHP, Apache, OTLP, Zipkin, Docker | july 2022 |
 | [201](201-instrument-java-spring-demo-app) | Quickstart automatic instrumentation with Java app / Java microservices demo app | [Aternity APM](https://www.aternity.com/application-performance-monitoring/) | APM agentless, Java, automatic instrumentation, Profiler, WebApp, Microservices, Docker | apr. 2022 |
 | [202](202-containerize-apm-with-java-app) | *in progress* | [Aternity APM](https://www.aternity.com/application-performance-monitoring/) | APM Java agent for Linux, Java, APM host-agentless, Web App, Docker, automatic instrumentation | oct. 2022 |
-| [233](233-containerized-apm-with-java-app-on-gke) | *in progress* | [Aternity APM](https://www.aternity.com/application-performance-monitoring/) | APM Java agent for Linux, Java, APM host-agentless, Web App, Google Cloud, GKE, automatic instrumentation | nov. 2022 |
+| [233](233-containerized-apm-with-java-app-on-gke) | *in progress* | [Aternity APM](https://www.aternity.com/application-performance-monitoring/) | APM Java agent for Linux, Java, APM host-agentless, Web App, Google Cloud, Kubernetes, GKE, auto-instrumentation | nov. 2022 |
 
 Contributions can be submitted via  [Issues](https://github.com/Aternity/Tech-Community/issues) and [Pull Request](https://github.com/Aternity/Tech-Community/pulls). The team will usually give feedback in the day.
 
