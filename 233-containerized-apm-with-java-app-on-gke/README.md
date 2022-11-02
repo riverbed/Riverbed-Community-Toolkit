@@ -33,7 +33,7 @@ In the [Google Cloud Console](https://console.cloud.google.com) retrieve the det
 
 ## Step 3. Store the Aternity APM package in a Bucket Storage
 
-In the [Google Cloud Console](https://console.cloud.google.com), navigate to the [Cloud Storage ](https://console.cloud.google.com/storage/browser). Select the GCP project and create a Bucket with with Docker format and pick the same region as the Kubernetes cluster.
+In the [Google Cloud Console](https://console.cloud.google.com), navigate to the [Cloud Storage ](https://console.cloud.google.com/storage/browser). Select the GCP project and create a Bucket with Docker format and pick the same region as the Kubernetes cluster.
 
 There, upload the package of the Aternity APM Java agent library for Linux (.zip file) and grab the **gsutil URI** for the next steps, for example *gs://my_bucket/aternity-apm-jida-linux-12.18.0_BL546.zip*
 
