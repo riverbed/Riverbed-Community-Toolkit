@@ -2,9 +2,9 @@ steps:
 - name: 'gcr.io/cloud-builders/gsutil'
   args: ['cp', '${_APM_PACKAGE_GSUTIL_URI}', './aternity-apm-jida-linux.zip']
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/cookbook-233', '.']
+  args: ['build', '-t', '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE_NAME}', '.']
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/cookbook-233']
+  args: ['push', '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE_NAME}']
 substitutions:
   _APM_PACKAGE_GSUTIL_URI: gs://my_bucket/aternity-apm-jida-linux-12.18.0_BL546.zip
   _REGION: europe-west9
