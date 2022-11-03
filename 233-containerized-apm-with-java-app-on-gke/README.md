@@ -52,7 +52,7 @@ For example
 ```shell
 cd 233-containerized-apm-with-java-app-on-gke
 gcloud config set project aternity-cookbooks
-gcloud container clusters get-credentials autopilot-cluster-1 --region europe-west9 --project aternity-cookbook
+gcloud container clusters get-credentials autopilot-cluster-1 --region europe-west9 --project aternity-cookbooks
 ```
 
 2. Run the command to build the image, replacing the actual values in the substitutions parameter.
@@ -62,7 +62,7 @@ gcloud builds submit --config cloudbuild.yaml --substitutions _APM_PACKAGE_GSUTI
 ```
 Where:
 
-   - **{_APM_PACKAGE_GSUTIL_URI}**: the gsutil URI of the package of the Aternity APM Java library package
+   - **{_APM_PACKAGE_GSUTIL_URI}**: the gsutil URI of the Aternity APM Java library package
    - **{_REGION}**: the region of the Artifact Registry
    - **{_REPOSITORY}**: the name of the Artifact Registry repository
 
@@ -78,9 +78,9 @@ Based on the [Dockerfile](Dockerfile), it is building a Docker image that will c
 
 1. With the Cloud Shell Editor, edit the Kubernetes manifest [app-k8s.yaml](app-k8s.yaml) to configure the environment variables of your Aternity APM SaaS account and also the path of the image we just built:
 
-- **Customer Id** in the variable RVBD_CUSTOMER_ID, for example *12341234-12341234-13241234*
-- **SaaS Psockets Server host** in the variable RVBD_ANALYSIS_SERVER, for example *psockets.my_environment.aternity.com*
-- **Image Path** in the deployment section replacing the token {cookbook-233 image}, for example: *europe-west9-docker.pkg.dev/aternity-cookbooks/aternity-apm/cookbook-233:latest*
+   - **Customer Id** in the variable RVBD_CUSTOMER_ID, for example *12341234-12341234-13241234*
+   - **SaaS Psockets Server host** in the variable RVBD_ANALYSIS_SERVER, for example *psockets.my_environment.aternity.com*
+   - **Image Path** in the deployment section replacing the token {cookbook-233 image}, for example: *europe-west9-docker.pkg.dev/aternity-cookbooks/aternity-apm/cookbook-233:latest*
 
 2. In the Cloud Shell Terminal, execute the following commands to deploy the application on Kubernetes and then show the external ip address of the load-balancer of the app
 
