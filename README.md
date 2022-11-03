@@ -1,6 +1,6 @@
 # Aternity Tech-Community repository
 
-Dedicated to the Aternity Community, this repo contains technical contributions that help customers, partners and engineers to customize and leverage Aternity DEM products.
+Dedicated to the Aternity Community, this repo contains technical contributions that help customers, partners and engineers to customize and leverage Alluvio Aternity DEM products.
 For example: custom scripts, custom synthetic test, cookbooks, howtos and more.
 
 Please visit the website of [Alluvio by Riverbed](https://www.riverbed.com/products/unified-observability) for Solutions resources, [Free Trials](https://www.riverbed.com/trial-downloads) and [Trials for Alluvio Aternity](https://www.riverbed.com/trial-download/alluvio-aternity), Trainings, [Documentation and Support](https://support.riverbed.com/).
