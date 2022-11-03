@@ -1,5 +1,5 @@
 # app_k8s.yaml
-# 22.11.221101
+# 22.11.221103
 #
 # Description:
 #   
@@ -36,8 +36,8 @@ data:
   # Example:
   #   RVBD_CUSTOMER_ID: "my_customerid"
   #   RVBD_ANALYSIS_SERVER: "psockets.my_environment.aternity.com"
-  RVBD_CUSTOMER_ID: "{RVBD_CUSTOMER_ID}'"
-  RVBD_ANALYSIS_SERVER: "{RVBD_ANALYSIS_SERVER}" 
+  RVBD_CUSTOMER_ID: {RVBD_CUSTOMER_ID}
+  RVBD_ANALYSIS_SERVER: {RVBD_ANALYSIS_SERVER}
 ---
 apiVersion: apps/v1
 kind: Deployment
