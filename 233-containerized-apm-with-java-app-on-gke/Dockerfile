@@ -45,9 +45,9 @@ COPY --from=aternity-apm-java-agent /aternity-apm /aternity-apm/.
 
 # 3. Configure the Aternity APM Java agent for Linux
 #    with customer id, psockets host and instance name as it will appear in the Aternity APM webconsole)
-ENV RVBD_CUSTOMER_ID "my_customerid"
-ENV RVBD_ANALYSIS_SERVER "psockets.apm.my_environment.aternity.com"
-ENV RVBD_APP_INSTANCE "" 
+ENV RVBD_CUSTOMER_ID="my_customerid"
+ENV RVBD_ANALYSIS_SERVER="psockets.apm.my_environment.aternity.com"
+ENV RVBD_APP_INSTANCE="" 
 
 # 4. Keep this setting to enable Aternity APM Java agent for Linux
 ENV RVBD_AGENT_FILES=1
