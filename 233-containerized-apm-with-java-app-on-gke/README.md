@@ -39,7 +39,9 @@ There, upload the package of the Aternity APM Java agent library for Linux (.zip
 
 ## Step 4.Containerize Aternity APM Java agent with the app
 
-1. In the Cloud Shell terminal, run the commands to go to the cookbook folder, select the project (replacing {PROJECT_ID} with the actual value) and configure kubectl to control the cluster
+### 1. Prepare to build
+
+In the Cloud Shell terminal, run the commands to go to the cookbook folder, select the project (replacing {PROJECT_ID} with the actual value) and configure kubectl to control the cluster
 
 ```shell
 cd 233-containerized-apm-with-java-app-on-gke
@@ -55,7 +57,9 @@ gcloud config set project aternity-cookbooks
 gcloud container clusters get-credentials autopilot-cluster-1 --region europe-west9 --project aternity-cookbooks
 ```
 
-2. Run the command to build the image, replacing the actual values in the substitutions parameter.
+### 2. Build the image
+
+Run the command to build the image, replacing the actual values in the substitutions parameter.
 
 ```shell
 gcloud builds submit --config cloudbuild.yaml --substitutions _APM_PACKAGE_GSUTIL_URI={_APM_PACKAGE_GSUTIL_URI},_REGION={_REGION},_REPOSITORY={REPOSITORY}
@@ -76,16 +80,27 @@ Based on the [Dockerfile](Dockerfile), it is building a Docker image that will c
 
 ## Step 5. Configure the Kubernetes manifest and deploy
 
-1. With the Cloud Shell Editor, edit the Kubernetes manifest [app-k8s.yaml](app-k8s.yaml) to configure the environment variables of your Aternity APM SaaS account and also the path of the image we just built:
+### 1. Configure the manifest
+
+With the Cloud Shell Editor, edit the Kubernetes manifest [app-k8s.yaml](app-k8s.yaml) to configure the environment variables of your Aternity APM SaaS account and also the path of the image we just built:
 
    - **Customer Id** in the variable RVBD_CUSTOMER_ID, for example *12341234-12341234-13241234*
-   - **SaaS Psockets Server host** in the variable RVBD_ANALYSIS_SERVER, for example *psockets.my_environment.aternity.com*
+   - **SaaS Psockets Server host** in the variable RVBD_ANALYSIS_SERVER, for example *psockets.apm.my_environment.aternity.com*
    - **Image Path** in the deployment section replacing the token {cookbook-233 image}, for example: *europe-west9-docker.pkg.dev/aternity-cookbooks/aternity-apm/cookbook-233:latest*
 
-2. In the Cloud Shell Terminal, execute the following commands to deploy the application on Kubernetes and then show the external ip address of the load-balancer of the app
+### 2. Deploy
+
+In the Cloud Shell Terminal, execute the following command to deploy the application on Kubernetes.
 
 ```shell
 kubectl apply -f app_k8s.yaml
+```
+
+### 3. Check
+
+After few minutes, execute the following command to get the external ip address of the load-balancer created for the app.
+
+```shell
 kubectl --namespace cookbook-233 get svc
 ```
 

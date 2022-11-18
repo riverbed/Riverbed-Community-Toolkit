@@ -1,5 +1,5 @@
 # app_k8s.yaml
-# 22.11.221103
+# 22.11.221118
 #
 # Description:
 #   
@@ -35,7 +35,7 @@ data:
   # Aternity APM, environment variables
   # Example:
   #   RVBD_CUSTOMER_ID: "my_customerid"
-  #   RVBD_ANALYSIS_SERVER: "psockets.my_environment.aternity.com"
+  #   RVBD_ANALYSIS_SERVER: "psockets.apm.my_environment.aternity.com"
   RVBD_CUSTOMER_ID: {RVBD_CUSTOMER_ID}
   RVBD_ANALYSIS_SERVER: {RVBD_ANALYSIS_SERVER}
 ---
