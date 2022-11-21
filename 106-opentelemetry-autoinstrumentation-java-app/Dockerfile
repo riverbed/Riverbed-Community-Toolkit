@@ -2,7 +2,7 @@
 #
 # Aternity Tech-Community (https://github.com/Aternity/Tech-Community)
 # 106-opentelemetry-autoinstrumentation-java-app
-# version: 22.3.29
+# version: 22.11.221121
 #
 # Usage:
 #
@@ -39,6 +39,6 @@ ENV OTEL_TRACES_EXPORTER=otlp
 ENV OTEL_EXPORTER_OTLP_ENDPOINT="http://localhost:4317"
 
 ## Inject OpenTelemetry automatic instrumentation
-RUN curl -OL https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/download/v1.12.1/opentelemetry-javaagent.jar
+RUN curl -OL https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/download/v1.20.1/opentelemetry-javaagent.jar
 ENV JAVA_TOOL_OPTIONS="-javaagent:./opentelemetry-javaagent.jar"
 CMD [ "java","-jar","myapp.jar" ]
