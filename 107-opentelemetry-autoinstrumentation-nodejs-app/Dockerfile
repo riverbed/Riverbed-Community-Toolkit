@@ -23,7 +23,7 @@ WORKDIR /app
 RUN npm install express axios
 COPY *.js ./
 # TODO: remove this patch, when docker-compose "subdir not supported yet" issue is fixed
-COPY [107-opentelemetry-autoinstrumentation-nodejs-app]/*.js ./
+COPY 107-opentelemetry-autoinstrumentation-nodejs-app/*.js ./
 
 # OpenTelemetry
 RUN npm install @opentelemetry/api @opentelemetry/sdk-trace-node
