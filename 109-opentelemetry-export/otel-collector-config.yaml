@@ -2,7 +2,7 @@
 #
 # Aternity Tech-Community
 # 109-opentelemetry-export
-# version: 22.3.1
+# version: 22.11.221128
 #
 # OpenTelemetry Collector Configuration
 #
@@ -21,7 +21,8 @@ exporters:
 
   jaeger:
     endpoint: jaeger-all-in-one:14250
-    insecure: true
+    tls:
+      insecure: true
 
   zipkin:
     endpoint: http://zipkin-all-in-one:9411/api/v2/spans

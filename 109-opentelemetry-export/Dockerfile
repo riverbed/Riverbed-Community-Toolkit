@@ -2,7 +2,7 @@
 #
 # Aternity Tech-Community
 # 109-opentelemetry-export
-# version: 22.3.4
+# version: 22.11.221128
 #
 # Example
 #
@@ -12,10 +12,10 @@
 #
 # - Run
 #
-#   docker run  -it --rm -p 8109:80 -e OTEL_EXPORTER_OTLP_ENDPOINT="otel-collector:4317" -e OTEL_SERVICE_NAME="service109-go" local/service109-go:latest
+#   docker run -it --rm -p 8109:80 -e OTEL_EXPORTER_OTLP_ENDPOINT="otel-collector:4317" -e OTEL_SERVICE_NAME="service109-go" local/service109-go:latest
 #
 # https://hub.docker.com/_/golang
-FROM golang:1.17
+FROM golang:1.18
 
 WORKDIR /usr/src/example
 
