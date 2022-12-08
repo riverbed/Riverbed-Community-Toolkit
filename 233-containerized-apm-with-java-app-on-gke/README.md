@@ -20,7 +20,7 @@ In the Aternity APM webconsole, navigate to CONFIGURE > AGENTS > Install Agents 
 
 1. Find your **Customer Id**, for example *12341234-12341234-13241234*
 2. Find the **SaaS Analysis Server Host** and obtain the **SaaS Psockets Server host** replacing *agents* by *psockets*. For example if the analysis server host is *agents.apm.my_environment.aternity.com* then the SaaS Psockets Server host is *psockets.apm.my_environment.aternity.com*
-3. Download the **Aternity APM Java agent library for Linux** package. If the link is not there yet in your environment, get it from the [Riverbed support](https://support.riverbed.com/content/support/software/aternity-dem/aternity-apm.html) to obtain a copy, for example *aternity-apm-jida-linux-12.19.0_BL516*
+3. Download the **Aternity APM Java agent library for Linux** package - if the link is not there yet in your environment, get it from the [Riverbed support](https://support.riverbed.com/content/support/software/aternity-dem/aternity-apm.html), for example *aternity-apm-jida-linux-12.19.0_BL516*
 
 ## Step 2. Prepare Google Cloud infrastructure
 
