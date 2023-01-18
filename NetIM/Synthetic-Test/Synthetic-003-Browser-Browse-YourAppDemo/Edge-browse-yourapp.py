@@ -1,12 +1,14 @@
 #!/usr/bin/env python
 """
 Riverbed Community Toolkit
-NetIM - Synthetic Test
+Synthetic Test
 
 Script: Edge-browse-yourapp.py
+Version: 23.1.230118
 Application: Edge, YourAppDemo
+Requirement: Python 3.11 with selenium 4
 
-Browse YourAppDemo with the Edge browser on a windows machine
+Browse YourAppDemo with the Chrome browser on a windows machine
 
 Usage:
     python Edge-browse-yourapp.py
@@ -15,48 +17,59 @@ Usage:
 import time
 
 # Configure Selenium
-from msedge.selenium_tools import Edge, EdgeOptions, EdgeService
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.edge.service import Service
+from selenium.webdriver.edge.options import Options
+
 MSEDGEDRIVER_PATH= "C:\\edgedriver_win64\\msedgedriver.exe"
+DEFAULT_URL = "https://www.riverbed.com"
+DEFAULT_ROBOT_PROFILE_PATH = "C:\\robot-edge-profile"
 
 if __name__ == "__main__":
-    service = EdgeService(MSEDGEDRIVER_PATH)
-    options = EdgeOptions()
-    options.use_chromium = True
-    driver = Edge(executable_path=MSEDGEDRIVER_PATH,options=options)
+    edge_options = Options()
+    edge_options.add_argument('user-data-dir='+DEFAULT_ROBOT_PROFILE_PATH)
+    service_args=['--verbose']
+    service = Service(executable_path=MSEDGEDRIVER_PATH, service_args=service_args)
+    driver = webdriver.Edge(service=service, options=edge_options)
 
+##################################################################
 # Synthetic test
 
-    BASE_URL = "http://www.yourapp.com"
+    BASE_URL = "https://yourapp.yourcorp.net"
     driver.get(BASE_URL+"/ims.html")
     time.sleep(3)
 
     try:
-        element = driver.find_element_by_id("Home")
+        element = driver.find_element(By.LINK_TEXT,"Home")
         element.click()
-        time.sleep(3)
+        time.sleep(10)
 
-        element = driver.find_element_by_id("Orders")
+        element = driver.find_element(By.LINK_TEXT,"Orders")
         element.click()
-        time.sleep(3)
+        time.sleep(10)
 
-        element = driver.find_element_by_id("Portfolio")
+        element = driver.find_element(By.LINK_TEXT,"Portfolio")
         element.click()
-        time.sleep(3)
+        time.sleep(10)
 
-        element = driver.find_element_by_id("Securities")
+        element = driver.find_element(By.LINK_TEXT,"Securities")
         element.click()
-        time.sleep(3)
+        time.sleep(10)
         
-        element = driver.find_element_by_id("Analysis")
+        element = driver.find_element(By.LINK_TEXT,"Analysis")
         element.click()
-        time.sleep(3)
+        time.sleep(10)
 
-        element = driver.find_element_by_id("Logout")
+        element = driver.find_element(By.LINK_TEXT,"Logout")
         element.click()
-        time.sleep(3)
+        time.sleep(10)
         driver.close()
         driver.quit()
     except:
         driver.close()
         driver.quit()
+        print("Caught exception, ending")
         exit(5)
+
+print("End.")
