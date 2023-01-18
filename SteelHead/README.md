@@ -23,6 +23,7 @@ The technical solution exists in different form factors so that it can be deploy
 - [Azure-101 - Chaining Accelerator in VNET having a gateway appliance (VPN or SD-WAN)](Azure-Cloud-Cookbooks/101-service-chain-gw-appliance)
 - [Azure-102 - Cloud Accelerators with Load-Balancing and Scale Out in Azure](Azure-Cloud-Cookbooks/102-scale-out)
 - [Azure-103 - Cluster of 2 active Cloud Accelerator](Azure-Cloud-Cookbooks/103-deploy-active-active)
+- [Azure-104 - Backup and Restore Cloud Accelerator](Azure-Cloud-Cookbooks/104-Backup-and-Restore)
 - [Azure-300 - PowerShell script to configure Route Tables for Service Chaining](Azure-ServiceChain)
 
 *Other topics in preparation: - Active/Passive, Monitoring, VNET to VNET Acceleration, MTTR/Availability, SteelConnect SD-WAN, 3rd party SD-WAN, ExpressRoute, AzureVWAN, Azure Virtual Gateway*
