@@ -8,7 +8,7 @@ Version: 23.1.230118
 Application: Edge, YourAppDemo
 Requirement: Python 3.11 with selenium 4
 
-Browse YourAppDemo with the Chrome browser on a windows machine
+Browse YourAppDemo with the Edge browser on a windows machine
 
 Usage:
     python Edge-browse-yourapp.py
@@ -16,6 +16,7 @@ Usage:
 
 import time
 
+##################################################################
 # Configure Selenium
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -72,4 +73,4 @@ if __name__ == "__main__":
         print("Caught exception, ending")
         exit(5)
 
-print("End.")
+print("Successfully run")

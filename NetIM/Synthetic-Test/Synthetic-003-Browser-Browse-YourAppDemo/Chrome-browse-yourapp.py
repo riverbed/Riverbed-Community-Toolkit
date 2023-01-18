@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 """
 Riverbed Community Toolkit
-NetIM - Synthetic Test
+Synthetic Test
 
 Script: Chrome-browse-yourapp.py
+Version: 23.1.230118
 Application: Chrome, YourAppDemo
+Requirement: Python 3.11 with selenium 4
 
 Browse YourAppDemo with the Chrome browser on a windows machine
 
@@ -14,22 +16,23 @@ Usage:
 
 import time
 
+##################################################################
 # Configure Selenium
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.edge.service import Service
-from selenium.webdriver.edge.options import Options
+from selenium.webdriver.chrome.service import Service as ChromeService
+from selenium.webdriver.chrome.options import Options
 
-MSEDGEDRIVER_PATH= "C:\\edgedriver_win64\\msedgedriver.exe"
+CHROMEDRIVER_PATH= "C:\\chromedriver_win32\\chromedriver.exe"
 DEFAULT_URL = "https://www.riverbed.com"
-DEFAULT_ROBOT_PROFILE_PATH = "C:\\robot-edge-profile"
+DEFAULT_ROBOT_PROFILE_PATH = "C:\\robot-chrome-profile"
 
 if __name__ == "__main__":
-    edge_options = Options()
-    edge_options.add_argument('user-data-dir='+DEFAULT_ROBOT_PROFILE_PATH)
+    chrome_options = Options()
+    chrome_options.add_argument('user-data-dir='+DEFAULT_ROBOT_PROFILE_PATH)
     service_args=['--verbose']
-    service = Service(executable_path=MSEDGEDRIVER_PATH, service_args=service_args)
-    driver = webdriver.Edge(service=service, options=edge_options)
+    service = ChromeService(executable_path=CHROMEDRIVER_PATH,service_args=service_args)
+    driver = webdriver.Chrome(service=service, options=chrome_options)
 
 ##################################################################
 # Synthetic test
@@ -71,4 +74,4 @@ if __name__ == "__main__":
         print("Caught exception, ending")
         exit(5)
 
-print("End.")
+print("Successfully run")
