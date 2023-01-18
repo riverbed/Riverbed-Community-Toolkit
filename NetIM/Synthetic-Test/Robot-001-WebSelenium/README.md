@@ -29,9 +29,7 @@ The next paragraph explains how to setup from scratch on a Windows machine. It i
 > - Check the installer option to Add Python to PATH
 > - Hit Custom Install button and in the Advanced Install options check to box to select"Install Python for all users"
 
-4. Install selenium libraries for Python with pip
-
-Open a Windows PowerShell (Admin) and run
+4. Install **selenium 4** libraries for Python with pip (check [Selenium](https://www.selenium.dev/) and [pip](https://pypi.org/project/selenium/) for details, the latest version is 4.7.2 as of jan 2023). Open a Windows PowerShell (Admin) and run the following command:
 
 ```PowerShell
 pip install selenium
@@ -45,10 +43,6 @@ For example Version 109.0.1518.55 (Official build) (64-bit):
 
 ![edge version 109](images/edge-version-109.png)
 
-For example Version 83:
-
-![edge version 83](images/edge-version-83.png)
-
 2. Download the [Driver](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/#downloads) for **Windows 64 bits** and extract it to c:\. 
 
 For example the URL of the version **109.0.1518.55** for Windows 64bits is https://msedgedriver.azureedge.net/109.0.1518.55/edgedriver_win64.zip
@@ -56,12 +50,6 @@ For example the URL of the version **109.0.1518.55** for Windows 64bits is https
 After extraction the driver should be in the following path: C:\edgedriver_win64\msedgedriver.exe
 
 ![Edge Driver extracted](images/edgedriver-win64-extracted.png)
-
-3. Install **selenium 4** libraries for Python with pip (check [Selenium](https://www.selenium.dev/) and [pip](https://pypi.org/project/selenium/) for details, the latest version is 4.7.2 as of jan 2023). Open a Windows PowerShell (Admin) and run the following command:
-
-```PowerShell
-pip install selenium
-```
 
 ### 3. Chrome specifics
 
