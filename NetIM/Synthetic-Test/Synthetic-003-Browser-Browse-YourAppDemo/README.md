@@ -32,7 +32,7 @@ Create a new Synthetic Test
 - Command: 
 
 ```
-"C:\Program Files\Python38\python.exe" "C:\Riverbed-Community-Toolkit\NetIM\Synthetic-Test\Synthetic-003-Browser-Browse-YourAppDemo\Edge-browse-yourapp.py"
+"C:\Program Files\Python311\python.exe" "C:\Riverbed-Community-Toolkit\NetIM\Synthetic-Test\Synthetic-003-Browser-Browse-YourAppDemo\Edge-browse-yourapp.py"
 ```
 
 ### Synthetic Test for Chrome on a Web Selenium Robot
