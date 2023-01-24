@@ -1,11 +1,11 @@
-# Alluvio Aternity Tech-Community repository
+# ALLUVIO Aternity Tech-Community repository
 
-Dedicated to the Alluvio Aternity Community, this repo contains technical contributions that help customers, partners and engineers to customize and leverage Alluvio Aternity products for Digital Experience Management (DEM).
+Dedicated to the ALLUVIO Aternity Community, this repo contains technical contributions that help customers, partners and engineers to customize and leverage ALLUVIO Aternity products for Digital Experience Management (DEM).
 For example: custom scripts, custom synthetic test, cookbooks, howtos and more.
 
-Please visit the website of [Alluvio by Riverbed](https://www.riverbed.com/products/unified-observability) for Solutions resources, [Free Trials](https://www.riverbed.com/trial-downloads) and [Trials for Alluvio Aternity](https://www.riverbed.com/trial-download/alluvio-aternity), Trainings, [Documentation and Support](https://support.riverbed.com/).
+Please visit the website of [ALLUVIO by Riverbed](https://www.riverbed.com/products/unified-observability) for Solutions resources, [Free Trials](https://www.riverbed.com/trial-downloads) and [Trials for ALLUVIO Aternity](https://www.riverbed.com/trial-download/alluvio-aternity), Trainings, [Documentation and Support](https://support.riverbed.com/).
 
-To use the following contents you will need active licenses of the Alluvio Aternity DEM products. 
+To use the following contents you will need active licenses of the ALLUVIO Aternity DEM products. 
 
 ## Contents
 
