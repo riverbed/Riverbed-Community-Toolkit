@@ -1,4 +1,4 @@
-# 201-instrument-java-spring-demo-app
+# 201-instrument-java-microservices-with-apm-agentless
 
 This cookbook shows how to setup APM agentless for Java (the APM Java agent library for Linux) with auto-instrumentation on a Java app.
 
@@ -26,7 +26,7 @@ Navigate to the APM webconsole url (for example [https://apm.myaccount.aternity.
 
 ### Step 2: Get the docker-compose
 
-Download a local copy of the file [docker-compose.yml](docker-compose.yml), for example  [right-click here to download](https://raw.githubusercontent.com/Aternity/Tech-Community/main/201-instrument-java-spring-demo-app/docker-compose.yml) and save it in the directory `Tech-Community/201-instrument-java-spring-demo-app`
+Download a local copy of the file [docker-compose.yml](docker-compose.yml), for example  [right-click here to download](https://raw.githubusercontent.com/Aternity/Tech-Community/main/201-instrument-java-microservices-with-apm-agentless/docker-compose.yml) and save it in the directory `Tech-Community/201-instrument-java-microservices-with-apm-agentless`
 
 In the [docker-compose.yml](docker-compose.yml), for each service, the auto-instrumentation configuration consists in few environment variables set with CustomerID and SaaS Analysis Server Host psockets endpoint, and a volume that mounts the agent.
 
@@ -68,7 +68,7 @@ Open a shell
 Go in the folder where you keep the [docker-compose.yml](docker-compose.yml) file you just configured. For example:
 
 ```shell
-cd Tech-Community/201-instrument-java-spring-demo-app
+cd Tech-Community/201-instrument-java-microservices-with-apm-agentless
 ```
 
 Unzip the zip archive of the APM Java Agent package, it will be expanded in a subdirectory */agent*

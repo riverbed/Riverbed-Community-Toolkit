@@ -1,4 +1,4 @@
-# 233-instrument-java-app-with-apm-java-agent-on-gke
+# 233-instrument-java-app-with-apm-agentless-on-gke
 
 In this cookbook a Java web app ([Spring PetClinic](https://github.com/spring-projects/spring-petclinic)) is containerized with the APM agentless for Java (the APM Java agent library for Linux), and deployed along with a [PostgreSQL](https://www.postgresql.org) database on the Linux node pool of a [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine).
 
@@ -12,7 +12,7 @@ With this setup, the pods and nodes of the Kubernetes cluster can scaleout, the 
 
 3. Click on the button to open the cookbook in the Google Cloud Shell
 
-[![Open in Cloud Shell](https://www.gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/Aternity/Tech-Community&tutorial=233-instrument-java-app-with-apm-java-agent-on-gke/README.md)
+[![Open in Cloud Shell](https://www.gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/Aternity/Tech-Community&tutorial=233-instrument-java-app-with-apm-agentless-on-gke/README.md)
 
 ## Step 1. Get ALLUVIO Aternity APM details
 
@@ -44,7 +44,7 @@ There, upload the package of the Aternity APM Java agent library for Linux (.zip
 In the Cloud Shell terminal, run the commands to go to the cookbook folder, select the project (replacing {PROJECT_ID} with the actual value) and configure kubectl to control the cluster
 
 ```shell
-cd 233-instrument-java-app-with-apm-java-agent-on-gke
+cd 233-instrument-java-app-with-apm-agentless-on-gke
 gcloud config set project {PROJECT_ID}
 gcloud container clusters get-credentials {CLUSTER NAME} --region {REGION}--project {PROJECT_ID}
 ```
@@ -52,7 +52,7 @@ gcloud container clusters get-credentials {CLUSTER NAME} --region {REGION}--proj
 For example
 
 ```shell
-cd 233-instrument-java-app-with-apm-java-agent-on-gke
+cd 233-instrument-java-app-with-apm-agentless-on-gke
 gcloud config set project aternity-cookbooks
 gcloud container clusters get-credentials autopilot-cluster-1 --region europe-west9 --project aternity-cookbooks
 ```
