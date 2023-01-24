@@ -1,28 +1,28 @@
 # 201-instrument-java-spring-demo-app
 
-This cookbook shows how to setup Aternity Java APM agent auto-instrumentation on a Java app.
+This cookbook shows how to setup APM agentless for Java (the APM Java agent library for Linux) with auto-instrumentation on a Java app.
 
 The demo app is the famous Java Community application called [Spring PetClinic Microservices](https://github.com/spring-petclinic/spring-petclinic-microservices), same app used in the [Cookbook 102: OpenTelemetry quickstart](../102-opentelemetry-spring-demo-app). The app is composed of multiple services that run in containers, like Config, Discovery Server, Customers, Vets, Visits and API.
 
-Here, the [Aternity APM](https://www.aternity.com/apm) agent is injected in each service, enabling automatic instrumentation and performance monitoring. 
+Here, the [ALLUVIO Aternity APM](https://www.aternity.com/apm) agent is injected in each service, enabling automatic instrumentation and performance monitoring. 
 
 ![diagram](images/201-diagram.png)
 
 ## Prerequisites
 
-1. an Aternity APM account (SaaS)
+1. an ALLUVIO Aternity APM account (SaaS)
 2. a Docker host, for example [Docker Desktop](https://www.docker.com/products/docker-desktop)
 
 ## Step by Step
 
-### Step 1: Connect to Aternity APM webconsole
+### Step 1: Connect to the APM webconsole
 
-Navigate to Aternity APM (for example [https://apm.myaccount.aternity.com](https://apm.myaccount.aternity.com)) > Agents > Install Agents:
+Navigate to the APM webconsole url (for example [https://apm.myaccount.aternity.com](https://apm.myaccount.aternity.com)) > AGENTS > Install Agents:
 
 1. Find your **CustomerID**, for example *12341234-1234-1234-1234-123456789abc*
 2. Grab **SaaS Analysis Server Host**, for example *agents.apm.myaccount.aternity.com*
 3. Obtain the **psockets host name** replacing *agents* with *psockets*, for example *psockets.apm.myaccount.aternity.com*
-4. Download the Aternity APM Java Agent
+4. Download the package **Aternity APM Agentless Instrumentation (Java)** (also available on [Riverbed support](https://support.riverbed.com/content/support/software/aternity-dem/aternity-apm.html), for example *aternity-apm-jida-linux-12.19.0_BL516*
 
 ### Step 2: Get the docker-compose
 
@@ -71,7 +71,7 @@ Go in the folder where you keep the [docker-compose.yml](docker-compose.yml) fil
 cd Tech-Community/201-instrument-java-spring-demo-app
 ```
 
-Unzip the zip archive of the Aternity APM Java Agent, it will be expanded in a subdirectory */agent*
+Unzip the zip archive of the APM Java Agent package, it will be expanded in a subdirectory */agent*
 
 ```shell
 unzip aternity-apm-jida-linux-xx.x.x_BLxxx.zip
@@ -89,25 +89,25 @@ Browse http://localhost:8080 and click around to generate load and transactions 
 
 ![spring petclinic](images/spring-petclinic.png)
 
-### Step 5: Open the Aternity APM webconsole to visualize and analyze the traces collected for every transaction
+### Step 5: Open the APM webconsole to visualize and analyze the traces collected for every transaction
 
 View the entire applications:
 
-![Aternity APM Application View](images/aternity-apm-spring-petclinic-application-view.png)
+![ALLUVIO Aternity APM Application View](images/aternity-apm-spring-petclinic-application-view.png)
 
 Search transactions:
 
-![Aternity APM Transactions](images/aternity-apm-spring-petclinic-transactions.png)
+![ALLUVIO Aternity APM Transactions](images/aternity-apm-spring-petclinic-transactions.png)
 
 View transaction details:
 
-![Aternity APM Transaction Details](images/aternity-apm-spring-petclinic-transaction-detail.png)
+![ALLUVIO Aternity APM Transaction Details](images/aternity-apm-spring-petclinic-transaction-detail.png)
 
 ## Notes 
 
 ### Support
 
-Please visit [Aternity website](https://www.aternity.com/) if your need Support or Training.
+Please visit [ALLUVIO Aternity website](https://www.aternity.com/) if your need Support or Training.
 
 ### Stop the app and all the containers
 

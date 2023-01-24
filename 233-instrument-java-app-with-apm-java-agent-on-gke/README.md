@@ -1,26 +1,26 @@
-# 233-containerized-apm-with-java-app-on-gke
+# 233-instrument-java-app-with-apm-java-agent-on-gke
 
-In this cookbook a Java web app ([Spring PetClinic](https://github.com/spring-projects/spring-petclinic)) is containerized with the Aternity APM Java library, and deployed along with a [PostgreSQL](https://www.postgresql.org) database on the Linux node pool of a [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine).
+In this cookbook a Java web app ([Spring PetClinic](https://github.com/spring-projects/spring-petclinic)) is containerized with the APM agentless for Java (the APM Java agent library for Linux), and deployed along with a [PostgreSQL](https://www.postgresql.org) database on the Linux node pool of a [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine).
 
-With this setup, the pods and nodes of the Kubernetes cluster can scaleout, the [Aternity APM](https://www.riverbed.com/products/application-performance-monitoring) will collect every transaction.
+With this setup, the pods and nodes of the Kubernetes cluster can scaleout, the [ALLUVIO Aternity APM](https://www.riverbed.com/products/application-performance-monitoring) will collect every transaction.
 
 ## Prerequisites
 
-1. a SaaS account for [Aternity APM](https://www.riverbed.com/products/application-performance-monitoring)
+1. a SaaS account for [ALLUVIO Aternity APM](https://www.riverbed.com/products/application-performance-monitoring)
 
 2. a project in [Google Cloud](https://console.cloud.google.com) configured for billing and having Kubernetes setup (Linux node pool and Artifact registry)
 
 3. Click on the button to open the cookbook in the Google Cloud Shell
 
-[![Open in Cloud Shell](https://www.gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/Aternity/Tech-Community&tutorial=233-containerized-apm-with-java-app-on-gke/README.md)
+[![Open in Cloud Shell](https://www.gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/Aternity/Tech-Community&tutorial=233-instrument-java-app-with-apm-java-agent-on-gke/README.md)
 
-## Step 1. Get Aternity APM details
+## Step 1. Get ALLUVIO Aternity APM details
 
-In the Aternity APM webconsole, navigate to CONFIGURE > AGENTS > Install Agents and in the Agent Installation Steps section,
+In the ALLUVIO Aternity APM webconsole, navigate to CONFIGURE > AGENTS > Install Agents and in the Agent Installation Steps section,
 
 1. Find your **Customer Id**, for example *12341234-12341234-13241234*
 2. Find the **SaaS Analysis Server Host** and obtain the **SaaS Psockets Server host** replacing *agents* by *psockets*. For example if the analysis server host is *agents.apm.my_environment.aternity.com* then the SaaS Psockets Server host is *psockets.apm.my_environment.aternity.com*
-3. Download the **Aternity APM Java agent library for Linux** package - if the link is not there yet in your environment, get it from the [Riverbed support](https://support.riverbed.com/content/support/software/aternity-dem/aternity-apm.html), for example *aternity-apm-jida-linux-12.19.0_BL516*
+3. Download the package **Aternity APM Agentless Instrumentation (Java)** (also available on [Riverbed support](https://support.riverbed.com/content/support/software/aternity-dem/aternity-apm.html), for example *aternity-apm-jida-linux-12.19.0_BL516*
 
 ## Step 2. Prepare Google Cloud infrastructure
 
@@ -31,20 +31,20 @@ In the [Google Cloud Console](https://console.cloud.google.com) retrieve the det
 3. Region, for example: *europe-west9*
 4. Artifact Registry repository name, for example: *aternity-apm*
 
-## Step 3. Store the Aternity APM package in a Bucket Storage
+## Step 3. Store the APM package in a Bucket Storage
 
 In the [Google Cloud Console](https://console.cloud.google.com), navigate to the [Cloud Storage ](https://console.cloud.google.com/storage/browser). Select the GCP project and create a Bucket with Docker format and pick the same region as the Kubernetes cluster.
 
 There, upload the package of the Aternity APM Java agent library for Linux (.zip file) and grab the **gsutil URI** for the next steps, for example *gs://my_bucket/aternity-apm-jida-linux-12.19.0_BL516*
 
-## Step 4.Containerize Aternity APM Java agent with the app
+## Step 4.Containerize ALLUVIO Aternity APM Java agent with the app
 
 ### 1. Prepare to build
 
 In the Cloud Shell terminal, run the commands to go to the cookbook folder, select the project (replacing {PROJECT_ID} with the actual value) and configure kubectl to control the cluster
 
 ```shell
-cd 233-containerized-apm-with-java-app-on-gke
+cd 233-instrument-java-app-with-apm-java-agent-on-gke
 gcloud config set project {PROJECT_ID}
 gcloud container clusters get-credentials {CLUSTER NAME} --region {REGION}--project {PROJECT_ID}
 ```
@@ -52,7 +52,7 @@ gcloud container clusters get-credentials {CLUSTER NAME} --region {REGION}--proj
 For example
 
 ```shell
-cd 233-containerized-apm-with-java-app-on-gke
+cd 233-instrument-java-app-with-apm-java-agent-on-gke
 gcloud config set project aternity-cookbooks
 gcloud container clusters get-credentials autopilot-cluster-1 --region europe-west9 --project aternity-cookbooks
 ```
@@ -108,9 +108,9 @@ kubectl --namespace cookbook-233 get svc
 
 In your web browser, open the http url using the external IP address, for example http://external-ip-address, and navigate in the app to generate some traffic and application transactions.
 
-## Step 7. Aternity APM webconsole 
+## Step 7. ALLUVIO Aternity APM webconsole 
 
-Go to the Aternity APM webconsole to observe the application with every transaction and every instance.
+Go to the APM webconsole to observe the application with every transaction and every instance.
 
 ## Cleanup
 
