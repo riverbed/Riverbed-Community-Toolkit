@@ -104,15 +104,15 @@ When the build is done, the image will be stored in the repository of an Artifac
 
 ## Step 6. Deploy the APM Daemonset POD Agent
 
-### 1. Configure the manifest
+1. Configure the manifest
 
 Edit the Kubernetes manifest [apm-daemonset-pod-agent.yaml](apm-daemonset-pod-agent.yaml) to configure the image path and the environment variables for the APM agent:
 
-1. replace {{ALLUVIO Aternity APM Daemonset POD agent image path}} with the **container image path** built in the previous step, for example: *europe-west9-docker.pkg.dev/aternity-cookbooks/apm/alluvio-aternity-apm-daemonset-pod-agent:latest*
-2. replace {{ALLUVIO_ATERNITY_APM_CUSTOMER_ID}} with the **Customer Id**, for example: *12312341234-1234-124356*
-3. replace {{ALLUVIO_ATERNITY_APM_SAAS_SERVER_HOST}} with the **SaaS Analysis Server Host**, for example: *agents.apm.my-account.aternity.com*
+- replace {{ALLUVIO Aternity APM Daemonset POD agent image path}} with the **container image path** built in the previous step, for example: *europe-west9-docker.pkg.dev/aternity-cookbooks/apm/alluvio-aternity-apm-daemonset-pod-agent:latest*
+- replace {{ALLUVIO_ATERNITY_APM_CUSTOMER_ID}} with the **Customer Id**, for example: *12312341234-1234-124356*
+- replace {{ALLUVIO_ATERNITY_APM_SAAS_SERVER_HOST}} with the **SaaS Analysis Server Host**, for example: *agents.apm.my-account.aternity.com*
 
-### 2. Deploy
+2. Deploy
 
 In the Cloud Shell Terminal, execute the following command to deploy the application on Kubernetes.
 
@@ -124,9 +124,9 @@ After few minutes, the agents show up in the APM webconsole in CONFIGURE > AGENT
 
 ## Step 7. Deploy a Java web-application
 
-### 1. Build the image of the app
+1. Build the image of the app
 
-1. Run the build command for the [app-cloudbuild.yaml](app-cloudbuild.yaml) config, replacing the actual values in the substitutions parameters
+Run the build command for the [app-cloudbuild.yaml](app-cloudbuild.yaml) config, replacing the actual values in the substitutions parameters
 
 ```shell
 gcloud builds submit --config app-cloudbuild.yaml --substitutions _REGION={_REGION},_REPOSITORY={REPOSITORY}
@@ -147,17 +147,19 @@ where:
 
 When the build is done, the image path should be diplayed in the shell output, for example *europe-west9-docker.pkg.dev/aternity-cookbooks/apm/java-app:latest*
 
-### 2. Deploy the app
+3. Set the image path in the Kubernetes manifest
 
-1. With the Cloud Shell Editor, edit the Kubernetes manifest [app-k8s.yaml](app-k8s.yaml) and set the image path replacing {{java-app image}} with the actual value in the container definition, for example: *europe-west9-docker.pkg.dev/aternity-cookbooks/apm/java-app:latest*
+With the Cloud Shell Editor, edit the manifest [app-k8s.yaml](app-k8s.yaml) and set the image path replacing {{java-app image}} with the actual value in the container definition, for example: *europe-west9-docker.pkg.dev/aternity-cookbooks/apm/java-app:latest*
 
-2. In the Cloud Shell Terminal, execute the following command to deploy the application on Kubernetes
+4. Deploy the app
+
+In the Cloud Shell Terminal, execute the following command to deploy the application on Kubernetes
 
 ```shell
 kubectl apply -f app-k8s.yaml
 ```
 
-### 3. Find the external ip address of the app
+5. Find the external ip address of the app
 
 After few minutes, execute the following command to obtain the external ip address exposing the app.
 
