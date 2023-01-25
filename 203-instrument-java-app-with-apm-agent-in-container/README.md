@@ -9,29 +9,27 @@ In this cookbook, the full APM agent is installed inside the container image of 
 1. a SaaS account for [ALLUVIO Aternity APM](https://www.riverbed.com/products/application-performance-monitoring)
 2. a Docker host, for example [Docker Desktop](https://www.docker.com/products/docker-desktop)
 
-## Step by Step
+## Step 1. Get installation details in ALLUVIO Aternity APM webconsole
 
-### Step 1. Get ALLUVIO Aternity APM installation details
-
-In the ALLUVIO Aternity APM webconsole, navigate to CONFIGURE > AGENTS > Install Agents to see the Agent Installation Steps section.
+In the APM webconsole, navigate to CONFIGURE > AGENTS > Install Agents to see the Agent Installation Steps section.
 
 1. Find your **Customer Id**, for example *12341234-12341234-13241234*
 2. Find the **SaaS Analysis Server Host**, for example *agents.apm.my_environment.aternity.com*
-3. Download the latest **ALLUVIO Aternity APM Java agent for Linux** package (also available on [Riverbed support](https://support.riverbed.com/content/support/software/aternity-dem/aternity-apm.html)), *appinternals_agent_latest_linux.gz*
+3. Download the latest **Aternity APM agent for Linux** package (also available on [Riverbed support](https://support.riverbed.com/content/support/software/aternity-dem/aternity-apm.html)), *appinternals_agent_latest_linux.gz*
 
 Then in CONFIGURE > AGENTS > Configurations, 
 
 4. Define a configuration for the app and download the .json file. For example create a new configuration and name it "configuration", configure Data Collection Settings to enable End-User Experience Data collection, Save and Download the file configuration.json
 
-### Step 2. Cookbook preparation
+## Step 2. Cookbook preparation
 
 1. Download the cookbook. For example download the [zip of the repository](https://github.com/Aternity/Tech-Community/archive/refs/heads/main.zip), expand it and go the folder Tech-Community/203-instrument-java-app-with-apm-agent-in-container
 2. Copy the agent package appinternals_agent_latest_linux.gz in the subfolder apm-customization.
-3. Copy the configuration file (prepared in Step 1.) into the subfolder apm-customization/config.
+3. Copy the configuration file (prepared in Step 1.) to the subfolder apm-customization/config.
    
-4. *optional* if the name of the configuration file not configuration.json then edit the initial-mapping to adapt the startup autoinstrumentation mapping 
+> :warning: if the name of the configuration file is not configuration.json then edit the initial-mapping to adapt the startup autoinstrumentation mapping 
 
-### Step 3. Start the containers
+## Step 3. Start the containers
 
 Start the containers using docker-compose, for example with Bash:
 
@@ -57,19 +55,19 @@ $env:ALLUVIO_ATERNITY_APM_CUSTOMER_ID="12341234-12341234-13241234"
 docker-compose up
 ```
 
-### Step 4. Browse the app
+## Step 4. Browse the app
 
 The web application should now be available on [http://localhost:8080](http://localhost:8080).
 
 Open the url in your browser and refresh the page few times to generate some traffic.
 
-### Step 5. ALLUVIO Aternity APM webconsole 
+## Step 5. ALLUVIO Aternity APM webconsole 
 
-Go to the ALLUVIO Aternity APM webconsole to monitor the instance and observe every transaction.
+Go to the APM webconsole to monitor the instance and observe every transaction.
 
 ![ALLUVIO Aternity APM Transactions](images/cookbook-203-transactions.png)
 
-#### License
+### License
 
 Copyright (c) 2023 Riverbed
 

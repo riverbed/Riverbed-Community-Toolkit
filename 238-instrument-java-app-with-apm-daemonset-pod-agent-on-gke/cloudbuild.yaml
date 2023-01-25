@@ -3,7 +3,7 @@
 # ALLUVIO Aternity Tech Community Cookbook (https://github.com/Aternity/Tech-Community)
 #
 # Usage:
-#   
+#
 #   gcloud builds submit --config cloudbuild.yaml --substitutions _APM_PACKAGE_GSUTIL_URI={_APM_PACKAGE_GSUTIL_URI},_REGION={_REGION},_REPOSITORY={REPOSITORY},_IMAGE_NAME={IMAGE_NAME},_TAG_NAME={TAG_NAME}
 #
 # Example
@@ -12,13 +12,14 @@
 
 steps:
 - name: 'gcr.io/cloud-builders/gsutil'
-  args: ['cp', '${_APM_PACKAGE_GSUTIL_URI}', './aternity-apm-jida-linux.zip']
+  args: ['cp', '${_APM_PACKAGE_GSUTIL_URI}', './apm-customization/appinternals_agent_latest_linux.gz']
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE_NAME}', '.']
+  args: ['build', '-t', '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE_NAME}','-t','${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE_NAME}:${_TAG_NAME}','.']
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE_NAME}']
+  args: ['push','-a','${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE_NAME}']
 substitutions:
-  _APM_PACKAGE_GSUTIL_URI: gs://my_bucket/aternity-apm-jida-linux-12.19.0_BL516.zip
+  _APM_PACKAGE_GSUTIL_URI: gs://my_bucket/appinternals_agent_latest_linux.gz
   _REGION: europe-west9
   _REPOSITORY: apm
-  _IMAGE_NAME: cookbook-233
+  _IMAGE_NAME: alluvio-aternity-apm-daemonset-pod-agent
+  _TAG_NAME: "230124"

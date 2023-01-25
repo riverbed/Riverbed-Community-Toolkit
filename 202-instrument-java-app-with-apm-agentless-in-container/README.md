@@ -29,7 +29,7 @@ In the APM webconsole, navigate to CONFIGURE > AGENTS > Install Agents and in th
 
 In the command below, replace the value with your own info (see Step 1):
 1. **Customer Id**, for example *12341234-12341234-13241234*
-2. **SaaS Psockets Server host**, for example *psockets.my_environment.aternity.com*
+2. **SaaS Psockets Server host**, for example *psockets.apm.myaccount.aternity.com*
 
 For example with Bash:
 
@@ -55,16 +55,16 @@ $env:ALLUVIO_ATERNITY_APM_CUSTOMER_ID="12341234-12341234-13241234"
 docker-compose up
 ```
 
-### User docker command
+### or using docker command
 
-In the command below replace the value with your own info (see Step 1):
+In the command below replace the value of the environment variable with your own info (see Step 1):
 1. *Customer Id* in the variable RVBD_CUSTOMER_ID, for example *12341234-12341234-13241234*
-2. *SaaS Psockets Server host* in the variable RVBD_ANALYSIS_SERVER, for example *psockets.my_environment.aternity.com*
+2. *SaaS Psockets Server host* in the variable RVBD_ANALYSIS_SERVER, for example *psockets.apm.myaccount.aternity.com*
 
 ```shell
 docker build --tag cookbook-202 .
 
-docker run --rm -p 8080:8080 -e RVBD_CUSTOMER_ID="1234-12341243" -e RVBD_ANALYSIS_SERVER="psockets.apm.my_environment.aternity.com" cookbook-202
+docker run --rm -p 8080:8080 -e RVBD_CUSTOMER_ID="1234-12341243" -e RVBD_ANALYSIS_SERVER="psockets.apm.myaccount.aternity.com" cookbook-202
 ```
 
 ## Step 4. Navigate on the app
