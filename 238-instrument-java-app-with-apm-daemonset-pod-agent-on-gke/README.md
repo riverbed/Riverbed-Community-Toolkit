@@ -4,14 +4,15 @@ In this cookbook a Java web-application deployed with multiple replicas on a Kub
 
 ![Cookbook 238](images/cookbook-238.png)
 
-> :information_source: This cookbook detailed for GKE, Kubernetes cluster hosted in GCP. Minor adaptations might be required to run in different environment.
+In details:
 
-> :information_source: More details:
-> A custom image of the APM agent is built and deployed as a **Daemonset POD agent** on a Kubernetes cluster. So that the agent will be running on every node and exposing the APM services to the hosted PODs listening on NodePorts (e.g. DSA on port 2111)
->
-> The [manifest of the Daemonset POD agent](apm-daemonset-pod-agent.yaml) must be customized with the APM account information.
->
-> Multiple replicas of a Java web-application, containerized from [sources](app) with a usual [Dockerfile](app-Dockerfile), are then deployed with APM instrumentation. The instrumentation of the app is set up in the deployment manifest of the app ([app-k8s.yaml](app-k8s.yaml)). It mounts a shared volume to give access to some agent files (e.g. the Java agent library).
+A custom image of the APM agent is built and deployed as a **Daemonset POD agent** on a Kubernetes cluster. So that the agent will be running on every node and exposing the APM services to the hosted PODs listening on NodePorts (e.g. DSA on port 2111)
+
+The [manifest of the Daemonset POD agent](apm-daemonset-pod-agent.yaml) must be customized with the APM account information.
+
+Multiple replicas of a Java web-application, containerized from [sources](app) with a usual [Dockerfile](app-Dockerfile), are then deployed with APM instrumentation. The instrumentation of the app is set up in the deployment manifest of the app ([app-k8s.yaml](app-k8s.yaml)). It mounts a shared volume to give access to some agent files (e.g. the Java agent library).
+
+> :information_source: This cookbook uses a GKE cluster, a managed Kubernetes cluster hosted in GCP. Minor adaptations might be required to use the artifacts in different environment.
 
 ## Prerequisites
 
