@@ -1,0 +1,4 @@
+[submodule "001-FlyFast-demo-app"]
+	path = 001-FlyFast-demo-app
+	branch = main
+	url = https://github.com/Aternity/FlyFast.git
