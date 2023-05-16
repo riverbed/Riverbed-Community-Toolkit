@@ -28,15 +28,15 @@ Set the FlyFast URL in the variable BASE_URL in the Python script Chrome-browse-
     BASE_URL = "https://flyfast.yourcorp.net"
 ```
 
-### Step 4. Run it
+### Step 4. Run the Synthetic Test
 
-In powershell
+In PowerShell
 
-```
+```PowerShell
 python.exe "C:\Riverbed-Community-Toolkit\NetIM\Synthetic-Test\Synthetic-004-Browse-FlyFast\Chrome-browse-flyfast.py"
 ```
 
-### (optionally) Configure a monitor in ALLUVIO NetIM
+### *optional* Configure a monitor in ALLUVIO NetIM
 
 In ALLUVIO NetIM web console, create a new Synthetic Test
 
