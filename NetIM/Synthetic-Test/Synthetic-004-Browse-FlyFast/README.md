@@ -4,18 +4,21 @@ Usecase: App monitoring
 Recommended Robot: Web Selenium
 
 This synthetic test is for FlyFast, a flight booking demo app shared on GitHub by the [ALLUVIO Aternity Tech Community](https://github.com/Aternity/Tech-Community).
-It runs on a Web Selenium robot setup (based on Windows, Chrome, Python, Selenium,...) which is [described here](../Robot-001-WebSelenium).
+It runs on a simple [Web Selenium robot setup](../Robot-001-WebSelenium) (based on Windows, Chrome, Python, Selenium,...).
 
 ## Preparation
 
 ### Step 1. Get the URL of FlyFast
 
-The URL can be the IP address, for example if deployed locally http://192.168.0.23, or a FQDN for example http://flyfast.yourcorp.net. 
+The URL can be the IP address, for example if deployed locally http://192.168.0.23, or a FQDN for example http://flyfast.yourcorp.net.
+
 If you want to install your own instance of FlyFast, please refer to the Cookbook 001 in [ALLUVIO Aternity Tech Community](https://github.com/Aternity/Tech-Community).
 
-### Step 2. Fetch the toolkit on the robot 
+### Step 2. Fetch the script on the machine to run the test
 
-For example download the [ZIP archive](https://github.com/riverbed/Riverbed-Community-Toolkit/archive/refs/heads/master.zip) and expand it, for example in C:\Riverbed-Community-Toolkit)
+Hit this [ZIP archive](https://github.com/riverbed/Riverbed-Community-Toolkit/archive/refs/heads/master.zip) to download the ZIP archive, and the expand it, for example in C:\Riverbed-Community-Toolkit)
+
+The steps to prepare a Web Selenium robot setup are described [here](../Robot-001-WebSelenium).
 
 ### Step 3. Configure the script
 
