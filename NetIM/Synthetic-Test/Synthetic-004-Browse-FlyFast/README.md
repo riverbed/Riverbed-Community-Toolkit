@@ -11,7 +11,7 @@ It runs on a [Web Selenium robot setup](../Robot-001-WebSelenium), bas on Window
 ### Step 1. Get the URL of FlyFast
 
 The URL can be the IP address, for example if deployed locally http://192.168.0.23, or a FQDN for example http://flyfast.yourcorp.net. 
-To install your own, please refer to the Cookbook 001 in [ALLUVIO Aternity Tech Community](https://github.com/Aternity/Tech-Community).
+If you want to install your own instance of FlyFast, please refer to the Cookbook 001 in [ALLUVIO Aternity Tech Community](https://github.com/Aternity/Tech-Community).
 
 ### Step 2. Fetch the toolkit on the robot 
 
