@@ -4,7 +4,7 @@ Usecase: App monitoring
 Recommended Robot: Web Selenium
 
 This synthetic test is for FlyFast, a flight booking demo app shared on GitHub by the [ALLUVIO Aternity Tech Community](https://github.com/Aternity/Tech-Community).
-It runs on a [Web Selenium robot setup](../Robot-001-WebSelenium), bas on Windows, Chrome, Python, Selenium,...
+It runs on a Web Selenium robot setup (based on Windows, Chrome, Python, Selenium,...) which is [described here](../Robot-001-WebSelenium).
 
 ## Preparation
 
