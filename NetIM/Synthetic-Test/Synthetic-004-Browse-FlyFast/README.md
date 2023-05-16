@@ -22,7 +22,7 @@ The steps to prepare a Web Selenium robot setup are described [here](../Robot-00
 
 ### Step 3. Configure the script
 
-Set the FlyFast URL in the variable BASE_URL in the Python script Chrome-browse-flyfast.py 
+Edit the the Python script Chrome-browse-flyfast.py, and set the FlyFast URL in the variable BASE_URL (line 52) 
 
 ```python
 ##################################################################
