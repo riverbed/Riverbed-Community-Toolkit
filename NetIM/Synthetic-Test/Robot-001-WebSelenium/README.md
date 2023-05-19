@@ -11,7 +11,7 @@ The next paragraph explains how to setup from scratch on a Windows machine. It i
 
 ## Prerequisites
 
-- a fresh machine with Windows 10 x64 and a user account with Administrator permission
+- a fresh machine with Windows 11 x64 and a user account with Administrator permissions
 - a [Riverbed NetIM](https://www.riverbed.com/products/steelcentral/infrastructure-management.html) instance for Synthetic Test orchestration
 - connectivity between the Windows machine and the NetIM Core node
 
@@ -25,11 +25,47 @@ The next paragraph explains how to setup from scratch on a Windows machine. It i
 
 2. Download a install a decent code editor, for example [Visual Studio Code - x64 System Installer](https://code.visualstudio.com/#alt-downloads)
 
-3. Download and install [Python](https://www.python.org). For example [Python 3.8.83 x64](https://www.python.org/ftp/python/3.8.3/python-3.8.3-amd64.exe)
+3. Download and install [Python](https://www.python.org). For example [Python 3.11.1 x64](https://www.python.org/ftp/python/3.11.1/python-3.11.1-amd64.exe)
 > - Check the installer option to Add Python to PATH
-> - Hit Custom Install button and select "install for all users" in the Advanced Install options
+> - Hit Custom Install button and in the Advanced Install options check to box to select"Install Python for all users"
 
-### 2. NetIM agent
+4. Install **selenium 4** libraries for Python with pip (check [Selenium](https://www.selenium.dev/) and [pip](https://pypi.org/project/selenium/) for details, the latest version is 4.7.2 as of jan 2023). Open a Windows PowerShell (Admin) and run the following command:
+
+```PowerShell
+pip install selenium
+```
+
+### 2. Edge specifics
+
+1. Launch Edge and open the url [edge://settings/help](edge://settings/help) to check the version that is running (if not already there, fetch and install from [here](https://www.microsoft.com/en-us/edge)). 
+
+For example Version 109.0.1518.55 (Official build) (64-bit):
+
+![edge version 109](images/edge-version-109.png)
+
+2. Download the [Driver](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/#downloads) for **Windows 64 bits** and extract it to c:\. 
+
+For example the URL of the version **109.0.1518.55** for Windows 64bits is https://msedgedriver.azureedge.net/109.0.1518.55/edgedriver_win64.zip
+
+After extraction the driver should be in the following path: C:\edgedriver_win64\msedgedriver.exe
+
+![Edge Driver extracted](images/edgedriver-win64-extracted.png)
+
+### 3. Chrome specifics
+
+1. Download and install [Google Chrome](https://www.google.com/chrome/)
+
+2. Launch Chrome and open the url [chrome://settings/help](chrome://settings/help) to check the version number
+
+3. Download the [Chrome Driver](https://chromedriver.chromium.org/downloads) matching the version for **Windows 32 bits** and extract it to c:\. 
+
+For example the URL of the chrome driver for version **Version 109** for Windows 32 bits is https://chromedriver.storage.googleapis.com/109.0.5414.74/chromedriver_win32.zip
+
+After extraction the driver should be in the path: C:\chromedriver_win32\chromedriver.exe
+
+![Chrome Driver extracted](images/chromedriver-win32-extracted.png)
+
+### 4. NetIM agent
 
 1. Download the NetIM TestEngine Agent installer from the **NetIM Core node**
 
@@ -48,52 +84,6 @@ scp netim_admin_username@netim_servername:/data1/riverbed/NetIM/latest/external/
 On your Windows machine, **extract TestEngine-windows.zip on C:**
 
 Run the **install.bat** in a PowerShell (with Administrator privilege).
-
-### 3. Edge specifics
-
-1. Download and install [Microsoft Edge](https://www.microsoft.com/en-us/edge) (Chromium version)
-
-2. Launch Edge and open the url [edge://settings/help](edge://settings/help) to check the version that is running. For example version 83:
-
-![edge version 83](images/edge-version-83.png)
-
-3. Download the [Driver](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/#downloads) for **Windows 64 bits** and extract it to c:\. 
-
-For example the URL of the version **83.0.478.56** for Windows 64bits is https://msedgedriver.azureedge.net/83.0.478.56/edgedriver_win64.zip
-
-After extraction the driver should be in the following path: C:\edgedriver_win64\msedgedriver.exe
-
-![Edge Driver extracted](images/edgedriver-win64-extracted.png)
-
-4. Install edge selenium libraries for Python with pip. Open a Windows PowerShell (Admin) and run the following command:
-
-```PowerShell
-pip install msedge-selenium-tools
-```
-
-### 4. Chrome specifics
-
-1. Download and install [Google Chrome](https://www.google.com/chrome/)
-
-2. Download the [Driver](https://chromedriver.chromium.org/downloads) for **Windows 32 bits** and extract it to c:\. 
-
-For example the URL of the version **83.0.4103.39** for Windows 32 bits is https://chromedriver.storage.googleapis.com/83.0.4103.39/chromedriver_win32.zip
-
-After extraction the driver should be in the path: C:\chromedriver_win32\chromedriver.exe
-
-![Chrome Driver extracted](images/chromedriver-win32-extracted.png)
-
-3. Install selenium libraries for Python with pip
-
-Open a Windows PowerShell (Admin) and run
-
-```PowerShell
-pip install selenium
-```
-
-4. Install selenium libraries for Python with pip
-
-![Chrome version 83](images/chrome-version-83.png)
 
 ## License
 

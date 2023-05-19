@@ -901,6 +901,18 @@
             },
             "existingVirtualNetworkId" : {
               "value": "[reference(variables('linkedTemplateName_vnet-riverbed-headend')).outputs.virtualNetworkId.value]"
+            },
+            "existingSubnetName" : {
+              "value": "Monitoring"
+            },
+            "virtualMachineName": {
+              "value": "Visiblity"
+            },
+            "adminUsername":{
+              "value": "[parameters('demoJumpboxUsername')]"
+            },
+            "adminPassword":{
+              "value": "[parameters('demoJumpboxPassword')]"
             }
           },
           "template" :

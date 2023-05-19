@@ -5,6 +5,7 @@ Riverbed is sharing the cookbooks with the user community to help integrating Ac
 - [101 - Chaining Acceleration in a VNET having a gateway appliance (VPN or SD-WAN)](./101-service-chain-gw-appliance)
 - [102 - Acceleration Scale Out in Azure](./102-scale-out)
 - [103 - Cluster of 2 active Cloud SteelHead](./103-deploy-active-active)
+- [104 - Backup and Restore Cloud SteelHead](./104-Backup-and-Restore)
 
 ### License
 
