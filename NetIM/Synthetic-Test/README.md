@@ -11,26 +11,31 @@ This area of the Riverbed Community Toolkit contains Howtos, samples and technic
 
 Synthetic Testing often requires dedicated hosts with some special configuration and software preprequisites installed. We like to call them **Robots**. The [robots cookbooks](#robots-cookbooks) section is where you will find how to build some robots.
 
-The section [Synthetic Test Library](#synthetic-test-library)  inventories all the scripts samples and usecases provided in the subfolders.
+The section [Synthetic Test Library](#synthetic-test-library) inventories all the scripts samples and usecases provided in the subfolders.
 
 Any contributions are welcome. More details in the [How to contribute](#how-to-contribute)
 
 ## ROBOTS cookbooks
 
-| Robot | SubFolder | Capabilities |
-| --- | --- | --- |
-| Robot Template | [Robot-000-Template](Robot-000-Template) | Template to design new Robot
-| Web Selenium Robot | [Robot-001-WebSelenium](Robot-001-WebSelenium) | <li>Edge and Chrome</li><li>Selenium with Python</li> |
+| Robot                         | SubFolder                                                            | Capabilities                                                    |
+| ----------------------------- | -------------------------------------------------------------------- | --------------------------------------------------------------- |
+| Robot Template                | [Robot-000-Template](Robot-000-Template)                             | Template to design new Robot                                    |
+| Web Selenium Robot            | [Robot-001-WebSelenium](Robot-001-WebSelenium)                       | <li>Edge and Chrome</li><li>Selenium with Python</li>           |
 | Metrics Collector Linux Robot | [Robot-002-MetricsCollector-Linux](Robot-002-MetricsCollector-Linux) | <li>Linux</li><li>Python</li><li>SSH within Python scripts</li> |
 
 ## Synthetic Test Library
 
-| Usecase  | SubFolder  |  Recommended Robots | 
-| --- | --- | --- |
-| Synthetic Test Template | [Synthetic-000-Template](Synthetic-000-Template) | - | 
-| URL availability, Edge | [Synthetic-001-Browser-Open-URL](Synthetic-001-Browser-Open-URL) | Web Selenium Robot | 
-| Generic URL availability, Edge or Chrome | [Synthetic-002-Browser-Open-URL-Generic](Synthetic-002-Browser-Open-URL-Generic) | Web Selenium Robot |
-| YourApp Demo | [Synthetic-003-Browser-Browse-YourAppDemo](Synthetic-003-Browser-Browse-YourAppDemo) | Web Selenium Robot | 
+| Usecase                                  | SubFolder                                                                                | Recommended Robots |
+| ---------------------------------------- | ---------------------------------------------------------------------------------------- | ------------------ |
+| Synthetic Test Template                  | [Synthetic-000-Template](Synthetic-000-Template)                                         | -                  |
+| URL availability, Edge                   | [Synthetic-001-Browser-Open-URL](Synthetic-001-Browser-Open-URL)                         | Web Selenium Robot |
+| Generic URL availability, Edge or Chrome | [Synthetic-002-Browser-Open-URL-Generic](Synthetic-002-Browser-Open-URL-Generic)         | Web Selenium Robot |
+| YourApp Demo                             | [Synthetic-003-Browser-Browse-YourAppDemo](Synthetic-003-Browser-Browse-YourAppDemo)     | Web Selenium Robot |
+| FlyFast Selenium Script                  | [Synthetic-004-Browse-FlyFast](Synthetic-004-Browse-FlyFast)                             | Web Selenium Robot |
+| Monitor BGP State                        | [Synthetic-005-Monitor-BGP-Peer-State](Synthetic-005-Monitor-BGP-Peer-State)             | -                  |
+| Bandwidth Monitor                        | [Synthetic-006-Bandwidth-Monitor](Synthetic-006-Bandwidth-Monitor)                       | -                  |
+| SSL/TLS Certificate Verification         | [Synthetic-007-TLS-Certificate-Verification](Synthetic-007-TLS-Certificate-Verification) | -                  |
+| IP Route Monitoring                      | [Synthetic-008-IP-Route-Monitoring](Synthetic-008-IP-Route-Monitoring)                   | -                  |
 
 ## How to contribute
 
