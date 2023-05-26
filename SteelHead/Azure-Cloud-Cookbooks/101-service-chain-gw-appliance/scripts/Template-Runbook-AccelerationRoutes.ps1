@@ -85,28 +85,29 @@ Import-Module Az.Accounts
 Import-Module Az.Network
 Import-Module Az.Automation
 
+#Use system-maganed identity instead of RunAsAccount
 try
 {
-    $connectionName = "AzureRunAsConnection"
-    $servicePrincipalConnection=Get-AutomationConnection -Name $connectionName         
-
     "Logging in to Azure..."
-    Add-AzAccount `
-        -ServicePrincipal `
-        -TenantId $servicePrincipalConnection.TenantId `
-        -ApplicationId $servicePrincipalConnection.ApplicationId `
-        -CertificateThumbprint $servicePrincipalConnection.CertificateThumbprint 
+    Connect-AzAccount -Identity
 }
-catch 
-{
-    if (!$servicePrincipalConnection)
+catch {
+    Write-Error -Message $_.Exception
+    throw $_.Exception
+}
+
+#Get all Resource Manager resources from all resource groups
+$ResourceGroups = Get-AzResourceGroup
+
+foreach ($ResourceGroup in $ResourceGroups)
+{    
+    Write-Output ("Showing resources in resource group " + $ResourceGroup.ResourceGroupName)
+    $Resources = Get-AzResource -ResourceGroupName $ResourceGroup.ResourceGroupName
+    foreach ($Resource in $Resources)
     {
-        $ErrorMessage = "Connection $connectionName failed."
-        throw $ErrorMessage
-    } else{
-        Write-Error -Message $_.Exception
-        throw $_.Exception
+        Write-Output ($Resource.Name + " of type " +  $Resource.ResourceType)
     }
+    Write-Output ("")
 }
 
 #endregion
