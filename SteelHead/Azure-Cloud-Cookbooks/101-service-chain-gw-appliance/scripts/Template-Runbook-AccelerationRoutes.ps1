@@ -85,28 +85,15 @@ Import-Module Az.Accounts
 Import-Module Az.Network
 Import-Module Az.Automation
 
+#Use system-maganed identity instead of RunAsAccount
 try
 {
-    $connectionName = "AzureRunAsConnection"
-    $servicePrincipalConnection=Get-AutomationConnection -Name $connectionName         
-
     "Logging in to Azure..."
-    Add-AzAccount `
-        -ServicePrincipal `
-        -TenantId $servicePrincipalConnection.TenantId `
-        -ApplicationId $servicePrincipalConnection.ApplicationId `
-        -CertificateThumbprint $servicePrincipalConnection.CertificateThumbprint 
+    Connect-AzAccount -Identity
 }
-catch 
-{
-    if (!$servicePrincipalConnection)
-    {
-        $ErrorMessage = "Connection $connectionName failed."
-        throw $ErrorMessage
-    } else{
-        Write-Error -Message $_.Exception
-        throw $_.Exception
-    }
+catch {
+    Write-Error -Message $_.Exception
+    throw $_.Exception
 }
 
 #endregion
