@@ -71,7 +71,7 @@ gcloud container clusters get-credentials {CLUSTER NAME} --region {REGION} --pro
 
 > Example:
 >```shell
->238-instrument-java-app-with-apm-daemonset-pod-agent-on-gke
+>cd 238-instrument-java-app-with-apm-daemonset-pod-agent-on-gke
 >gcloud config set project aternity-cookbooks
 >gcloud container clusters get-credentials standard-cluster-1 --region europe-west9 --project aternity-cookbooks
 >```
@@ -95,7 +95,7 @@ where:
 
 > Example:
 >```shell
->gcloud builds submit --config cloudbuild.yaml --substitutions _APM_PACKAGE_GSUTIL_URI=gs://>my_bucket/appinternals_agent_latest_linux.gz,_REGION=europe-west9,_REPOSITORY=apm
+>gcloud builds submit --config cloudbuild.yaml --substitutions _APM_PACKAGE_GSUTIL_URI=gs://my_bucket/appinternals_agent_latest_linux.gz,_REGION=europe-west9,_REPOSITORY=apm
 >```
 
 3. Grab the container image path
