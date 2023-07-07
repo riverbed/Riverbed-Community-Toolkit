@@ -2,7 +2,7 @@
 #
 # Aternity Tech-Community
 # 110-opentelemetry-php-app
-# version: 22.7.30
+# version: 23.7.7
 #
 # Compose file to use with the cookbook 110
 #
@@ -28,7 +28,7 @@ services:
     # Aternity OpenTelemetry Collector
     # https://hub.docker.com/r/aternity/apm-collector
 
-    image: registry.hub.docker.com/aternity/apm-collector:2022.4.0-4
+    image: registry.hub.docker.com/aternity/apm-collector:2022.11.0-4
 
     container_name: aternity-opentelemetry-collector-110
 
@@ -70,7 +70,7 @@ services:
 
       OTEL_EXPORTER_ZIPKIN_ENDPOINT: http://aternity-opentelemetry-collector:9411/api/v2/spans
 
-      OTEL_EXPORTER_OTLP_ENDPOINT: http://aternity-opentelemetry-collector:4318
+      OTEL_EXPORTER_OTLP_TRACES_ENDPOINT: http://aternity-opentelemetry-collector:4318/v1/traces     
       
       
     command: >
