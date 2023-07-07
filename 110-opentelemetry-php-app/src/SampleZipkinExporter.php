@@ -4,7 +4,7 @@
 #
 # Aternity Tech-Community
 # 110-opentelemetry-php-app
-# version: 22.7.30
+# version: 23.7.7
 #
 # Sample app instrumented with OpenTelemetry (https://opentelemetry.io/)
 # 
@@ -21,6 +21,7 @@ require __DIR__ . '/vendor/autoload.php';
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\HttpFactory;
+use OpenTelemetry\SDK\Common\Export\Http\PsrTransportFactory;
 use OpenTelemetry\Contrib\Zipkin\Exporter as ZipkinExporter;
 use OpenTelemetry\SDK\Common\Attribute\Attributes;
 use OpenTelemetry\SDK\Trace\SpanProcessor\SimpleSpanProcessor;
@@ -29,17 +30,15 @@ use OpenTelemetry\SDK\Trace\TracerProvider;
 $OTEL_EXPORTER_ZIPKIN_ENDPOINT = getenv("OTEL_EXPORTER_ZIPKIN_ENDPOINT");
 $OTEL_SERVICE_NAME = getenv("OTEL_SERVICE_NAME");
 
-$zipkinExporter = new ZipkinExporter(
+$transport = PsrTransportFactory::discover()->create($OTEL_EXPORTER_ZIPKIN_ENDPOINT, 'application/json');
+$exporter = new ZipkinExporter(
     $OTEL_SERVICE_NAME,
-    $OTEL_EXPORTER_ZIPKIN_ENDPOINT,
-    new Client(),
-    new HttpFactory(),
-    new HttpFactory()
+    $transport
 );
 
 $tracerProvider =  new TracerProvider(
     new SimpleSpanProcessor(
-        $zipkinExporter
+        $exporter
     )
 );
 
@@ -51,17 +50,15 @@ $tracer = $tracerProvider->getTracer('cookbook-tracer');
 
 echo 'Starting Sample app instrumented with OpenTelemetry, exporting Zipkin telemetry to '. getenv("OTEL_EXPORTER_ZIPKIN_ENDPOINT") ;
 
-$root = $span = $tracer->spanBuilder('root')->startSpan();
-$span->activate();
+$root = $tracer->spanBuilder('root')->startSpan();
+$root->setAttribute('cookbook', '110')->setAttribute('sample', 'ZipkinExporter');
+$scope = $root->activate();
 
-$span->setAttribute('cookbook', '110')
-->setAttribute('sample', 'ZipkinExporter');
-
-echo PHP_EOL ;
+echo PHP_EOL . "<br>" ;
 
 for ($i = 1; $i < 10; $i++) {
     
-    echo "Span: $i" . PHP_EOL ;
+    echo "Span: $i" . PHP_EOL . "<br>" ;
 
     $span = $tracer->spanBuilder('loop-' . $i)->startSpan();
 
@@ -69,6 +66,14 @@ for ($i = 1; $i < 10; $i++) {
 
     $span->end();
 }
+
 $root->end();
+$scope->detach();
 
 echo 'Complete!' . PHP_EOL;
+
+############################################
+
+## OpenTelemetry shutdown
+
+$tracerProvider->shutdown();

@@ -90,6 +90,8 @@ services:
         composer require guzzlehttp/guzzle ;
         composer require symfony/http-client
         composer require open-telemetry/opentelemetry ;
+        composer require open-telemetry/exporter-otlp ;
+        composer require open-telemetry/exporter-zipkin ;
 
         # Launch Apache http webserver, https://httpd.apache.org/
         apache2-foreground ;
