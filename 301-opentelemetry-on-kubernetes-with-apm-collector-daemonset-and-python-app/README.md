@@ -100,16 +100,16 @@ After few seconds, a probe will start and generate regular http calls. For each 
 
 3. Optionally - Check the logs of the app
 
-Exectue the following command in the shell:
+Execute the following command in the shell:
 
 ```shell
-kubectl logs cookbook301-app -f
+kubectl logs cookbook301-app
 ```
 
 When the app is running, the output looks like this:
 
 ```
-> kubectl logs cookbook301-app -f
+> kubectl logs cookbook301-app
  * Debug mode: off
 WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
  * Running on all addresses (0.0.0.0)
