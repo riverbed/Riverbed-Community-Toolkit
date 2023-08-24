@@ -1,6 +1,6 @@
 # 301-opentelemetry-on-kubernetes-with-apm-collector-daemonset-and-python-app
 
-This cookbook shows how the APM Collector of ALLUVIO Aternity can be deployed as a daemonset on a Kubernetes cluster, so that an APM Collector pod will run on every node in order to receive traces from local applications pod and store the traces in the SaaS account.
+This cookbook shows how the [APM Collector](https://hub.docker.com/r/aternity/apm-collector) of ALLUVIO Aternity can be deployed as a daemonset on a Kubernetes cluster, so that an APM Collector pod will run on every node in order to receive traces from local applications pod and store the traces in the SaaS account.
 
 And for testing, the cookbook provides a simple web app written in Python/Flask, instrumented with OpenTelemetry Python, and that runs in a single container.
 The pod is configured in the Kubernetes manifest to export the OpenTelemetry traces to the APM Collector.
