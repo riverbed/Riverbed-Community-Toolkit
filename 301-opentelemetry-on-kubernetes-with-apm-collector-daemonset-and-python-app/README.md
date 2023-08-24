@@ -94,6 +94,7 @@ Execute the following commands:
 ```shell
 # Deploy the app
 kubectl apply -f cookbook301-app.yaml
+```
 
 After few seconds, a probe will start and generate regular http calls. For each call, the OpenTelemetry instrumentation will create a trace and export it.
 
