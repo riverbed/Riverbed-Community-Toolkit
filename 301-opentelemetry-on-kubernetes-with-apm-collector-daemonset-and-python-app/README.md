@@ -2,10 +2,10 @@
 
 This cookbook shows how the APM Collector of ALLUVIO Aternity can be deployed as a daemonset on a Kubernetes cluster, so that an APM Collector pod will run on every node in order to receive traces from local applications pod and store the traces in the SaaS account.
 
-And for testing, the cookbook provides a simple web app written in Pyhon/Flask, instrumented with OpenTelemetry Python, and that run in a single container.
+And for testing, the cookbook provides a simple web app written in Python/Flask, instrumented with OpenTelemetry Python, and that runs in a single container.
 The pod is configured in the Kubernetes manifest to export the OpenTelemetry traces to the APM Collector.
 
-The cookbook can be used with Kubernetes managed service in the cloud like Azure AKS, AWS EKS or Google GKE.
+The cookbook can be used with Kubernetes managed services in your favorite Cloud, like Azure AKS, AWS EKS or Google GKE.
 
 ## Prerequisites
 
