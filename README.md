@@ -29,6 +29,7 @@ To use the following contents you will need active licenses of the ALLUVIO Atern
 | [233](233-instrument-java-app-with-apm-agentless-on-gke) | Deploy a Java app instrumented with APM Agentless in a container to run on Google Kubernetes Engine | [ALLUVIO Aternity APM](https://www.riverbed.com/products/application-performance-monitoring) | APM Agentless for Java, APM Java agent for Linux, Java, APM host-agentless, Web App, Google Cloud, Kubernetes, GKE, auto-instrumentation | jan. 2023 |
 | [235](235-instrument-java-app-with-apm-agent-in-container-on-gke) | *in progress* - Deploy a Java app instrumented with the full APM agent in a container to run on Google Kubernetes Engine | [ALLUVIO Aternity APM](https://www.riverbed.com/products/application-performance-monitoring) | APM agent for Linux, Java, Web App, Google Cloud, Kubernetes, GKE, auto-instrumentation | jan. 2023 |
 | [238](238-instrument-java-app-with-apm-daemonset-pod-agent-on-gke) | Deploy the full APM agent on GKE as a Daemonset POD agent and instrument all the PODs of a Java web-app | [ALLUVIO Aternity APM](https://www.riverbed.com/products/application-performance-monitoring) | APM agent for Linux, Java, Web App, Google Cloud, Kubernetes, GKE, auto-instrumentation | jan. 2023 |
+| [301](301-opentelemetry-on-kubernetes-with-apm-collector-daemonset-and-python-app) | Deploy the APM Collector on Kubernetes as a Daemonset and try it with a Python wep app | [ALLUVIO Aternity APM](https://www.riverbed.com/products/application-performance-monitoring) | APM Collector, OpenTelemetry, Kubernetes, AKS, EKS, GCP, auto-instrumentation | aug. 2023 |
 
 Contributions can be submitted via  [Issues](https://github.com/Aternity/Tech-Community/issues) and [Pull Request](https://github.com/Aternity/Tech-Community/pulls). The team will usually give feedback in the day.
 
@@ -36,6 +37,6 @@ Thanks in advance!
 
 ### License
 
-Copyright (c) 2022 Riverbed Technology, Inc.
+Copyright (c) 2023 Riverbed Technology, Inc.
 
 The contents provided here are licensed under the terms and conditions of the MIT License accompanying the software ("License"). The scripts are distributed "AS IS" as set forth in the License. The script also include certain third party code. All such third party code is also distributed "AS IS" and is licensed by the respective copyright holders under the applicable terms and conditions (including, without limitation, warranty and liability disclaimers) identified in the license notices accompanying the software.
