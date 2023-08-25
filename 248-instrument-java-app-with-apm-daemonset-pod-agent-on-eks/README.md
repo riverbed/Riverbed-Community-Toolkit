@@ -182,6 +182,8 @@ In your web browser, open the http url using the external IP address, for exampl
 
 Go to the APM webconsole to observe the application, every instance and every transaction.
 
+![Cookbook 248 Transactions](images/cookbook-248-transactions.png)
+
 #### License
 
 Copyright (c) 2023 Riverbed
