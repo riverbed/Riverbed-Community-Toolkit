@@ -178,7 +178,7 @@ kubectl -n cookbook-app get svc
 
 In your web browser, open the http url using the external IP address, for example http://external-ip-address and refresh multiple time in order to generate some traffic and application transactions.
 
-## Step 8. Monitor in ALLUVIO Aternity APM webconsole 
+## Step 6. Monitor in ALLUVIO Aternity APM webconsole 
 
 Go to the APM webconsole to observe the application, every instance and every transaction.
 
