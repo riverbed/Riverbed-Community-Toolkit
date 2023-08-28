@@ -7,6 +7,8 @@ The pod is configured in the Kubernetes manifest to export the OpenTelemetry tra
 
 The cookbook can be used with Kubernetes managed services in your favorite Cloud, like Azure AKS, AWS EKS or Google GKE.
 
+![Cookbook 301](images/cookbook-301.png)
+
 ## Prerequisites
 
 1. a SaaS account for [ALLUVIO Aternity APM](https://www.riverbed.com/products/application-performance-monitoring) with a license for OpenTelemetry
