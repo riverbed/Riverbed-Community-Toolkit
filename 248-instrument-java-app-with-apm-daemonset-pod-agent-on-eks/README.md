@@ -61,7 +61,7 @@ aws ecr get-login-password --region $ecr_region | docker login --username AWS --
 
 # 2. Create a repository
 repository_name="alluvio-aternity-apm-daemonset-pod-agent"
-aws ecr create-repository --repository-name $repository_name
+aws ecr create-repository --repository-name $repository_name --region $ecr_region
 
 # 3. Build and push the container image
 tag="23.8"
@@ -132,7 +132,7 @@ aws ecr get-login-password --region $ecr_region | docker login --username AWS --
 
 # 2. Create a repository
 repository_name="cookbook-248-app"
-aws ecr create-repository --repository-name $repository_name
+aws ecr create-repository --repository-name $repository_name --region $ecr_region
 
 # 3. Build and push the container image of the app
 tag="23.8"
