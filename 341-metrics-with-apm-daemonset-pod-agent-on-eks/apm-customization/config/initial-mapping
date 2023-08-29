@@ -1,0 +1,3 @@
+# Process - Configuration mapping examples:
+# include:*demo* config:my-custom-configuration.json
+include:*demo* config:configuration.json
