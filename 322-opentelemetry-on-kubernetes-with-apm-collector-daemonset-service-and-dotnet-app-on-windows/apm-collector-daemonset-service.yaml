@@ -1,0 +1,38 @@
+# apm-collector-daemonset-service.yaml
+# 23.8.230825
+# ALLUVIO Aternity Tech Community Cookbook (https://github.com/Aternity/Tech-Community)
+#
+# Usage:
+# 
+#     1. If not already done, deploy the APM Collector daemonset (see apm-collector-daemonset.yaml)
+#
+#     2. Apply  
+#
+#       kubectl apply -f apm-collector-daemonset-service.yaml
+#
+#     3. Check resources
+#
+#       kubectl --namespace alluvio-aternity get service
+#
+#     4. Remove
+#
+#       kubectl delete -f apm-collector-daemonset-service.yaml
+#
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: alluvio-aternity
+  name: apm-collector
+spec:
+  type: LoadBalancer
+  selector:
+    app.kubernetes.io/name: daemonset
+    app.kubernetes.io/component: apm-collector
+    app.kubernetes.io/part-of: alluvio-aternity
+  ports:
+    - name: otlp # OTLP/gRPC
+      protocol: TCP
+      port: 4317
+      targetPort: 4317
