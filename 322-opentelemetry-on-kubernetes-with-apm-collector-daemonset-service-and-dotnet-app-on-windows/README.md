@@ -53,7 +53,7 @@ kubectl apply -f apm-collector-daemonset-service.yaml
 
 4. Wait a bit until the resources are ready, and find the IP Address of the service
 
-For example, run the following command to s:
+For example, run the following command to see the IP Address of the service resource:
 
 ```shell
 kubectl --namespace alluvio-aternity get service
