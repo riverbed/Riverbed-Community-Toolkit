@@ -44,7 +44,7 @@ cd Tech-Community/341-metrics-with-apm-daemonset-pod-agent-on-eks
 
 It is not required for CMX metric. Any APM instrumentation configuration file (e.g configuration.json exported from the webconsole) must be copied to the subfolder **apm-customization/config/**
 
-3. In the snippet below, replace the token {{ecr_region}} and {{aws_account_id}} with your own values. Execute the snippet to build the image locally, and then push it to the ECR container registry. The build is based on a [Dockerfile](Dockerfile). 
+3. In the snippet below, replace the token **{{ecr_region}}** and **{{aws_account_id}}** with your own values. Execute the snippet to build the image locally, and then push it to the ECR container registry. The build is based on a [Dockerfile](Dockerfile). 
 
 ```shell
 ecr_region = "{{ecr_region}}"  # replace {{ecr_region}}, for example: eu-west-3
@@ -83,11 +83,11 @@ For example:
 
 Edit the Kubernetes manifest [apm-daemonset-pod-agent.yaml](apm-daemonset-pod-agent.yaml) to set the image path and the environment variables to configure the APM agent with the actual values prepared in previous steps (Step 1 and Step 3):
 
-- replace {{ALLUVIO Aternity APM Daemonset POD agent image}} with the **URI of the APM agent container image** built previously (see Step 3.), for example: *1234-5678-90.dkr.ecr.eu-west-3.amazonaws.com/alluvio-aternity-apm-daemonset-pod-agent:23.8*
+- replace **{{ALLUVIO Aternity APM Daemonset POD agent image}}** with the **URI of the APM agent container image** built previously (see Step 3.), for example: *1234-5678-90.dkr.ecr.eu-west-3.amazonaws.com/alluvio-aternity-apm-daemonset-pod-agent:23.8*
 
-- replace {{ALLUVIO_ATERNITY_APM_CUSTOMER_ID}} with the **Customer Id** (see Step 1.), for example: *12341234-12341234-13241234*
+- replace **{{ALLUVIO_ATERNITY_APM_CUSTOMER_ID}}** with the **Customer Id** (see Step 1.), for example: *12341234-12341234-13241234*
 
-- replace {{ALLUVIO_ATERNITY_APM_SAAS_SERVER_HOST}} with the **SaaS Analysis Server Host** (see Step 1.), for example: *agents.apm.my_environment.aternity.com*
+- replace **{{ALLUVIO_ATERNITY_APM_SAAS_SERVER_HOST}}** with the **SaaS Analysis Server Host** (see Step 1.), for example: *agents.apm.my_environment.aternity.com*
 
 
 2. Deploy the APM Daemonset POD Agent
@@ -104,7 +104,8 @@ When ready, the agents will show up in the APM webconsole: in CONFIGURE > AGENTS
 
 1. Prepare the image
 
-Same as in Step 3, replace the token {{ecr_region}} and {{aws_account_id}} with the values of your environment, and execute the snippet to build the image of app. The build is based on this [Dockerfile](app/Dockerfile).
+Same as in Step 3, replace the token **{{ecr_region}}** and **{{aws_account_id}}** with the values of your environment, and execute the snippet to build the image of the app.
+The build is based on this [Dockerfile](app/Dockerfile).
 
 ```shell
 ecr_region = "{{ecr_region}}"  # replace {{ecr_region}}, for example: eu-west-3
@@ -138,7 +139,7 @@ The URI should be displayed in the terminal from the previous step. For example:
 3. Set the image of the app in the manifest
 
 Edit the [YAML manifest of the app](app/cookbook-341-kubernetes-job.yaml).
-Find the container definition and set the image replacing {{ cookbook 341 app image }} with the URI obtained in the previous step, for example: *1234-5678-90.dkr.ecr.eu-west-3.amazonaws.com/cookbook-341-app:23.8*
+Find the container definition and set the image replacing **{{ cookbook 341 app image }}** with the URI obtained in the previous step, for example: *1234-5678-90.dkr.ecr.eu-west-3.amazonaws.com/cookbook-341-app:23.8*
 
 4. Deploy the app
 
