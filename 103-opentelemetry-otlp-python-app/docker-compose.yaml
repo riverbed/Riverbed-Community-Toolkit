@@ -2,20 +2,20 @@
 #
 # Aternity Tech-Community
 # 103-opentelemetry-otlp-python-app
-# version: 22.7.30
+# version: 23.10.18
 #
 # Usage
-#   docker-compose up
+#   docker compose up
 #
 # Example in Bash
 #   export ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
 #   export ATERNITY_CUSTOMER_ID="12341234-12341234-13241234"
-#   docker-compose up
+#   docker compose up
 #
 # Example in PowerShell
 #   $env:ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
 #   $env:ATERNITY_CUSTOMER_ID="12341234-12341234-13241234"
-#   docker-compose up
+#   docker compose up
 
 version: "3.8"
 
@@ -26,9 +26,9 @@ services:
     # Aternity OpenTelemetry Collector
     # https://hub.docker.com/r/aternity/apm-collector
 
-    image: registry.hub.docker.com/aternity/apm-collector:2022.4.0-4
+    image: registry.hub.docker.com/aternity/apm-collector:2022.11.0-4
     
-    container_name: aternity-opentelemetry-collector
+    container_name: apm-collector
     
     environment:
     
@@ -39,9 +39,9 @@ services:
       # Uncomment the telemetry protocol used by the application
 
       # OpenTelemetry, https://opentelemetry.io
-      - "4318:4318/tcp"     # OpenTelemetry OTLP JSON/Protobuf over HTTP
+      - "4317:4317/tcp"   # OpenTelemetry OTLP over gRPC
+      # - "4318:4318/tcp"     # OpenTelemetry OTLP JSON/Protobuf over HTTP
       # - "55681:55681/tcp" # OpenTelemetry OTLP JSON/Protobuf over HTTP
-      # - "4317:4317/tcp"   # OpenTelemetry OTLP over gRPC
       
       # Jaeger, https://www.jaegertracing.io
       # - "14268:14268/tcp" # Jaeger Thrift Binary over HTTP
@@ -56,11 +56,13 @@ services:
     
     environment:  
     
-      OTEL_EXPORTER_OTLP_ENDPOINT: http://aternity-opentelemetry-collector:4318
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://apm-collector:4317
 
       OTEL_SERVICE_NAME: service103_python
 
-      PY_APP_URL: https://raw.githubusercontent.com/open-telemetry/opentelemetry-python/main/docs/examples/auto-instrumentation/server_automatic.py
+      # TODO: fix issue server_automatic.py and auto instrumentation not sending trace anymore, and remove the temporary app server_programmatic.py that is not auto instrumentation
+      # PY_APP_URL: https://raw.githubusercontent.com/open-telemetry/opentelemetry-python/main/docs/examples/auto-instrumentation/server_automatic.py
+      PY_APP_URL: https://raw.githubusercontent.com/open-telemetry/opentelemetry-python/main/docs/examples/auto-instrumentation/server_programmatic.py
     
     ports:
       - "8103:80"
@@ -77,10 +79,10 @@ services:
         curl -s -o app.py $$PY_APP_URL ;
         
         # Run with OpenTelemetry auto-instrumentation
-        opentelemetry-instrument --traces_exporter otlp_proto_http flask run --port=80 --host="0.0.0.0"
+        opentelemetry-instrument --traces_exporter otlp --metrics_exporter none flask run --port=80 --host="0.0.0.0"
         
         # DEBUG:  OpenTelemetry
-        # opentelemetry-instrument --traces_exporter otlp_proto_http,console flask run --port=80 --host="0.0.0.0"
+        # opentelemetry-instrument --traces_exporter console,otlp --metrics_exporter none flask run --port=80 --host="0.0.0.0"
       "
 
   service103_traffic_generator:
@@ -91,7 +93,7 @@ services:
       /bin/sh -c "
         sleep 30; 
         while :; do
-          curl http://service103_python:80/server_request > /dev/null 1>&1; 
+          curl http://service103_python:80/server_request\?param=103 > /dev/null 1>&1; 
           sleep 5;
         done
       "

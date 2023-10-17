@@ -33,16 +33,16 @@ services:
 
   opentelemetry-collector:
     
-    image: registry.hub.docker.com/aternity/apm-collector:2022.4.0-4
+    image: registry.hub.docker.com/aternity/apm-collector:2022.11.0-4
     
-    container_name: aternity-opentelemetry-collector       
+    container_name: apm-collector       
     
     environment:
 
       SERVER_URL: "wss://agents.apm.myaccount.aternity.com/?RPM_AGENT_CUSTOMER_ID=12341234-12341234-13241234"
 
     ports:
-      - "4318:4318/tcp"
+      - "4317:4317/tcp"
 ```
 
 Then, start the containers from the shell. The collector can be configured at the same time using environment variables. 
@@ -58,7 +58,7 @@ export ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
 export ATERNITY_CUSTOMER_ID="12341234-12341234-13241234"
 
 # Start the containers
-docker-compose up
+docker compose up
 ```
 
 Using PowerShell:
@@ -72,7 +72,7 @@ $env:ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
 $env:ATERNITY_CUSTOMER_ID="12341234-12341234-13241234"
 
 # Start the containers
-docker-compose up
+docker compose up
 ```
 
 ### 3. Generate traffic and telemetry
@@ -116,7 +116,7 @@ On the application container side, the `OTEL_EXPORTER_OTLP_ENDPOINT` environment
     
     environment:  
     
-      OTEL_EXPORTER_OTLP_ENDPOINT: http://aternity-opentelemetry-collector:4318
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://apm-collector:4317
 
       OTEL_SERVICE_NAME: service103_python
 ```
