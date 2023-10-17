@@ -60,7 +60,7 @@ services:
 
       OTEL_SERVICE_NAME: service103_python
 
-      PY_APP_URL: https://raw.githubusercontent.com/open-telemetry/opentelemetry-python/main/docs/examples/auto-instrumentation/server_uninstrumented.py
+      PY_APP_URL: https://raw.githubusercontent.com/open-telemetry/opentelemetry-python/main/docs/examples/auto-instrumentation/server_automatic.py
     
     ports:
       - "8103:80"
