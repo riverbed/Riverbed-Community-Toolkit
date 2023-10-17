@@ -104,7 +104,7 @@ Press CTRL + C in the shell where it is running.
 Or in a shell, go to the folder where you keep the [docker-compose.yaml](docker-compose.yaml) and run:
 
 ```shell
-docker-compose down
+docker compose down
 ```
 
 ### OpenTelemetry details
