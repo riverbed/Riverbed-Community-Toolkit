@@ -26,7 +26,7 @@ Those information are required to activate the Aternity OpenTelemetry Collector 
 
 Get a local copy of the [docker-compose.yaml](docker-compose.yaml) file. 
 
-Edit the file if you want to manually configure the `SERVER_URL` variable, replacing *ATERNITY_SAAS_SERVER_HOST* and *ATERNITY_CUSTOMER_ID* with actual values. The remaining is all set to pull the container image from [DockerHub](https://hub.docker.com/r/aternity/apm-collector) and receive telemetry on the OTLP protobuf 4318/tcp port.
+Edit the file if you want to manually configure the `SERVER_URL` variable, replacing *ATERNITY_SAAS_SERVER_HOST* and *ATERNITY_CUSTOMER_ID* with actual values. The remaining is all set to pull the container image from [DockerHub](https://hub.docker.com/r/aternity/apm-collector) and receive telemetry on the OTLP gRPC port (4317 tcp port 4317.
 
 ```yaml
 services:
