@@ -23,7 +23,7 @@ The next paragraph explains how to setup from scratch on a Windows machine. It i
 
 ![Riverbed Community Toolkit extract](images/riverbed-community-toolkit-extracted.png)
 
-2. Download a install a decent code editor, for example [Visual Studio Code - x64 System Installer](https://code.visualstudio.com/#alt-downloads)
+2. Download and install a decent code editor, for example [Visual Studio Code - x64 System Installer](https://code.visualstudio.com/#alt-downloads)
 
 3. Download and install [Python](https://www.python.org). For example [Python 3.11.1 x64](https://www.python.org/ftp/python/3.11.1/python-3.11.1-amd64.exe)
 > - Check the installer option to Add Python to PATH
