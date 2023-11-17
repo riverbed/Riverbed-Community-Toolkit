@@ -1,0 +1,44 @@
+version: "3.9"
+services:
+  aci:
+    depends_on:
+      - mysql
+    image: dockercisco/acitoolkit
+    container_name: acitoolkit
+    environment:
+      - APIC_URL=https://myapic.url
+      - APIC_LOGIN=admin
+      - APIC_PASSWORD=some_password
+      - APIC_MYSQLIP=172.18.0.3
+      - APIC_MYSQLLOGIN=root
+      - APIC_MYSQLPASSWORD=password
+    command: "sleep infinity"
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.2
+ 
+  mysql:
+    image: mysql:8.0
+    container_name: mysql_db
+    environment:
+      - MYSQL_ROOT_HOST=%
+      - MYSQL_ROOT_PASSWORD=password
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.3
+    
+  ansible:
+    image: m_ansible:aci
+    container_name: ansible
+    command: "sleep infinity"
+    volumes:
+      - ./app:/app
+    networks:
+      mynet:
+        ipv4_address: 172.18.0.4
+
+networks:
+  mynet:
+    ipam:
+      config:
+        - subnet: 172.18.0.0/24
