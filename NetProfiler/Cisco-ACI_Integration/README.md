@@ -7,7 +7,7 @@ The following cookbook contains a description of a workflow on how to add **NetP
 
 ## Prerequisites
 1. A host with Docker installed, probably a Linux host, and sufficient access to run create and run Docker containers
-2. A NetProfiler with credentials available for a user able to create and modify Host Groups
+2. A NetProfiler with OAuth credentials available for a user able to create and modify Host Groups (Administration > OAuth Access)
 3. Access to a Cisco ACI APIC with suitable credentials
 
 ## Workflow description
@@ -78,13 +78,13 @@ python aci-endpoint-tracker-rvbd.py -o
 ```
 Verify that the database exists and is populated:
 ```
-docker exec -ti m_ansible /bin/bash
+docker exec -ti ansible /bin/bash
 mysql -u root -ppassword -h 172.18.0.3 endpointtracker
 select * from endpoints limit 10;
 exit
 exit
 ```
-Modify the [create-hostgroups.yml](app/create-hostgroups.yml) file with the NetProfiler details for your environment:
+Modify the [app/create-hostgroups.yml](app/create-hostgroups.yml) file with the NetProfiler details for your environment:
 ```
   vars:
     host: "NetProfiler ipv4 address"
