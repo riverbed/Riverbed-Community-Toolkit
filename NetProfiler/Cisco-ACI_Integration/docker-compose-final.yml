@@ -28,7 +28,7 @@ services:
         ipv4_address: 172.18.0.3
     
   ansible:
-    image: m_ansible:netprofiler
+    image: m_ansible:aci
     container_name: ansible
     command: "sleep infinity"
     volumes:
