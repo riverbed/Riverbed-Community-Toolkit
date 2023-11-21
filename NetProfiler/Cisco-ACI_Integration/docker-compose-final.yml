@@ -3,7 +3,7 @@ services:
   aci:
     depends_on:
       - mysql
-    image: dockercisco/acitoolkit
+    image: acitoolkit:rvbd
     container_name: acitoolkit
     environment:
       - APIC_URL=https://myapic.url
@@ -16,7 +16,7 @@ services:
     networks:
       mynet:
         ipv4_address: 172.18.0.2
- 
+
   mysql:
     image: mysql:8.0
     container_name: mysql_db
@@ -26,7 +26,7 @@ services:
     networks:
       mynet:
         ipv4_address: 172.18.0.3
-    
+
   ansible:
     image: m_ansible:aci
     container_name: ansible
