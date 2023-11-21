@@ -4,6 +4,8 @@ WORKDIR /opt
 
 COPY aci-endpoint-tracker.patch /tmp
 
+RUN apt-get update && apt-get install -y python-pip && \
+    pip install protobuf==3.18.0 && pip install mysql-connector-python==8.0.21
 RUN cd /opt/acitoolkit/applications/endpointtracker && \
     patch -b < /tmp/aci-endpoint-tracker.patch
 
