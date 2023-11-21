@@ -1,0 +1,89 @@
+--- aci-endpoint-tracker.py	2018-02-17 03:41:02.000000000 +0100
++++ acitoolkit/applications/endpointtracker/aci-endpoint-tracker.py	2023-11-21 14:42:06.530261275 +0100
+@@ -34,6 +34,8 @@
+ """
+ Simple application that logs on to the APIC and displays all
+ of the Endpoints.
++
++Slightly modified by Riverbed to fix a couple of issues and add a one-off (single pass) option
+ """
+ import sys
+ import acitoolkit.acitoolkit as aci
+@@ -114,7 +116,7 @@
+     session = aci.Session(args.url, args.login, args.password)
+     resp = session.login()
+     if not resp.ok:
+-        print '%% Could not login to APIC'
++        print('%% Could not login to APIC')
+         sys.exit(0)
+ 
+     c, cnx = connect_mysql(args)
+@@ -140,23 +142,36 @@
+         try:
+             data = (ep.mac, ep.ip, tenant.name, app_profile.name, epg.name,
+                     ep.if_name, convert_timestamp_to_mysql(ep.timestamp))
+-        except ValueError, e:
++        except ValueError as e:
+             if args.daemon:
+                 logging.info(e)
+             continue
+ 
+-        ep_exists = c.execute("""SELECT * FROM endpoints
+-                                 WHERE mac="%s"
+-                                 AND
+-                                 timestop is null;""" % ep.mac)
+-        c.fetchall()
++        c.execute("""SELECT * FROM endpoints
++                    WHERE mac="%s" AND
++                    timestop is null;""" % ep.mac)
++        
++        # If the list is not empty then we have matches - endpoints with the same MAC
++        ep_exists = len(c.fetchall())
+         if not ep_exists:
++            # Create a new entry
+             c.execute("""INSERT INTO endpoints (mac, ip, tenant,
+                          app, epg, interface, timestart)
+                          VALUES ('%s', '%s', '%s', '%s',
+                          '%s', '%s', '%s')""" % data)
+             cnx.commit()
+-
++        else:
++            # This MAC address was already seen and something may have changed
++            # but perhaps nothing changed... we update anyway
++            updata = (ep.mac, ep.ip, tenant.name, app_profile.name, epg.name,
++                    ep.if_name, convert_timestamp_to_mysql(ep.timestamp), ep.mac)
++            c.execute("""UPDATE endpoints SET mac="%s", ip="%s", tenant="%s", app="%s", epg="%s", 
++                    interface="%s", timestart="%s" WHERE mac="%s" AND timestop is null""" % updata)
++
++    # Check if we are running in one-off mode and return if we are
++    if not args.oneoff:
++        return
++    
+     # Subscribe to live updates and update the database
+     sys.stdout.write("Starting subscribe to apic events")
+     aci.Endpoint.subscribe(session)
+@@ -165,10 +180,11 @@
+             ep = aci.Endpoint.get_event(session)
+             try:
+                 epg = ep.get_parent()
++                app_profile = epg.get_parent()
++                tenant = app_profile.get_parent()
+             except AttributeError:
+                 continue
+-            app_profile = epg.get_parent()
+-            tenant = app_profile.get_parent()
++
+             if ep.is_deleted():
+                 ep.if_name = None
+                 data = (convert_timestamp_to_mysql(ep.timestamp),
+@@ -255,6 +271,10 @@
+                    ' all of the Endpoints in a MySQL database.')
+     creds = aci.Credentials(qualifier=('apic', 'mysql', 'daemon'),
+                             description=description)
++    
++    # add an additional argument to support a single-pass mode
++    creds.add_argument('-o', '--oneoff', help='Run one pass only and exit', action='store_false')
++    
+     args = creds.get()
+ 
+     if args.daemon or args.kill or args.restart:
