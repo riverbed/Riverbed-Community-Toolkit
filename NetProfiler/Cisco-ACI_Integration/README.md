@@ -52,7 +52,7 @@ Modify the docker-compose file environment variables APIC_URL, APIC_LOGIN and AP
       - APIC_PASSWORD=mysecret_password
 ```
 
-Start the docker-compose process:
+Start the `docker-compose`` (use `docker compose` if the `docker-compose` command is not available) process:
 ```
 docker-compose -f docker-compose-final.yml up -d
 ```
@@ -64,19 +64,19 @@ c44e76fe01c9   acitoolkit:rvbd          "sleep infinity"         32 seconds ago 
 008a14bc3c98   m_ansible:aci            "sleep infinity"         32 seconds ago   Up 31 seconds                         ansible
 dc237249a07a   mysql:latest             "docker-entrypoint.s…"   32 seconds ago   Up 31 seconds   3306/tcp, 33060/tcp   mysql_db
 ```
-Note that there is a slightly modified version of the `aci-endpoint-tracker.py` script which fixes a couple of issues and adds a "one-off" option to force the script to execute one scan of ACI, export endpoint data into MySQL and then exit rather than running perpetually updating the database as the ACI system changes.
+Note that there is a slightly modified version of the `aci-endpoint-tracker.py` script is created in the `acitoolkit` container which fixes a couple of issues and adds a "one-off" option to force the script to execute one scan of ACI, export endpoint data into MySQL and then exit rather than running perpetually updating the database as the ACI system changes.
 
 Connect to the `acitoolkit` container and execute the Python script that gets the endpoint information and writes it in to the MySQL database:
 ```
-cd applications/endpointtracker/
-python aci-endpoint-tracker-rvbd.py -o
+docker exec -ti acitoolkit /bin/bash
+cd acitoolkit/applications/endpointtracker/
+python aci-endpoint-tracker.py -o
 ```
 Disconnect from the `acitoolkit` container and connect to the `ansible` container to verify that the database exists and is now populated:
 ```
 docker exec -ti ansible /bin/bash
 mysql -u root -ppassword -h 172.18.0.3 endpointtracker
 select * from endpoints limit 10;
-exit
 exit
 ```
 Disconnect from the `ansible` container and modify the [app/create-hostgroups.yml](app/create-hostgroups.yml) file with the NetProfiler details for your environment:
