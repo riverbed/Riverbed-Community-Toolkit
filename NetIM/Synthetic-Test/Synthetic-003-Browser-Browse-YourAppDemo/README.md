@@ -8,9 +8,9 @@ Recommended Robots: Web Selenium
 
 This simple web application is called "IMS - UI SPA".
 
-It is a sinlge page app (SPA) based on bootstrap framework and provided for demo prupose.
+It is a simple single page app (SPA) based on bootstrap framework and provided for demo prupose.
 
-In Chrome the app looks like this : 
+In Chrome, the app looks like this: 
 
 ![IMS - UI SPA](images/yourapp-ims-ui-spa-portfolio-complete.png)
 
@@ -27,25 +27,43 @@ From your Web Selenium robot, simply open a browser and navigate to the page.
 On the robot machine set up with the Robot Web Selenium ([see instruction for Robot Web Selenium](https://github.com/riverbed/Riverbed-Community-Toolkit/tree/master/NetIM/Synthetic-Test/Robot-001-WebSelenium)),
 
 Edit the script [Edge-browser-yourapp.py](Edge-browser-yourapp.py) to configure the test for Edge, and similarily [Chrome-browser-yourapp.py](Chrome-browser-yourapp.py) for Chrome.
-In the Synthetic Test section set the BASE_URL and the starting path to open the app "yourapp". For example "https://yourmodifiedapp.yourlab.net" and "/" :
+In the Synthetic Test section set the BASE_URL and the starting path to open the app "yourapp". For example "https://yourapp.yourlab.net" and "/" :
 
 ```python
-    BASE_URL = "https://yourmodifiedapp.yourlab.net"
+    BASE_URL = "https://yourapp.yourlab.net"
     driver.get(BASE_URL+"/")
     time.sleep(45)
 ```
 
+**Edge**
+
 Then to run the test for Edge browser, execute the following command in a shell:
 
-```shell
+```PowerShell
 python "C:\Riverbed-Community-Toolkit\NetIM\Synthetic-Test\Synthetic-003-Browser-Browse-YourAppDemo\Edge-browse-yourapp.py"
 ```
 
-And same for Chrome browser:
+**Chrome**
 
-```shell
+Execute the command to launch the script for Chrome
+
+```PowerShell
 python "C:\Riverbed-Community-Toolkit\NetIM\Synthetic-Test\Synthetic-003-Browser-Browse-YourAppDemo\Chrome-browse-yourapp.py"
 ```
+
+---
+**NOTE**
+
+If there is any issue running the script, retry after closing any running window of the browser and also stopping any browser process in background.
+For example, executing the following PowerShell script try to stop msedge and chrome processes.
+
+```PowerShell
+Get-Process msedge | Stop-Process
+
+Get-Process chrome | Stop-Process
+```
+
+---
 
 ## Configuring Synthetic Test in NetIM
 
