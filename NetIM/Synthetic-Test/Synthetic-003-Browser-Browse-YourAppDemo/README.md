@@ -55,7 +55,7 @@ python "C:\Riverbed-Community-Toolkit\NetIM\Synthetic-Test\Synthetic-003-Browser
 **NOTE**
 
 If there is any issue running the script, retry after closing any running window of the browser and also stopping any browser process in background.
-For example, executing the following PowerShell script try to stop msedge and chrome processes.
+For example, executing the following PowerShell script will try to stop msedge and chrome processes.
 
 ```PowerShell
 Get-Process msedge | Stop-Process
