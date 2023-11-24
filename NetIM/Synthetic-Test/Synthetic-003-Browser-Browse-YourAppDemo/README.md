@@ -26,7 +26,7 @@ From your Web Selenium robot, simply open a browser and navigate to the page.
 
 On the robot machine set up with the Robot Web Selenium ([see instructions for Robot Web Selenium](https://github.com/riverbed/Riverbed-Community-Toolkit/tree/master/NetIM/Synthetic-Test/Robot-001-WebSelenium)),
 
-Edit the script [Edge-browser-yourapp.py](Edge-browser-yourapp.py) to configure the test for Edge, and similarily [Chrome-browser-yourapp.py](Chrome-browser-yourapp.py) for Chrome.
+Edit the script [Edge-browser-yourapp.py](Edge-browse-yourapp.py) to configure the test for Edge, and similarily [Chrome-browser-yourapp.py](Chrome-browse-yourapp.py) for Chrome.
 In the Synthetic Test section set the BASE_URL and the starting path to open the app "yourapp". For example "https://yourapp.yourlab.net" and "/" :
 
 ```python
