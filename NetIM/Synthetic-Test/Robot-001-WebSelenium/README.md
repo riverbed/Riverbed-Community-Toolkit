@@ -41,7 +41,7 @@ pip install selenium
 
 For example Version 119.0.2151.72 (Official build) (64-bit).
 
-2. Download the corresponding [Driver](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/#downloads) for **Windows 64 bits** and extract it to c:\. 
+2. Download the corresponding [MS Edge WebDriver](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/#downloads) for **Windows 64 bits** and extract it to c:\. 
 
 After extraction the driver should be in the following path: C:\edgedriver_win64\msedgedriver.exe
 
@@ -53,7 +53,7 @@ After extraction the driver should be in the following path: C:\edgedriver_win64
 
 2. Launch Chrome and open the url [chrome://settings/help](chrome://settings/help) to check the version number
 
-3. Download the corresponding [Chrome Driver](https://googlechromelabs.github.io/chrome-for-testing/) matching the version for **Windows 64 bits** and extract it to c:\. 
+3. Download the corresponding [Chrome WebDriver](https://googlechromelabs.github.io/chrome-for-testing/) matching the version for **Windows 64 bits** and extract it to c:\. 
 
 After extraction the driver should be in the path: C:\chromedriver-win64\chromedriver.exe
 
