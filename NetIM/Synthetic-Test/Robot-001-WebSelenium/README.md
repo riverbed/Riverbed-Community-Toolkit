@@ -53,7 +53,7 @@ After extraction the driver should be in the following path: C:\edgedriver_win64
 
 2. Launch Chrome and open the url [chrome://settings/help](chrome://settings/help) to check the version number
 
-3. Download the [Chrome Driver]([https://chromedriver.chromium.org/downloads](https://googlechromelabs.github.io/chrome-for-testing/)) matching the version for **Windows 64 bits** and extract it to c:\. 
+3. Download the corresponding [Chrome Driver](https://googlechromelabs.github.io/chrome-for-testing/) matching the version for **Windows 64 bits** and extract it to c:\. 
 
 After extraction the driver should be in the path: C:\chromedriver-win64\chromedriver.exe
 
