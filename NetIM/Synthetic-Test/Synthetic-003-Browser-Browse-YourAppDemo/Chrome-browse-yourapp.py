@@ -4,9 +4,9 @@ Riverbed Community Toolkit
 Synthetic Test
 
 Script: Chrome-browse-yourapp.py
-Version: 23.1.230118
+Version: 23.11.231124
 Application: Chrome, YourAppDemo
-Requirement: Python 3.11 with selenium 4
+Requirements: Python 3.11 or 3.12 with selenium 4 + chromedriver
 
 Browse YourAppDemo with the Chrome browser on a windows machine
 
@@ -23,7 +23,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service as ChromeService
 from selenium.webdriver.chrome.options import Options
 
-CHROMEDRIVER_PATH= "C:\\chromedriver_win32\\chromedriver.exe"
+CHROMEDRIVER_PATH= "C:\\chromedriver-win64\\chromedriver.exe"
 DEFAULT_URL = "https://www.riverbed.com"
 DEFAULT_ROBOT_PROFILE_PATH = "C:\\robot-chrome-profile"
 
@@ -43,7 +43,7 @@ if __name__ == "__main__":
     time.sleep(10)
 
     try:
-        element = driver.find_element(By.LINK_TEXT,"Orders")
+        element = driver.find_element(By.LINK_TEXT,"Home")
         element.click()
         time.sleep(10)
 
@@ -66,6 +66,7 @@ if __name__ == "__main__":
         element = driver.find_element(By.LINK_TEXT,"Logout")
         element.click()
         time.sleep(10)
+        
         driver.close()
         driver.quit()
     except:
