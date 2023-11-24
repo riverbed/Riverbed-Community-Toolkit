@@ -35,25 +35,25 @@ The next paragraph explains how to setup from scratch on a Windows machine. It i
 pip install selenium
 ```
 
-### 2. Edge specifics
+### 2. Edge specific
 
 1. Launch Edge and open the url [edge://settings/help](edge://settings/help) to check the version that is running (if not already there, fetch and install from [here](https://www.microsoft.com/en-us/edge)). 
 
 For example Version 119.0.2151.72 (Official build) (64-bit).
 
-2. Download the corresponding [Driver](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/#downloads) for **Windows 64 bits** and extract it to c:\. 
+2. Download the corresponding [MS Edge WebDriver](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/#downloads) for **Windows 64 bits** and extract it to c:\. 
 
 After extraction the driver should be in the following path: C:\edgedriver_win64\msedgedriver.exe
 
 ![Edge Driver extracted](images/edgedriver-win64-extracted.png)
 
-### 3. Chrome specifics
+### 3. Chrome specific
 
 1. Download and install [Google Chrome](https://www.google.com/chrome/)
 
 2. Launch Chrome and open the url [chrome://settings/help](chrome://settings/help) to check the version number
 
-3. Download the [Chrome Driver]([https://chromedriver.chromium.org/downloads](https://googlechromelabs.github.io/chrome-for-testing/)) matching the version for **Windows 64 bits** and extract it to c:\. 
+3. Download the corresponding [Chrome WebDriver](https://googlechromelabs.github.io/chrome-for-testing/) matching the version for **Windows 64 bits** and extract it to c:\. 
 
 After extraction the driver should be in the path: C:\chromedriver-win64\chromedriver.exe
 
