@@ -52,7 +52,7 @@ Modify the docker-compose file environment variables APIC_URL, APIC_LOGIN and AP
       - APIC_PASSWORD=mysecret_password
 ```
 
-Start the `docker-compose`` (use `docker compose` if the `docker-compose` command is not available) process:
+Start the `docker-compose` (use `docker compose` if the `docker-compose` command is not available) process:
 ```
 docker-compose -f docker-compose-final.yml up -d
 ```
