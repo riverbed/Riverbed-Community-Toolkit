@@ -4,9 +4,9 @@ Riverbed Community Toolkit
 Synthetic Test
 
 Script: Edge-browse-yourapp.py
-Version: 23.1.230118
+Version: 23.11.231124
 Application: Edge, YourAppDemo
-Requirement: Python 3.11 with selenium 4
+Requirement: Python 3.11 or 3.12 with selenium 4, msedgedriver
 
 Browse YourAppDemo with the Edge browser on a windows machine
 
@@ -25,6 +25,10 @@ from selenium.webdriver.edge.options import Options
 
 MSEDGEDRIVER_PATH= "C:\\edgedriver_win64\\msedgedriver.exe"
 DEFAULT_URL = "https://www.riverbed.com"
+
+# Configure the profile path
+# For example, "C:\\robot-edge-profile" to create new/use a dedicated profile
+# For example, "C:\\Users\\your_username\\AppData\\Local\\Microsoft\\Edge\\User Data" to use the profile of an existing user (your_username)
 DEFAULT_ROBOT_PROFILE_PATH = "C:\\robot-edge-profile"
 
 if __name__ == "__main__":
@@ -42,10 +46,6 @@ if __name__ == "__main__":
     time.sleep(3)
 
     try:
-        element = driver.find_element(By.LINK_TEXT,"Home")
-        element.click()
-        time.sleep(10)
-
         element = driver.find_element(By.LINK_TEXT,"Orders")
         element.click()
         time.sleep(10)
@@ -61,10 +61,7 @@ if __name__ == "__main__":
         element = driver.find_element(By.LINK_TEXT,"Analysis")
         element.click()
         time.sleep(10)
-
-        element = driver.find_element(By.LINK_TEXT,"Logout")
-        element.click()
-        time.sleep(10)
+        
         driver.close()
         driver.quit()
     except:
