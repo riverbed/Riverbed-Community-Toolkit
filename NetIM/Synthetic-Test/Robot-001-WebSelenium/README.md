@@ -77,6 +77,16 @@ On your Windows machine, **extract TestEngine-windows.zip on C:**
 
 Run the **install.bat** in a PowerShell (with Administrator privilege).
 
+3. Change the service account for the service
+
+By default, the NetIM agent run as Local System. It must be changed to run Selenium test.
+
+In the Windows Services (search Services from the Start Menu), edit the Properties of the service "Riverbed NetIM Test Engine", go to the tab "Log On", select "This account" and put your user account info (username and password). For example for a local user, put: .\yourusername
+
+Then, restart the service and the agent will be ready to run the synthetic test.
+
+[NetIM Service](./images/netim-service-yourusername.png)
+
 ## License
 
 The scripts provided here are licensed under the terms and conditions of the MIT License accompanying the software ("License"). The scripts are distributed "AS IS" as set forth in the License. The script also include certain third party code. All such third party code is also distributed "AS IS" and is licensed by the respective copyright holders under the applicable terms and conditions (including, without limitation, warranty and liability disclaimers) identified in the license notices accompanying the software.
