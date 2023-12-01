@@ -85,7 +85,7 @@ In the Windows Services (search Services from the Start Menu), edit the Properti
 
 Then, restart the service and the agent will be ready to run the synthetic test.
 
-[NetIM Service](./images/netim-service-yourusername.png)
+![NetIM service account](./images/netim-service-yourusername.png)
 
 ## License
 
