@@ -77,7 +77,7 @@ On your Windows machine, **extract TestEngine-windows.zip on C:**
 
 Run the **install.bat** in a PowerShell (with Administrator privilege).
 
-3. Change the service account for the service
+3. Change the service account
 
 By default, the NetIM agent run as Local System. It must be changed to run Selenium test.
 
