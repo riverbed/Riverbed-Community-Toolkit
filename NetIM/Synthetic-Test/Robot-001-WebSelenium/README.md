@@ -81,7 +81,7 @@ Run the **install.bat** in a PowerShell (with Administrator privilege).
 
 By default, the NetIM agent run as Local System. It must be changed to run Selenium test.
 
-In the Windows Services (search Services from the Start Menu), edit the Properties of the service "Riverbed NetIM Test Engine", go to the tab "Log On", select "This account" and put your user account info (username and password). For example for a local user, put: .\yourusername
+In the Windows Services (search Services from the Start Menu), edit the Properties of the service "Riverbed NetIM Test Engine", go to the tab "Log On", select "This account" and put your user account info (username and password). For example, a local user: .\yourusername, and for example an AD user: youruser@yourcorp.org
 
 Then, restart the service and the agent will be ready to run the synthetic test.
 
