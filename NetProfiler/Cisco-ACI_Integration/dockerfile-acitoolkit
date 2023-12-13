@@ -1,0 +1,15 @@
+FROM dockercisco/acitoolkit
+
+WORKDIR /opt
+
+COPY aci-endpoint-tracker.patch /tmp
+
+# Update and install some required packages
+RUN apt-get update && apt-get install -y python-pip && \
+    pip install protobuf==3.18.0 && pip install mysql-connector-python==8.0.21
+
+# Patch the standard Cisco script to fix a couple of issues and add a "one-off" option
+RUN cd /opt/acitoolkit/applications/endpointtracker && \
+    patch -b < /tmp/aci-endpoint-tracker.patch
+
+CMD ["sleep infinity"]
