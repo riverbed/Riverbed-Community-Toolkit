@@ -53,8 +53,8 @@ cd Tech-Community/248-instrument-java-app-with-apm-daemonset-pod-agent-on-eks
 3. In the snippet below, replace the token {{ecr_region}} and {{aws_account_id}} with your own values. Execute the snippet to build the image of the APM agent locally, and push it to the ECR container registry. The build is based on a [Dockerfile](Dockerfile). 
 
 ```shell
-ecr_region = "{{ecr_region}}"  # replace {{ecr_region}}, for example: eu-west-3
-aws_account_id = "{{aws_account_id}}"  # replace {{aws_account_id}}, for example: 1234-5678-90
+ecr_region="{{ecr_region}}"  # replace {{ecr_region}}, for example: eu-west-3
+aws_account_id="{{aws_account_id}}"  # replace {{aws_account_id}}, for example: 1234-5678-90
 
 # 1. Connect docker to the ECR repository
 aws ecr get-login-password --region $ecr_region | docker login --username AWS --password-stdin $aws_account_id.dkr.ecr.$ecr_region.amazonaws.com
@@ -124,8 +124,8 @@ In the snippet below, same as in Step 3, the token {{ecr_region}} and {{aws_acco
 Execute the snippet to build the image of app. The build is based on this [Dockerfile](app/Dockerfile).
 
 ```shell
-ecr_region = "{{ecr_region}}"  # replace {{ecr_region}}, for example: eu-west-3
-aws_account_id = "{{aws_account_id}}"  # replace {{aws_account_id}}, for example: 1234-5678-90
+ecr_region="{{ecr_region}}"  # replace {{ecr_region}}, for example: eu-west-3
+aws_account_id="{{aws_account_id}}"  # replace {{aws_account_id}}, for example: 1234-5678-90
 
 # 1. Connect docker to the ECR repository
 aws ecr get-login-password --region $ecr_region | docker login --username AWS --password-stdin $aws_account_id.dkr.ecr.$ecr_region.amazonaws.com
