@@ -12,7 +12,8 @@ The [manifest of the Daemonset POD agent](apm-daemonset-pod-agent.yaml) must be 
 
 Multiple replicas of a Java web-application, containerized from [sources](app) with a usual [Dockerfile](app-Dockerfile), are then deployed with APM instrumentation. The instrumentation of the app is set up in the deployment manifest of the app ([app-k8s.yaml](app-k8s.yaml)). It mounts a shared volume to give access to some agent files (e.g. the Java agent library).
 
-> :information_source: This cookbook uses a GKE cluster, a managed Kubernetes cluster hosted in GCP. Minor adaptations might be required to use the artifacts in different environment.
+> [!NOTE]
+> This cookbook uses a GKE cluster, a managed Kubernetes cluster hosted in GCP. Minor adaptations might be required to use the artifacts in different environment.
 
 ## Prerequisites
 
