@@ -116,7 +116,7 @@ Then, the SERVERS view will start to display the metrics of the different nodes 
 > kubectl --namespace alluvio-aternity get pod
 > ```
 
-## Step 5. Deploy a web-application
+## Step 5. Deploy a web-application on Kubernetes with a manifest configured for APM instrumentation
 
 1. Prepare the image of the app
 
@@ -158,9 +158,11 @@ For example:
 Edit the manifest [app/app-k8s.yaml](app/app-k8s.yaml).
 Find the container definition and there just set the image path replacing {{java-app image}} with the URI obtained in the previous step, for example: *1234-5678-90.dkr.ecr.eu-west-3.amazonaws.com/cookbook-248-app:23.8*
 
+The manifest [app/app-k8s.yaml](app/app-k8s.yaml) has been configured for the APM instrumentation, it is based on the initial manifest [app/app-k8s-without-apm.yaml](app/app-k8s-without-apm.yaml).
+
 4. Deploy the app
 
-In the terminal, execute the following command to deploy the application on Kubernetes
+In the terminal, execute the following command to deploy the application on Kubernetes using the manifest configured for the APM instrumentation.
 
 ```shell
 kubectl apply -f app/app-k8s.yaml
