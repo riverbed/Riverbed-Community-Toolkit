@@ -48,7 +48,8 @@ cd Tech-Community/248-instrument-java-app-with-apm-daemonset-pod-agent-on-eks
 
 2. Copy the APM configuration file (prepared in Step 1.4) to the subfolder apm-customization/config/
    
-> :Warning: if the name of the configuration file is not configuration.json then edit the initial-mapping to adapt the startup auto-instrumentation mapping 
+> [!WARNING]
+> If the name of the configuration file is not configuration.json then edit the initial-mapping to adapt the startup auto-instrumentation mapping 
 
 3. In the snippet below, replace the token {{ecr_region}} and {{aws_account_id}} with your own values. Execute the snippet to build the image of the APM agent locally, and push it to the ECR container registry. The build is based on a [Dockerfile](Dockerfile). 
 
