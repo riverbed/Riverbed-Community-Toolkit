@@ -108,7 +108,7 @@ kubectl apply -f apm-daemonset-pod-agent.yaml
 After few minutes, the agents will show up in the APM webconsole, in CONFIGURE > AGENTS > Agent List.
 Then, the SERVERS view will start to display the metrics of the different nodes (e.g. CPU utilization).
 
-
+> [!TIP]
 > To check the progress of the deployment on the cluster, you can run the following command in the terminal:
 >
 > ```shell
