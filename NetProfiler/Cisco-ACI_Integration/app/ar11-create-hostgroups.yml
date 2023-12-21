@@ -1,0 +1,43 @@
+---
+- name: REST API AppResponse (AR11)
+  hosts: localhost
+  connection: local
+  vars:
+    host: "AppResponse (AR11) ipv4 address"
+    username: "AppResponse username"
+    password: "AppResponse password"
+    tenant: "myTenant"
+    mysql_host: "172.18.0.3"
+    mysql_username: "root"
+    mysql_pass: "password"
+    mysql_db: "endpointtracker"
+    mysql_table: "endpoints"
+    json_file: "import.json"
+    is_netprofiler: "False"
+    is_ar11: "True"
+
+  tasks:
+    - name: Import and Create Hostgroup File
+      aci_mysql_endpoints_to_epg_hostgroups_json:
+        mysql_host: "{{ mysql_host }}"
+        mysql_username: "{{ mysql_username }}"
+        mysql_pass: "{{ mysql_pass }}"
+        mysql_db: "{{ mysql_db }}"
+        mysql_table: "{{ mysql_table }}"
+        tenant: "{{ tenant }}"
+        json_file: "{{ json_file }}"
+        is_netprofiler: "{{ is_netprofiler }}"
+        is_ar11: "{{ is_ar11 }}"
+      register: result
+
+    - debug: var=result
+
+    - name: Create Hostgroups from TXT file
+      host_group_upload:
+        host: "{{ host }}"
+        username: "{{ username }}"
+        password: "{{ password }}"
+        hostgroup_file: "{{ json_file }}"
+      register: result
+
+    - debug: var=result
