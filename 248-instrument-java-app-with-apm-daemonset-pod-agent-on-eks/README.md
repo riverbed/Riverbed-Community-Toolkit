@@ -156,12 +156,20 @@ For example:
 
 3. Set the image of the app in the manifest configured for APM instrumentation
 
-Edit the manifest [app/app-k8s.yaml](app/app-k8s.yaml).
-Find the container definition and there just set the image path replacing {{java-app image}} with the URI obtained in the previous step, for example: *1234-5678-90.dkr.ecr.eu-west-3.amazonaws.com/cookbook-248-app:23.8*
+Edit the manifest [app/app-k8s.yaml](app/app-k8s.yaml) and find the container definition to replace {{java-app image}} with the URI of the image obtained in the previous step.
+
+For example:
+
+```yaml
+      ...
+      containers:
+      - name: app
+        # TODO: Replace {{java-app image}} with the actual value
+        image: 1234-5678-90.dkr.ecr.eu-west-3.amazonaws.com/cookbook-248-app:23.8
+```
 
 > [!NOTE]
 > The manifest [app/app-k8s.yaml](app/app-k8s.yaml) has been configured for the APM instrumentation, it is based on the initial manifest [app/app-k8s-without-apm.yaml](app/app-k8s-without-apm.yaml).
-
 
 4. Deploy the app
 
