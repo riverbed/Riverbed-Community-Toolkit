@@ -80,7 +80,8 @@ gcloud container clusters get-credentials {CLUSTER NAME} --region {REGION} --pro
 
 1. Copy/Upload the APM configuration file (prepared in Step 1.) to the subfolder apm-customization/config
    
-> :Warning: if the name of the configuration file is not configuration.json then edit the initial-mapping to adapt the startup auto-instrumentation mapping 
+> [!WARNING]
+> If the name of the configuration file is not configuration.json then edit the initial-mapping to adapt the startup auto-instrumentation mapping 
 
 2. Run the command to build the image with the [cloudbuild.yaml](cloudbuild.yaml) config, replacing the actual values in the substitutions parameters. Based on this [Dockerfile](Dockerfile), it will build a Docker image that contains the APM agent, and push the image to the registry. 
 
@@ -122,7 +123,7 @@ kubectl apply -f apm-daemonset-pod-agent.yaml
 
 After few minutes, the agents show up in the APM webconsole in CONFIGURE > AGENTS > Agent List, and then the SERVERS view will start to display the metrics of the node (e.g. CPU).
 
-## Step 7. Deploy a Java web-application
+## Step 7. Deploy a Java web-application on Kubernetes with a manifest configured for APM instrumentation
 
 1. Build the image of the app
 
@@ -147,9 +148,12 @@ where:
 
 When the build is done, the image path should be diplayed in the shell output, for example *europe-west9-docker.pkg.dev/aternity-cookbooks/apm/java-app:latest*
 
-3. Set the image path in the Kubernetes manifest
+3. Set the image path in the Kubernetes manifest configured for APM instrumentation
 
 With the Cloud Shell Editor, edit the manifest [app-k8s.yaml](app-k8s.yaml) and set the image path replacing {{java-app image}} with the actual value in the container definition, for example: *europe-west9-docker.pkg.dev/aternity-cookbooks/apm/java-app:latest*
+
+> [!NOTE]
+> The manifest [app-k8s.yaml](app-k8s.yaml) has been configured for the APM instrumentation, it is based on the initial manifest [app-k8s-without-apm.yaml](app-k8s-without-apm.yaml).
 
 4. Deploy the app
 
