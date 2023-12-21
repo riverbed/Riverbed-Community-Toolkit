@@ -161,7 +161,7 @@ Edit the manifest [app/app-k8s.yaml](app/app-k8s.yaml) and find the container de
 For example:
 
 ```yaml
-      ...
+    spec:
       containers:
       - name: app
         # TODO: Replace {{java-app image}} with the actual value
