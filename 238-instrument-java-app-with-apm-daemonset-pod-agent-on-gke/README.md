@@ -20,7 +20,8 @@ Multiple replicas of a Java web-application, containerized from [sources](app) w
 
 2. a project in [Google Cloud](https://console.cloud.google.com) with a Kubernetes infrastructure setup ready to use: GKE cluster Standard mode with a Linux node pool, a Bucket Storage and Artifact registry
 
-> :warning: The GKE cluster must be created in Standard mode (not Autopilot mode)
+> [!WARNING]
+> The GKE cluster must be created in Standard mode (not Autopilot mode)
 
 3. Click on the button to open the cookbook in the Google Cloud Shell
 
@@ -45,13 +46,15 @@ In the [Google Cloud Console](https://console.cloud.google.com) retrieve the det
 1. Project id, for example: *aternity-cookbooks*
 2. Kubernetes Engine cluster name, for example: *standard-cluster-1*
 
-> :warning: The GKE cluster must be created in Standard mode
+> [!WARNING]
+> The GKE cluster must be created in Standard mode
 
 3. Region, for example: *europe-west9*
 4. Artifact Registry repository name, for example: *apm*
 5. Bucket name, for example: *my_bucket*
 
-> :warning: The repository must be created with Docker format and preferably in the same region as the GKE cluster
+> [!WARNING]
+> The repository must be created with Docker format and preferably in the same region as the GKE cluster
 
 ## Step 3. Store the APM package in a Bucket Storage
 
