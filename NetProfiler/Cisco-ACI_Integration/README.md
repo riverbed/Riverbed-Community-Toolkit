@@ -1,5 +1,5 @@
 ## NetProfiler Cisco ACI integration - mapping ACI EPGs to NetProfiler Host Groups
-The following cookbook contains a description of a workflow on how to add **NetProfiler** Host Groups based on the endpoint groups connected to **Cisco ACI**.
+The following cookbook contains a description of a workflow on how to add **NetProfiler** Host Groups based on the endpoint groups connected to **Cisco ACI**. The mechanism has now been extended to include the ability to create and update Host Groups in **AppResponse** instances.
 
 ## Workflow overview
 
@@ -8,7 +8,8 @@ The following cookbook contains a description of a workflow on how to add **NetP
 ## Prerequisites
 1. A host with Docker installed, e.g. a Linux host, and sufficient access to create and run Docker containers
 2. A NetProfiler instance with OAuth credentials available for a user able to create and modify Host Groups (created via Administration > OAuth Access)
-3. Access to the source Cisco ACI APIC with suitable credentials
+3. And/or an instances of AppResponse with credntials for a user able to manage Host Group definitions
+4. Access to the source Cisco ACI APIC with suitable credentials
 
 ## Workflow description
 The workflow represented above consists of the following parts:  
@@ -51,6 +52,7 @@ Modify the docker-compose file environment variables APIC_URL, APIC_LOGIN and AP
       - APIC_LOGIN=admin
       - APIC_PASSWORD=mysecret_password
 ```
+It may also be necessary to change the default network (172.18.0.0/24) used if this conflicts with existing network allocations - any changes will require changes to the various YML files and to commands shown below.
 
 Start the `docker-compose` (use `docker compose` if the `docker-compose` command is not available) process:
 ```
@@ -86,13 +88,23 @@ Disconnect from the `ansible` container and modify the [app/create-hostgroups.ym
     access_code: "Oauth access code"
     tenant: "myTenant"
 ```
-Now reconnect to the `ansible` container and run `ansible-playbook` using the above file:
+If the AppResponse integration is being used, modify the [app/ar11-create-hostgroups.yml](app/ar11-create-hostgroups.yml) file with the AppResponse details for your environment (note that the AR11 integration uses password authentication rather than OAUTH):
+```
+  vars:
+    host: "AppResponse IPv4 address"
+    user: "user name for a user with admin privileges"
+    password: "password for above user"
+    tenant: "myTenant"
+```
+
+Now reconnect to the `ansible` container and run `ansible-playbook` using the above file(s):
 ```
 docker exec -ti ansible /bin/bash
 ansible-playbook -vvv create-hostgroups.yml
+ansible-playbook -vvv ar11-create-hostgroups.yml
 ```
-## Production
-The ACI script can be run in one-off mode (the default) or in daemon mode. In one-off mode, the script pulls the endpoint data from the APIC and adds the entries matching the specified Tenant to the MySQL database.
+## Running in Production
+The ACI script can be run in one-off mode or in daemon mode. In one-off mode, the script pulls the endpoint data from the APIC and adds the entries matching the specified Tenant to the MySQL database.
 If an endpoint entry already exists (matching MAC address) then the existing entry is updated to capture any changed details. Without one-off mode (default is now one-off mode) the application will keep running, listening for APIC events and updating the database accordingly.
 In daemon mode, the application puts itself into the background.
 
@@ -100,11 +112,15 @@ For deployment, one could run the script chain from a cronjob or cronjobs, e.g. 
 1. Run the ACI script to update the MySQL database
 2. Run the Ansible script to update the Host Group definitions
 
+It will be necessary to ensure the containers are shutdown cleanly when the system is shutdown and restarted when the system boots.
+
 ## Limitations
-1. The current model only handles one Tenant. One might extend the model to support multiple tenants with separate Host Group Types per Tenant, for instance.
+1. The current model only handles one Cisco ACI Tenant. The model could be extended to support multiple tenants with separate Host Group Types per Tenant, for instance.
+2. The mechanism only supports creating Host Groups in one NetProfiler and/or one AppResponse; it should support multiple instances of AppResponse at least and also support Portal as this can be used to manage HG defintions on multiple AppResponse instances.
 
 ## Troubleshooting
-1. Make sure there really are endpoints defined in the APIC for the scripts to discover (the Cisco ACI sanbdbox is often empty!)
+1. Make sure that the containers are up and running
+2. Make sure there really are endpoints defined in the APIC for the scripts to discover (the Cisco ACI sanbdbox is often empty!)
 2. Make sure the access information and credentials are correct for the APIC
 3. Make sure the access information and credentials are correct for the NetProfiler - note that the OAuth tokens expire so will need renewing at some point
 4. If there are Python errors make sure that nothing is installed that is not compatible with the old version of Python used by the ACI toolkit (Python version 2.7)
