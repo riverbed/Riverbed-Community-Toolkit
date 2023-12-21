@@ -153,7 +153,7 @@ For example:
 1234-5678-90.dkr.ecr.eu-west-3.amazonaws.com/cookbook-248-app:23.8
 ```
 
-3. Set the image of the app in the manifest
+3. Set the image of the app in the manifest configured for APM instrumentation
 
 Edit the manifest [app/app-k8s.yaml](app/app-k8s.yaml).
 Find the container definition and there just set the image path replacing {{java-app image}} with the URI obtained in the previous step, for example: *1234-5678-90.dkr.ecr.eu-west-3.amazonaws.com/cookbook-248-app:23.8*
