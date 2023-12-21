@@ -168,7 +168,7 @@ For example:
         image: 1234-5678-90.dkr.ecr.eu-west-3.amazonaws.com/cookbook-248-app:23.8
 ```
 
-> [!NOTE]
+> [!WARNING]
 > The manifest [app/app-k8s.yaml](app/app-k8s.yaml) has been configured for the APM instrumentation, it is based on the initial manifest [app/app-k8s-without-apm.yaml](app/app-k8s-without-apm.yaml).
 
 4. Deploy the app
@@ -189,7 +189,7 @@ kubectl -n cookbook-app get svc
 
 6. Navigate on the app
 
-In your web browser, open the http url using the external IP address, for example http://external-ip-address and refresh multiple time in order to generate some traffic and application transactions.
+In your web browser, open the http url using the external IP address, for example http://external-ip-address and refresh multiple times in order to generate some traffic and application transactions.
 
 ## Step 6. Monitor in ALLUVIO Aternity APM webconsole 
 
