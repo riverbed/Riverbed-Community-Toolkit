@@ -122,7 +122,7 @@ Then, the SERVERS view will start to display the metrics of the different nodes 
 1. Prepare the image of the app
 
 In the snippet below, same as in Step 3, the token {{ecr_region}} and {{aws_account_id}} must be replaced with the values of your environment. 
-Execute the snippet to build the image of app. The build is based on this [Dockerfile](app/Dockerfile).
+Execute the snippet to build the image of the app. The build is based on this regular [Dockerfile](app/Dockerfile).
 
 ```shell
 ecr_region="{{ecr_region}}"  # replace {{ecr_region}}, for example: eu-west-3
