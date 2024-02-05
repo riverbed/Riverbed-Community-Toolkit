@@ -2,7 +2,7 @@
 #
 # Aternity Tech-Community
 # 103-opentelemetry-otlp-python-app
-# version: 23.10.18
+# version: 24.2.5
 #
 # Usage
 #   docker compose up
@@ -60,9 +60,7 @@ services:
 
       OTEL_SERVICE_NAME: service103_python
 
-      # TODO: fix issue server_automatic.py and auto instrumentation not sending trace anymore, and remove the temporary app server_programmatic.py that is not auto instrumentation
-      # PY_APP_URL: https://raw.githubusercontent.com/open-telemetry/opentelemetry-python/main/docs/examples/auto-instrumentation/server_automatic.py
-      PY_APP_URL: https://raw.githubusercontent.com/open-telemetry/opentelemetry-python/main/docs/examples/auto-instrumentation/server_programmatic.py
+      PY_APP_URL: https://raw.githubusercontent.com/open-telemetry/opentelemetry-python/main/docs/examples/auto-instrumentation/server_automatic.py
     
     ports:
       - "8103:80"
@@ -73,7 +71,9 @@ services:
       bash -c "
         
         # Install prepreqs
-        pip install -q opentelemetry-distro[otlp] opentelemetry-instrumentation opentelemetry-instrumentation-flask flask requests  > /dev/null 2>&1 ;
+        # TODO: revert the patch when OTEL supports auto-instrumentation for flask 3 and werkzeug 3 (ref; https://opentelemetry.io/docs/languages/python/automatic/example/)
+        # pip install -q opentelemetry-distro[otlp] opentelemetry-instrumentation opentelemetry-instrumentation-flask flask requests  > /dev/null 2>&1 ;
+        pip install -q opentelemetry-distro[otlp] opentelemetry-instrumentation-flask 'flask<3' 'werkzeug<3' requests > /dev/null 2>&1 ;
         
         # Fetch the app
         curl -s -o app.py $$PY_APP_URL ;
