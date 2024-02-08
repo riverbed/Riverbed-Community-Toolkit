@@ -1,8 +1,8 @@
 # 103-opentelemetry-otlp-python-app
 
-The [Aternity OpenTelemetry Collector](https://hub.docker.com/r/aternity/apm-collector) is a container that collects the telemetry exported by the application whether using OTLP, the OpenTelemetry native telemetry protocols, Jaeger or Zipkin.
-
 This cookbook deploys multiple containers using docker-compose: a **python** web app, that is based on Flask and auto-instrumented using [OpenTelemetry](https://opentelemetry.io/) to export OLTP telemetry, a simple traffic generator and the [Aternity OpenTelemetry Collector](https://hub.docker.com/r/aternity/apm-collector) container.
+
+The [Aternity OpenTelemetry Collector](https://hub.docker.com/r/aternity/apm-collector) is a container that collects the telemetry exported by the application whether using OTLP, the OpenTelemetry native telemetry protocols, Jaeger or Zipkin.
 
 ![diagram](images/103-diagram.png)
 
@@ -13,7 +13,7 @@ This cookbook deploys multiple containers using docker-compose: a **python** web
 
 ## Step by Step
 
-### 1. Get your CustomerID & SaaS Analysis Server Host details from the Aternity APM webconsole
+### 1. Get your CustomerID & SaaS Analysis Server Host details from the Aternity APM web console
 
 Navigate to Aternity APM (for example [https://apm.myaccount.aternity.com](https://apm.myaccount.aternity.com)) > Agents > Install Agents:
 
@@ -67,7 +67,7 @@ Using PowerShell:
 # Go to the directory that contains docker-compose.yaml
 cd Tech-Community/103-opentelemetry-otlp-python-app
 
-# Configure the environement variable for the Aternity OpenTelemetry Collector
+# Configure the environment variable for the Aternity OpenTelemetry Collector
 $env:ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
 $env:ATERNITY_CUSTOMER_ID="12341234-12341234-13241234"
 
@@ -79,7 +79,7 @@ docker compose up
 
 The web app should now be running as well as the traffic generator. Every trace will be collected by the Aternity APM OpenTelemetry Collector.
 
-You can also browse the app, navigating to http://localhost:8103/server_request or call the url from a command line. 
+You can also browse the app, navigating to http://localhost:8103/server_request or call the URL from a command line. 
 
 ![service103-python](images/aternity-opentelemetry-service103-python-navigate.png)
 
@@ -89,7 +89,7 @@ For example using curl:
 curl http://localhost:8103/server_request
 ```
 
-### 4. Open the Aternity APM webconsole to visualize and analyze the traces collected for every transaction
+### 4. Open the Aternity APM web console to visualize and analyze the traces collected for every transaction
 
 Search transaction, browse the spans for the selected transaction :
 
