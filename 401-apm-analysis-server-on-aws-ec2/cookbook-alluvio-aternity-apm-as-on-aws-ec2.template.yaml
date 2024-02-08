@@ -1,0 +1,224 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  Deploy the ALLUVIO Aternity APM Analysis Server on AWS EC2 in existing VPC/Subnet.
+  See Cookbook 401 on Aternity Tech Community (https://github.com/Aternity/Tech-Community) and Riverbed Community Toolkit (https://github.com/riverbed/Riverbed-Community-Toolkit)
+Metadata:
+  Version: '240207'
+  'AWS::CloudFormation::Interface':
+    ParameterGroups:
+      - Label:
+          default: ALLUVIO Aternity APM Analysis Server installer
+        Parameters:
+          - InstallerURLAPMAS
+          - InstallerVersion
+      - Label:
+          default: Network Configuration
+        Parameters:
+          - SubnetId
+          - AutoAssignPublicIPAddress
+          - SecurityGroupId
+      - Label:
+          default: EC2 Instance Configuration
+        Parameters:
+          - InstanceType
+    ParameterLabels:
+      InstallerURLAPMAS:
+        default: Enter the URL
+      InstallerVersion:
+        default: Select latest or a specific version of APM Analaysis Server
+      AutoAssignPublicIPAddress:
+        default: Select 'Yes' to assign a Public IP Address
+      SubnetId:
+        default: Select a Subnet
+      SecurityGroupId:
+        default: Select a Security Group
+      InstanceType:
+        default: Select an Instance type (sizing)
+Parameters:
+  InstallerURLAPMAS:
+    Description: Obtain a temporary private URL to fetch the installer (e.g. https://yourstorage.com/folder/installer.tar?token=123&validity=12)
+    Type: String
+    NoEcho: true
+    MinLength: 15
+    AllowedPattern: "^http.*$"
+  InstallerVersion:
+    Type: String
+    Description: Version of the APM Analysis Server installer package (used for checksum verification)
+    AllowedValues:
+      - 'latest'
+      - '2023.11.0'
+    Default: 'latest'
+  AutoAssignPublicIPAddress:
+    Type: String
+    AllowedValues: ['Yes','No']
+    Default: 'No'
+    Description: Set 'Yes' to enable Auto-Assign a Public IP address and expose Publicly (not recommended, instead please consider the ALLUVIO APM SaaS offerings)
+  SubnetId:
+    Type: 'AWS::EC2::Subnet::Id'
+    Description: An existing Subnet from which the EC2 instance can access the URL (installer package)
+  SecurityGroupId:
+    Type: 'AWS::EC2::SecurityGroup::Id'
+    Description: An existing Security Group allowing HTTPS for webconsole access and agent telemetry
+  InstanceType:
+    Description: >-
+      Suggested list of EC2 instance types for ALLUVIO APM Analysis Server, based on the minimum specs x64  vCPU:4 Memory:32GB. The instance types may not be available in the selected region or subnet/availability zone.
+    Type: String
+    Default: r5.xlarge
+    AllowedValues:
+      - r7iz.xlarge
+      - r7a.xlarge
+      - r6a.xlarge
+      - r5.xlarge
+Mappings:
+  InstallerVersionChecksum:
+    latest: 
+      checksum: "cab18208d5dd61f6aed5d1dfc2024b20fb17b7bf5c6c9f97ce0b490b498d7b7e"
+    2023.11.0: 
+      checksum: "cab18208d5dd61f6aed5d1dfc2024b20fb17b7bf5c6c9f97ce0b490b498d7b7e"
+  AWSRegionMapAMI:
+    us-west-1:
+      HVM64: ami-015e832ac6a60f0de
+    us-west-2:
+      HVM64: ami-0ecb0bb5d6b19457a
+    us-east-1:
+      HVM64: ami-0277155c3f0ab2930
+    us-east-2:
+      HVM64: ami-0866a04d72a1f5479
+    sa-east-1:
+      HVM64: ami-00dbf01ec2a2a2cc3
+    ca-west-1:
+      HVM64: ami-06818e351c2213a71
+    ca-central-1:
+      HVM64: ami-09219f22f73652d74
+    af-south-1:
+      HVM64: ami-06526a0ac077a5ed1
+    eu-west-1:
+      HVM64: ami-0c24ee2a1e3b9df45
+    eu-west-2:
+      HVM64: ami-0780837dd83465d73
+    eu-west-3:
+      HVM64: ami-06e7d9bed6ecdc388
+    eu-north-1:
+      HVM64: ami-090793d48e56d862c
+    eu-south-1:
+      HVM64: ami-027d303c7d875101c
+    eu-south-2:
+      HVM64: ami-0676bc454a7b377fd
+    eu-central-1:
+      HVM64: ami-02fe204d17e0189fb
+    il-central-1:
+      HVM64: ami-0d828e4c05a20a72a
+    me-central-1:
+      HVM64: ami-00bcef692461b8e7c
+    ap-northeast-1:
+      HVM64: ami-0b193da66bc27147b 
+    ap-northeast-2:
+      HVM64: ami-00ba43a774eb5870b
+    ap-northeast-3:
+      HVM64: ami-04d7b860b0e08262e
+    ap-south-1:
+      HVM64: ami-0d63de463e6604d0a
+    ap-south-2:
+      HVM64: ami-0e6a156749de5c143
+    ap-east-1:
+      HVM64: ami-0f4dfdbd0b33c2e4c  
+    ap-southeast-1:
+      HVM64: ami-0e5d58de654dfb50d  
+    ap-southeast-2:
+      HVM64: ami-03b4905c5f84d954b
+    ap-southeast-3:
+      HVM64: ami-04b0e5ff9f93bcfa2
+Conditions:
+  RequiresAssociatePublicIpAddress: !Equals [ 'Yes' , !Ref AutoAssignPublicIPAddress ]
+Resources:
+  EC2Instance:
+    Type: 'AWS::EC2::Instance'
+    Properties:
+      Tags:
+        - Key: Name
+          Value: ALLUVIO Aternity APM Analysis Server
+        - Key: Cookbook
+          Value: apm-as-on-aws-ec2
+        - Key: by
+          Value: Riverbed Community
+      NetworkInterfaces: 
+        - DeviceIndex: "0"
+          AssociatePublicIpAddress: !If [ RequiresAssociatePublicIpAddress , 'true' ,'false' ]
+          SubnetId: !Ref SubnetId
+          GroupSet: 
+          - !Ref SecurityGroupId
+      ImageId: !FindInMap 
+        - AWSRegionMapAMI
+        - !Ref 'AWS::Region'
+        - HVM64
+      InstanceType: !Ref InstanceType
+      BlockDeviceMappings:
+        - DeviceName: /dev/xvda
+          Ebs:
+            VolumeType: gp3
+            VolumeSize: 20
+            DeleteOnTermination: true
+        - DeviceName: /dev/xvdb
+          Ebs:
+            VolumeType: io2
+            VolumeSize: 100
+            Iops: 100
+            DeleteOnTermination: true
+      UserData:
+        Fn::Base64: !Sub
+          - |
+            #!/bin/bash
+            yum update -y aws-cfn-bootstrap
+            apm_linux_installer_url="${InstallerURLAPMAS}"
+            apm_linux_installer_sha256="${InstallerSHA256APMAS}"
+            apm_linux_installer_temp_path="/home/ec2-user"
+            # 1. Prereqs 
+            yum install -y iptables-services
+            systemctl enable iptables
+            systemctl start iptables
+            if [ $? -ne 0 ]; then /opt/aws/bin/cfn-signal --region ${AWS::Region} --stack ${AWS::StackName} --resource EC2Instance --success false --reason 'Error iptables prereq' ; fi
+            # 2. Data volume
+            data_device=/dev/xvdb
+            mkdir /data
+            mkfs -t xfs $data_device
+            mount $data_device /data
+            if [ $? -ne 0 ]; then /opt/aws/bin/cfn-signal --region ${AWS::Region} --stack ${AWS::StackName} --resource EC2Instance --success false --reason 'Error mount' ; fi
+            blkid $data_device | sed -n 's/.*UUID=\"\([^\"]*\)\".*/UUID=\1 \/data xfs defaults,nofail 0 2/p' >> /etc/fstab
+            cat /etc/fstab
+            lsblk
+            # 3. Fetch package & install
+            cd $apm_linux_installer_temp_path
+            curl $apm_linux_installer_url --output appint-linux.tar
+            sha256sum appint-linux.tar | grep $apm_linux_installer_sha256
+            if [ $? -ne 0 ]; then /opt/aws/bin/cfn-signal --region ${AWS::Region} --stack ${AWS::StackName} --resource EC2Instance --success false --reason 'Error checksum' ; fi
+            tar -xvzf appint-linux.tar
+            if [ $? -ne 0 ]; then /opt/aws/bin/cfn-signal --region ${AWS::Region} --stack ${AWS::StackName} --resource EC2Instance --success false --reason 'Error extracting installer' ; fi
+            ./appinternals_installer --force --bin-dir /opt --data-dir /data/appint
+            if [ $? -ne 0 ]; then /opt/aws/bin/cfn-signal --region ${AWS::Region} --stack ${AWS::StackName} --resource EC2Instance --success false --reason 'Error installer' ; fi
+            /opt/aws/bin/cfn-signal --region ${AWS::Region} --stack ${AWS::StackName} --resource EC2Instance --success true
+          - InstallerSHA256APMAS: !FindInMap [ InstallerVersionChecksum , !Ref InstallerVersion , 'checksum' ]
+    CreationPolicy:
+      ResourceSignal:
+        Timeout: PT10M
+Outputs:
+  InstanceID:
+    Description: EC2 Instance ID
+    Value: !Ref EC2Instance
+  PublicURL:
+    Description: URL Public DNS Name
+    Value: !If [ RequiresAssociatePublicIpAddress , !Join [ '' , [ 'https://' , !GetAtt EC2Instance.PublicDnsName ]], "n.a."]
+  PublicDnsName:
+    Description: Public IP DNS Name
+    Value: !If [ RequiresAssociatePublicIpAddress , !GetAtt EC2Instance.PublicDnsName , "n.a."]
+  PublicIPAddress:
+    Description: Public IP Address
+    Value: !If [ RequiresAssociatePublicIpAddress , !GetAtt EC2Instance.PublicIp , "n.a."]  
+  PrivateURL:
+    Description: URL Private DNS Name
+    Value: !Join [ '' , ['https://' , !GetAtt EC2Instance.PrivateDnsName ]]
+  PrivateDnsName:
+    Description: Private IP DNS Name
+    Value: !GetAtt EC2Instance.PrivateDnsName
+  PrivateIPAddress:
+    Description: Private IP Address
+    Value: !GetAtt EC2Instance.PrivateIp
