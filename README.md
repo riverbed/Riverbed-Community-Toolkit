@@ -33,6 +33,8 @@ To use the following contents you will need active licenses of the ALLUVIO Atern
 | [301](301-opentelemetry-on-kubernetes-with-apm-collector-daemonset-and-python-app) | Deploy the APM Collector on Kubernetes as a Daemonset and try it with a Python wep app | [ALLUVIO Aternity APM](https://www.riverbed.com/products/application-performance-monitoring) | APM Collector, OpenTelemetry, Kubernetes, AKS, EKS, GCP, auto-instrumentation | aug. 2023 |
 | [322](322-opentelemetry-on-kubernetes-with-apm-collector-daemonset-service-and-dotnet-app-on-windows) | A Windows container of a .NET web-app instrumented with OpenTelemetry  and exporting to the APM Collector exposed as a Kubernetes service | [ALLUVIO Aternity APM](https://www.riverbed.com/products/application-performance-monitoring) | APM Collector, OpenTelemetry, .NET, dotnet, Windows Container, Kubernetes | sept. 2023 |
 | [341](341-metrics-with-apm-daemonset-pod-agent-on-eks) | A Python app sending metrics to the CMX endpoint of the APM agent in Kubernetes (in AWS EKS) | [ALLUVIO Aternity APM](https://www.riverbed.com/products/application-performance-monitoring) | APM agent, Custom Metrics, CMX, Kubernetes, EKS | aug. 2023 |
+| [401](401-apm-analysis-server-on-aws-ec2) | *in progress* APM Analysis Server on AWS EC2 | [ALLUVIO Aternity APM](https://www.riverbed.com/products/application-performance-monitoring) | APM Analysis Server, AWS | feb. 2024 |
+
 
 Contributions can be submitted via  [Issues](https://github.com/Aternity/Tech-Community/issues) and [Pull Request](https://github.com/Aternity/Tech-Community/pulls). The team will usually give feedback in the day.
 
