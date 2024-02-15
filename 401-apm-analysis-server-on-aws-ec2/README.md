@@ -9,7 +9,7 @@ This cookbook deploys the ALLUVIO Aternity [APM](https://www.riverbed.com/produc
 ## Prerequisites
 
 1. an account in AWS
-2. a temporary URL of the installer packager. This URL must be accessible for the EC2 instance, for example *https://yourbucket.s3.amazonaws/temporary/installer.tar?token=123&validity=12*
+2. a temporary URL of the installer packager. This URL must be accessible for the EC2 instance, for example *https://yourbucket.s3.amazonaws.com/temporary/installer.tar?token=123&validity=12*
 
 > [!TIP]
 > Check the [Cookbook FAQ](#FAQ) and refer to the [Riverbed Support website](https://support.riverbed.com/content/support/software/aternity-dem/aternity-apm.html)
