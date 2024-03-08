@@ -2,7 +2,7 @@
 #
 # Aternity Tech-Community
 # 107-opentelemetry-autoinstrumentation-nodejs-app
-# version: 22.11.221128
+# version: 24.3.240308
 #
 # Compose file to use with the cookbook 107
 #
@@ -28,7 +28,7 @@ services:
     # Aternity OpenTelemetry Collector
     # https://hub.docker.com/r/aternity/apm-collector
 
-    image: registry.hub.docker.com/aternity/apm-collector:2022.4.0-4
+    image: registry.hub.docker.com/aternity/apm-collector:2022.11.0-4
 
     environment:
     
