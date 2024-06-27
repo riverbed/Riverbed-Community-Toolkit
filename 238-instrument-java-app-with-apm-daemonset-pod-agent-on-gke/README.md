@@ -1,5 +1,8 @@
 # 238-instrument-java-app-with-apm-daemonset-pod-agent-on-gke
 
+> [!WARNING]
+> Riverbed recently released the Riverbed Operator for Kubernetes, which is the preferred deployment method for Kubernetes.
+
 In this cookbook a Java web-application deployed with multiple replicas on a Kubernetes cluster, is  instrumented with APM using a custom Daemonset POD agent
 
 ![Cookbook 238](images/cookbook-238.png)
@@ -17,7 +20,7 @@ Multiple replicas of a Java web-application, containerized from [sources](app) w
 
 ## Prerequisites
 
-1. a SaaS account for [ALLUVIO Aternity APM](https://www.riverbed.com/products/application-performance-monitoring)
+1. a SaaS account for [Riverbed APM](https://www.riverbed.com/products/application-performance-monitoring)
 
 2. a project in [Google Cloud](https://console.cloud.google.com) with a Kubernetes infrastructure setup ready to use: GKE cluster Standard mode with a Linux node pool, a Bucket Storage and Artifact registry
 
@@ -28,13 +31,13 @@ Multiple replicas of a Java web-application, containerized from [sources](app) w
 
 [![Open in Cloud Shell](https://www.gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/Aternity/Tech-Community&tutorial=238-instrument-java-app-with-apm-daemonset-pod-agent-on-gke/README.md)
 
-## Step 1. Get details in ALLUVIO Aternity APM
+## Step 1. Get details in Riverbed APM
 
 In the APM webconsole, navigate to CONFIGURE > AGENTS > Install Agents and in the Agent Installation Steps section,
 
 1. Find your **Customer Id**, for example *12341234-12341234-13241234*
 2. Find the **SaaS Analysis Server Host**, for example *agents.apm.my_environment.aternity.com*
-3. Download the latest **ALLUVIO Aternity APM agent for Linux** package (also available on [Riverbed support](https://support.riverbed.com/content/support/software/aternity-dem/aternity-apm.html)), *appinternals_agent_latest_linux.gz*
+3. Download the latest **Riverbed APM agent for Linux** package (also available on [Riverbed support](https://support.riverbed.com/content/support/software/aternity-dem/aternity-apm.html)), *appinternals_agent_latest_linux.gz*
 
 Then in CONFIGURE > AGENTS > Configurations, 
 
@@ -44,7 +47,7 @@ Then in CONFIGURE > AGENTS > Configurations,
 
 In the [Google Cloud Console](https://console.cloud.google.com) retrieve the details of the project and resources ready to use:
 
-1. Project id, for example: *aternity-cookbooks*
+1. Project id, for example: *riverbed-cookbooks*
 2. Kubernetes Engine cluster name, for example: *standard-cluster-1*
 
 > [!WARNING]
@@ -61,7 +64,7 @@ In the [Google Cloud Console](https://console.cloud.google.com) retrieve the det
 
 In the [Google Cloud Console](https://console.cloud.google.com), navigate to [Cloud Storage ](https://console.cloud.google.com/storage/browser), then select the GCP project and the Bucket.
 
-There, upload the package of the ALLUVIO Aternity APM agent for Linux (.gz file) and grab the **gsutil URI** for the next steps, for example *gs://my_bucket/appinternals_agent_latest_linux.gz*
+There, upload the package of the Riverbed APM agent for Linux (.gz file) and grab the **gsutil URI** for the next steps, for example *gs://my_bucket/appinternals_agent_latest_linux.gz*
 
 ## Step 4. Prepare the shell
 
@@ -76,8 +79,8 @@ gcloud container clusters get-credentials {CLUSTER NAME} --region {REGION} --pro
 > Example:
 >```shell
 >cd 238-instrument-java-app-with-apm-daemonset-pod-agent-on-gke
->gcloud config set project aternity-cookbooks
->gcloud container clusters get-credentials standard-cluster-1 --region europe-west9 --project aternity-cookbooks
+>gcloud config set project riverbed-cookbooks
+>gcloud container clusters get-credentials standard-cluster-1 --region europe-west9 --project riverbed-cookbooks
 >```
 
 ## Step 5. Build the image of the APM Daemonset POD Agent
@@ -105,7 +108,7 @@ where:
 
 3. Grab the container image path
 
-When the build is done, the image will be stored in the repository of an Artifact Registry resource. The image path should be displayed in the shell output, for example *europe-west9-docker.pkg.dev/aternity-cookbooks/apm/alluvio-aternity-apm-daemonset-pod-agent:latest*
+When the build is done, the image will be stored in the repository of an Artifact Registry resource. The image path should be displayed in the shell output, for example *europe-west9-docker.pkg.dev/riverbed-cookbooks/apm/riverbed-apm-daemonset-pod-agent:latest*
 
 ## Step 6. Deploy the APM Daemonset POD Agent
 
@@ -113,9 +116,9 @@ When the build is done, the image will be stored in the repository of an Artifac
 
 Edit the Kubernetes manifest [apm-daemonset-pod-agent.yaml](apm-daemonset-pod-agent.yaml) to configure the image path and the environment variables for the APM agent:
 
-- replace {{ALLUVIO Aternity APM Daemonset POD agent image path}} with the **container image path** built in the previous step, for example: *europe-west9-docker.pkg.dev/aternity-cookbooks/apm/alluvio-aternity-apm-daemonset-pod-agent:latest*
-- replace {{ALLUVIO_ATERNITY_APM_CUSTOMER_ID}} with the **Customer Id**, for example: *12312341234-1234-124356*
-- replace {{ALLUVIO_ATERNITY_APM_SAAS_SERVER_HOST}} with the **SaaS Analysis Server Host**, for example: *agents.apm.my-account.aternity.com*
+- replace {{Riverbed APM Daemonset POD agent image path}} with the **container image path** built in the previous step, for example: *europe-west9-docker.pkg.dev/riverbed-cookbooks/apm/riverbed-apm-daemonset-pod-agent:latest*
+- replace {{RIVERBED_APM_CUSTOMER_ID}} with the **Customer Id**, for example: *12312341234-1234-124356*
+- replace {{RIVERBED_APM_SAAS_SERVER_HOST}} with the **SaaS Analysis Server Host**, for example: *agents.apm.my-account.aternity.com*
 
 2. Deploy
 
@@ -150,11 +153,11 @@ where:
 
 2. Grab the container image path
 
-When the build is done, the image path should be diplayed in the shell output, for example *europe-west9-docker.pkg.dev/aternity-cookbooks/apm/java-app:latest*
+When the build is done, the image path should be diplayed in the shell output, for example *europe-west9-docker.pkg.dev/riverbed-cookbooks/apm/java-app:latest*
 
 3. Set the image path in the Kubernetes manifest configured for APM instrumentation
 
-With the Cloud Shell Editor, edit the manifest [app-k8s.yaml](app-k8s.yaml) and set the image path replacing {{java-app image}} with the actual value in the container definition, for example: *europe-west9-docker.pkg.dev/aternity-cookbooks/apm/java-app:latest*
+With the Cloud Shell Editor, edit the manifest [app-k8s.yaml](app-k8s.yaml) and set the image path replacing {{java-app image}} with the actual value in the container definition, for example: *europe-west9-docker.pkg.dev/riverbed-cookbooks/apm/java-app:latest*
 
 > [!NOTE]
 > The manifest [app-k8s.yaml](app-k8s.yaml) has been configured for the APM instrumentation, it is based on the initial manifest [app-k8s-without-apm.yaml](app-k8s-without-apm.yaml).
@@ -179,7 +182,7 @@ kubectl -n cookbook-app get svc
 
 In your web browser, open the http url using the external IP address, for example http://external-ip-address and refresh multiple time in order to generate some traffic and application transactions.
 
-## Step 9. Monitor in ALLUVIO Aternity APM webconsole 
+## Step 9. Monitor in Riverbed APM webconsole 
 
 Go to the APM webconsole to observe the application, every instance and every transaction.
 
