@@ -38,7 +38,7 @@ Run the following command to configure the required permissions for the Riverbed
 
 ```shell
 # Set the permissions
-oc apply -f https://raw.githubusercontent.com/Aternity/Tech-Community/main/285-instrument-app-with-riverbed-apm-on-openshift/riverbed-operator-permissions-openshift.yaml
+oc apply -f https://raw.githubusercontent.com/Aternity/Tech-Community/main/285-auto-instrument-app-with-riverbed-apm-on-openshift/riverbed-operator-permissions-openshift.yaml
 ```
 
 ### 3.2 Riverbed Operator
@@ -103,7 +103,7 @@ riverbed-operator-controller-manager-56dd4ddf78-n2t66   2/2     Running   0     
 Run the following command to deploy the demo application `yourapp` in the namespace `cookbook-app`. The app uses the docker image of a simple java webapp.
 
 ```shell
-oc apply -f https://raw.githubusercontent.com/Aternity/Tech-Community/main/285-instrument-app-with-riverbed-apm-on-openshift/app/yourapp.yaml
+oc apply -f https://raw.githubusercontent.com/Aternity/Tech-Community/main/285-auto-instrument-app-with-riverbed-apm-on-openshift/app/yourapp.yaml
 ```
 
 ### 5.2 Test the app
@@ -145,7 +145,7 @@ Go to the APM web console to observe every transaction of the application. Every
 Simply run the following 
 
 ```shell
-oc delete  -f https://raw.githubusercontent.com/Aternity/Tech-Community/main/285-instrument-app-with-riverbed-apm-on-openshift/app/yourapp.yaml
+oc delete  -f https://raw.githubusercontent.com/Aternity/Tech-Community/main/285-auto-instrument-app-with-riverbed-apm-on-openshift/app/yourapp.yaml
 ```
 
 ### How to clean-up the operator
