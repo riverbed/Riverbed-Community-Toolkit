@@ -136,7 +136,9 @@ oc patch deployment -n cookbook-app cookbook-app -p '{"spec": {"template":{"meta
 
 ## Step 6. Navigate the app and monitor in Riverbed APM web console 
 
-Go to the APM web console to observe every transaction of the application. Every Pod is automatically instrumented.
+Go to the APM web console to observe every transaction of the application. Every Pod on any Node is automatically instrumented, with the Riverbed APM agent deployed on every node.
+
+![Riverbed APM transactions](images/285-riverbed-apm-transactions.png)
 
 ## Notes
 
