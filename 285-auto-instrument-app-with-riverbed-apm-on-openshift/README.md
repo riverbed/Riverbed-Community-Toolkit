@@ -116,7 +116,7 @@ oc port-forward -n cookbook-app service/yourapp --address 127.0.0.1 8888:80
 
 Then you should be able to access from your browser to [http://127.0.0.1:8888](http://127.0.0.1:8888) or from the CLI `curl http://127.0.0.1:8888`
 
-## Step 5. Instrument your app
+## Step 6. Instrument your app
 
 Simply enable the automatic instrumentation adding the annotation.
 
@@ -127,14 +127,14 @@ Simply enable the automatic instrumentation adding the annotation.
 For example, with the demo application `yourapp`, which is a java app, the command below patches the app deployment to add the annotation `"instrument.apm.riverbed/inject-java":"true"`:
 
 ```shell
-oc patch deployment -n cookbook-app cookbook-app -p '{"spec": {"template":{"metadata":{"annotations":{"instrument.apm.riverbed/inject-java":"true"}}}} }'
+oc patch deployment -n cookbook-app yourapp -p '{"spec": {"template":{"metadata":{"annotations":{"instrument.apm.riverbed/inject-java":"true"}}}} }'
 ```
 
 > [!TIP]
 > The APM instrumentation annotation can also be added to the manifest, for example [app/yourapp-with-apm.yaml](app/yourapp-with-apm.yaml) is annotated, and based on the original manifest [app/yourapp.yaml](app/yourapp.yaml).
 
 
-## Step 6. Navigate the app and monitor in Riverbed APM web console 
+## Step 7. Navigate the app and monitor in Riverbed APM web console 
 
 Go to the APM web console to observe every transaction of the application. Every Pod on any Node is automatically instrumented, with the Riverbed APM agent deployed on every node.
 
