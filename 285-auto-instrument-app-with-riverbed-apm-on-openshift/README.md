@@ -58,12 +58,7 @@ oc apply -f https://raw.githubusercontent.com/riverbed/riverbed-operator/1.0.0/r
 
 ### 3.3 Riverbed Operator configuration
 
-Run the following command, that will open the configuration in your editor before applying it to the cluster. There, you can configure the lines `customerId: ""` and `analysisServerHost: "agents.apm.YOUR-ENV.aternity.com"` adding the values of the **Customer Id** and **SaaS Analysis Server Host** obtained in Step 1.. When done, just save and close the file.
-
-```shell
-# Configure the Riverbed Operator with your Customer Id and SaaS Analysis Server Host
-oc create -f https://raw.githubusercontent.com/riverbed/riverbed-operator/1.0.0/riverbed_configuration_v1.0.0.yaml --namespace=riverbed-operator --edit
-```
+Download locally the [riverbed operator configuration manifest](https://raw.githubusercontent.com/riverbed/riverbed-operator/1.0.0/riverbed_configuration_v1.0.0.yaml), and edit the file to change the lines `customerId: ""` and `analysisServerHost: "agents.apm.YOUR-ENV.aternity.com"` adding the values of the **Customer Id** and **SaaS Analysis Server Host** obtained in Step 1. 
 
 For example the related lines in the configuration will look like this:
 
@@ -74,12 +69,26 @@ For example the related lines in the configuration will look like this:
 ...
 ```
 
+Then apply the configuration:
+
+```shell
+# Apply the Riverbed Operator configuration with your Customer Id and SaaS Analysis Server Host
+oc apply -f riverbed_configuration_v1.0.0.yaml
+```
+
 > [!NOTE]
 > Please refer to the [Riverbed Operator](https://github.com/riverbed/riverbed-operator) to learn the details on how to deploy the Riverbed Operator on a Kubernetes cluster.
 
+> [!TIP]
+> The following command can also be used to automatically open the configuration in your editor. The configuration will be applied when you save and close the file from the editor.
+```shell
+# Configure the Riverbed Operator with your Customer Id and SaaS Analysis Server Host
+oc create -f https://raw.githubusercontent.com/riverbed/riverbed-operator/1.0.0/riverbed_configuration_v1.0.0.yaml --namespace=riverbed-operator --edit
+```
+
 ## Step 4. Check the setup
 
-You can verify the Pods in the `riverbed-operator` namespace are ready.
+After few seconds, you can verify the Pods in the `riverbed-operator` namespace are ready.
 
 ```shell
 oc get pod -n riverbed-operator
@@ -98,45 +107,73 @@ riverbed-operator-controller-manager-56dd4ddf78-n2t66   2/2     Running   0     
 
 ## Step 5. *optional* Install a demo app
 
+<details>
+<summary>Details</summary>
+  
 ### 5.1 Deployment
 
 Run the following command to deploy the demo application `yourapp` in the namespace `cookbook-app`. The app uses the docker image of a simple java webapp.
 
 ```shell
+# Deploy YourApp (version without APM)
 oc apply -f https://raw.githubusercontent.com/Aternity/Tech-Community/main/285-auto-instrument-app-with-riverbed-apm-on-openshift/app/yourapp.yaml
 ```
 
 ### 5.2 Test the app
 
 In a separate shell, run this command to open a local port that will give access the app. For example on port 8888
-
+ 
 ```shell
+# Bind YourApp to a local port
 oc port-forward -n cookbook-app service/yourapp --address 127.0.0.1 8888:80
 ```
 
-Then you should be able to access from your browser to [http://127.0.0.1:8888](http://127.0.0.1:8888) or from the CLI `curl http://127.0.0.1:8888`
+Then you can run the pods are up, running the following commands:
+
+```shell
+oc get pod -n cookbook-app
+oc get service -n cookbook-app
+```
+
+And you you should be able to access from your browser to [http://127.0.0.1:8888](http://127.0.0.1:8888) or using CLI:
+
+```shell
+# Access YourApp
+curl http://127.0.0.1:8888
+```
+
+When the app is ready, the CLI output should look like this:
+
+```console
+Hello Docker World
+```
+
+</details>
 
 ## Step 6. Instrument your app
 
-Simply enable the automatic instrumentation adding the annotation.
-
-> [!NOTE]
-> For more details about automatic instrumentation, please refer to the readme page of the [Riverbed Operator](https://github.com/riverbed/riverbed-operator).
-
+Simply enable the automatic instrumentation adding the annotation. 
 
 For example, with the demo application `yourapp`, which is a java app, the command below patches the app deployment to add the annotation `"instrument.apm.riverbed/inject-java":"true"`:
 
 ```shell
 oc patch deployment -n cookbook-app yourapp -p '{"spec": {"template":{"metadata":{"annotations":{"instrument.apm.riverbed/inject-java":"true"}}}} }'
 ```
+> [!NOTE]
+> For more details about automatic instrumentation, please refer to the readme page of the [Riverbed Operator](https://github.com/riverbed/riverbed-operator).
 
 > [!TIP]
-> The APM instrumentation annotation can also be added to the manifest, for example [app/yourapp-with-apm.yaml](app/yourapp-with-apm.yaml) is annotated, and based on the original manifest [app/yourapp.yaml](app/yourapp.yaml).
+> The APM instrumentation annotation can also be added directly to the manifest file, for example [app/yourapp-with-apm.yaml](app/yourapp-with-apm.yaml) is annotated, and based on the original manifest [app/yourapp.yaml](app/yourapp.yaml). Then the manifest with APM can be applied:
+> ```shell
+> # Deploy YourApp (with APM)
+> oc apply -f https://raw.githubusercontent.com/Aternity/Tech-Community/main/285-auto-instrument-app-with-riverbed-apm-on-openshift/app/yourapp-with-apm.yaml
+> ```
 
+## Step 7. Monitor in Riverbed APM web console 
 
-## Step 7. Navigate the app and monitor in Riverbed APM web console 
+When the app is ready, just use the app to generate some transactions.
 
-Go to the APM web console to observe every transaction of the application. Every Pod on any Node is automatically instrumented, with the Riverbed APM agent deployed on every node.
+And then go to the APM web console to observe every transaction of the application. Every Pod on any Node is automatically instrumented, with the Riverbed APM agent deployed on every node.
 
 ![Riverbed APM transactions](images/285-riverbed-apm-transactions.png)
 
