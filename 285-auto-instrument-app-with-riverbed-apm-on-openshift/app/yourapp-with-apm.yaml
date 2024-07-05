@@ -26,11 +26,11 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: yourapp
-    ###############################################
-    # Riverbed APM configuration
-    annotations:
-      instrument.apm.riverbed/inject-java: "true"
-    ###############################################              
+      ###############################################
+      # Riverbed APM configuration
+      annotations:
+        instrument.apm.riverbed/inject-java: "true"
+      ###############################################              
     spec:
       containers:
       - name: java-spring-yourapp
