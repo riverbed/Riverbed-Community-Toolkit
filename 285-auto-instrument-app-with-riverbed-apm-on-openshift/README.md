@@ -163,7 +163,7 @@ oc patch deployment -n cookbook-app yourapp -p '{"spec": {"template":{"metadata"
 > For more details about automatic instrumentation, please refer to the readme page of the [Riverbed Operator](https://github.com/riverbed/riverbed-operator).
 
 > [!TIP]
-> The APM instrumentation annotation can also be added directly to the manifest file, for example [app/yourapp-with-apm.yaml](app/yourapp-with-apm.yaml) is annotated, and based on the original manifest [app/yourapp.yaml](app/yourapp.yaml). Then the manifest with APM can be applied:
+> The APM instrumentation annotation can also be added directly to the manifest file of the app. For example with the demo app, [app/yourapp-with-apm.yaml](app/yourapp-with-apm.yaml) is annotated to enable APM instrumentation - the file is based on the original manifest [app/yourapp.yaml](app/yourapp.yaml) without annotation. Then the manifest can be applied to the cluster as usual:
 > ```shell
 > # Deploy YourApp (with APM)
 > oc apply -f https://raw.githubusercontent.com/Aternity/Tech-Community/main/285-auto-instrument-app-with-riverbed-apm-on-openshift/app/yourapp-with-apm.yaml
