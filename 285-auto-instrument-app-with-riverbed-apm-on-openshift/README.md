@@ -76,15 +76,15 @@ Then apply the configuration:
 oc apply -f riverbed_configuration_v1.0.0.yaml
 ```
 
-> [!NOTE]
-> Please refer to the [Riverbed Operator](https://github.com/riverbed/riverbed-operator) to learn the details on how to deploy the Riverbed Operator on a Kubernetes cluster.
-
 > [!TIP]
 > The following command can also be used to automatically open the configuration in your editor. The configuration will be applied when you save and close the file from the editor.
-```shell
-# Configure the Riverbed Operator with your Customer Id and SaaS Analysis Server Host
-oc create -f https://raw.githubusercontent.com/riverbed/riverbed-operator/1.0.0/riverbed_configuration_v1.0.0.yaml --namespace=riverbed-operator --edit
-```
+> ```shell
+> # Configure the Riverbed Operator with your Customer Id and SaaS Analysis Server Host
+> oc create -f https://raw.githubusercontent.com/riverbed/riverbed-operator/1.0.0/riverbed_configuration_v1.0.0.yaml --namespace=riverbed-operator --edit
+> ```
+
+> [!NOTE]
+> Please refer to the [Riverbed Operator](https://github.com/riverbed/riverbed-operator) to learn more details on how to deploy the Riverbed Operator on a Kubernetes cluster.
 
 ## Step 4. Check the setup
 
@@ -159,15 +159,32 @@ For example, with the demo application `yourapp`, which is a java app, the comma
 ```shell
 oc patch deployment -n cookbook-app yourapp -p '{"spec": {"template":{"metadata":{"annotations":{"instrument.apm.riverbed/inject-java":"true"}}}} }'
 ```
-> [!NOTE]
-> For more details about automatic instrumentation, please refer to the readme page of the [Riverbed Operator](https://github.com/riverbed/riverbed-operator).
 
 > [!TIP]
-> The APM instrumentation annotation can also be added directly to the manifest file of the app. For example with the demo app, [app/yourapp-with-apm.yaml](app/yourapp-with-apm.yaml) is annotated to enable APM instrumentation - the file is based on the original manifest [app/yourapp.yaml](app/yourapp.yaml) without annotation. Then the manifest can be applied to the cluster as usual:
+> The APM instrumentation annotation can also be added to the manifest files, and can be defined at the deployment level to instrument a specific app, or at the namespace level to instrument all the applications in the namespace.
+>
+> For example with the demo app,
+>
+> In [app/yourapp-with-apm.yaml](app/yourapp-with-apm.yaml) the deployment spec of the app is annotated - the file is based on the original manifest [app/yourapp.yaml](app/yourapp.yaml) without annotation. The manifest can be applied to the cluster as usual:
 > ```shell
-> # Deploy YourApp (with APM)
+> # Apply or Deploy YourApp with APM instrumentation
 > oc apply -f https://raw.githubusercontent.com/Aternity/Tech-Community/main/285-auto-instrument-app-with-riverbed-apm-on-openshift/app/yourapp-with-apm.yaml
 > ```
+>
+> In [app/namespace-with-apm.yaml](app/namespace-with-apm.yaml), the namespace is annotated with the APM Instrumentation and can be applied to the cluster:
+> ```shell
+> # Annotate the namespace for APM instrumentation
+> oc apply -f https://raw.githubusercontent.com/Aternity/Tech-Community/main/285-auto-instrument-app-with-riverbed-apm-on-openshift/app/namespace-with-apm.yaml
+> ```
+>
+> If the app was already deployed and running before beeing annotated, it needs a rollout restart that can be triggered for example with:
+> ```shell
+> # Restart the deployment of all the applications in the namespace (here there is just one single deployment deployment/yourapp)
+> oc rollout restart -n cookbook-app deployment
+> ```
+
+> [!NOTE]
+> For more details about automatic instrumentation, please refer to the readme page of the [Riverbed Operator](https://github.com/riverbed/riverbed-operator).
 
 ## Step 7. Monitor in Riverbed APM web console 
 
@@ -195,7 +212,7 @@ oc delete -f https://raw.githubusercontent.com/riverbed/riverbed-operator/1.0.0/
 ```
 
 > [!NOTE]
-> Please refer to the [Riverbed Operator](https://github.com/riverbed/riverbed-operator) to learn the details on how to deploy the Riverbed Operator on a Kubernetes cluster.
+> Please refer to the [Riverbed Operator](https://github.com/riverbed/riverbed-operator) to learn more details on how to deploy the Riverbed Operator on a Kubernetes cluster.
 
 #### License
 

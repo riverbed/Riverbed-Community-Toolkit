@@ -1,0 +1,16 @@
+# namespace-with-apm.yaml
+# version: 240715 - Riverbed Community Toolkit
+#
+# Usage:
+#
+#   oc apply -f namespace-with-apm.yaml
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cookbook-app
+  ###############################################
+  # Riverbed APM configuration
+  annotations:
+    instrument.apm.riverbed/inject-java: "true"
+  ###############################################
