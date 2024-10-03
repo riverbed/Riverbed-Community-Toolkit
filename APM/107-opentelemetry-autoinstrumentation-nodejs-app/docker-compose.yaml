@@ -64,5 +64,5 @@ services:
       - "8107:80"
 
     build:
-      context: https://github.com/Aternity/Tech-Community.git#main
+      context: https://github.com/riverbed/Riverbed-Community-Toolkit.git#main
       dockerfile: 107-opentelemetry-autoinstrumentation-nodejs-app/Dockerfile

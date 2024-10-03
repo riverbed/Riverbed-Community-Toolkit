@@ -1,7 +1,7 @@
 #! /bin/sh
 # bootstrap-agent.sh
 # 23.1.230123
-# Cookbook 203 - Aternity Tech Community Cookbook (https://github.com/Aternity/Tech-Community)
+# Cookbook 203 - Aternity Tech Community Cookbook (https://github.com/riverbed/Riverbed-Community-Toolkit)
 #
 # Usage:
 #   bootstrap-agent.sh <cmd> <args>

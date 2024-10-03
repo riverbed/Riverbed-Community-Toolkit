@@ -1,6 +1,6 @@
 # Dockerfile 
 # version: 23.8.230921
-# Riverbed - ALLUVIO Aternity Tech Community Cookbook (https://github.com/Aternity/Tech-Community)
+# Riverbed - ALLUVIO Aternity Tech Community Cookbook (https://github.com/riverbed/Riverbed-Community-Toolkit)
 #
 # Containerize the Python app of cookbook 341
 

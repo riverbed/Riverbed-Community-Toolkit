@@ -1,6 +1,6 @@
 // Cookbook106.java
 //
-// Aternity Tech-Community (https://github.com/Aternity/Tech-Community)
+// Aternity Tech-Community (https://github.com/riverbed/Riverbed-Community-Toolkit)
 // 106-opentelemetry-autoinstrumentation-java-app
 // version: 22.3.29
 //

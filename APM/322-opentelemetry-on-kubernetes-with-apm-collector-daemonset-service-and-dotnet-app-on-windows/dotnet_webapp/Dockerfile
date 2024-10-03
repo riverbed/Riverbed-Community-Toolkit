@@ -1,6 +1,6 @@
 # Dockerfile 
 # 23.9.230915
-# ALLUVIO Aternity Tech Community Cookbook (https://github.com/Aternity/Tech-Community)
+# ALLUVIO Aternity Tech Community Cookbook (https://github.com/riverbed/Riverbed-Community-Toolkit)
 # 
 # Containerize a .NET webapp for Windows, instrumented with OpenTelemetry
 #

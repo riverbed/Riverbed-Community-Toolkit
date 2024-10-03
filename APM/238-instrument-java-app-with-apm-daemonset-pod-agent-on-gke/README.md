@@ -29,7 +29,7 @@ Multiple replicas of a Java web-application, containerized from [sources](app) w
 
 3. Click on the button to open the cookbook in the Google Cloud Shell
 
-[![Open in Cloud Shell](https://www.gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/Aternity/Tech-Community&tutorial=238-instrument-java-app-with-apm-daemonset-pod-agent-on-gke/README.md)
+[![Open in Cloud Shell](https://www.gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/riverbed/Riverbed-Community-Toolkit&tutorial=238-instrument-java-app-with-apm-daemonset-pod-agent-on-gke/README.md)
 
 ## Step 1. Get details in Riverbed APM
 

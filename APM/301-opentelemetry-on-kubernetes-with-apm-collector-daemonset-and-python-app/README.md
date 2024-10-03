@@ -27,7 +27,7 @@ Then in the Linux agent panel, switch to the "Standard Agent Install" to find:
 
 ## Step 2. Get the cookbook and open a shell
 
-1. Download the .yaml files of the cookbook, or ([download the full Tech Community zip archive](https://github.com/Aternity/Tech-Community/archive/refs/heads/main.zip))
+1. Download the .yaml files of the cookbook, or ([download the full Tech Community zip archive](https://github.com/riverbed/Riverbed-Community-Toolkit/archive/refs/heads/main.zip))
 
 2. Open a shell and go to your directory with the .yaml file
 

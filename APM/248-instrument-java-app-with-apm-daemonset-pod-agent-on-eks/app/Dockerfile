@@ -1,6 +1,6 @@
 # Dockerfile
 # 23.8.25
-# ALLUVIO Aternity Tech Community Cookbook (https://github.com/Aternity/Tech-Community)
+# ALLUVIO Aternity Tech Community Cookbook (https://github.com/riverbed/Riverbed-Community-Toolkit)
 
 # Usage:
 #

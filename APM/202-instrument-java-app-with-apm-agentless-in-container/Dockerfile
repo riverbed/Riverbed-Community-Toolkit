@@ -1,5 +1,5 @@
 # Dockerfile
-# Coookbook 202 - Aternity Tech Community Cookbook (https://github.com/Aternity/Tech-Community)
+# Coookbook 202 - Aternity Tech Community Cookbook (https://github.com/riverbed/Riverbed-Community-Toolkit)
 # v22.11.221108
 # 
 # Description:

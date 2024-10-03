@@ -26,7 +26,7 @@ Then in the Linux agent panel, switch to the "Standard Agent Install" to find:
 
 ## Step 2. Deploy the APM Collector on the Kubernetes cluster
 
-1. Download the .yaml files of the cookbook, or ([download the full Tech Community zip archive](https://github.com/Aternity/Tech-Community/archive/refs/heads/main.zip))
+1. Download the .yaml files of the cookbook, or ([download the full Tech Community zip archive](https://github.com/riverbed/Riverbed-Community-Toolkit/archive/refs/heads/main.zip))
 
 2. Configure the .yaml manifest
 
@@ -63,7 +63,7 @@ kubectl --namespace alluvio-aternity get service
 
 On the Windows machine enabled with a Docker runtime,
 
-1. Fetch the cookbook, for example hit the link to [download the full Tech Community zip archive](https://github.com/Aternity/Tech-Community/archive/refs/heads/main.zip) and expand the zip archive
+1. Fetch the cookbook, for example hit the link to [download the full Tech Community zip archive](https://github.com/riverbed/Riverbed-Community-Toolkit/archive/refs/heads/main.zip) and expand the zip archive
 
 2. Configure the instrumentation with the OTLP endpoint and run the app
 

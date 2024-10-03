@@ -67,5 +67,5 @@ services:
       - "8108:80"
 
     build:
-      context: https://github.com/Aternity/Tech-Community.git#main
-      dockerfile: 108-collect-zipkin-nodejs-app/Dockerfile
+      context: https://github.com/riverbed/Riverbed-Community-Toolkit.git#main
+      dockerfile: APM/108-collect-zipkin-nodejs-app/Dockerfile

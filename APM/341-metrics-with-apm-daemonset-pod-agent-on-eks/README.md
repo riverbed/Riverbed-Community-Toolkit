@@ -34,7 +34,7 @@ Then in the Linux agent panel, switch to the "Standard Agent Install" to:
 Run the following CLI in the terminal to download a local copy of the cookbook:
 
 ```shell
-git clone https://github.com/Aternity/Tech-Community.git --depth 1
+git clone https://github.com/riverbed/Riverbed-Community-Toolkit.git --depth 1
 
 cd Tech-Community/341-metrics-with-apm-daemonset-pod-agent-on-eks
 ```

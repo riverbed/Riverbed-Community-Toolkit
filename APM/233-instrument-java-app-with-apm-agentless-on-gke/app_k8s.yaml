@@ -3,7 +3,7 @@
 #
 # Description:
 #   
-#   Aternity Tech Community Cookbook (https://github.com/Aternity/Tech-Community)
+#   Aternity Tech Community Cookbook (https://github.com/riverbed/Riverbed-Community-Toolkit)
 #   Kubernetes manifest to deploy the Spring PetClinic app (see https://github.com/spring-projects/spring-petclinic.git)
 #   containerized with Aternity APM Java agent for Linux, and also a PostgreSQL database
 #

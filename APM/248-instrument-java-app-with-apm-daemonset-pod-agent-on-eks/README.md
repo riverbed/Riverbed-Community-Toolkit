@@ -40,7 +40,7 @@ For example, create a new configuration and simply name it "configuration", conf
 Run the following CLI in the terminal to download a local copy of the cookbook:
 
 ```shell
-git clone https://github.com/Aternity/Tech-Community.git --depth 1
+git clone https://github.com/riverbed/Riverbed-Community-Toolkit.git --depth 1
 
 cd Tech-Community/248-instrument-java-app-with-apm-daemonset-pod-agent-on-eks
 ```

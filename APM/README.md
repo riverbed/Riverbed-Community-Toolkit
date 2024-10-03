@@ -37,7 +37,7 @@ To use the following contents you will need active licenses of the Riverbed APM 
 | [401](401-apm-analysis-server-on-aws-ec2) | *in progress* APM Analysis Server on AWS EC2 | [APM](https://www.riverbed.com/products/application-performance-monitoring) | APM Analysis Server, AWS | feb. 2024 |
 
 
-Contributions can be submitted via  [Issues](https://github.com/Aternity/Tech-Community/issues) and [Pull Request](https://github.com/Aternity/Tech-Community/pulls). The team will usually give feedback in the day.
+Contributions can be submitted via  [Issues](https://github.com/riverbed/Riverbed-Community-Toolkit/issues) and [Pull Request](https://github.com/riverbed/Riverbed-Community-Toolkit/pulls). The team will usually give feedback in the day.
 
 Thanks in advance!
 

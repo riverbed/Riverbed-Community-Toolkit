@@ -1,6 +1,6 @@
 # Dockerfile 
 # version: 23.1.230113
-# ALLUVIO Aternity Tech Community Cookbook (https://github.com/Aternity/Tech-Community)
+# ALLUVIO Aternity Tech Community Cookbook (https://github.com/riverbed/Riverbed-Community-Toolkit)
 #
 # Containerize the APM agent for Daemonset POD deployment in Kubernetes
 #

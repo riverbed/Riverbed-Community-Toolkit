@@ -22,7 +22,7 @@ Navigate to Aternity APM (for example [https://apm.myaccount.aternity.com](https
 
 ### Step 2 - Get the files to run the Cookbook
 
-Download the cookbook, for example [right-click here](https://github.com/Aternity/Tech-Community/archive/refs/heads/main.zip) to download the zip archive, and expand it locally.
+Download the cookbook, for example [right-click here](https://github.com/riverbed/Riverbed-Community-Toolkit/archive/refs/heads/main.zip) to download the zip archive, and expand it locally.
 
 ### Step 3 - Start the containers
 

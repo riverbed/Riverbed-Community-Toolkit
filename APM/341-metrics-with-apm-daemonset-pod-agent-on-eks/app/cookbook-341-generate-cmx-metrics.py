@@ -1,7 +1,7 @@
 #! /bin/python3
 # cookbook-341-generate-cmx-metrics.py
 # version: 23.8.230821
-# Riverbed - ALLUVIO Aternity Tech-Community (https://github.com/Aternity/Tech-Community)
+# Riverbed - ALLUVIO Aternity Tech-Community (https://github.com/riverbed/Riverbed-Community-Toolkit)
 #
 # Prerequisites
 # - python3
