@@ -1,0 +1,66 @@
+# cookbook-341-kubernetes-job.yaml
+# version: 23.8.230821
+# Riverbed - Riverbed-Community-Toolkit (https://github.com/riverbed/Riverbed-Community-Toolkit)
+#
+# Usage:
+#
+# 1. Replace {{ cookbook 341 app image }} with your own image
+#
+# 2. Deploy the job
+#
+#   kubectl apply -f cookbook-341-kubernetes-job.yaml
+#
+# 3. Check the job
+#
+#   kubectl get cronjob
+
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: cookbook-341-generate-cmx-job
+  namespace: default
+spec:
+  schedule: "* * * * *"  # Every minute
+  concurrencyPolicy: Forbid
+  failedJobsHistoryLimit: 1
+  successfulJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: cookbook-341-generate-cmx-metrics
+
+            # TODO: replace {{ cookbook 341 app image }}  with your own image
+            image: {{ cookbook 341 app image }}
+
+            env:
+
+              # Define the APM CMX endpoint of the node
+              - name: NODE_IP
+                valueFrom:
+                  fieldRef:
+                    apiVersion: v1
+                    fieldPath: status.hostIP
+              - name: ALLUVIO_ATERNITY_APM_CMX_ENDPOINT
+                value: https://$(NODE_IP):7074
+
+              # Other metrics decorations
+              - name: ALLUVIO_ATERNITY_APM_CMX_SOURCE
+                value: "cookbook-341-source"
+              - name: COOKBOOK_DIMENSION_CLOUD
+                value: "aws"
+              - name: COOKBOOK_DIMENSION_REGION
+                value: "eu-west-3"
+              - name: COOKBOOK_TAG_TIER
+                value: "medium"
+
+            resources:
+              limits:
+                  cpu: 500m
+                  memory: 512Mi
+              requests:
+                  cpu: 50m
+                  memory: 32Mi

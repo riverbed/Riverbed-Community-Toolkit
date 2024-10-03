@@ -1,0 +1,52 @@
+# Riverbed-Community-Toolkit
+# 105-opentelemetry-go-app
+# version: 22.03.15
+#
+# Simple 2 tier Go application using the OpenTelemetry SDK. Capable of showing distributed traces
+# using the Otlp, Jaeger, or Zipkin formats.
+#
+# Reference:
+# * https://hub.docker.com/r/aternity/apm-collector
+# * https://www.riverbed.com/products/application-performance-monitoring
+#
+# Usage:
+#   kubectl apply -f kubernetes/
+#
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: aternity-collector
+spec:
+  type: ClusterIP
+  ports:
+#    - port: 4318
+#      protocol: TCP
+    - port: 14268
+      protocol: TCP
+#    - port: 9411
+#      protocol: TCP
+  selector:
+    app: aternity-collector
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aternity-collector
+spec:
+  selector:
+    matchLabels:
+      app: aternity-collector
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: aternity-collector
+    spec:
+      containers:
+      - name: aternity-collector
+        image: aternity/apm-collector:latest
+        env:
+          - name: SERVER_URL
+            value: wss://agents.apm.<domain>.aternity.com/?RPM_AGENT_CUSTOMER_ID=<customer-id>
+1

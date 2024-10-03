@@ -1,0 +1,74 @@
+# riverbed-operator-permissions-openshift.yaml
+# version: 240624 - Riverbed Community Toolkit
+#
+# Configure permissions for the riverbed-operator to run a RedHat OpenShift cluster
+#
+# Usage:
+#
+#   oc apply -f riverbed-operator-permissions-openshift.yaml
+#
+#     or
+#
+#   kubectl apply -f riverbed-operator-permissions-openshift.yaml
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    app.kubernetes.io/component: manager
+    app.kubernetes.io/created-by: riverbed-operator
+    app.kubernetes.io/instance: system
+    app.kubernetes.io/managed-by: kustomize
+    app.kubernetes.io/name: namespace
+    app.kubernetes.io/part-of: riverbed-operator
+    control-plane: controller-manager
+
+    pod-security.kubernetes.io/enforce: privileged
+    pod-security.kubernetes.io/enforce-version: latest
+  name: riverbed-operator
+---
+apiVersion: security.openshift.io/v1
+kind: SecurityContextConstraints
+metadata:
+  annotations:
+    include.release.openshift.io/ibm-cloud-managed: "true"
+    include.release.openshift.io/self-managed-high-availability: "true"
+    include.release.openshift.io/single-node-developer: "true"
+    kubernetes.io/description: 'privileged = root'
+    release.openshift.io/create-only: "true"
+  generation: 1
+  name: privileged-observability
+allowHostDirVolumePlugin: true
+allowHostIPC: true
+allowHostNetwork: true
+allowHostPID: true
+allowHostPorts: true
+allowPrivilegeEscalation: true
+allowPrivilegedContainer: true
+allowedCapabilities:
+- '*'
+allowedUnsafeSysctls:
+- '*'
+defaultAddCapabilities: null
+fsGroup:
+  type: RunAsAny
+groups:
+- system:cluster-admins
+- system:nodes
+- system:masters
+
+priority: null
+readOnlyRootFilesystem: false
+requiredDropCapabilities: null
+runAsUser:
+  type: RunAsAny
+seLinuxContext:
+  type: RunAsAny
+seccompProfiles:
+- '*'
+supplementalGroups:
+  type: RunAsAny
+volumes:
+- '*'
+users:
+- system:serviceaccount:riverbed-operator:riverbed-apm-agent

@@ -1,0 +1,61 @@
+# app-k8s-without-apm.yaml
+# 23.1.21
+# Riverbed-Community-Toolkit (https://github.com/riverbed/Riverbed-Community-Toolkit)
+#
+# Java web-application deployment (without APM instrumentation)
+#
+# Configuration:
+#
+#   - Replace {{java-app image}} with the actual value
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cookbook-app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: cookbook-app
+  name: app-without-apm
+  labels:
+    app.kubernetes.io/name: app-without-apm
+    app.kubernetes.io/part-of: cookbook-238
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: app-without-apm
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: app-without-apm
+    spec:
+      containers:
+      - name: app-without-apm
+        # TODO: Replace {{java-app image}} with the actual value
+        image: {{java-app image}}
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 200m
+            memory: 256Mi
+        ports:
+          - containerPort: 8080
+---
+kind: Service
+apiVersion: v1
+metadata:
+  namespace: cookbook-app
+  name: cookbook-app
+spec:
+  selector:
+    app.kubernetes.io/name: app-without-apm
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+  type: LoadBalancer

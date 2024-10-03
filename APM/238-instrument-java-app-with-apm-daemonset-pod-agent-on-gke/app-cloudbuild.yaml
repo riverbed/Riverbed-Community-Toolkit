@@ -1,0 +1,22 @@
+# app-cloudbuild.yaml
+# 23.1.11
+# Riverbed-Community-Toolkit (https://github.com/riverbed/Riverbed-Community-Toolkit)
+#
+# Usage:
+#
+#   gcloud builds submit --config app-cloudbuild.yaml --substitutions _REGION={_REGION},_REPOSITORY={REPOSITORY},_IMAGE_NAME={IMAGE_NAME},_TAG_NAME={TAG_NAME}
+#
+# Example
+#
+#   gcloud builds submit --config app-cloudbuild.yaml
+
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', '${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE_NAME}','-t','${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE_NAME}:${_TAG_NAME}','-f','app-Dockerfile','.']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push','-a','${_REGION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE_NAME}']
+substitutions:
+  _REGION: europe-west9
+  _REPOSITORY: apm
+  _IMAGE_NAME: java-app
+  _TAG_NAME: "230111"
