@@ -1,9 +1,9 @@
 #!/bin/sh
 # install-and-run-ds-pod-agent.sh
 # version: 23.1.230115
-# ALLUVIO Aternity Tech Community Cookbook (https://github.com/riverbed/Riverbed-Community-Toolkit)
+# Riverbed-Community-Toolkit (https://github.com/riverbed/Riverbed-Community-Toolkit)
 #
-# Unattended install of the Aternity APM agent for Kubernetes Daemonset POD deployment
+# Unattended install of the APM agent for Kubernetes Daemonset POD deployment
 
 ######################################
 # Parameters

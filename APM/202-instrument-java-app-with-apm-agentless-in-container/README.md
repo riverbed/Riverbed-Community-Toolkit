@@ -6,7 +6,7 @@ The Java application is the [Spring PetClinic](https://github.com/spring-project
 
 ## Prerequisites
 
-1. a SaaS account for [ALLUVIO Aternity APM](https://www.riverbed.com/products/application-performance-monitoring)
+1. a SaaS account for [APM](https://www.riverbed.com/products/application-performance-monitoring)
 2. a Docker host, for example [Docker Desktop](https://www.docker.com/products/docker-desktop)
 
 ## Step 1. Get APM installation details
@@ -15,13 +15,13 @@ In the APM webconsole, navigate to CONFIGURE > AGENTS > Install Agents and in th
 
 1. Find your **Customer Id**, for example *12341234-12341234-13241234*
 2. Find the **SaaS Analysis Server Host** and obtain the **SaaS Psockets Server host** replacing *agents* by *psockets*. For example if the analysis server host is *agents.apm.my_environment.aternity.com* then the SaaS Psockets Server host is *psockets.apm.my_environment.aternity.com*
-3. Download the package **Aternity APM Agentless Instrumentation (Java)** (also available on [Riverbed support](https://support.riverbed.com/content/support/software/aternity-dem/aternity-apm.html), for example *aternity-apm-jida-linux-12.19.0_BL516*
+3. Download the package **APM Agentless Instrumentation (Java)** (also available on [Riverbed support](https://support.riverbed.com/content/support/software/aternity-dem/aternity-apm.html), for example *aternity-apm-jida-linux-12.19.0_BL516*
 
 ## Step 2. Prepare the image
 
 1. Save the package of the APM Java agent for Linux in local folder, for example in "Tech-Community/202-instrument-java-app-with-apm-agentless-in-container)", and **rename the file as aternity-apm-jida-linux.zip** - just removing the suffix part that is the version number.
 
-2. Download the [Dockerfile](https://raw.githubusercontent.com/Aternity/Tech-Community/main/202-instrument-java-app-with-apm-agentless-in-container)/Dockerfile).
+2. Download the [Dockerfile](https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads/master/APM/202-instrument-java-app-with-apm-agentless-in-container)/Dockerfile).
 
 ## Step 3. Start the container
 
@@ -34,7 +34,7 @@ In the command below, replace the value with your own info (see Step 1):
 For example with Bash:
 
 ```bash
-cd Tech-Community/203-instrument-java-app-with-apm-agent-in-container
+cd Riverbed-Community-Toolkit/APM/203-instrument-java-app-with-apm-agent-in-container
 
 # Configure the environment variables with the SAAS Account details
 export ALLUVIO_ATERNITY_APM_SAAS_PSOCKETS_SERVER_HOST="psockets.apm.myaccount.aternity.com"
@@ -46,7 +46,7 @@ docker-compose up
 or with PowerShell:
 
 ```PowerShell
-cd Tech-Community/203-instrument-java-app-with-apm-agent-in-container
+cd Riverbed-Community-Toolkit/APM/203-instrument-java-app-with-apm-agent-in-container
 
 # Configure the environment variables with the SAAS Account details
 $env:ALLUVIO_ATERNITY_APM_SAAS_PSOCKETS_SERVER_HOST="psockets.apm.myaccount.aternity.com"
@@ -73,11 +73,11 @@ The web application should now be available on [http://localhost:8080](http://lo
 
 Then, open the url in your browser and refresh the page few times to generate some traffic.
 
-## Step 5. ALLUVIO Aternity APM webconsole 
+## Step 5. APM web console 
 
 Go to the APM webconsole to observe the transactions of that instance.
 
-![ALLUVIO Aternity APM Transactions](images/cookbook-202-transactions.png)
+![APM Transactions](images/cookbook-202-transactions.png)
 
 #### License
 

@@ -1,6 +1,6 @@
 # 301-opentelemetry-on-kubernetes-with-apm-collector-daemonset-and-python-app
 
-This cookbook shows how the [APM Collector](https://hub.docker.com/r/aternity/apm-collector) of ALLUVIO Aternity can be deployed as a daemonset on a Kubernetes cluster, so that an APM Collector pod will run on every node to receive traces from applications running on local pods, and send them to a SaaS account enabled for OpenTelemetry.
+This cookbook shows how the [APM Collector](https://hub.docker.com/r/aternity/apm-collector) can be deployed as a daemonset on a Kubernetes cluster, so that an APM Collector pod will run on every node to receive traces from applications running on local pods, and send them to a SaaS account enabled for OpenTelemetry.
 
 And for testing, the cookbook provides a simple web app written in Python/Flask, instrumented with OpenTelemetry Python, and that runs in a single container.
 The pod is configured in the Kubernetes manifest to export the OpenTelemetry traces to the APM Collector.
@@ -11,11 +11,11 @@ The cookbook can be used with Kubernetes managed services in your favorite Cloud
 
 ## Prerequisites
 
-1. a SaaS account for [ALLUVIO Aternity APM](https://www.riverbed.com/products/application-performance-monitoring) with a license for OpenTelemetry
+1. a SaaS account for [APM](https://www.riverbed.com/products/application-performance-monitoring) with a license for OpenTelemetry
 
 2. a Kubernetes cluster ready and manageable using kubectl CLI
 
-## Step 1. Get the details for ALLUVIO Aternity APM
+## Step 1. Get the details for APM
 
 In the APM webconsole, from the Home page, hit "Deploy Collectors" and "Install now" button (or else navigate via the traditional menu: CONFIGURE > AGENTS > Install Agents).
 
@@ -122,7 +122,7 @@ Press CTRL+C to quit
 192.168.138.18 - - [24/Aug/2023 10:09:14] "GET / HTTP/1.1" 200 -
 ```
 
-## Step 5. Observe the traces in ALLUVIO Aternity APM webconsole 
+## Step 5. Observe the traces in APM web console 
 
 In the APM webconsole, open the menu and go the "Search" view to find all the OpenTelemetry traces of the app. 
 The view allows to filter the transactions based the attributes. 
@@ -133,6 +133,6 @@ For example the following query will match on the Service Name used by this appl
 service.name='cookbook301-service'
 ```
 
-ALLUVIO Aternity APM collects every trace:
+APM collects every trace:
 
 ![Cookbook-301 OpenTelemetry Transactions](images/cookbook-301-transactions.png)

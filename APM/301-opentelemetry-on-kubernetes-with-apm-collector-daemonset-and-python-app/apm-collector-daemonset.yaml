@@ -1,6 +1,6 @@
 # apm-collector-daemonset.yaml
 # 23.08.24
-# ALLUVIO Aternity Tech Community Cookbook (https://github.com/riverbed/Riverbed-Community-Toolkit)
+# Riverbed-Community-Toolkit (https://github.com/riverbed/Riverbed-Community-Toolkit)
 #
 # Deploy the APM Collector as a daemonset a on Kubernetes cluster
 # Tested on EKS, GCP and AKS

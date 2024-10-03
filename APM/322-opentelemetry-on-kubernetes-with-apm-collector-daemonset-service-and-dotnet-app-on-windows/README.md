@@ -1,6 +1,6 @@
 # 322-opentelemetry-on-kubernetes-with-apm-collector-daemonset-service-and-dotnet-app-on-windows
 
-This cookbook shows how the [APM Collector](https://hub.docker.com/r/aternity/apm-collector) of ALLUVIO Aternity can be deployed on a Kubernetes cluster and exposed as a service, so that, workloads that are outside the cluster, like a Windows virtual machine, can be instrumented with [OpenTelemetry](https://opentelemetry.io) and export the telemetry to the APM Collector.
+This cookbook shows how the [APM Collector](https://hub.docker.com/r/aternity/apm-collector) can be deployed on a Kubernetes cluster and exposed as a service, so that, workloads that are outside the cluster, like a Windows virtual machine, can be instrumented with [OpenTelemetry](https://opentelemetry.io) and export the telemetry to the APM Collector.
 
 The cookbook requires a Kubernetes cluster. It can be in the Cloud, like Azure AKS, AWS EKS or Google GKE. And it requires a Windows host, that can be in the same network as the cluster. After deploying the APM Collector in the Kubernetes cluster, a simple [.NET](https://dotnet.microsoft.com) webapp that is instrumented with [OpenTelemetry](https://opentelemetry.io) will be containerized as a Windows container to run on the Windows host.
 
@@ -8,13 +8,13 @@ The cookbook requires a Kubernetes cluster. It can be in the Cloud, like Azure A
 
 ## Prerequisites
 
-1. a SaaS account for [ALLUVIO Aternity APM](https://www.riverbed.com/products/application-performance-monitoring) with a license activated for OpenTelemetry
+1. a SaaS account for [APM](https://www.riverbed.com/products/application-performance-monitoring) with a license activated for OpenTelemetry
 
 2. a Kubernetes cluster ready and manageable using kubectl CLI
 
 3. a Windows host enabled with a Docker runtime, for example [Docker Desktop](https://www.docker.com/products/docker-desktop/) on a Windows Server virtual machine
 
-## Step 1. Get the details for ALLUVIO Aternity APM
+## Step 1. Get the details for APM
 
 In the APM webconsole, from the Home page, hit "Deploy Collectors" and "Install now" button (or else navigate via the traditional menu: CONFIGURE > AGENTS > Install Agents).
 
@@ -92,7 +92,7 @@ docker compose up
 3. Open a local browser, open the app on http://localhost:8080, and navigate multiple times on the different menus to generate some traces
 
 
-## Step 4. Observe the traces in ALLUVIO Aternity APM webconsole 
+## Step 4. Observe the traces in APM web console 
 
 In the APM webconsole, open the menu and go to the "Search" view to find all the OpenTelemetry traces of the app. 
 

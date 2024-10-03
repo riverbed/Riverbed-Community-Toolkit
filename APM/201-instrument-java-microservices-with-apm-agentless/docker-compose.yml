@@ -1,11 +1,11 @@
-# Aternity Tech-Community
+# Riverbed-Community-Toolkit
 # 201-instrument-jav-spring-demo-app
 # version: 22.03.31
 #
-# Define the containers of the Spring PetClinic Microservices application using Aternity APM
+# Define the containers of the Spring PetClinic Microservices application using APM
 # Reference:
 # * https://github.com/spring-petclinic/spring-petclinic-microservices/blob/master/docker-compose.yml
-# * https://www.aternity.com/application-performance-monitoring
+# * https://www.riverbed.com/products/application-performance-monitoring
 #
 # Usage:
 #   docker-compose up

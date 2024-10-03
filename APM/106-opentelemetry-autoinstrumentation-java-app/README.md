@@ -1,30 +1,30 @@
 # 106-opentelemetry-autoinstrumentation-java-app
 
-A simple Java application is launched with [OpenTelemetry](https://opentelemetry.io/) automatic instrumentation. The OpenTelemetry instrumentation is configured with multiple telemetry exporters. In parallel it is logging telemetry on the console, exporting to a local [jaeger](https://www.jaegertracing.io), and also exporting to the Aternity APM SaaS backend via the [Aternity APM OpenTelemetry collector container](https://hub.docker.com/r/aternity/apm-collector).
+A simple Java application is launched with [OpenTelemetry](https://opentelemetry.io/) automatic instrumentation. The OpenTelemetry instrumentation is configured with multiple telemetry exporters. In parallel it is logging telemetry on the console, exporting to a local [jaeger](https://www.jaegertracing.io), and also exporting to the APM SaaS backend via the [APM OpenTelemetry collector container](https://hub.docker.com/r/aternity/apm-collector).
 
-For this cookbook the [Aternity APM OpenTelemetry collector container](https://hub.docker.com/r/aternity/apm-collector) is configured to receive OTLP-gRPC but it also supports OTLP-http, jaeger and even zipkin telemetry.
+For this cookbook the [APM OpenTelemetry collector container](https://hub.docker.com/r/aternity/apm-collector) is configured to receive OTLP-gRPC but it also supports OTLP-http, jaeger and even zipkin telemetry.
 
 ![diagram](images/106-diagram.png)
 
 ## Prerequisites
 
-1. an Aternity APM account (SaaS)
+1. an APM account (SaaS)
 2. a Docker host, for example [Docker Desktop](https://www.docker.com/products/docker-desktop)
 
 ## Step by step
 
-### Step 1 - Connect to Aternity APM webconsole
+### Step 1 - Connect to APM web console
 
-Navigate to Aternity APM (for example [https://apm.myaccount.aternity.com](https://apm.myaccount.aternity.com)) > Agents > Install Agents:
+Navigate to APM (for example [https://apm.myaccount.aternity.com](https://apm.myaccount.aternity.com)) > Agents > Install Agents:
 
 1. Find your **CustomerID**, for example *12341234-12341234-13241234*
 2. Grab **SaaS Analysis Server Host**, for example *agents.apm.myaccount.aternity.com*
 
 ### Step 2 - Get the sources
 
-Download the sources, for example [right-click here](https://github.com/riverbed/Riverbed-Community-Toolkit/archive/refs/heads/main.zip) to download the zip archive, and expand it locally.
+Download the sources, for example [right-click here](https://github.com/riverbed/Riverbed-Community-Toolkit/archive/refs/heads/master.zip) to download the zip archive, and expand it locally.
 
-Edit the [docker-compose.yaml](docker-compose.yaml) file if you want to manually configure the `SERVER_URL` environment variable of the Aternity APM OpenTelemetry Collector container, replacing *ATERNITY_SAAS_SERVER_HOST* and *ATERNITY_CUSTOMER_ID* with actual values. The remaining is set to pull the Aternity APM OpenTelemetry Collector container image from [DockerHub](https://hub.docker.com/r/aternity/apm-collector) and expose the port 4317 to receive OTLP gRPC telemetry. It looks like this:
+Edit the [docker-compose.yaml](docker-compose.yaml) file if you want to manually configure the `SERVER_URL` environment variable of the APM OpenTelemetry Collector container, replacing *ATERNITY_SAAS_SERVER_HOST* and *ATERNITY_CUSTOMER_ID* with actual values. The remaining is set to pull the APM OpenTelemetry Collector container image from [DockerHub](https://hub.docker.com/r/aternity/apm-collector) and expose the port 4317 to receive OTLP gRPC telemetry. It looks like this:
 
 ```yaml
 services:
@@ -46,15 +46,15 @@ The sources of the Java application consist in a single Java file [cookbook106.j
 
 ### Step 3 - Start the containers
 
-In a shell, go to the Cookbook folder, configure the Aternity APM OpenTelemetry Collector using the environment variables, ATERNITY_SAAS_SERVER_HOST and ATERNITY_CUSTOMER_ID, and starts all the containers with docker-compose.
+In a shell, go to the Cookbook folder, configure the APM OpenTelemetry Collector using the environment variables, ATERNITY_SAAS_SERVER_HOST and ATERNITY_CUSTOMER_ID, and starts all the containers with docker-compose.
 
 For example using Bash:
 
 ```bash
 # Go to the directory that contains the cookbook
-cd Tech-Community-main\106-opentelemetry-autoinstrumentation-java-app
+cd Riverbed-Community-Toolkit/APM/106-opentelemetry-autoinstrumentation-java-app
 
-# Configure the environment variables for the Aternity OpenTelemetry Collector
+# Configure the environment variables for the APM OpenTelemetry Collector
 export ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
 export ATERNITY_CUSTOMER_ID="12341234-12341234-13241234"
 
@@ -65,9 +65,9 @@ or else using PowerShell:
 
 ```PowerShell
 # Go to the directory that contains the cookbook
-cd Tech-Community\Tech-Community-main\106-opentelemetry-autoinstrumentation-java-app
+cd Riverbed-Community-Toolkit\APM\106-opentelemetry-autoinstrumentation-java-app
 
-# Configure the environement variable for the Aternity OpenTelemetry Collector
+# Configure the environement variable for the APM OpenTelemetry Collector
 $env:ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
 $env:ATERNITY_CUSTOMER_ID="12341234-12341234-13241234"
 
@@ -75,13 +75,13 @@ $env:ATERNITY_CUSTOMER_ID="12341234-12341234-13241234"
 docker-compose up
 ```
 
-### Step 4 - Open the Aternity APM webconsole to visualize and analyze the traces collected for every transaction
+### Step 4 - Open the APM web console to visualize and analyze the traces collected for every transaction
 
 The app simply fetches a page from a url, parses the contents and exits. To generate telemetry continuously, the app container is defined in the [docker-compose.yaml](docker-compose.yaml) with *restart: always* so that the app will restart indifinitely.
 
 In Aternity Web console, in the Search tab, the transactions will appear with the instance name "service106-java-otlp"
 
-![Aternity APM OpenTelemetry traces](images/aternity-opentelemetry-service106-java-transactions.png)
+![APM OpenTelemetry traces](images/aternity-opentelemetry-service106-java-transactions.png)
 
 ## Notes 
 

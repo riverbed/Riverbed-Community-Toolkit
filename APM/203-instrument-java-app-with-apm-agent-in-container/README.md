@@ -6,16 +6,16 @@ In this cookbook, the full APM agent is installed inside the container image of 
 
 ## Prerequisites
 
-1. a SaaS account for [ALLUVIO Aternity APM](https://www.riverbed.com/products/application-performance-monitoring)
+1. a SaaS account for [APM](https://www.riverbed.com/products/application-performance-monitoring)
 2. a Docker host, for example [Docker Desktop](https://www.docker.com/products/docker-desktop)
 
-## Step 1. Get installation details in ALLUVIO Aternity APM webconsole
+## Step 1. Get installation details in APM web console
 
 In the APM webconsole, navigate to CONFIGURE > AGENTS > Install Agents to see the Agent Installation Steps section.
 
 1. Find your **Customer Id**, for example *12341234-12341234-13241234*
 2. Find the **SaaS Analysis Server Host**, for example *agents.apm.my_environment.aternity.com*
-3. Download the latest **Aternity APM agent for Linux** package (also available on [Riverbed support](https://support.riverbed.com/content/support/software/aternity-dem/aternity-apm.html)), *appinternals_agent_latest_linux.gz*
+3. Download the latest **APM agent for Linux** package (also available on [Riverbed support](https://support.riverbed.com/content/support/software/aternity-dem/aternity-apm.html)), *appinternals_agent_latest_linux.gz*
 
 Then in CONFIGURE > AGENTS > Configurations, 
 
@@ -34,7 +34,7 @@ Then in CONFIGURE > AGENTS > Configurations,
 Start the containers using docker-compose, for example with Bash:
 
 ```bash
-cd Tech-Community/203-instrument-java-app-with-apm-agent-in-container
+cd Riverbed-Community-Toolkit/APM/203-instrument-java-app-with-apm-agent-in-container
 
 # Configure the environment variables with the SAAS Account details
 export ALLUVIO_ATERNITY_APM_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
@@ -46,7 +46,7 @@ docker-compose up
 or with PowerShell:
 
 ```PowerShell
-cd Tech-Community/203-instrument-java-app-with-apm-agent-in-container
+cd Riverbed-Community-Toolkit/APM/203-instrument-java-app-with-apm-agent-in-container
 
 # Configure the environment variables with the SAAS Account details
 $env:ALLUVIO_ATERNITY_APM_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
@@ -61,11 +61,11 @@ The web application should now be available on [http://localhost:8080](http://lo
 
 Open the url in your browser and refresh the page few times to generate some traffic.
 
-## Step 5. ALLUVIO Aternity APM webconsole 
+## Step 5. APM web console 
 
 Go to the APM webconsole to monitor the instance and observe every transaction.
 
-![ALLUVIO Aternity APM Transactions](images/cookbook-203-transactions.png)
+![APM Transactions](images/cookbook-203-transactions.png)
 
 ### License
 

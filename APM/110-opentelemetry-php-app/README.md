@@ -1,24 +1,24 @@
 # 110-opentelemetry-php-app
 
-This cookbook runs multiple containers on a Docker host. A container of the Apache http server exposes a web listener to serve some PHP samples and another container continuously connects to it to generate traffic. The PHP samples are manually instrumented with OpenTelemetry and different exporters, OTLP http and also Zipkin. The [Aternity OpenTelemetry Collector container](https://hub.docker.com/r/aternity/apm-collector) collects all traces, every span without sampling, and sends the spans to the Aternity SaaS backend. 
+This cookbook runs multiple containers on a Docker host. A container of the Apache http server exposes a web listener to serve some PHP samples and another container continuously connects to it to generate traffic. The PHP samples are manually instrumented with OpenTelemetry and different exporters, OTLP http and also Zipkin. The [APM OpenTelemetry Collector container](https://hub.docker.com/r/aternity/apm-collector) collects all traces, every span without sampling, and sends the spans to the Aternity SaaS backend. 
 
 ![diagram](images/110-diagram.png)
 
 ## Prerequisites
 
-1. an Aternity APM account (SaaS)
+1. an APM account (SaaS)
 2. a Docker host, for example [Docker Desktop](https://www.docker.com/products/docker-desktop)
 
 ## Step by Step
 
-### Step1. Get your CustomerID & SaaS Analysis Server Host details from the Aternity APM webconsole
+### Step1. Get your CustomerID & SaaS Analysis Server Host details from the APM web console
 
-Navigate to Aternity APM (for example [https://apm.myaccount.aternity.com](https://apm.myaccount.aternity.com)) > Agents > Install Agents:
+Navigate to APM (for example [https://apm.myaccount.aternity.com](https://apm.myaccount.aternity.com)) > Agents > Install Agents:
 
 1. Find your **CustomerID**, for example *12341234-12341234-13241234*
 2. Grab **SaaS Analysis Server Host**, for example *agents.apm.myaccount.aternity.com*
 
-Those information are required to activate the Aternity OpenTelemetry Collector container, passing via the environment variable `SERVER_URL`. 
+Those information are required to activate the APM OpenTelemetry Collector container, passing via the environment variable `SERVER_URL`. 
 
 ### Step2. Start the containers
 
@@ -35,9 +35,9 @@ Download a local copy of the files of this cookbook, for example store them in t
 Start the containers using the [docker-compose.yaml](docker-compose.yaml), for example with Bash:
 
 ```bash
-cd Tech-Community/110-opentelemetry-php-app
+cd Riverbed-Community-Toolkit/APM/110-opentelemetry-php-app
 
-# Configure the environment variables for the Aternity OpenTelemetry Collector
+# Configure the environment variables for the APM OpenTelemetry Collector
 export ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
 export ATERNITY_CUSTOMER_ID="12341234-12341234-13241234"
 
@@ -47,9 +47,9 @@ docker-compose up
 or with PowerShell:
 
 ```PowerShell
-cd Tech-Community/110-opentelemetry-php-app
+cd Riverbed-Community-Toolkit/APM/110-opentelemetry-php-app
 
-# Configure the environement variable for the Aternity OpenTelemetry Collector
+# Configure the environement variable for the APM OpenTelemetry Collector
 $env:ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
 $env:ATERNITY_CUSTOMER_ID="12341234-12341234-13241234"
 
@@ -65,9 +65,9 @@ Browse the local urls
 - http://localhost:8110/SampleZipkinExporter.php
 
 
-### Step4. Open the Aternity APM webconsole to visualize and analyze the traces collected for every transaction
+### Step4. Open the APM web console to visualize and analyze the traces collected for every transaction
 
-![Aternity APM OpenTelemetry traces](images/aternity-opentelemetry-service110-php-transactions.png)
+![APM OpenTelemetry traces](images/aternity-opentelemetry-service110-php-transactions.png)
 
 ## Notes
 

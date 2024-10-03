@@ -1,6 +1,6 @@
-# Aternity Tech-Community
+# Riverbed-Community-Toolkit
 
-The Aternity Tech-Community is there: https://github.com/riverbed/Riverbed-Community-Toolkit, it provides technical contributions that help customers, partners and engineers to customize and leverage Aternity DEM products. For example: custom scripts, custom synthetic test, cookbooks, howtos for OpenTelemetry, APM instrumentation, User Journey Intelligence, EUEM and more.
+The Riverbed-Community-Toolkit is there: https://github.com/riverbed/Riverbed-Community-Toolkit, it provides technical contributions that help customers, partners and engineers to customize and leverage Aternity DEM products. For example: custom scripts, custom synthetic test, cookbooks, howtos for OpenTelemetry, APM instrumentation, User Journey Intelligence, EUEM and more.
 
 Please visit and contribute!
 

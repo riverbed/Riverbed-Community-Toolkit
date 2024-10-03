@@ -1,4 +1,4 @@
-# Aternity Tech-Community
+# Riverbed-Community-Toolkit
 # 105-opentelemetry-go-app
 # version: 22.06.3
 
@@ -17,7 +17,7 @@ ZIPKIN_PATH: /api/v2/spans
 OTLP_PORT: 4318
 OTLP_PATH: /v1/traces
 
-# Aternity APM collector configuration
+# APM collector configuration
 ATERNITY_COLLECTOR_SERVICE_HOST: localhost
 
 # Service name

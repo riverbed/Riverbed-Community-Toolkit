@@ -1,6 +1,6 @@
 # Cookbook 401 - APM Analysis Server on AWS EC2
 
-This cookbook deploys the ALLUVIO Aternity [APM](https://www.riverbed.com/products/application-performance-monitoring/) Analysis Server in few clicks. It creates an EC2 instance into an existing VPC/Subnet in your AWS account.
+This cookbook deploys the  AterALLUVIOnity [APM](https://www.riverbed.com/products/application-performance-monitoring/) Analysis Server in few clicks. It creates an EC2 instance into an existing VPC/Subnet in your AWS account.
 
 <div align="center">
 <img src="images/alluvio-apm-as-on-aws-ec2_login.png" alt="APM AS on AWS EC2" width="70%" height="auto">
@@ -60,7 +60,7 @@ It is ready after just few minutes (usually less than 5 minutes) and you can con
 
 ### How to create myself a temporary URL of the installer package?
 
-From the [Riverbed Support page](https://support.riverbed.com/content/support/software/aternity-dem/aternity-apm.html) check for *Aternity APM Analysis Server (Linux Installer)* and download the latest version of the installer package. Then you can upload it in a storage of your choice, for example in an AWS S3 Bucket from which you can generate a protected temporary URL, for example *https://yourbucket.s3.amazonaws/temporary/installer.tar?token=123&validity=12*. Whether private or public, the URL must be accessible to the EC2 instance, allowing to fetch the package and install the software.
+From the [Riverbed Support page](https://support.riverbed.com/content/support/software/aternity-dem/aternity-apm.html) check for *APM Analysis Server (Linux Installer)* and download the latest version of the installer package. Then you can upload it in a storage of your choice, for example in an AWS S3 Bucket from which you can generate a protected temporary URL, for example *https://yourbucket.s3.amazonaws/temporary/installer.tar?token=123&validity=12*. Whether private or public, the URL must be accessible to the EC2 instance, allowing to fetch the package and install the software.
 
 ### How to connect to the APM Analysis Server console?
 
@@ -70,7 +70,7 @@ When the stack is created you should be able to connect to web console using the
 - **Private URL**: [https://ec2-your-instance-ip.your_region.compute.internal](https://ec2-your-instance.your_region.compute.internal)
 
 > [!TIP]
-> - To find the actual **Public URL** or **Private URL**, check the Outputs tab in the AWS CloudFormation stack. Or in the EC2 service, you should have an instance named **ALLUVIO Aternity APM Analysis Server**
+> - To find the actual **Public URL** or **Private URL**, check the Outputs tab in the AWS CloudFormation stack. Or in the EC2 service, you should have an instance named **APM Analysis Server**
 > - If you cannot reach the page, check the connectivity. Possibly the Security Group associated to the EC2 might be blocking port 443
 > - For the login / password, refer to the User Guide on [Riverbed Support](https://support.riverbed.com/content/support/software/aternity-dem/aternity-apm.html)
 

@@ -1,6 +1,6 @@
 // Cookbook106.java
 //
-// Aternity Tech-Community (https://github.com/riverbed/Riverbed-Community-Toolkit)
+// Riverbed-Community-Toolkit (https://github.com/riverbed/Riverbed-Community-Toolkit)
 // 106-opentelemetry-autoinstrumentation-java-app
 // version: 22.3.29
 //
@@ -17,13 +17,13 @@ public class cookbook106 {
     public static void get_apm_webpage() {
         
         try {
-            URL url = new URL("https://www.aternity.com/apm");
+            URL url = new URL("https://www.riverbed.com/products/application-performance-monitoring");
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
             BufferedReader in = new BufferedReader(new InputStreamReader(urlConnection.getInputStream()));
             String inputLine;
             while ((inputLine = in.readLine()) != null) {
                 if (inputLine.contains("APM")) {
-                    System.out.println("Aternity APM");
+                    System.out.println("APM");
                 }
             }
             in.close();

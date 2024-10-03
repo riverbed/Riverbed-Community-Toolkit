@@ -1,6 +1,6 @@
 # Dockerfile 
 #
-# Aternity Tech-Community
+# Riverbed-Community-Toolkit
 # 109-opentelemetry-export
 # version: 22.11.221128
 #

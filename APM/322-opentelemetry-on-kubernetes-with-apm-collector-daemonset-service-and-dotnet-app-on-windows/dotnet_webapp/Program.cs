@@ -1,6 +1,6 @@
 // Program.cs
 // 23.9.230915
-// ALLUVIO Aternity Tech Community Cookbook (https://github.com/riverbed/Riverbed-Community-Toolkit)
+// Riverbed-Community-Toolkit (https://github.com/riverbed/Riverbed-Community-Toolkit)
 //
 // Webapp instrumented with OpenTelemetry
 

@@ -1,4 +1,4 @@
-# Aternity Tech-Community
+# Riverbed-Community-Toolkit
 # 105-opentelemetry-go-app
 # version: 22.06.03
 #
@@ -7,7 +7,7 @@
 #
 # Reference:
 # * https://hub.docker.com/r/aternity/apm-collector
-# * https://www.aternity.com/application-performance-monitoring
+# * https://www.riverbed.com/products/application-performance-monitoring
 #
 # Usage:
 #   docker-compose up

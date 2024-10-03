@@ -1,11 +1,11 @@
 # docker-compose.yaml
 #
-# Aternity Tech-Community
+# Riverbed-Community-Toolkit
 # 108-collect-zipkin-nodejs-app
 # version: 22.3.8
 #
 # Compose file to use with the cookbook 108
-# a Nodejs webapp with Zipkin instrumentation exporting telemetry to the Aternity OpenTelemetry Collector
+# a Nodejs webapp with Zipkin instrumentation exporting telemetry to the APM OpenTelemetry Collector
 #
 # Usage
 #   docker-compose up
@@ -26,7 +26,7 @@ services:
 
   opentelemetry-collector:
 
-    # Aternity OpenTelemetry Collector
+    # APM OpenTelemetry Collector
     # https://hub.docker.com/r/aternity/apm-collector
 
     image: registry.hub.docker.com/aternity/apm-collector:2022.4.0-4

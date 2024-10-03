@@ -1,6 +1,6 @@
 # Dockerfile 
 # version: 23.1.230113
-# ALLUVIO Aternity Tech Community Cookbook (https://github.com/riverbed/Riverbed-Community-Toolkit)
+# Riverbed-Community-Toolkit (https://github.com/riverbed/Riverbed-Community-Toolkit)
 #
 # Containerize the APM agent for Daemonset POD deployment in Kubernetes
 #
@@ -8,7 +8,7 @@
 # For example on a GKE Standard Linux Ubuntu cluster the node path can be /var/lib/toolbox/alluvio-apm
 
 ###############################################################################
-# Aternity APM Daemonset POD agent
+# APM Daemonset POD agent
 ###############################################################################
 
 # Prepare the apm stage
@@ -25,7 +25,7 @@ COPY $APM_CUSTOMIZATION_PATH/config/. ./config/.
 COPY $APM_CUSTOMIZATION_PATH/install-and-run-ds-pod-agent.sh .
 RUN chmod +x install-and-run-ds-pod-agent.sh
 
-# Define Aternity APM common settings
+# Define APM common settings
 ENV logging.level.root="INFO"
 ENV PANORAMA_LOG_PURGE_HOURS="1h"
 ENV RVBD_AGENT_PORT="7073"

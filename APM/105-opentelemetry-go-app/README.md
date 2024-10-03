@@ -1,26 +1,26 @@
 # 105-opentelemetry-go-app
 
-The [Aternity OpenTelemetry Collector](https://hub.docker.com/r/aternity/apm-collector) is part of the [Aternity DEM platform](https://www.aternity.com/application-performance-monitoring/) and can collect OTLP, the OpenTelemetry native telemetry protocols, as well as Jaeger and Zipkin telemetry.
+The [APM OpenTelemetry Collector](https://hub.docker.com/r/aternity/apm-collector) is part of the [Riverbed Platform](https://www.riverbed.com/platform) and can collect OTLP, the OpenTelemetry native telemetry protocols, as well as Jaeger and Zipkin telemetry.
 
-In this cookbook, [Aternity](https://www.aternity.com) collects the telemetry of a **Go** webapp that is instrumented using the [OpenTelemetry](https://opentelemetry.io/) SDK. It can export OpenTelemetry, [Jaeger](https://www.jaegertracing.io/), or [Zipkin](https://zipkin.io/) telemetry. The [Aternity OpenTelemetry Collector](https://hub.docker.com/r/aternity/apm-collector) container is deployed next to the web app. It collects every trace - no sampling.
+In this cookbook, the APM collects the telemetry of a **Go** webapp that is instrumented using the [OpenTelemetry](https://opentelemetry.io/) SDK. It can export OpenTelemetry, [Jaeger](https://www.jaegertracing.io/), or [Zipkin](https://zipkin.io/) telemetry. The [APM OpenTelemetry Collector](https://hub.docker.com/r/aternity/apm-collector) container is deployed next to the web app. It collects every trace - no sampling.
 
 ![diagram](images/105-diagram.png)
 
 ## Prerequisites
 
-1. an Aternity APM account (SaaS)
+1. an APM account (SaaS)
 2. a Docker host, for example [Docker Desktop](https://www.docker.com/products/docker-desktop)
 
 ## Step by Step
 
-### 1. Get your CustomerID & SaaS Analysis Server Host details from the Aternity APM webconsole
+### 1. Get your CustomerID & SaaS Analysis Server Host details from the APM web console
 
-Navigate to Aternity APM (for example [https://apm.myaccount.aternity.com](https://apm.myaccount.aternity.com)) > Agents > Install Agents:
+Navigate to APM (for example [https://apm.myaccount.aternity.com](https://apm.myaccount.aternity.com)) > Agents > Install Agents:
 
 1. Find your **CustomerID**, for example *12341234-12341234-13241234*
 2. Grab **SaaS Analysis Server Host**, for example *agents.apm.myaccount.aternity.com*
 
-This information are required to activate the Aternity OpenTelemetry Collector container, passing via the environment variable `SERVER_URL`. 
+This information are required to activate the APM OpenTelemetry Collector container, passing via the environment variable `SERVER_URL`. 
 
 ### 2. Start the containers
 
@@ -28,9 +28,9 @@ This information are required to activate the Aternity OpenTelemetry Collector c
 
 2. Start the containers using the [docker-compose.yaml](docker-compose.yaml), for example with Bash:
     ```bash
-    cd Tech-Community/105-opentelemetry-go-app
+    cd Riverbed-Community-Toolkit/APM/105-opentelemetry-go-app
 
-    # Configure the environment variables for the Aternity OpenTelemetry Collector
+    # Configure the environment variables for the APM OpenTelemetry Collector
     export ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
     export ATERNITY_CUSTOMER_ID="12341234-12341234-13241234"
 
@@ -40,9 +40,9 @@ This information are required to activate the Aternity OpenTelemetry Collector c
     or with PowerShell:
 
     ```PowerShell
-    cd Tech-Community/105-opentelemetry-go-app
+    cd Riverbed-Community-Toolkit/APM/105-opentelemetry-go-app
     
-    # Configure the environement variable for the Aternity OpenTelemetry Collector
+    # Configure the environement variable for the APM OpenTelemetry Collector
     $env:ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
     $env:ATERNITY_CUSTOMER_ID="12341234-12341234-13241234"
     
@@ -56,11 +56,11 @@ There is an in-built load generator in the `docker-compose` startup. If you want
 curl http://localhost:8081/
 ```
 
-### 4. Open the Aternity APM webconsole to visualize and analyze the traces collected for every transaction
+### 4. Open the APM web console to visualize and analyze the traces collected for every transaction
 
 Search transaction, browse the spans for the selected transaction :
 
-![Aternity APM OpenTelemetry transactions](images/service105-transactions.png)
+![APM OpenTelemetry transactions](images/service105-transactions.png)
 
 View details of a specific transaction as a waterfall chart :
 
@@ -87,7 +87,7 @@ The cookbook contains few files:
 - [docker-compose.yaml](docker-compose.yaml) is the main file that defines the multi-tier app with 4 services:
   - the instrumented 2-tier Go `frontend` web app 
   - the instrumented 2-tier Go `backend` web app
-  - the Aternity OpenTelemetry Collector
+  - the APM OpenTelemetry Collector
   - the load generator
     
 ### Kubernetes

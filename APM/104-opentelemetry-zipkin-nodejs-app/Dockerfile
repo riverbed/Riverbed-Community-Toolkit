@@ -1,4 +1,4 @@
-# Aternity Tech-Community
+# Riverbed-Community-Toolkit
 # 104-opentelemetry-zipkin-nodejs-app
 # version: 22.2.24
 #

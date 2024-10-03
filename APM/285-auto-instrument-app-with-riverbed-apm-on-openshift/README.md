@@ -38,7 +38,7 @@ Run the following command to configure the required permissions for the Riverbed
 
 ```shell
 # Set the permissions
-oc apply -f https://raw.githubusercontent.com/Aternity/Tech-Community/main/285-auto-instrument-app-with-riverbed-apm-on-openshift/riverbed-operator-permissions-openshift.yaml
+oc apply -f https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads/master/APM/285-auto-instrument-app-with-riverbed-apm-on-openshift/riverbed-operator-permissions-openshift.yaml
 ```
 
 ### 3.2 Riverbed Operator
@@ -116,7 +116,7 @@ Run the following command to deploy the demo application `yourapp` in the namesp
 
 ```shell
 # Deploy YourApp (version without APM)
-oc apply -f https://raw.githubusercontent.com/Aternity/Tech-Community/main/285-auto-instrument-app-with-riverbed-apm-on-openshift/app/yourapp.yaml
+oc apply -f https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads/master/APM/285-auto-instrument-app-with-riverbed-apm-on-openshift/app/yourapp.yaml
 ```
 
 ### 5.2 Test the app
@@ -168,13 +168,13 @@ oc patch deployment -n cookbook-app yourapp -p '{"spec": {"template":{"metadata"
 > In [app/yourapp-with-apm.yaml](app/yourapp-with-apm.yaml) the deployment spec of the app is annotated - the file is based on the original manifest [app/yourapp.yaml](app/yourapp.yaml) without annotation. The manifest can be applied to the cluster as usual:
 > ```shell
 > # Apply or Deploy YourApp with APM instrumentation
-> oc apply -f https://raw.githubusercontent.com/Aternity/Tech-Community/main/285-auto-instrument-app-with-riverbed-apm-on-openshift/app/yourapp-with-apm.yaml
+> oc apply -f https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads/master/APM/285-auto-instrument-app-with-riverbed-apm-on-openshift/app/yourapp-with-apm.yaml
 > ```
 >
 > In [app/namespace-with-apm.yaml](app/namespace-with-apm.yaml), the namespace is annotated with the APM Instrumentation and can be applied to the cluster:
 > ```shell
 > # Annotate the namespace for APM instrumentation
-> oc apply -f https://raw.githubusercontent.com/Aternity/Tech-Community/main/285-auto-instrument-app-with-riverbed-apm-on-openshift/app/namespace-with-apm.yaml
+> oc apply -f https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads/master/APM/285-auto-instrument-app-with-riverbed-apm-on-openshift/app/namespace-with-apm.yaml
 > ```
 >
 > If the app was already deployed and running before beeing annotated, it needs a rollout restart that can be triggered for example with:
@@ -201,7 +201,7 @@ And then go to the APM web console to observe every transaction of the applicati
 Simply run the following 
 
 ```shell
-oc delete  -f https://raw.githubusercontent.com/Aternity/Tech-Community/main/285-auto-instrument-app-with-riverbed-apm-on-openshift/app/yourapp.yaml
+oc delete  -f https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads/master/APM/285-auto-instrument-app-with-riverbed-apm-on-openshift/app/yourapp.yaml
 ```
 
 ### How to clean-up the operator

@@ -32,7 +32,7 @@ COPY --from=builder /app-build/target/demo-*.jar /app/spring-demo.jar
 EXPOSE 8080
 
 ###############################################################################
-# Add ALLUVIO Aternity APM agent instrumentation
+# Add APM agent instrumentation
 ###############################################################################
 
 # Prepare the apm stage

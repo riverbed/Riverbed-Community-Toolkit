@@ -34,9 +34,9 @@ dotnet run
 
 ## at that point the application should be running on https://localhost:5001/ and you can connect to it from the local browser
 
-# Step 4. Install the Aternity APM agent
+# Step 4. Install the APM agent
 
-## Customize Aternity APM variables
+## Customize APM variables
 $ATERNITY_APM_CUSTOMER_ID="{{my-CustomerId}}"  # e.g. "12341234-12341234-13241234"
 $ATERNITY_APM_SAAS_ANALYSIS_SERVER_HOST="{{my-SaaSAnalysisServerHost}}"  # e.g. "agents.apm.myaccount.aternity.com"
 $ATERNITY_APM_AGENT_URL = "https://{{my-S3-BUCKET}}/AppInternals_Agent_12.1.0.597_Win.exe"  # e.g. "https://mydemobucket.s3.eu-central-1.amazonaws.com/AppInternals_Agent_12.1.0.597_Win.exe"
@@ -45,4 +45,4 @@ $ATERNITY_APM_AGENT_URL = "https://{{my-S3-BUCKET}}/AppInternals_Agent_12.1.0.59
 Start-BitsTransfer $ATERNITY_APM_AGENT_URL -Destination C:\Packages\Aternity-AppInternals_Agent.exe
 Start-Process -Wait -FilePath C:\Packages\Aternity-AppInternals_Agent.exe "/s /v`"O_SI_CUSTOMER_ID=$ATERNITY_APM_CUSTOMER_ID O_SI_SAAS_ANALYSIS_SERVER_HOST=$ATERNITY_APM_SAAS_ANALYSIS_SERVER_HOST O_SI_SAAS_ANALYSIS_SERVER_ENABLED=true O_SI_AUTO_INSTRUMENT=true /L*v c:\Logs\Aternity-APM-InstallLog.log /qn`"
 
-## at that point the Aternity APM agent should be running
+## at that point the APM agent should be running

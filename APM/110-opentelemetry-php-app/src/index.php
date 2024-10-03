@@ -1,3 +1,3 @@
 <?php
-echo "Aternity Tech-Community - Cookbook 110";
+echo "Riverbed-Community-Toolkit - Cookbook 110";
 ?>

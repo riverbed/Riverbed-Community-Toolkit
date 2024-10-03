@@ -1,4 +1,4 @@
-// Aternity Tech-Community
+// Riverbed-Community-Toolkit
 // 105-opentelemetry-go-app
 
 package config

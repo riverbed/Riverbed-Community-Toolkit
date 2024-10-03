@@ -36,7 +36,7 @@ Run the following CLI in the terminal to download a local copy of the cookbook:
 ```shell
 git clone https://github.com/riverbed/Riverbed-Community-Toolkit.git --depth 1
 
-cd Tech-Community/341-metrics-with-apm-daemonset-pod-agent-on-eks
+cd Riverbed-Community-Toolkit/APM/341-metrics-with-apm-daemonset-pod-agent-on-eks
 ```
 
 ## Step 3. Build the image of the APM Daemonset POD Agent

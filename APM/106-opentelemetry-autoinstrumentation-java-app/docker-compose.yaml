@@ -1,11 +1,11 @@
 # docker-compose.yaml
 #
-# Aternity Tech-Community (https://github.com/riverbed/Riverbed-Community-Toolkit)
+# Riverbed-Community-Toolkit (https://github.com/riverbed/Riverbed-Community-Toolkit)
 # 106-opentelemetry-autoinstrumentation-java-app
 # version: 22.3.29
 #
 # Simple Java application with OpenTelemetry automatic instrumentation with multiple telemetry exporters
-# to demonstrate logging, OTLP-gRPC with the Aternity APM OpenTelemetry Collector and Jaeger telemetry
+# to demonstrate logging, OTLP-gRPC with the APM OpenTelemetry Collector and Jaeger telemetry
 
 version: "3.9"
 
@@ -13,7 +13,7 @@ services:
 
   aternity-opentelemetry-collector:
 
-    # Aternity OpenTelemetry Collector
+    # APM OpenTelemetry Collector
     # https://hub.docker.com/r/aternity/apm-collector
 
     image: registry.hub.docker.com/aternity/apm-collector:2022.4.0-4

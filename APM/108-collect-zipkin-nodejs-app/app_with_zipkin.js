@@ -1,6 +1,6 @@
 // app_with_zipkin.js
 //
-// Aternity Tech-Community
+// Riverbed-Community-Toolkit
 // 108-collect-zipkin-nodejs-app
 // version: 22.2.28
 //

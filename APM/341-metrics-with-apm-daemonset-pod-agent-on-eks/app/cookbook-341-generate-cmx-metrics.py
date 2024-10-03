@@ -1,7 +1,7 @@
 #! /bin/python3
 # cookbook-341-generate-cmx-metrics.py
 # version: 23.8.230821
-# Riverbed - ALLUVIO Aternity Tech-Community (https://github.com/riverbed/Riverbed-Community-Toolkit)
+# Riverbed - Riverbed-Community-Toolkit (https://github.com/riverbed/Riverbed-Community-Toolkit)
 #
 # Prerequisites
 # - python3
@@ -37,7 +37,7 @@ urllib3.disable_warnings()
 
 def main():
 
-    print("ALLUVIO Aternity APM CMX endpoint: " + ALLUVIO_ATERNITY_APM_CMX_ENDPOINT)
+    print("APM CMX endpoint: " + ALLUVIO_ATERNITY_APM_CMX_ENDPOINT)
 
     # 1. Post the metric definitions to the CMX endpoint
 

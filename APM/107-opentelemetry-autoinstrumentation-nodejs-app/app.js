@@ -1,6 +1,6 @@
 // app.js
 //
-// Aternity Tech-Community
+// Riverbed-Community-Toolkit
 // 107-opentelemetry-autoinstrumentation-nodejs-app
 // version: 22.4.1
 //
@@ -27,7 +27,7 @@ const axios = require('axios');
 const app = express();
 
 app.get('/fetch', (req, res) => {
-    var response = axios.get("https://github.com/Aternity")
+    var response = axios.get("https://github.com/riverbed")
     .then(function (response) {
     console.log("success");
     console.log(response);

@@ -1,9 +1,9 @@
-# Aternity Tech-Community
+# Riverbed-Community-Toolkit
 # 108-collect-zipkin-nodejs-app
 # version: 22.2.28
 #
 # Dockerfile for service108-js
-# A nodejs webapp with Zipkin instrumentation exporting telemetry to the Aternity OpenTelemetry Collector
+# A nodejs webapp with Zipkin instrumentation exporting telemetry to the APM OpenTelemetry Collector
 #
 # Refs:
 #   * https://github.com/Aternity

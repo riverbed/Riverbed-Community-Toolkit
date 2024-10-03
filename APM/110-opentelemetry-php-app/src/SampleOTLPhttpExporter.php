@@ -2,7 +2,7 @@
 
 # SampleOTLPhttpExporter.php
 #
-# Aternity Tech-Community
+# Riverbed-Community-Toolkit
 # 110-opentelemetry-php-app
 # version: 23.7.7
 #

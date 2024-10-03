@@ -1,6 +1,6 @@
 # Dockerfile
 #
-# Aternity Tech-Community (https://github.com/riverbed/Riverbed-Community-Toolkit)
+# Riverbed-Community-Toolkit (https://github.com/riverbed/Riverbed-Community-Toolkit)
 # 111-opentelemetry-autoinstrumentation-spring-demo-app
 # v22.11.221121
 # 

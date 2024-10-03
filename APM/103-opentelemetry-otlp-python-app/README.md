@@ -1,26 +1,26 @@
 # 103-opentelemetry-otlp-python-app
 
-This cookbook deploys multiple containers using docker-compose: a **python** web app, that is based on Flask and auto-instrumented using [OpenTelemetry](https://opentelemetry.io/) to export OLTP telemetry, a simple traffic generator and the [Aternity OpenTelemetry Collector](https://hub.docker.com/r/aternity/apm-collector) container.
+This cookbook deploys multiple containers using docker-compose: a **python** web app, that is based on Flask and auto-instrumented using [OpenTelemetry](https://opentelemetry.io/) to export OLTP telemetry, a simple traffic generator and the [APM OpenTelemetry Collector](https://hub.docker.com/r/aternity/apm-collector) container.
 
-The [Aternity OpenTelemetry Collector](https://hub.docker.com/r/aternity/apm-collector) is a container that collects the telemetry exported by the application whether using OTLP, the OpenTelemetry native telemetry protocols, Jaeger or Zipkin.
+The [APM OpenTelemetry Collector](https://hub.docker.com/r/aternity/apm-collector) is a container that collects the telemetry exported by the application whether using OTLP, the OpenTelemetry native telemetry protocols, Jaeger or Zipkin.
 
 ![diagram](images/103-diagram.png)
 
 ## Prerequisites
 
-1. an Aternity APM account (SaaS)
+1. an APM account (SaaS)
 2. a Docker host, for example [Docker Desktop](https://www.docker.com/products/docker-desktop)
 
 ## Step by Step
 
-### 1. Get your CustomerID & SaaS Analysis Server Host details from the Aternity APM web console
+### 1. Get your CustomerID & SaaS Analysis Server Host details from the APM web console
 
-Navigate to Aternity APM (for example [https://apm.myaccount.aternity.com](https://apm.myaccount.aternity.com)) > Agents > Install Agents:
+Navigate to the APM web console (for example [https://apm.myaccount.aternity.com](https://apm.myaccount.aternity.com)) > Agents > Install Agents:
 
 1. Find your **CustomerID**, for example *12341234-12341234-13241234*
 2. Grab **SaaS Analysis Server Host**, for example *agents.apm.myaccount.aternity.com*
 
-Those information are required to activate the Aternity OpenTelemetry Collector container and will be passed via the environment variable `SERVER_URL`. 
+Those information are required to activate the APM OpenTelemetry Collector container and will be passed via the environment variable `SERVER_URL`. 
 
 ### 2. Start the containers
 
@@ -51,9 +51,9 @@ For example using Bash:
 
 ```bash
 # Go to the directory that contains docker-compose.yaml
-cd Tech-Community/103-opentelemetry-otlp-python-app
+cd Riverbed-Community-Toolkit/APM/103-opentelemetry-otlp-python-app
 
-# Configure the environment variables for the Aternity OpenTelemetry Collector
+# Configure the environment variables for the APM OpenTelemetry Collector
 export ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
 export ATERNITY_CUSTOMER_ID="12341234-12341234-13241234"
 
@@ -65,9 +65,9 @@ Using PowerShell:
 
 ```PowerShell
 # Go to the directory that contains docker-compose.yaml
-cd Tech-Community/103-opentelemetry-otlp-python-app
+cd Riverbed-Community-Toolkit/APM/103-opentelemetry-otlp-python-app
 
-# Configure the environment variable for the Aternity OpenTelemetry Collector
+# Configure the environment variable for the APM OpenTelemetry Collector
 $env:ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
 $env:ATERNITY_CUSTOMER_ID="12341234-12341234-13241234"
 
@@ -77,7 +77,7 @@ docker compose up
 
 ### 3. Generate traffic and telemetry
 
-The web app should now be running as well as the traffic generator. Every trace will be collected by the Aternity APM OpenTelemetry Collector.
+The web app should now be running as well as the traffic generator. Every trace will be collected by the APM OpenTelemetry Collector.
 
 You can also browse the app, navigating to http://localhost:8103/server_request or call the URL from a command line. 
 
@@ -89,11 +89,11 @@ For example using curl:
 curl http://localhost:8103/server_request
 ```
 
-### 4. Open the Aternity APM web console to visualize and analyze the traces collected for every transaction
+### 4. Open the APM web console to visualize and analyze the traces collected for every transaction
 
 Search transaction, browse the spans for the selected transaction :
 
-![Aternity APM OpenTelemetry traces](images/aternity-opentelemetry-service103-python-transactions.png)
+![APM OpenTelemetry traces](images/aternity-opentelemetry-service103-python-transactions.png)
 
 ## Notes 
 

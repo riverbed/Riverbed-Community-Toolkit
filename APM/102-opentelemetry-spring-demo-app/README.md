@@ -1,32 +1,32 @@
 # 102-opentelemetry-spring-demo-app
 
-This cookbook sets up a Java microservices application with the [Aternity APM OpenTelemetry collector container](https://hub.docker.com/r/aternity/apm-collector) on a Docker host to start practicing Digital Experience Monitoring (DEM) using [Aternity APM](https://www.aternity.com/application-performance-monitoring/) and [OpenTelemetry](https://opentelemetry.io/).
+This cookbook sets up a Java microservices application with the [APM OpenTelemetry collector container](https://hub.docker.com/r/aternity/apm-collector) on a Docker host to start practicing Digital Experience Monitoring (DEM) using [APM](https://www.riverbed.com/products/application-performance-monitoring/) and [OpenTelemetry](https://opentelemetry.io/).
 
-The sample app is the famous Java Community application called [Spring PetClinic Microservices](https://github.com/spring-petclinic/spring-petclinic-microservices). Composed of multiple services that run in containers, like Config, Discovery Server, Customers, Vets, Visits and API, it uses [ZipKin](https://zipkin.io/) instrumentation to export some application telemetry (traces for the service calls). The [Aternity APM OpenTelemetry collector](https://hub.docker.com/r/aternity/apm-collector) is integrated in the architecture, it also runs in a container, taking the role of the Tracing Server to collect and store the telemetry in the Aternity APM backend (SaaS). 
+The sample app is the famous Java Community application called [Spring PetClinic Microservices](https://github.com/spring-petclinic/spring-petclinic-microservices). Composed of multiple services that run in containers, like Config, Discovery Server, Customers, Vets, Visits and API, it uses [ZipKin](https://zipkin.io/) instrumentation to export some application telemetry (traces for the service calls). The [APM OpenTelemetry collector](https://hub.docker.com/r/aternity/apm-collector) is integrated in the architecture, it also runs in a container, taking the role of the Tracing Server to collect and store the telemetry in the APM backend (SaaS). 
 
-The [Aternity APM OpenTelemetry Collector](https://hub.docker.com/r/aternity/apm-collector) keeps 100% of the traces to provide full fidelity for application performance and behavior analysis. There is no data sampling.
+The [APM OpenTelemetry Collector](https://hub.docker.com/r/aternity/apm-collector) keeps 100% of the traces to provide full fidelity for application performance and behavior analysis. There is no data sampling.
 
 ![diagram](images/102-diagram.png)
 
 ## Prerequisites
 
-1. an Aternity APM account (SaaS)
+1. an APM account (SaaS)
 2. a Docker host, for example [Docker Desktop](https://www.docker.com/products/docker-desktop)
 
 ## Step by step
 
-### Step 1 - Connect to Aternity APM web console
+### Step 1 - Connect to the APM web console
 
-Navigate to Aternity APM (for example [https://apm.myaccount.aternity.com](https://apm.myaccount.aternity.com)) > Agents > Install Agents:
+Navigate to the APM web console (for example [https://apm.myaccount.aternity.com](https://apm.myaccount.aternity.com)) > Agents > Install Agents:
 
 1. Find your **CustomerID**, for example *12341234-12341234-13241234*
 2. Grab the **SaaS Analysis Server Host** starting with "agents.apm", for example *agents.apm.myaccount.aternity.com*
 
 ### Step 2 - Get the docker-compose
 
-Download a local copy of the file [docker-compose.yml](docker-compose.yml), for example  [right-click here to download](https://raw.githubusercontent.com/Aternity/Tech-Community/main/102-opentelemetry-spring-demo-app/docker-compose.yml) and save it in the directory `Tech-Community/102-opentelemetry-spring-demo-app`
+Download a local copy of the file [docker-compose.yml](docker-compose.yml), for example  [right-click here to download](https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads/master/APM/102-opentelemetry-spring-demo-app/docker-compose.yml) and save it in the directory `Riverbed-Community-Toolkit/APM/102-opentelemetry-spring-demo-app`
 
-In this YAML file, the *tracing-server* section contains the Aternity APM OpenTelemetry Collector definition. There are variables that correspond to the CustomerID and to the SaaS Analysis Server Host. They will be set in the next step. 
+In this YAML file, the *tracing-server* section contains the APM OpenTelemetry Collector definition. There are variables that correspond to the CustomerID and to the SaaS Analysis Server Host. They will be set in the next step. 
 
 ```yaml
   tracing-server:
@@ -41,15 +41,15 @@ In this YAML file, the *tracing-server* section contains the Aternity APM OpenTe
 
 ### Step 3 - Start the `spring-petclinic-microservices` app
 
-In a shell, just go in the folder where you keep the [docker-compose.yml](docker-compose.yml). Configure the Aternity APM OpenTelemetry Collector using the environment variable, ATERNITY_SAAS_SERVER_HOST and ATERNITY_CUSTOMER_ID, and starts all the containers with docker-compose.
+In a shell, just go in the folder where you keep the [docker-compose.yml](docker-compose.yml). Configure the APM OpenTelemetry Collector using the environment variable, ATERNITY_SAAS_SERVER_HOST and ATERNITY_CUSTOMER_ID, and starts all the containers with docker-compose.
 
 For example, using Bash:
 
 ```bash
 # Go to the directory that contains docker-compose.yaml
-cd Tech-Community/102-opentelemetry-spring-demo-app
+cd Riverbed-Community-Toolkit/APM/102-opentelemetry-spring-demo-app
 
-# Configure the environment variables for the Aternity OpenTelemetry Collector
+# Configure the environment variables for the APM OpenTelemetry Collector
 export ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
 export ATERNITY_CUSTOMER_ID="12341234-12341234-13241234"
 
@@ -61,9 +61,9 @@ or else using PowerShell:
 
 ```PowerShell
 # Go to the directory that contains docker-compose.yaml
-cd Tech-Community/102-opentelemetry-spring-demo-app
+cd Riverbed-Community-Toolkit/APM/102-opentelemetry-spring-demo-app
 
-# Configure the environment variable for the Aternity OpenTelemetry Collector
+# Configure the environment variable for the APM OpenTelemetry Collector
 $env:ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
 $env:ATERNITY_CUSTOMER_ID="12341234-12341234-13241234"
 
@@ -73,25 +73,25 @@ docker-compose up
 
 ### Step 4 - Exercise the application
 
-Browse http://localhost:8080 and click around to generate some telemetry that will be collected by the Aternity APM OpenTelemetry Collector
+Browse http://localhost:8080 and click around to generate some telemetry that will be collected by the APM OpenTelemetry Collector
 
 ![spring petclinic](images/spring-petclinic.png)
 
-### Step 5 - Open the Aternity APM web console to visualize and analyze the traces collected for every transaction
+### Step 5 - Open the APM web console to visualize and analyze the traces collected for every transaction
 
 Search transactions:
 
-![Aternity APM OpenTelemetry every transaction](images/aternity-apm-webconsoles-every-transactions.png)
+![APM OpenTelemetry every transaction](images/aternity-apm-webconsoles-every-transactions.png)
 
 Browse the spans for the selected transaction:
 
-![Aternity APM OpenTelemetry Span Browser](images/aternity-apm-spring-transaction-details-span-browser.png)
+![APM OpenTelemetry Span Browser](images/aternity-apm-spring-transaction-details-span-browser.png)
 
 ## Notes 
 
 ### Support
 
-Please visit [Aternity website](https://www.aternity.com/) if you need support and learn more about [OpenTelemetry with Aternity APM](https://help.aternity.com/bundle/console_install_ost_guide_2022y_console_saas/page/console/topics/apm_ost_ig_intro.html)
+Please visit [Riverbed website](https://www.riverbed.com/products/application-performance-monitoring) if you need [support](https://support.riverbed.com) and learn more about [OpenTelemetry with APM](https://www.riverbed.com/products/application-performance-monitoring)
 
 ### Stop the app and all the containers
 
@@ -103,9 +103,9 @@ Or in a shell, go to the folder where you keep the [docker-compose.yml](docker-c
 docker-compose down
 ```
 
-### Configuring Aternity APM OpenTelemetry Collector
+### Configuring APM OpenTelemetry Collector
 
-The CustomerID and the SaaS Analysis Server Host configuration of the Aternity APM OpenTelemetry container can be defined directly in the [docker-compose.yml](docker-compose.yml), for example:
+The CustomerID and the SaaS Analysis Server Host configuration of the APM OpenTelemetry container can be defined directly in the [docker-compose.yml](docker-compose.yml), for example:
 
 ```yaml
   tracing-server:

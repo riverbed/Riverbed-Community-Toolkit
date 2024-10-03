@@ -1,6 +1,6 @@
 # apm-daemonset-pod-agent.yaml
 # 23.8.25
-# ALLUVIO Aternity Tech Community Cookbook (https://github.com/riverbed/Riverbed-Community-Toolkit)
+# Riverbed-Community-Toolkit (https://github.com/riverbed/Riverbed-Community-Toolkit)
 #
 # Description
 #
@@ -10,7 +10,7 @@
 #
 #     1. Customize the env variables in the container definition (container name: apm-daemonset-pod-agent)
 #
-#       replace {{ALLUVIO Aternity APM Daemonset POD agent image URI}} for example: 1234-5678-90.dkr.ecr.eu-west-3.amazonaws.com/alluvio-aternity-apm-daemonset-pod-agent:23.8
+#       replace {{APM Daemonset POD agent image URI}} for example: 1234-5678-90.dkr.ecr.eu-west-3.amazonaws.com/alluvio-aternity-apm-daemonset-pod-agent:23.8
 #       replace {{ALLUVIO_ATERNITY_APM_CUSTOMER_ID}}, for example: 12341234-12341234-13241234
 #       replace {{ALLUVIO_ATERNITY_APM_SAAS_SERVER_HOST}} for example: agents.apm.my_environment.aternity.com
 #
@@ -58,9 +58,9 @@ spec:
         app.kubernetes.io/part-of: alluvio-aternity        
     spec:
       containers:
-        # TODO: Replace {{ALLUVIO Aternity APM Daemonset POD agent image path}} with the actual value
+        # TODO: Replace {{APM Daemonset POD agent image path}} with the actual value
         - name: apm-daemonset-pod-agent
-          image : {{ALLUVIO Aternity APM Daemonset POD agent image path}}
+          image : {{APM Daemonset POD agent image path}}
           env:
           # TODO: Replace {{ALLUVIO_ATERNITY_APM_CUSTOMER_ID}} and {{ALLUVIO_ATERNITY_APM_SAAS_SERVER_HOST}} with actual values
           - name: ALLUVIO_ATERNITY_APM_CUSTOMER_ID

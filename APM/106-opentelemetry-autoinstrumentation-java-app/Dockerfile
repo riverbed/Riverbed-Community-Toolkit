@@ -1,6 +1,6 @@
 # Dockerfile
 #
-# Aternity Tech-Community (https://github.com/riverbed/Riverbed-Community-Toolkit)
+# Riverbed-Community-Toolkit (https://github.com/riverbed/Riverbed-Community-Toolkit)
 # 106-opentelemetry-autoinstrumentation-java-app
 # version: 22.11.221121
 #

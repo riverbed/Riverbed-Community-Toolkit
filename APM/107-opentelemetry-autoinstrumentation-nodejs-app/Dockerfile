@@ -1,4 +1,4 @@
-# Aternity Tech-Community
+# Riverbed-Community-Toolkit
 # 107-opentelemetry-autoinstrumentation-nodejs-app
 # version: 22.11.221128
 #

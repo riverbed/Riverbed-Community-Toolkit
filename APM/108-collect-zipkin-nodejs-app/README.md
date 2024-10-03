@@ -1,26 +1,26 @@
 # 108-collect-zipkin-nodejs-app
 
-In this cookbook, [Aternity](https://www.aternity.com) collects the telemetry of a **nodejs** webapp that is instrumented with [Zipkin](https://zipkin.io/). The [Aternity OpenTelemetry Collector](https://hub.docker.com/r/aternity/apm-collector) container is deployed next to the web app and collects every trace.
+In this cookbook, the APM collects the telemetry of a **nodejs** webapp that is instrumented with [Zipkin](https://zipkin.io/). The [APM OpenTelemetry Collector](https://hub.docker.com/r/aternity/apm-collector) container is deployed next to the web app and collects every trace.
 
 ![diagram](images/108-diagram.png)
 
-The [Aternity OpenTelemetry Collector](https://hub.docker.com/r/aternity/apm-collector) can collect OTLP, the OpenTelemetry native telemetry protocols, as well as Jaeger and Zipkin telemetry. Here it collects Zipkin telemetry like in the other [Aternity Tech-Community Cookbook 104](../104-opentelemetry-zipkin-nodejs-app) where the app is instrumented with OpenTelemetry.
+The [APM OpenTelemetry Collector](https://hub.docker.com/r/aternity/apm-collector) can collect OTLP, the OpenTelemetry native telemetry protocols, as well as Jaeger and Zipkin telemetry. Here it collects Zipkin telemetry like in the other [Riverbed-Community-Toolkit Cookbook 104](../104-opentelemetry-zipkin-nodejs-app) where the app is instrumented with OpenTelemetry.
 
 ## Prerequisites
 
-1. an Aternity APM account (SaaS)
+1. an APM account (SaaS)
 2. a Docker host, for example [Docker Desktop](https://www.docker.com/products/docker-desktop)
 
 ## Step by Step
 
-### 1. Get your CustomerID & SaaS Analysis Server Host details from the Aternity APM webconsole
+### 1. Get your CustomerID & SaaS Analysis Server Host details from the APM web console
 
-Navigate to Aternity APM (for example [https://apm.myaccount.aternity.com](https://apm.myaccount.aternity.com)) > Agents > Install Agents:
+Navigate to APM (for example [https://apm.myaccount.aternity.com](https://apm.myaccount.aternity.com)) > Agents > Install Agents:
 
 1. Find your **CustomerID**, for example *12341234-12341234-13241234*
 2. Grab **SaaS Analysis Server Host**, for example *agents.apm.myaccount.aternity.com*
 
-Those information are required to activate the Aternity OpenTelemetry Collector container, passing via the environment variable `SERVER_URL`. 
+Those information are required to activate the APM OpenTelemetry Collector container, passing via the environment variable `SERVER_URL`. 
 
 ### 2. Start the containers
 
@@ -29,9 +29,9 @@ Download a local copy of the  [docker-compose.yaml](docker-compose.yaml) file, f
 Start the containers using the [docker-compose.yaml](docker-compose.yaml), for example with Bash:
 
 ```bash
-cd Tech-Community/108-collect-zipkin-nodejs-app
+cd Riverbed-Community-Toolkit/APM/108-collect-zipkin-nodejs-app
 
-# Configure the environment variables for the Aternity OpenTelemetry Collector
+# Configure the environment variables for the APM OpenTelemetry Collector
 export ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
 export ATERNITY_CUSTOMER_ID="12341234-12341234-13241234"
 
@@ -41,9 +41,9 @@ docker-compose up
 or with PowerShell:
 
 ```PowerShell
-cd Tech-Community/108-collect-zipkin-nodejs-app
+cd Riverbed-Community-Toolkit/APM/108-collect-zipkin-nodejs-app
 
-# Configure the environement variable for the Aternity OpenTelemetry Collector
+# Configure the environement variable for the APM OpenTelemetry Collector
 $env:ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
 $env:ATERNITY_CUSTOMER_ID="12341234-12341234-13241234"
 
@@ -52,7 +52,7 @@ docker-compose up
 
 ### 3. Use the app to generate some telemetry
 
-The application should now be running. Every trace is collected by the Aternity APM OpenTelemetry Collector.
+The application should now be running. Every trace is collected by the APM OpenTelemetry Collector.
 
 Navigate to http://localhost:8108/fetch from a browser or call the url from a command line. 
 
@@ -64,11 +64,11 @@ For example using curl:
 curl http://localhost:8108/fetch
 ```
 
-### 4. Open the Aternity APM webconsole to visualize and analyze the traces collected for every transaction
+### 4. Open the APM web console to visualize and analyze the traces collected for every transaction
 
 Search transaction, browse the spans for the selected transaction :
 
-![Aternity APM OpenTelemetry traces](images/aternity-opentelemetry-service108-js-transactions.png)
+![APM OpenTelemetry traces](images/aternity-opentelemetry-service108-js-transactions.png)
 
 ## Notes 
 
@@ -87,11 +87,11 @@ docker-compose down
 The cookbook contains few files:
 - [app_with_zipkin.js](app.js) is a simple web app that listens http request (using Express) and exposes a `/fetch` method. It is instrumentated using Zipkin.
 - [Dockerfile](Dockerfile) defines the docker image to build integrating the zipkin instrumented libraries for the web app (Express and axios)
-- [docker-compose.yaml](docker-compose.yaml) is the main file that defines the multi-containers app with two services: the instrumented nodejs web app and the Aternity OpenTelemetry Collector 
+- [docker-compose.yaml](docker-compose.yaml) is the main file that defines the multi-containers app with two services: the instrumented nodejs web app and the APM OpenTelemetry Collector 
 
-In the [docker-compose.yaml](docker-compose.yaml), on the Aternity OpenTelemetry Collector section, the image is set to be downloaded from [DockerHub](https://hub.docker.com/r/aternity/apm-collector) and the port to receive Zipkin telemetry is open.
+In the [docker-compose.yaml](docker-compose.yaml), on the APM OpenTelemetry Collector section, the image is set to be downloaded from [DockerHub](https://hub.docker.com/r/aternity/apm-collector) and the port to receive Zipkin telemetry is open.
 
-The only thing that needs to be configured is the `SERVER_URL` variable. It contains the Aternity CustomerID and SaaS Analysis Server Host that allow the container to connect to the Aternity SaaS service and get activated. The Aternity OpenTelemetry Collector section is simple:
+The only thing that needs to be configured is the `SERVER_URL` variable. It contains the Aternity CustomerID and SaaS Analysis Server Host that allow the container to connect to the Aternity SaaS service and get activated. The APM OpenTelemetry Collector section is simple:
 
 ```yaml
 services:

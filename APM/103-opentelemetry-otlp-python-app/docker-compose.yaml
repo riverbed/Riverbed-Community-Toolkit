@@ -1,6 +1,6 @@
 # docker-compose.yaml
 #
-# Aternity Tech-Community
+# Riverbed-Community-Toolkit
 # 103-opentelemetry-otlp-python-app
 # version: 24.2.5
 #
@@ -23,7 +23,7 @@ services:
 
   opentelemetry-collector:
 
-    # Aternity OpenTelemetry Collector
+    # APM OpenTelemetry Collector
     # https://hub.docker.com/r/aternity/apm-collector
 
     image: registry.hub.docker.com/aternity/apm-collector:2022.11.0-4

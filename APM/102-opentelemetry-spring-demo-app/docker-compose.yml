@@ -1,12 +1,12 @@
-# Aternity Tech-Community
+# Riverbed-Community-Toolkit
 # 102-opentelemetry-spring-demo-app
 # version: 22.3.31
 #
-# Define the containers of the Spring PetClinic Microservices application using Aternity APM OpenTelemetry Collector for the tracing-server
+# Define the containers of the Spring PetClinic Microservices application using APM OpenTelemetry Collector for the tracing-server
 # Reference:
 # * https://github.com/spring-petclinic/spring-petclinic-microservices/blob/master/docker-compose.yml
 # * https://hub.docker.com/r/aternity/apm-collector
-# * https://www.aternity.com/application-performance-monitoring
+# * https://www.riverbed.com/products/application-performance-monitoring
 #
 # Usage:
 #   docker-compose up
