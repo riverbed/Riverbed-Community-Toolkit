@@ -25,7 +25,6 @@ To use the following contents you will need active licenses of the Riverbed APM 
 | [111](111-opentelemetry-autoinstrumentation-spring-demo-app) | Containerize a Java Spring Boot app with the OpenTelemetry Java agent. Collect the traces with [OpenTelemetry APM Collector](https://hub.docker.com/r/aternity/apm-collector) | OpenTelemetry, Java agent, OTLP, Docker | nov. 2022 |
 | [301](301-opentelemetry-on-kubernetes-with-apm-collector-daemonset-and-python-app) | Deploy the APM Collector on Kubernetes as a Daemonset and try it with a Python wep app | APM Collector, OpenTelemetry, Kubernetes, AKS, EKS, GCP, auto-instrumentation | aug. 2023 |
 | [322](322-opentelemetry-on-kubernetes-with-apm-collector-daemonset-service-and-dotnet-app-on-windows) | A Windows container of a .NET web-app instrumented with OpenTelemetry  and exporting to the APM Collector exposed as a Kubernetes service | APM Collector, OpenTelemetry, .NET, dotnet, Windows Container, Kubernetes | sept. 2023 |
-| [341](341-metrics-with-apm-daemonset-pod-agent-on-eks) | A Python app sending metrics to the CMX endpoint of the APM agent in Kubernetes (in AWS EKS) | APM agent, Custom Metrics, CMX, Kubernetes, EKS | aug. 2023 |
 | [001](https://github.com/riverbed/FlyFast) | *maintenance* OpenTelemetry with FlyFast microservices on a Docker Host. Collect the traces with [OpenTelemetry APM Collector](https://hub.docker.com/r/aternity/apm-collector) | OpenTelemetry, Javascript, React, Python, Tornado, Microservices, Docker | jan. 2024 |
 
 ### Instrumentation and Custom-Metrics
@@ -42,6 +41,7 @@ To use the following contents you will need active licenses of the Riverbed APM 
 | [248](248-instrument-java-app-with-apm-daemonset-pod-agent-on-eks) | Deploy the full APM agent on EKS as a Daemonset POD agent and instrument all the PODs of a Java web-app | APM agent for Linux, Java, Web App, AWS, Kubernetes, EKS, auto-instrumentation | aug. 2023 |
 | [285](285-auto-instrument-app-with-riverbed-apm-on-openshift) | *draft* Auto-instrument a java app on a Red Hat OpenShift cluster using the Riverbed Operator | Red Hat OpenShift, auto-instrumentation, APM agent for Linux, Java, Web App | july 2024 |
 | [401](401-apm-analysis-server-on-aws-ec2) | *in progress* APM Analysis Server on AWS EC2 | APM Analysis Server, AWS | feb. 2024 |
+| [341](341-metrics-with-apm-daemonset-pod-agent-on-eks) | A Python app sending metrics to the CMX endpoint of the APM agent in Kubernetes (in AWS EKS) | APM agent, Custom Metrics, CMX, Kubernetes, EKS | aug. 2023 |
 | [901](https://github.com/Aternity/custom-metrics-examples) | Getting started with custom Metrics using CMX | CMX, Kubernetes, Gett | feb. 2023
 | [902](https://github.com/Aternity/custom-metrics-snow-plugin) | Example with CMX API | CMX, API | nov. 2022
 
