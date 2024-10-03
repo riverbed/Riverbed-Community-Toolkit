@@ -1,0 +1,72 @@
+# cookbook301-app.yaml
+# 23.08.24
+# ALLUVIO Aternity Tech Community Cookbook (https://github.com/Aternity/Tech-Community)
+#
+# Simple Python app instrumented with OpenTelemetry
+#
+# Usage:
+# 
+#     1. # Deploy the app
+#
+#       kubectl apply -f cookbook301-app.yaml
+#
+#     2. Wait few seconds and check the app is running (logs)
+#
+#     kubectl logs  cookbook301-app -f
+#
+#     3. Clean up
+#
+#       kubectl delete -f cookbook301-app.yaml
+
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: cookbook301-app
+  labels:
+    app.kubernetes.io/name: cookbook301-app
+spec:
+  containers:
+  - name: cookbook301-app
+
+    env:
+
+      # Configure the service name for OpenTelemetry
+      - name: OTEL_SERVICE_NAME
+        value: cookbook301-service
+      
+      # Configure OpenTelemetry to export the traces the collector
+      - name: NODE_IP
+        valueFrom:
+          fieldRef:
+            apiVersion: v1
+            fieldPath: status.hostIP
+      - name: OTEL_EXPORTER_OTLP_TRACES_ENDPOINT
+        value: "http://$(NODE_IP):4317"
+      - name: OTEL_LOGS_EXPORTER
+        value: "none"
+      - name: OTEL_METRICS_EXPORTER
+        value: "none"
+
+    # Run a simple web app instrumented with OpenTelemetry Python
+    image: registry.hub.docker.com/library/python:latest
+    command: ["/bin/sh","-c","--"]
+    args:
+    - pip install -q opentelemetry-distro[otlp] opentelemetry-instrumentation opentelemetry-instrumentation-flask flask requests  > /dev/null 2>&1 ;
+      echo 'from flask import Flask\napp = Flask(__name__)\n@app.route("/")\ndef handler():\n\treturn "<p>Hello from Cookbook301!</p>"' > /app.py ;
+      opentelemetry-instrument flask run --port=80 --host="0.0.0.0" ;
+
+    # Listen on the HTTP port
+    ports:
+    - containerPort: 80
+
+    # The readiness probe generates regular calls. The OpenTelemetry instrumentation will generate and export related traces
+    readinessProbe:
+      httpGet:
+        path: /
+        port: 80
+      initialDelaySeconds: 10
+      periodSeconds: 5
+      timeoutSeconds: 10
+      successThreshold: 1
+      failureThreshold: 10

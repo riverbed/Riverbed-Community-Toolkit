@@ -1,0 +1,130 @@
+# app-k8s.yaml
+# 23.1.21
+# ALLUVIO Aternity Tech Community Cookbook (https://github.com/Aternity/Tech-Community)
+#
+# Java web-application deployment with APM instrumentation
+#
+# Configuration:
+#
+#   - Replace {{java-app image}} with the actual value
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cookbook-app
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: cookbook-app
+  name: app
+  labels:
+    app.kubernetes.io/name: app
+    app.kubernetes.io/part-of: cookbook-238
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: app
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: app
+    spec:
+      # APM - note 1 - Add an init container that will check the APM Daemonset POD agent is ready to instrument the app
+      initContainers:
+      - name: check-apm-agent-readiness
+        image: busybox
+        volumeMounts:
+        - name: alluvio-aternity-apm-panorama
+          mountPath: /opt/Panorama
+        env:
+        - name: APM_AGENT_DSAPORT
+          value: "2111"
+        - name: APM_AGENT_DSAHOST
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: status.hostIP
+        command: ["/bin/sh","-c","--"]
+        args:
+        - nc -vz -w 5 $APM_AGENT_DSAHOST $APM_AGENT_DSAPORT
+      containers:
+      - name: app
+        # TODO: Replace {{java-app image}} with the actual value
+        image: {{java-app image}}
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 200m
+            memory: 256Mi
+        ports:
+          - containerPort: 8080
+        env:
+        # APM - note 2 - Customize the instance name as it will appear in the APM webconsole
+        - name: RVBD_APP_INSTANCE
+          value: cookbook-238
+        # APM - note 3 - Add APM instrumentation to the JVM via JAVA_TOOL_OPTIONS
+        - name: JAVA_TOOL_OPTIONS
+          value: "-agentpath:/opt/Panorama/hedzup/mn/lib/librpilj64.so -Dcom.sun.management.jmxremote.ssl=false -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.port=0"
+        #  APM - note 4 - Add APM mandatory environment variable (RVBD_DSAHOST is required by the Java instrumentation on the app side to be able to connect to the APM agent)
+        - name: RVBD_DSAHOST
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: status.hostIP
+        # APM - note 5 - Import the other APM standard environment variables defined in a configMap
+        envFrom:
+          - configMapRef:
+              name: apm-env
+        volumeMounts:
+        # APM - note 6 - Mount the folder to access the files of the agent
+        - name: alluvio-aternity-apm-panorama
+          mountPath: /opt/Panorama
+      volumes:
+        # APM - note 7 - Define the volume that must contain the files of the agent
+        - name: alluvio-aternity-apm-panorama
+          hostPath:
+            path: /var/lib/toolbox/alluvio-aternity-apm/Panorama
+            type: Directory
+        - name: userdata-config
+          configMap:
+            name: aternity-agent-userdata-config
+---
+# APM - note 8 - Define APM standard environment variables
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: cookbook-app
+  name: apm-env
+data:
+  ### COMMON
+  logging.level.root: "INFO"
+  PANORAMA_LOG_PURGE_HOURS: 1h
+  RVBD_AGENT_FILES: "1"
+  RVBD_AGENT_PORT: "7073"
+  AIX_INSTRUMENT_ALL: "1"
+  container_metrics: "true"  
+  ### DOTNET
+  CORECLR_ENABLE_PROFILING: "1"
+  CORECLR_PROFILER: "{CEBBDDAB-C0A5-4006-9C04-2C3B75DF2F80}"
+  CORECLR_PROFILER_PATH: "/opt/Panorama/hedzup/mn/lib/libAwDotNetProf64.so"
+  DOTNET_SHARED_STORE: "/opt/Panorama/hedzup/mn/install/dotnet/store/"
+  DOTNET_ADDITIONAL_DEPS: "/opt/Panorama/hedzup/mn/install/dotnet/additionalDeps/Riverbed.AppInternals.DotNetCore/"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  namespace: cookbook-app
+  name: cookbook-app
+spec:
+  selector:
+    app.kubernetes.io/name: app
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+  type: LoadBalancer

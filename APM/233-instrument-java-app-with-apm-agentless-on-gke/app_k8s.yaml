@@ -1,0 +1,215 @@
+# app_k8s.yaml
+# 22.11.221118
+#
+# Description:
+#   
+#   Aternity Tech Community Cookbook (https://github.com/Aternity/Tech-Community)
+#   Kubernetes manifest to deploy the Spring PetClinic app (see https://github.com/spring-projects/spring-petclinic.git)
+#   containerized with Aternity APM Java agent for Linux, and also a PostgreSQL database
+#
+# Usage
+#
+#   1. Configure 
+#     - the environment variables RVBD_CUSTOMER_ID and RVBD_ANALYSIS_SERVER in the aternity-apm-env ConfigMap
+#     - the image path for the container in the spring-petclinic deployment
+#   2. Deploy
+#      kubectl apply -f app_k8s.yaml
+#   3. Find external ip and browse the app http://{external ip}
+#      kubectl -n cookbook-233 get svc
+#   4. Cleanup
+#      kubectl delete -f app_k8s.yaml
+#
+###############################################################################
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cookbook-233
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: cookbook-233
+  name: aternity-apm-env
+data:
+  # Aternity APM, environment variables
+  # Example:
+  #   RVBD_CUSTOMER_ID: "my_customerid"
+  #   RVBD_ANALYSIS_SERVER: "psockets.apm.my_environment.aternity.com"
+  RVBD_CUSTOMER_ID: {RVBD_CUSTOMER_ID}
+  RVBD_ANALYSIS_SERVER: {RVBD_ANALYSIS_SERVER}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: cookbook-233
+  name: spring-petclinic
+  labels:
+    app.kubernetes.io/name: spring-petclinic
+    app.kubernetes.io/part-of: spring-petclinic
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: spring-petclinic
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: spring-petclinic
+    spec:
+      containers:
+      - name: spring-petclinic
+        # Example:
+        #   image: europe-west9-docker.pkg.dev/aternity-cookbooks/aternity-apm/cookbook-233:latest
+        image: {cookbook-233 image}
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 50m
+            memory: 256Mi
+        ports:
+        - containerPort: 8080
+        env:
+        ##########################################################################################################
+        # Aternity APM, configuration
+        #
+        # Example:
+        #   Name the instance
+        #   - name: RVBD_APP_INSTANCE
+        #     value: "cookbook-233" 
+        #
+        #   Add "-agentpath:/aternity-apm/agent/lib/libAwProfile64.so" to JAVA_TOOL_OPTIONS to instrument the app
+        #   - name: JAVA_TOOL_OPTIONS
+        #     value: "-agentpath:/aternity-apm/agent/lib/libAwProfile64.so"
+        #
+        - name: RVBD_APP_INSTANCE
+          value: "spring-petclinic" 
+        - name: JAVA_TOOL_OPTIONS
+          value: "-agentpath:/aternity-apm/agent/lib/libAwProfile64.so -Dlogging.level.org.springframework=INFO"
+        ##########################################################################################################
+        - name: POSTGRES_URL
+          value: "jdbc:postgresql://postgres/petclinic" 
+        envFrom:
+        - configMapRef:
+            name: aternity-apm-env
+        - secretRef:
+            name: postgres-secrets
+        command: ["java"]
+        args: [ "-jar", "spring-petclinic.jar","--spring.profiles.active=postgres","-Driverbed.moniker=spring-petclinic"]
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 15
+          periodSeconds: 10
+          timeoutSeconds: 1
+          successThreshold: 1
+          failureThreshold: 3
+---
+kind: Service
+apiVersion: v1
+metadata:
+  namespace: cookbook-233
+  name: spring-petclinic
+spec:
+  selector:
+    app.kubernetes.io/name: spring-petclinic
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+  sessionAffinity: ClientIP
+  loadBalancerSourceRanges: ['0.0.0.0/0']
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  namespace: cookbook-233
+  name: postgres-secrets
+  labels:
+    app.kubernetes.io/name: postgres
+data:
+  POSTGRES_PASSWORD: ZGVtb19jb29rYm9vaw==
+  POSTGRES_PASS: "ZGVtb19jb29rYm9vaw=="
+stringData:
+  POSTGRES_USER: postgres
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  namespace: cookbook-233
+  name: postgres-pv-claim
+  labels:
+    app.kubernetes.io/name: postgres
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: standard-rwo
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: cookbook-233
+  name: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: postgres
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: postgres
+    spec:
+      containers:
+      - name: postgres
+        image: postgres:latest
+        resources:
+          limits:
+            cpu: 2000m
+            memory: 2048Mi
+          requests:
+            cpu: 1000m
+            memory: 1024Mi
+        imagePullPolicy: "IfNotPresent"
+        args:
+        - -c 
+        - max_connections=10
+        - -c
+        - shared_buffers=128MB
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_DB
+          value: petclinic
+        envFrom:
+        - secretRef:
+            name: postgres-secrets  
+        volumeMounts:
+        - mountPath: /var/lib/postgresql
+          name: postgredb
+      volumes:
+      - name: postgredb
+        persistentVolumeClaim:
+          claimName: postgres-pv-claim
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: cookbook-233
+  labels:
+    app.kubernetes.io/name: postgres
+  name: postgres
+spec:
+  ports:
+  - port: 5432
+    protocol: TCP
+    targetPort: 5432
+  selector:
+    app.kubernetes.io/name: postgres
