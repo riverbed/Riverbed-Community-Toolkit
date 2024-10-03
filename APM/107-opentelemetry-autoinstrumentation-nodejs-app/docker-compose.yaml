@@ -65,4 +65,4 @@ services:
 
     build:
       context: https://github.com/riverbed/Riverbed-Community-Toolkit.git#main
-      dockerfile: 107-opentelemetry-autoinstrumentation-nodejs-app/Dockerfile
+      dockerfile: APM/107-opentelemetry-autoinstrumentation-nodejs-app/Dockerfile
