@@ -4,7 +4,7 @@ A public toolkit shared by [Riverbed](https://www.riverbed.com) and the [Riverbe
 
 | Folders | Contents | Related 3rd party technology |
 | --- | --- | --- |
-| [APM](https://github.com/riverbed/Riverbed-Community-Toolkit) | Cookbooks and technical contents for [Riverbed APM](https://www.riverbed.com/products/application-performance-monitoring) | OpenTelemetry, Java, .Net, Instrumentation, API, Windows, Linux, Kubernetes, Docker |
+| [APM](/APM) | Cookbooks and technical contents for [Riverbed APM](https://www.riverbed.com/products/application-performance-monitoring) | OpenTelemetry, Java, .Net, Instrumentation, API, Windows, Linux, Kubernetes, Docker |
 | [Aternity](https://github.com/Aternity) | Repos with technical contents for [Aternity DEM](https://www.riverbed.com/products/digital-experience-management)| Windows, PowerShell |
 | [Cloud Accelerator (SteelHead)](/SteelHead) | Community Cloud Cookbooks: scripts and howto to deploy the Riverbed Accelerator in the Cloud and in your labs | Azure, AWS, GNS3, KVM, ARM, PowerShell |
 | [Client Accelerator](/Client%20Accelerator) | Cookbooks to interact with the REST API, use Ansible with [SteelScript](https://github.com/riverbed/steelscript), deploy the controller appliance with template in the Cloud | Python, Azure, REST, Ansible, Terraform |
