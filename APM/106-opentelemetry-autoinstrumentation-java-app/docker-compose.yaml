@@ -18,7 +18,7 @@ services:
     
     mem_limit: 128M
 
-    container_name: aternity-opentelemetry-collector
+    container_name: riverbed-apm-opentelemetry-collector
 
     environment:
     
@@ -63,6 +63,7 @@ services:
       OTEL_EXPORTER_OTLP_PROTOCOL: "grpc"
       OTEL_EXPORTER_OTLP_ENDPOINT: http://riverbed-apm-opentelemetry-collector:4317
       OTEL_METRICS_EXPORTER: none      
+      OTEL_LOGS_EXPORTER: none  
 
       # Jaeger
       OTEL_EXPORTER_JAEGER_ENDPOINT: http://jaeger-all-in-one:14250
