@@ -18,7 +18,7 @@
 // Example in PowerShell
 //
 //   $env:OTEL_SERVICE_NAME="service107-js"
-//   $env:OTEL_EXPORTER_OTLP_ENDPOINT="aternity-opentelemetry-collector:4317"
+//   $env:OTEL_EXPORTER_OTLP_ENDPOINT="riverbed-apm-opentelemetry-collector:4317"
 //   node -r ./trace_app_with_opentelemetry_automatic-instrumentation.js app.js
 
 'use strict';
