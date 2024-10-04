@@ -1,6 +1,6 @@
 # Dockerfile
 # 23.1.21
-# Cookbook 203 - Aternity Tech Community Cookbook (https://github.com/riverbed/Riverbed-Community-Toolkit)
+# Cookbook 203 - Riverbed-Community-Toolkit (https://github.com/riverbed/Riverbed-Community-Toolkit)
 #
 # Usage:
 #
@@ -14,7 +14,7 @@
 #       4. *optional* Customize the installation properties in the install.properties file
 #
 #   build: docker build -t spring-demo .
-#   run: docker run -e ALLUVIO_ATERNITY_APM_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com" -e ALLUVIO_ATERNITY_APM_CUSTOMER_ID="12341234-12341234-13241234" -e RVBD_APP_INSTANCE="cookbook-203" -p 8080:8080 spring-demo
+#   run: docker run -e RIVERBED_APM_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com" -e RIVERBED_APM_CUSTOMER_ID="12341234-12341234-13241234" -e RVBD_APP_INSTANCE="cookbook-203" -p 8080:8080 spring-demo
 
 ###############################################################################
 # App section
@@ -65,8 +65,8 @@ ENV RVBD_DSAHOST=127.0.0.1
 ENV container_metrics=true
 
 # Environment variables that need to be set at runtime for (re)configuration
-ENV ALLUVIO_ATERNITY_APM_SAAS_SERVER_HOST=""
-ENV ALLUVIO_ATERNITY_APM_CUSTOMER_ID=""
+ENV RIVERBED_APM_SAAS_SERVER_HOST=""
+ENV RIVERBED_APM_CUSTOMER_ID=""
 ENV RVBD_APP_INSTANCE=""
 
 ###############################################################################
