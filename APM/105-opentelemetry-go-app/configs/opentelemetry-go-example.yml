@@ -1,6 +1,6 @@
 # Riverbed-Community-Toolkit
 # 105-opentelemetry-go-app
-# version: 22.06.3
+# version: 24.10.4
 
 # Exporter
 OTEL_TRACES_EXPORTER: otlp
@@ -18,7 +18,7 @@ OTLP_PORT: 4318
 OTLP_PATH: /v1/traces
 
 # APM collector configuration
-ATERNITY_COLLECTOR_SERVICE_HOST: localhost
+RIVERBED_APM_COLLECTOR_SERVICE_HOST: localhost
 
 # Service name
 OTEL_SERVICE_NAME: service105-go

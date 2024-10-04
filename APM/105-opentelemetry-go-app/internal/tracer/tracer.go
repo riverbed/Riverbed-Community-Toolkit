@@ -107,20 +107,20 @@ func fileExporter(w io.Writer) (trace.SpanExporter, error) {
 // Jaeger exporter
 func jaegerExporter() (trace.SpanExporter, error) {
 	return jaeger.New(jaeger.WithCollectorEndpoint(
-		jaeger.WithEndpoint("http://" + appconfig.Config["ATERNITY_COLLECTOR_SERVICE_HOST"] +
+		jaeger.WithEndpoint("http://" + appconfig.Config["RIVERBED_APM_COLLECTOR_SERVICE_HOST"] +
 			":" + appconfig.Config["JAEGER_PORT"] + appconfig.Config["JAEGER_PATH"])))
 }
 
 // Zipkin exporter
 func zipkinExporter() (trace.SpanExporter, error) {
-	return zipkin.New("http://" + appconfig.Config["ATERNITY_COLLECTOR_SERVICE_HOST"] +
+	return zipkin.New("http://" + appconfig.Config["RIVERBED_APM_COLLECTOR_SERVICE_HOST"] +
 		":" + appconfig.Config["ZIPKIN_PORT"] + appconfig.Config["ZIPKIN_PATH"])
 }
 
 // OTLP http exporter
 func otlpExporter() (trace.SpanExporter, error) {
 	client := otlptracehttp.NewClient(otlptracehttp.WithInsecure(),
-		otlptracehttp.WithEndpoint(appconfig.Config["ATERNITY_COLLECTOR_SERVICE_HOST"]+
+		otlptracehttp.WithEndpoint(appconfig.Config["RIVERBED_APM_COLLECTOR_SERVICE_HOST"]+
 			":"+appconfig.Config["OTLP_PORT"]),
 		otlptracehttp.WithURLPath(appconfig.Config["OTLP_PATH"]))
 	return otlptrace.New(context.Background(), client)
