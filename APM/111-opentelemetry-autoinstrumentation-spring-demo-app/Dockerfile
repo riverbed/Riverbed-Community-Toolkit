@@ -22,7 +22,7 @@
 # Fetch the OpenTelemetry Java Agent 
 
 FROM openjdk as app-builder
-RUN curl -OL https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/download/v1.20.1/opentelemetry-javaagent.jar
+RUN curl -OL https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/download/v2.8.0/opentelemetry-javaagent.jar
 
 
 # Application image
