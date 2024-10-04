@@ -22,22 +22,22 @@
 
 services:
 
-  aternity-collector:
+  riverbed-apm-collector:
     image: aternity/apm-collector:latest
-    container_name: aternity-collector
+    container_name: riverbed-apm-collector
     environment:
       - SERVER_URL=wss://${RIVERBED_APM_SAAS_SERVER_HOST}/?RPM_AGENT_CUSTOMER_ID=${RIVERBED_APM_CUSTOMER_ID}
 
   service105-go-backend:
     depends_on:
-      - aternity-collector
+      - riverbed-apm-collector
     command: backend
     container_name: opentelemetry-go-backend
     environment:
       OTEL_SERVICE_NAME: service105-go-backend
       OTEL_TRACES_EXPORTER: otlp  # otlp, jaeger, zipkin, file
       ADD_CONSOLE_EXPORTER: "off" # "on", "off"
-      RIVERBED_APM_COLLECTOR_SERVICE_HOST: aternity-collector
+      RIVERBED_APM_COLLECTOR_SERVICE_HOST: riverbed-apm-collector
     build:
       context: .
       dockerfile: Dockerfile
@@ -51,7 +51,7 @@ services:
       OTEL_SERVICE_NAME: service105-go-frontend
       OTEL_TRACES_EXPORTER: otlp  # otlp, jaeger, zipkin, file
       ADD_CONSOLE_EXPORTER: "off" # "on", "off"
-      RIVERBED_APM_COLLECTOR_SERVICE_HOST: aternity-collector
+      RIVERBED_APM_COLLECTOR_SERVICE_HOST: riverbed-apm-collector
       BACKEND_SERVICE_HOST: opentelemetry-go-backend
     ports:
       - 8081:8081
