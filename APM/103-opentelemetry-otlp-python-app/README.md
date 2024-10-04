@@ -26,7 +26,7 @@ Those information are required to activate the APM OpenTelemetry Collector conta
 
 Get a local copy of the [docker-compose.yaml](docker-compose.yaml) file. 
 
-Edit the file if you want to manually configure the `SERVER_URL` variable, replacing *ATERNITY_SAAS_SERVER_HOST* and *ATERNITY_CUSTOMER_ID* with actual values. The remaining is all set to pull the container image from [DockerHub](https://hub.docker.com/r/aternity/apm-collector) and receive telemetry on the OTLP gRPC port (4317 tcp port 4317.
+Edit the file if you want to manually configure the `SERVER_URL` variable, replacing *RIVERBED_APM_SAAS_SERVER_HOST* and *RIVERBED_APM_CUSTOMER_ID* with actual values. The remaining is all set to pull the container image from [DockerHub](https://hub.docker.com/r/aternity/apm-collector) and receive telemetry on the OTLP gRPC port (4317 tcp port 4317.
 
 ```yaml
 services:
@@ -54,8 +54,8 @@ For example using Bash:
 cd Riverbed-Community-Toolkit/APM/103-opentelemetry-otlp-python-app
 
 # Configure the environment variables for the APM OpenTelemetry Collector
-export ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
-export ATERNITY_CUSTOMER_ID="12341234-12341234-13241234"
+export RIVERBED_APM_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
+export RIVERBED_APM_CUSTOMER_ID="12341234-12341234-13241234"
 
 # Start the containers
 docker compose up
@@ -68,8 +68,8 @@ Using PowerShell:
 cd Riverbed-Community-Toolkit/APM/103-opentelemetry-otlp-python-app
 
 # Configure the environment variable for the APM OpenTelemetry Collector
-$env:ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
-$env:ATERNITY_CUSTOMER_ID="12341234-12341234-13241234"
+$env:RIVERBED_APM_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
+$env:RIVERBED_APM_CUSTOMER_ID="12341234-12341234-13241234"
 
 # Start the containers
 docker compose up
