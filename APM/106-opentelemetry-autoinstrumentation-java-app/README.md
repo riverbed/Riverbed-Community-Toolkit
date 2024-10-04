@@ -24,18 +24,18 @@ Navigate to APM (for example [https://apm.myaccount.aternity.com](https://apm.my
 
 Download the sources, for example [right-click here](https://github.com/riverbed/Riverbed-Community-Toolkit/archive/refs/heads/master.zip) to download the zip archive, and expand it locally.
 
-Edit the [docker-compose.yaml](docker-compose.yaml) file if you want to manually configure the `SERVER_URL` environment variable of the APM OpenTelemetry Collector container, replacing *ATERNITY_SAAS_SERVER_HOST* and *ATERNITY_CUSTOMER_ID* with actual values. The remaining is set to pull the APM OpenTelemetry Collector container image from [DockerHub](https://hub.docker.com/r/aternity/apm-collector) and expose the port 4317 to receive OTLP gRPC telemetry. It looks like this:
+Edit the [docker-compose.yaml](docker-compose.yaml) file if you want to manually configure the `SERVER_URL` environment variable of the APM OpenTelemetry Collector container, replacing *RIVERBED_APM_SAAS_SERVER_HOST* and *RIVERBED_APM_CUSTOMER_ID* with actual values. The remaining is set to pull the APM OpenTelemetry Collector container image from [DockerHub](https://hub.docker.com/r/aternity/apm-collector) and expose the port 4317 to receive OTLP gRPC telemetry. It looks like this:
 
 ```yaml
 services:
      
-  aternity-opentelemetry-collector:
+  riverbed-apm-opentelemetry-collector:
 
     image: registry.hub.docker.com/aternity/apm-collector:2022.4.0-4
     
     environment:
     
-      SERVER_URL: "wss://${ATERNITY_SAAS_SERVER_HOST}/?RPM_AGENT_CUSTOMER_ID=${ATERNITY_CUSTOMER_ID}"
+      SERVER_URL: "wss://${RIVERBED_APM_SAAS_SERVER_HOST}/?RPM_AGENT_CUSTOMER_ID=${RIVERBED_APM_CUSTOMER_ID}"
     
     ports:
     
@@ -46,7 +46,7 @@ The sources of the Java application consist in a single Java file [cookbook106.j
 
 ### Step 3 - Start the containers
 
-In a shell, go to the Cookbook folder, configure the APM OpenTelemetry Collector using the environment variables, ATERNITY_SAAS_SERVER_HOST and ATERNITY_CUSTOMER_ID, and starts all the containers with docker-compose.
+In a shell, go to the Cookbook folder, configure the APM OpenTelemetry Collector using the environment variables, RIVERBED_APM_SAAS_SERVER_HOST and RIVERBED_APM_CUSTOMER_ID, and starts all the containers with docker-compose.
 
 For example using Bash:
 
@@ -55,8 +55,8 @@ For example using Bash:
 cd Riverbed-Community-Toolkit/APM/106-opentelemetry-autoinstrumentation-java-app
 
 # Configure the environment variables for the APM OpenTelemetry Collector
-export ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
-export ATERNITY_CUSTOMER_ID="12341234-12341234-13241234"
+export RIVERBED_APM_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
+export RIVERBED_APM_CUSTOMER_ID="12341234-12341234-13241234"
 
 # Start the containers
 docker-compose up
@@ -68,8 +68,8 @@ or else using PowerShell:
 cd Riverbed-Community-Toolkit\APM\106-opentelemetry-autoinstrumentation-java-app
 
 # Configure the environement variable for the APM OpenTelemetry Collector
-$env:ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
-$env:ATERNITY_CUSTOMER_ID="12341234-12341234-13241234"
+$env:RIVERBED_APM_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
+$env:RIVERBED_APM_CUSTOMER_ID="12341234-12341234-13241234"
 
 # Start the containers
 docker-compose up

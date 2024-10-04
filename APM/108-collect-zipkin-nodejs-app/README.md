@@ -32,8 +32,8 @@ Start the containers using the [docker-compose.yaml](docker-compose.yaml), for e
 cd Riverbed-Community-Toolkit/APM/108-collect-zipkin-nodejs-app
 
 # Configure the environment variables for the APM OpenTelemetry Collector
-export ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
-export ATERNITY_CUSTOMER_ID="12341234-12341234-13241234"
+export RIVERBED_APM_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
+export RIVERBED_APM_CUSTOMER_ID="12341234-12341234-13241234"
 
 docker-compose up
 ```
@@ -44,8 +44,8 @@ or with PowerShell:
 cd Riverbed-Community-Toolkit/APM/108-collect-zipkin-nodejs-app
 
 # Configure the environement variable for the APM OpenTelemetry Collector
-$env:ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
-$env:ATERNITY_CUSTOMER_ID="12341234-12341234-13241234"
+$env:RIVERBED_APM_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
+$env:RIVERBED_APM_CUSTOMER_ID="12341234-12341234-13241234"
 
 docker-compose up
 ```
@@ -104,13 +104,13 @@ services:
     
     environment:
 
-      SERVER_URL: "wss://${ATERNITY_SAAS_SERVER_HOST}/?RPM_AGENT_CUSTOMER_ID=${ATERNITY_CUSTOMER_ID}"
+      SERVER_URL: "wss://${RIVERBED_APM_SAAS_SERVER_HOST}/?RPM_AGENT_CUSTOMER_ID=${RIVERBED_APM_CUSTOMER_ID}"
 
     ports:
       - "9411:9411/tcp"
 ```
 
-In the [docker-compose.yaml](docker-compose.yaml) above, the `SERVER_URL` has been defined by two *docker compose variables*, to ease external configuration (ATERNITY_SAAS_SERVER_HOST and ATERNITY_CUSTOMER_ID). It can also be hard-coded, like this this:
+In the [docker-compose.yaml](docker-compose.yaml) above, the `SERVER_URL` has been defined by two *docker compose variables*, to ease external configuration (RIVERBED_APM_SAAS_SERVER_HOST and RIVERBED_APM_CUSTOMER_ID). It can also be hard-coded, like this this:
 
 ```yaml
       SERVER_URL: "wss://agents.apm.myaccount.aternity.com/?RPM_AGENT_CUSTOMER_ID=12341234-12341234-13241234"
@@ -123,12 +123,12 @@ In the [docker-compose.yaml](docker-compose.yaml), in the application container 
     
     environment:  
     
-      ZIPKIN_ENDPOINT: http://aternity-opentelemetry-collector:9411/api/v2/spans
+      ZIPKIN_ENDPOINT: http://riverbed-apm-opentelemetry-collector:9411/api/v2/spans
       ZIPKIN_SERVICE_NAME: service108_js
 ```
 
 #### License
 
-Copyright (c) 2022 Riverbed Technology, Inc.
+Copyright (c) 2022-2024 Riverbed Technology, Inc.
 
 The contents provided here are licensed under the terms and conditions of the MIT License accompanying the software ("License"). The scripts are distributed "AS IS" as set forth in the License. The script also include certain third party code. All such third party code is also distributed "AS IS" and is licensed by the respective copyright holders under the applicable terms and conditions (including, without limitation, warranty and liability disclaimers) identified in the license notices accompanying the software.

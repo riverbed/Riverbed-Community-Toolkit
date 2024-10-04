@@ -2,7 +2,7 @@
 //
 // Riverbed-Community-Toolkit
 // 108-collect-zipkin-nodejs-app
-// version: 22.2.28
+// version: 24.10.4
 //
 // Demo app in Nodejs with Zipkin instrumentation
 //
@@ -14,7 +14,7 @@
 //
 // - Set environment variable
 //   * ZIPKIN_SERVICE_NAME. For example: "service108-js"
-//   * ZIPKIN_ENDPOINT. For example: http://localhost:9411/api/v2/spans or http://aternity-opentelemetry-collector:9411/api/v2/spans
+//   * ZIPKIN_ENDPOINT. For example: http://localhost:9411/api/v2/spans or http://riverbed-apm-opentelemetry-collector:9411/api/v2/spans
 //
 // - Run the service
 //
@@ -30,7 +30,7 @@
 // Example in PowerShell
 //
 //   $env:ZIPKIN_SERVICE_NAME="service108-js"
-//   $env:ZIPKIN_ENDPOINT="http://aternity-opentelemetry-collector:9411/api/v2/spans"
+//   $env:ZIPKIN_ENDPOINT="http://riverbed-apm-opentelemetry-collector:9411/api/v2/spans"
 //   node app_with_zipkin.js
 
 'use strict';
@@ -86,7 +86,7 @@ app.get('/fetch', (req, res) => {
     const remoteServiceName = 'github'; 
     const axios = wrapAxios(distAxios, { tracer, remoteServiceName });
 
-    var response = axios.get("https://github.com/Aternity")
+    var response = axios.get("https://github.com/riverbed")
     .then(function (response) {
     console.log("success");
     console.log(response);

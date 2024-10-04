@@ -1,6 +1,6 @@
 # 102-opentelemetry-spring-demo-app
 
-This cookbook sets up a Java microservices application with the [APM OpenTelemetry collector container](https://hub.docker.com/r/aternity/apm-collector) on a Docker host to start practicing Digital Experience Monitoring (DEM) using [APM](https://www.riverbed.com/products/application-performance-monitoring/) and [OpenTelemetry](https://opentelemetry.io/).
+This cookbook sets up a Java microservices application with the [APM OpenTelemetry collector container](https://hub.docker.com/r/aternity/apm-collector) on a Docker host to start using [APM](https://www.riverbed.com/products/application-performance-monitoring/) and [OpenTelemetry](https://opentelemetry.io/).
 
 The sample app is the famous Java Community application called [Spring PetClinic Microservices](https://github.com/spring-petclinic/spring-petclinic-microservices). Composed of multiple services that run in containers, like Config, Discovery Server, Customers, Vets, Visits and API, it uses [ZipKin](https://zipkin.io/) instrumentation to export some application telemetry (traces for the service calls). The [APM OpenTelemetry collector](https://hub.docker.com/r/aternity/apm-collector) is integrated in the architecture, it also runs in a container, taking the role of the Tracing Server to collect and store the telemetry in the APM backend (SaaS). 
 
@@ -34,14 +34,14 @@ In this YAML file, the *tracing-server* section contains the APM OpenTelemetry C
     container_name: tracing-server
     mem_limit: 128M
     environment:
-      - SERVER_URL=wss://${ATERNITY_SAAS_SERVER_HOST}/?RPM_AGENT_CUSTOMER_ID=${ATERNITY_CUSTOMER_ID}
+      - SERVER_URL=wss://${RIVERBED_APM_SAAS_SERVER_HOST}/?RPM_AGENT_CUSTOMER_ID=${ATERNITY_CUSTOMER_ID}
     ports:
      - 9411:9411
 ```
 
 ### Step 3 - Start the `spring-petclinic-microservices` app
 
-In a shell, just go in the folder where you keep the [docker-compose.yml](docker-compose.yml). Configure the APM OpenTelemetry Collector using the environment variable, ATERNITY_SAAS_SERVER_HOST and ATERNITY_CUSTOMER_ID, and starts all the containers with docker-compose.
+In a shell, just go in the folder where you keep the [docker-compose.yml](docker-compose.yml). Configure the APM OpenTelemetry Collector using the environment variable, RIVERBED_APM_SAAS_SERVER_HOST and RIVERBED_APM_CUSTOMER_ID, and starts all the containers with docker-compose.
 
 For example, using Bash:
 
@@ -50,8 +50,8 @@ For example, using Bash:
 cd Riverbed-Community-Toolkit/APM/102-opentelemetry-spring-demo-app
 
 # Configure the environment variables for the APM OpenTelemetry Collector
-export ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
-export ATERNITY_CUSTOMER_ID="12341234-12341234-13241234"
+export RIVERBED_APM_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
+export RIVERBED_APM_CUSTOMER_ID="12341234-12341234-13241234"
 
 # Start the containers
 docker-compose up
@@ -64,8 +64,8 @@ or else using PowerShell:
 cd Riverbed-Community-Toolkit/APM/102-opentelemetry-spring-demo-app
 
 # Configure the environment variable for the APM OpenTelemetry Collector
-$env:ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
-$env:ATERNITY_CUSTOMER_ID="12341234-12341234-13241234"
+$env:RIVERBED_APM_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
+$env:RIVERBED_APM_CUSTOMER_ID="12341234-12341234-13241234"
 
 # Start the containers
 docker-compose up

@@ -26,7 +26,7 @@ Download the cookbook, for example [right-click here](https://github.com/riverbe
 
 ### Step 3 - Start the containers
 
-Open a shell and go to the Cookbook folder. Configure the APM OpenTelemetry Collector using the environment variables, ATERNITY_SAAS_SERVER_HOST and ATERNITY_CUSTOMER_ID, and start all the containers with docker-compose.
+Open a shell and go to the Cookbook folder. Configure the APM OpenTelemetry Collector using the environment variables, RIVERBED_APM_SAAS_SERVER_HOST and RIVERBED_APM_CUSTOMER_ID, and start all the containers with docker-compose.
 
 For example using Bash:
 
@@ -35,8 +35,8 @@ For example using Bash:
 cd Riverbed-Community-Toolkit/APM/111-opentelemetry-autoinstrumentation-spring-demo-app
 
 # Configure the environment variables for the APM OpenTelemetry Collector
-export ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
-export ATERNITY_CUSTOMER_ID="12341234-12341234-13241234"
+export RIVERBED_APM_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
+export RIVERBED_APM_CUSTOMER_ID="12341234-12341234-13241234"
 
 # Start the containers
 docker-compose up
@@ -48,8 +48,8 @@ or else using PowerShell:
 cd Riverbed-Community-Toolkit\APM\111-opentelemetry-autoinstrumentation-spring-demo-app
 
 # Configure the environement variable for the APM OpenTelemetry Collector
-$env:ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
-$env:ATERNITY_CUSTOMER_ID="12341234-12341234-13241234"
+$env:RIVERBED_APM_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
+$env:RIVERBED_APM_CUSTOMER_ID="12341234-12341234-13241234"
 
 # Start the containers
 docker-compose up
@@ -77,6 +77,6 @@ docker-compose down
 
 #### License
 
-Copyright (c) 2022 Riverbed Technology, Inc. 
+Copyright (c) 2022-2024 Riverbed Technology, Inc. 
 
 The contents provided here are licensed under the terms and conditions of the MIT License accompanying the software ("License"). The scripts are distributed "AS IS" as set forth in the License. The script also include certain third party code. All such third party code is also distributed "AS IS" and is licensed by the respective copyright holders under the applicable terms and conditions (including, without limitation, warranty and liability disclaimers) identified in the license notices accompanying the software.

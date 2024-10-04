@@ -1,6 +1,6 @@
 # 109-opentelemetry-export
 
-In this cookbook the OpenTelemetry Collector receives OTLP-gRPC telemetry from a Go app and exports it using other protocols (OLTP-http, Jaeger and Zipkin) to different collectors: [APM OpenTelemetry Collector](https://hub.docker.com/r/aternity/apm-collector), Jaeger all-in-one and also a Zipkin all-in-one.
+In this cookbook the OpenTelemetry Collector receives OTLP-gRPC telemetry from a Go app and exports to both [APM OpenTelemetry Collector](https://hub.docker.com/r/aternity/apm-collector) using Native OTLP gRPC protocol and to the open-source Zipkin all-in-one using Zipkin protocol.
 
 The Go app is a simple demo application provided by the [OpenTelemetry project](https://github.com/open-telemetry). In the cookbook it is set to run indefinitely to generate telemetry.
 
@@ -32,8 +32,8 @@ Start the containers using the [docker-compose.yaml](docker-compose.yaml), for e
 cd Riverbed-Community-Toolkit/APM/109-opentelemetry-export
 
 # Configure the environment variables for the APM OpenTelemetry Collector
-export ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
-export ATERNITY_CUSTOMER_ID="12341234-12341234-13241234"
+export RIVERBED_APM_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
+export RIVERBED_APM_CUSTOMER_ID="12341234-12341234-13241234"
 
 docker-compose up
 ```
@@ -44,8 +44,8 @@ or with PowerShell:
 cd Riverbed-Community-Toolkit/APM/109-opentelemetry-export
 
 # Configure the environement variable for the APM OpenTelemetry Collector
-$env:ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
-$env:ATERNITY_CUSTOMER_ID="12341234-12341234-13241234"
+$env:RIVERBED_APM_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
+$env:RIVERBED_APM_CUSTOMER_ID="12341234-12341234-13241234"
 
 docker-compose up
 ```
@@ -68,6 +68,6 @@ docker-compose down
 
 #### License
 
-Copyright (c) 2022 Riverbed Technology, Inc.
+Copyright (c) 2022-2024 Riverbed Technology, Inc.
 
 The contents provided here are licensed under the terms and conditions of the MIT License accompanying the software ("License"). The scripts are distributed "AS IS" as set forth in the License. The script also include certain third party code. All such third party code is also distributed "AS IS" and is licensed by the respective copyright holders under the applicable terms and conditions (including, without limitation, warranty and liability disclaimers) identified in the license notices accompanying the software.

@@ -1,5 +1,5 @@
 # docker-compose.yaml
-# version: 23.1.24
+# version: 24.10.4
 # Aternity Tech Community Cookbook (https://github.com/riverbed/Riverbed-Community-Toolkit)
 #
 # Usage:
@@ -8,25 +8,23 @@
 #
 # Example with Bash:
 #
-#   export ALLUVIO_ATERNITY_APM_SAAS_PSOCKETS_SERVER_HOST="agents.apm.myaccount.aternity.com"
-#   export ALLUVIO_ATERNITY_APM_CUSTOMER_ID="12341234-12341234-13241234"
+#   export RIVERBED_APM_SAAS_PSOCKETS_SERVER_HOST="agents.apm.myaccount.aternity.com"
+#   export RIVERBED_APM_CUSTOMER_ID="12341234-12341234-13241234"
 #   docker-compose up
 #
 # Example PowerShell
 #
-#   $env:ALLUVIO_ATERNITY_APM_SAAS_PSOCKETS_SERVER_HOST="agents.apm.myaccount.aternity.com"
-#   $env:ALLUVIO_ATERNITY_APM_CUSTOMER_ID="12341234-12341234-13241234"
+#   $env:RIVERBED_APM_SAAS_PSOCKETS_SERVER_HOST="agents.apm.myaccount.aternity.com"
+#   $env:RIVERBED_APM_CUSTOMER_ID="12341234-12341234-13241234"
 #   docker-compose up
-
-version: "3.9"
 
 services:
 
   demo-app-apm:
 
     environment:
-    - RVBD_ANALYSIS_SERVER=$ALLUVIO_ATERNITY_APM_SAAS_PSOCKETS_SERVER_HOST
-    - RVBD_CUSTOMER_ID=$ALLUVIO_ATERNITY_APM_CUSTOMER_ID
+    - RVBD_ANALYSIS_SERVER=$RIVERBED_APM_SAAS_PSOCKETS_SERVER_HOST
+    - RVBD_CUSTOMER_ID=$RIVERBED_APM_CUSTOMER_ID
     - RVBD_APP_INSTANCE=cookbook-202
 
     build:

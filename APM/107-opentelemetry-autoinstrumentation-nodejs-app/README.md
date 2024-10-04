@@ -33,8 +33,8 @@ Start the containers using the [docker-compose.yaml](docker-compose.yaml), for e
 cd Riverbed-Community-Toolkit/APM/107-opentelemetry-autoinstrumentation-nodejs-app
 
 # Configure the environment variables for the APM OpenTelemetry Collector
-export ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
-export ATERNITY_CUSTOMER_ID="12341234-12341234-13241234"
+export RIVERBED_APM_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
+export RIVERBED_APM_CUSTOMER_ID="12341234-12341234-13241234"
 
 docker-compose up
 ```
@@ -45,8 +45,8 @@ or with PowerShell:
 cd Riverbed-Community-Toolkit/APM/107-opentelemetry-autoinstrumentation-nodejs-app
 
 # Configure the environement variable for the APM OpenTelemetry Collector
-$env:ATERNITY_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
-$env:ATERNITY_CUSTOMER_ID="12341234-12341234-13241234"
+$env:RIVERBED_APM_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
+$env:RIVERBED_APM_CUSTOMER_ID="12341234-12341234-13241234"
 
 docker-compose up
 ```
@@ -102,17 +102,17 @@ services:
     
     image: registry.hub.docker.com/aternity/apm-collector:2022.4.0-4
     
-    container_name: aternity-opentelemetry-collector       
+    container_name: riverbed-apm-opentelemetry-collector       
     
     environment:
 
-      SERVER_URL: "wss://${ATERNITY_SAAS_SERVER_HOST}/?RPM_AGENT_CUSTOMER_ID=${ATERNITY_CUSTOMER_ID}"
+      SERVER_URL: "wss://${RIVERBED_APM_SAAS_SERVER_HOST}/?RPM_AGENT_CUSTOMER_ID=${RIVERBED_APM_CUSTOMER_ID}"
 
     ports:
       - "4317:4317/tcp"
 ```
 
-In the [docker-compose.yaml](docker-compose.yaml) above, the `SERVER_URL` has been defined by two *docker compose variables*, to ease external configuration (ATERNITY_SAAS_SERVER_HOST and ATERNITY_CUSTOMER_ID). It can also be hard-coded, like this this:
+In the [docker-compose.yaml](docker-compose.yaml) above, the `SERVER_URL` has been defined by two *docker compose variables*, to ease external configuration (RIVERBED_APM_SAAS_SERVER_HOST and RIVERBED_APM_CUSTOMER_ID). It can also be hard-coded, like this this:
 
 ```yaml
       SERVER_URL: "wss://agents.apm.myaccount.aternity.com/?RPM_AGENT_CUSTOMER_ID=12341234-12341234-13241234"
@@ -125,7 +125,7 @@ On the application container side, the `OTEL_EXPORTER_OTLP_ENDPOINT` environment
     
     environment:  
     
-      OTEL_EXPORTER_OTLP_ENDPOINT: http://aternity-opentelemetry-collector:4317
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://riverbed-apm-opentelemetry-collector:4317
       OTEL_SERVICE_NAME: service107_js
 ```
 
