@@ -15,9 +15,9 @@ services:
       - otel-collector
     build:
       # Uncomment to build from local context
-      context: .
+      # context: .
       # Build from remote context
-      # context: https://github.com/riverbed/Riverbed-Community-Toolkit.git#master:/APM/109-opentelemetry-export
+      context: https://github.com/riverbed/Riverbed-Community-Toolkit.git#master:/APM/109-opentelemetry-export
       dockerfile: Dockerfile
     restart: unless-stopped
 
