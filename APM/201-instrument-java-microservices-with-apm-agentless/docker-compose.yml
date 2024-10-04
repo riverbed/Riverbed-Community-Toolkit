@@ -1,6 +1,6 @@
 # Riverbed-Community-Toolkit
-# 201-instrument-jav-spring-demo-app
-# version: 22.03.31
+# 201-instrument-java-microservices-with-apm-agentless
+# version: 24.10.4
 #
 # Define the containers of the Spring PetClinic Microservices application using APM
 # Reference:
@@ -11,140 +11,178 @@
 #   docker-compose up
 # 
 # Example in PowerShell
-#   $env:ATERNITY_SAAS_SERVER_HOST="psockets.apm.myaccount.aternity.com"
-#   $env:ATERNITY_CUSTOMER_ID="12341234-12341234-13241234"
+#   $env:RIVERBED_APM_SAAS_SERVER_HOST="psockets.apm.myaccount.aternity.com"
+#   $env:RIVERBED_APM_CUSTOMER_ID="12341234-12341234-13241234"
 #   docker-compose up
 #
 # Example in Unix
-#   ATERNITY_SAAS_SERVER_HOST="psockets.apm.myaccount.aternity.com" ATERNITY_CUSTOMER_ID="12341234-12341234-13241234" docker-compose up
+#   RIVERBED_APM_SAAS_SERVER_HOST="psockets.apm.myaccount.aternity.com" RIVERBED_APM_CUSTOMER_ID="12341234-12341234-13241234" docker-compose up
 #
-
-version: '3.8'
 
 services:
 
   config-server:
-    image: springcommunity/spring-petclinic-config-server
+    image: springcommunity/spring-petclinic-config-server:2.5.1
     container_name: config-server
     mem_reservation: 200M
-    mem_limit: 256M
+    mem_limit: 500M
     ports:
      - 8888:8888
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://config-server:8888"]
+      interval: 1m
+      timeout: 10s
+      retries: 6
+      start_period: 30s
+      start_interval: 10s
 
   discovery-server:
-    image: springcommunity/spring-petclinic-discovery-server
+    image: springcommunity/spring-petclinic-discovery-server:2.5.1
     container_name: discovery-server
     mem_reservation: 200M
-    mem_limit: 256M
+    mem_limit: 500M
     depends_on:
-      - config-server
-    entrypoint: ["./dockerize","-wait=tcp://config-server:8888","-timeout=60s","--","java","-Xmx128m","-XshowSettings:vm","org.springframework.boot.loader.JarLauncher"]
+      config-server:
+        condition: service_healthy
     ports:
      - 8761:8761
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://discovery-server:8761"]
+      interval: 1m
+      timeout: 10s
+      retries: 6
+      start_period: 60s
+      start_interval: 60s
     environment:
-      - RVBD_ANALYSIS_SERVER=${ATERNITY_SAAS_SERVER_HOST}
-      - RVBD_CUSTOMER_ID=${ATERNITY_CUSTOMER_ID}
-      - JAVA_TOOL_OPTIONS=-agentpath:/agent/lib/libAwProfile64.so
+      - JAVA_TOOL_OPTIONS=-Xmx128m -agentpath:/agent/lib/libAwProfile64.so  
+      - RVBD_ANALYSIS_SERVER=${RIVERBED_APM_SAAS_SERVER_HOST}
+      - RVBD_CUSTOMER_ID=${RIVERBED_APM_CUSTOMER_ID}
       - RVBD_AGENT_FILES=1
       - RVBD_APP_INSTANCE=discovery-server
     volumes:
       - ./agent:/agent
 
+
   customers-service:
-    image: springcommunity/spring-petclinic-customers-service
+    image: springcommunity/spring-petclinic-customers-service:2.5.1
     container_name: customers-service
     mem_reservation: 200M
-    mem_limit: 256M
+    mem_limit: 500M
     depends_on:
-     - config-server
-     - discovery-server
-    entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java","-Xmx128m","-XshowSettings:vm","org.springframework.boot.loader.JarLauncher", "--spring.zipkin.enabled=false"]
+      discovery-server:
+        condition: service_healthy
+      config-server:
+        condition: service_healthy
     ports:
     - 8081:8081
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://customers-service:8081"]
+      interval: 1m
+      timeout: 10s
+      retries: 10
+      start_period: 60s
+      start_interval: 60s
     environment:
-      - RVBD_ANALYSIS_SERVER=${ATERNITY_SAAS_SERVER_HOST}
-      - RVBD_CUSTOMER_ID=${ATERNITY_CUSTOMER_ID}
-      - JAVA_TOOL_OPTIONS=-agentpath:/agent/lib/libAwProfile64.so
+      - JAVA_TOOL_OPTIONS=-Xmx128m -agentpath:/agent/lib/libAwProfile64.so
+      - RVBD_ANALYSIS_SERVER=${RIVERBED_APM_SAAS_SERVER_HOST}
+      - RVBD_CUSTOMER_ID=${RIVERBED_APM_CUSTOMER_ID}
       - RVBD_AGENT_FILES=1
       - RVBD_APP_INSTANCE=customers-service
     volumes:
-      - ./agent:/agent
+      - ./agent:/agent      
 
   visits-service:
-    image: springcommunity/spring-petclinic-visits-service
+    image: springcommunity/spring-petclinic-visits-service:2.5.1
     container_name: visits-service
     mem_reservation: 200M
-    mem_limit: 256M
+    mem_limit: 500M
     depends_on:
-     - config-server
-     - discovery-server
-    entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java","-Xmx128m","-XshowSettings:vm","org.springframework.boot.loader.JarLauncher", "--spring.zipkin.enabled=false"]
+      discovery-server:
+        condition: service_healthy
+      config-server:
+        condition: service_healthy
     ports:
      - 8082:8082
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://visits-service:8082"]
+      interval: 1m
+      timeout: 10s
+      retries: 10
+      start_period: 60s
+      start_interval: 60s
     environment:
-      - RVBD_ANALYSIS_SERVER=${ATERNITY_SAAS_SERVER_HOST}
-      - RVBD_CUSTOMER_ID=${ATERNITY_CUSTOMER_ID}
-      - JAVA_TOOL_OPTIONS=-agentpath:/agent/lib/libAwProfile64.so
+      - JAVA_TOOL_OPTIONS=-Xmx128m -agentpath:/agent/lib/libAwProfile64.so
+      - RVBD_ANALYSIS_SERVER=${RIVERBED_APM_SAAS_SERVER_HOST}
+      - RVBD_CUSTOMER_ID=${RIVERBED_APM_CUSTOMER_ID}
       - RVBD_AGENT_FILES=1
       - RVBD_APP_INSTANCE=visits-service
     volumes:
-      - ./agent:/agent
+      - ./agent:/agent      
 
   vets-service:
-    image: springcommunity/spring-petclinic-vets-service
+    image: springcommunity/spring-petclinic-vets-service:2.5.1
     container_name: vets-service
     mem_reservation: 200M
-    mem_limit: 256M
+    mem_limit: 500M
     depends_on:
-     - config-server
-     - discovery-server
-    entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java","-Xmx128m","-XshowSettings:vm","org.springframework.boot.loader.JarLauncher", "--spring.zipkin.enabled=false"]
+      discovery-server:
+        condition: service_healthy
+      config-server:
+        condition: service_healthy
     ports:
      - 8083:8083
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://vets-service:8083"]
+      interval: 1m
+      timeout: 10s
+      retries: 10
+      start_period: 60s
+      start_interval: 60s
     environment:
-      - RVBD_ANALYSIS_SERVER=${ATERNITY_SAAS_SERVER_HOST}
-      - RVBD_CUSTOMER_ID=${ATERNITY_CUSTOMER_ID}
-      - JAVA_TOOL_OPTIONS=-agentpath:/agent/lib/libAwProfile64.so
+      - JAVA_TOOL_OPTIONS=-Xmx256m -agentpath:/agent/lib/libAwProfile64.so
+      - RVBD_ANALYSIS_SERVER=${RIVERBED_APM_SAAS_SERVER_HOST}
+      - RVBD_CUSTOMER_ID=${RIVERBED_APM_CUSTOMER_ID}
       - RVBD_AGENT_FILES=1
       - RVBD_APP_INSTANCE=vets-service
     volumes:
       - ./agent:/agent
 
+
   api-gateway:
-    image: springcommunity/spring-petclinic-api-gateway
+    image: springcommunity/spring-petclinic-api-gateway:2.5.1
     container_name: api-gateway
     mem_reservation: 200M
-    mem_limit: 300M
+    mem_limit: 500M
     depends_on:
-     - config-server
-     - discovery-server
-    entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java","-Xmx128m","-XshowSettings:vm","org.springframework.boot.loader.JarLauncher", "--spring.zipkin.enabled=false"]
+      discovery-server:
+        condition: service_healthy 
     ports:
      - 8080:8080
     environment:
-      - RVBD_ANALYSIS_SERVER=${ATERNITY_SAAS_SERVER_HOST}
-      - RVBD_CUSTOMER_ID=${ATERNITY_CUSTOMER_ID}
-      - JAVA_TOOL_OPTIONS=-agentpath:/agent/lib/libAwProfile64.so
+      - JAVA_TOOL_OPTIONS=-Xmx128m -agentpath:/agent/lib/libAwProfile64.so
+      - RVBD_ANALYSIS_SERVER=${RIVERBED_APM_SAAS_SERVER_HOST}
+      - RVBD_CUSTOMER_ID=${RIVERBED_APM_CUSTOMER_ID}
       - RVBD_AGENT_FILES=1
       - RVBD_APP_INSTANCE=api-gateway
     volumes:
-      - ./agent:/agent
+      - ./agent:/agent    
 
   admin-server:
-    image: springcommunity/spring-petclinic-admin-server
+    image: springcommunity/spring-petclinic-admin-server:2.5.1
     container_name: admin-server
     mem_reservation: 200M
-    mem_limit: 256M
+    mem_limit: 500M
     depends_on:
-     - config-server
-     - discovery-server
-    entrypoint: ["./dockerize","-wait=tcp://discovery-server:8761","-timeout=60s","--","java","-Xmx128m","-XshowSettings:vm","org.springframework.boot.loader.JarLauncher"]
+      discovery-server:
+        condition: service_healthy
+      config-server:
+        condition: service_healthy
     ports:
      - 9090:9090
     environment:
-      - RVBD_ANALYSIS_SERVER=${ATERNITY_SAAS_SERVER_HOST}
-      - RVBD_CUSTOMER_ID=${ATERNITY_CUSTOMER_ID}
       - JAVA_TOOL_OPTIONS=-agentpath:/agent/lib/libAwProfile64.so
+      - RVBD_ANALYSIS_SERVER=${RIVERBED_APM_SAAS_SERVER_HOST}
+      - RVBD_CUSTOMER_ID=${RIVERBED_APM_CUSTOMER_ID}
       - RVBD_AGENT_FILES=1
       - RVBD_APP_INSTANCE=admin-server
     volumes:

@@ -35,25 +35,25 @@ In the [docker-compose.yml](docker-compose.yml), for each service, the auto-inst
     image: myapp/cool-java-service
     entrypoint: ["java", "-jar", "MyCoolService.jar"]
     environment:
-      - RVBD_ANALYSIS_SERVER=${ATERNITY_SAAS_SERVER_HOST}
-      - RVBD_CUSTOMER_ID=${ATERNITY_CUSTOMER_ID}
       - JAVA_TOOL_OPTIONS=-agentpath:/agent/lib/libAwProfile64.so
+      - RVBD_ANALYSIS_SERVER=${RIVERBED_APM_SAAS_SERVER_HOST}
+      - RVBD_CUSTOMER_ID=${RIVERBED_APM_CUSTOMER_ID}
       - RVBD_AGENT_FILES=1
       - RVBD_APP_INSTANCE=cool-java-service
     volumes:
       - ./agent:/agent
 ```
 
-The CustomerID and SaaS Analysis Server Host can be defined manually, replacing ATERNITY_SAAS_SERVER_HOST and ATERNITY_CUSTOMER_ID directly in the file like this:
+The CustomerID and SaaS Analysis Server Host can be defined manually, replacing RIVERBED_APM_SAAS_SERVER_HOST and RIVERBED_APM_CUSTOMER_ID directly in the file like this:
 
 ```yaml
   cool-java-service:
     image: myapp/cool-java-service
     entrypoint: ["java", "-jar", "MyCoolService.jar"]
     environment:
+      - JAVA_TOOL_OPTIONS=-agentpath:/agent/lib/libAwProfile64.so
       - RVBD_ANALYSIS_SERVER=psockets.apm.myaccount.aternity.com
       - RVBD_CUSTOMER_ID=12345678-abcd-1234-abcd-123456789012
-      - JAVA_TOOL_OPTIONS=-agentpath:/agent/lib/libAwProfile64.so
       - RVBD_AGENT_FILES=1
       - RVBD_APP_INSTANCE=cool-java-service
     volumes:
