@@ -29,7 +29,7 @@ Edit the [docker-compose.yaml](docker-compose.yaml) file if you want to manually
 ```yaml
 services:
      
-  aternity-opentelemetry-collector:
+  riverbed-apm-opentelemetry-collector:
 
     image: registry.hub.docker.com/aternity/apm-collector:2022.4.0-4
     
