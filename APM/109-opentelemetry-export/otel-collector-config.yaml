@@ -2,7 +2,7 @@
 #
 # Riverbed-Community-Toolkit
 # 109-opentelemetry-export
-# version: 22.11.221128
+# version: 24.10.4
 #
 # OpenTelemetry Collector Configuration
 #
@@ -16,13 +16,12 @@ receivers:
 
 exporters:
 
-  otlphttp:
-    endpoint: http://aternity-opentelemetry-collector:4318
-
-  jaeger:
-    endpoint: jaeger-all-in-one:14250
+  otlp:
+    endpoint: http://riverbed-apm-opentelemetry-collector:4317
+    compression: none
     tls:
       insecure: true
+    
 
   zipkin:
     endpoint: http://zipkin-all-in-one:9411/api/v2/spans
@@ -41,4 +40,4 @@ service:
     traces:
       receivers: [otlp]
       processors: []
-      exporters: [otlphttp,jaeger,zipkin,logging]
+      exporters: [otlp,zipkin,logging]
