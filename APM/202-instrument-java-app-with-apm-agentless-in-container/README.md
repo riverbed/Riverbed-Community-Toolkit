@@ -37,8 +37,8 @@ For example with Bash:
 cd Riverbed-Community-Toolkit/APM/203-instrument-java-app-with-apm-agent-in-container
 
 # Configure the environment variables with the SAAS Account details
-export ALLUVIO_ATERNITY_APM_SAAS_PSOCKETS_SERVER_HOST="psockets.apm.myaccount.aternity.com"
-export ALLUVIO_ATERNITY_APM_CUSTOMER_ID="12341234-12341234-13241234"
+export RIVERBED_APM_SAAS_PSOCKETS_SERVER_HOST="psockets.apm.myaccount.aternity.com"
+export RIVERBED_APM_CUSTOMER_ID="12341234-12341234-13241234"
 
 docker-compose up
 ```
@@ -49,8 +49,8 @@ or with PowerShell:
 cd Riverbed-Community-Toolkit/APM/203-instrument-java-app-with-apm-agent-in-container
 
 # Configure the environment variables with the SAAS Account details
-$env:ALLUVIO_ATERNITY_APM_SAAS_PSOCKETS_SERVER_HOST="psockets.apm.myaccount.aternity.com"
-$env:ALLUVIO_ATERNITY_APM_CUSTOMER_ID="12341234-12341234-13241234"
+$env:RIVERBED_APM_SAAS_PSOCKETS_SERVER_HOST="psockets.apm.myaccount.aternity.com"
+$env:RIVERBED_APM_CUSTOMER_ID="12341234-12341234-13241234"
 
 docker-compose up
 ```
@@ -81,6 +81,6 @@ Go to the APM webconsole to observe the transactions of that instance.
 
 #### License
 
-Copyright (c) 2022 Riverbed
+Copyright (c) 2022-2024 Riverbed
 
 The contents provided here are licensed under the terms and conditions of the MIT License accompanying the software ("License"). The scripts are distributed "AS IS" as set forth in the License. The script also include certain third party code. All such third party code is also distributed "AS IS" and is licensed by the respective copyright holders under the applicable terms and conditions (including, without limitation, warranty and liability disclaimers) identified in the license notices accompanying the software.
