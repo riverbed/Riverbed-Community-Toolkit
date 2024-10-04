@@ -102,7 +102,7 @@ services:
     
     image: registry.hub.docker.com/aternity/apm-collector:2022.3.0-3
     
-    container_name: aternity-opentelemetry-collector       
+    container_name: riverbed-apm-opentelemetry-collector       
     
     environment:
 
@@ -125,7 +125,7 @@ On the application container side, the `OTEL_EXPORTER_ZIPKIN_ENDPOINT` environme
     
     environment:  
     
-      OTEL_EXPORTER_ZIPKIN_ENDPOINT: http://aternity-opentelemetry-collector:9411/api/v2/spans
+      OTEL_EXPORTER_ZIPKIN_ENDPOINT: http://riverbed-apm-opentelemetry-collector:9411/api/v2/spans
       OTEL_SERVICE_NAME: service104_js
 ```
 
