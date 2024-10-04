@@ -2,7 +2,7 @@
 //
 // Riverbed-Community-Toolkit
 // 107-opentelemetry-autoinstrumentation-nodejs-app
-// version: 22.11.221128
+// version: 24.10.4
 //
 // Intialize OpenTelemetry tracing on a javascript app with OpenTelemetry automatic instrumentation
 //
@@ -10,7 +10,7 @@
 //
 // - Set environement variable used for OpenTelemetry instrumentation ZipKin exporter
 //   * OTEL_SERVICE_NAME. For example: "service107-js"
-//   * OTEL_EXPORTER_OTLP_ENDPOINT. For example: http://localhost:4317 or http://aternity-opentelemetry-collector:4317
+//   * OTEL_EXPORTER_OTLP_ENDPOINT. For example: http://localhost:4317 or http://riverbed-apm-opentelemetry-collector:4317
 //
 // - Run the app with tracing:
 //   node -r ./trace_app_with_opentelemetry_automatic-instrumentation.js app.js
