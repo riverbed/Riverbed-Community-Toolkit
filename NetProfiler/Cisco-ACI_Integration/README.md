@@ -1,5 +1,5 @@
 ## NetProfiler Cisco ACI integration - mapping ACI EPGs to NetProfiler Host Groups
-The following cookbook contains a description of a workflow on how to add **NetProfiler** Host Groups based on the endpoint groups connected to **Cisco ACI**. The mechanism has now been extended to include the ability to create and update Host Groups in **AppResponse** instances within the same framework.
+The following cookbook contains a description of a workflow on how to create **NetProfiler** Host Groups based on the endpoint groups defined within a **Cisco ACI** instance. The mechanism has now been extended to include the ability to create and update Host Groups in an **AppResponse** instance within the same framework.
 
 ## Workflow overview
 
@@ -8,14 +8,14 @@ The following cookbook contains a description of a workflow on how to add **NetP
 ## Prerequisites
 1. A host with Docker installed, e.g. a Linux host, and sufficient access to create and run Docker containers
 2. A NetProfiler instance with OAuth credentials available for a user able to create and modify Host Groups (created via Administration > OAuth Access)
-3. And/or an instances of AppResponse with credntials for a user able to manage Host Group definitions
+3. And/or an instances of AppResponse with credentials for a user able to manage Host Group definitions
 4. Access to the source Cisco ACI APIC with suitable credentials
 
 ## Workflow description
 The workflow represented above consists of the following parts:  
 1. Docker container which runs the [Cisco ACI toolkit](https://developer.cisco.com/codeexchange/github/repo/datacenter/acitoolkit). 
 2. Docker container which runs [MySQL](https://www.mysql.com) server.
-2. Docker container which runs [Ansible](https://www.ansible.com/) and SteelScript which is used to configure NetProfiler.
+2. Docker container which runs [Ansible](https://www.ansible.com/) and SteelScript which is used to configure the NetProfiler and/or AppResponse instances.
 
 The Cisco ACI toolkit contains a script [aci_endpointtracker](https://acitoolkit.readthedocs.io/en/latest/endpointtracker.html) which extracts all the endpoints from an indicated Tenant and stores them into a MySQL table (endpoints) with the following structure:
 ```
@@ -45,14 +45,14 @@ Verify that the container image is now existing:
 docker images m_ansible:aci
 docker images acitoolkit:rvbd
 ```
-Modify the docker-compose file environment variables APIC_URL, APIC_LOGIN and APIC_PASSWORD to the working values for the target environment:
+Modify the docker-compose file environment variables APIC_URL, APIC_LOGIN and APIC_PASSWORD to the working values for the target Cisco APIC instance:
 ```
    environment:
       - APIC_URL=https://myapic.url
       - APIC_LOGIN=admin
       - APIC_PASSWORD=mysecret_password
 ```
-It may also be necessary to change the default network (172.18.0.0/24) used if this conflicts with existing network allocations - any changes will require changes to the various YML files and to commands shown below.
+It may also be necessary to change the default network (172.18.0.0/24) used if this conflicts with existing network allocations - any such changes will require changes to the various YML files and to commands shown below.
 
 Start the `docker-compose` (use `docker compose` if the `docker-compose` command is not available) process:
 ```
@@ -66,7 +66,7 @@ c44e76fe01c9   acitoolkit:rvbd          "sleep infinity"         32 seconds ago 
 008a14bc3c98   m_ansible:aci            "sleep infinity"         32 seconds ago   Up 31 seconds                         ansible
 dc237249a07a   mysql:latest             "docker-entrypoint.s…"   32 seconds ago   Up 31 seconds   3306/tcp, 33060/tcp   mysql_db
 ```
-Note that there is a slightly modified version of the `aci-endpoint-tracker.py` script is created in the `acitoolkit` container which fixes a couple of issues and adds a "one-off" option to force the script to execute one scan of ACI, export endpoint data into MySQL and then exit rather than running perpetually updating the database as the ACI system changes.
+Note that a slightly modified version of the `aci-endpoint-tracker.py` script is created in the `acitoolkit` container which fixes a couple of issues and adds a "one-off" option to force the script to execute one scan of ACI, export endpoint data into MySQL and then exit rather than running perpetually updating the database as the ACI system changes.
 
 Connect to the `acitoolkit` container and execute the Python script that gets the endpoint information and writes it in to the MySQL database:
 ```
@@ -116,13 +116,13 @@ It will be necessary to ensure the containers are shutdown cleanly when the syst
 
 ## Limitations
 1. The current model only handles one Cisco ACI Tenant. The model could be extended to support multiple tenants with separate Host Group Types per Tenant, for instance.
-2. The mechanism only supports creating Host Groups in one NetProfiler and/or one AppResponse; it should support multiple instances of AppResponse at least and also support Portal as this can be used to manage HG defintions on multiple AppResponse instances.
+2. The mechanism only supports creating Host Groups in one NetProfiler and/or one AppResponse; it should support multiple instances of AppResponse at least and also support Portal as this can be used to manage HG definitions across multiple AppResponse instances.
 
 ## Troubleshooting
 1. Make sure that the containers are up and running
-2. Make sure there really are endpoints defined in the APIC for the scripts to discover (the Cisco ACI sanbdbox is often empty!)
+2. Make sure there really are endpoints defined in the APIC for the scripts to discover (the Cisco ACI sandbox is often empty!)
 2. Make sure the access information and credentials are correct for the APIC
-3. Make sure the access information and credentials are correct for the NetProfiler - note that the OAuth tokens expire so will need renewing at some point
+3. Make sure the access information and credentials are correct for the NetProfiler and/or AppResponse - note that the OAuth tokens expire so will need renewing at some point
 4. If there are Python errors make sure that nothing is installed that is not compatible with the old version of Python used by the ACI toolkit (Python version 2.7)
 
 ## Reference
