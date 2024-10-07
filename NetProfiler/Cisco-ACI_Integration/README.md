@@ -1,5 +1,5 @@
 ## NetProfiler Cisco ACI integration - mapping ACI EPGs to NetProfiler Host Groups
-The following cookbook contains a description of a workflow on how to add **NetProfiler** Host Groups based on the endpoint groups connected to **Cisco ACI**. The mechanism has now been extended to include the ability to create and update Host Groups in **AppResponse** instances.
+The following cookbook contains a description of a workflow on how to add **NetProfiler** Host Groups based on the endpoint groups connected to **Cisco ACI**. The mechanism has now been extended to include the ability to create and update Host Groups in **AppResponse** instances within the same framework.
 
 ## Workflow overview
 
