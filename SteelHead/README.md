@@ -45,9 +45,9 @@ The technical solution exists in different form factors so that it can be deploy
 | ID | Description | Tags | Last update |
 | --- | --- | --- | --- | 
 | [GNS3](GNS3) | Deploy Accelerator virtual appliance in your labs | GNS3 | apr 2021
-| [KVM-101](KVM-Cookbooks/101-virtual-fail-to-wire/) | *in progress* virtual fail to wire | KVM | oct 2024
+| [KVM-101](KVM-Cookbooks/101-virtual-fail-to-wire/) | Virtual fail to wire for KVM | KVM | oct 2024
 
 ## License
 
-Copyright (c) 2021 Riverbed Technology, Inc.
+Copyright (c) 2021 - 2024 Riverbed Technology, Inc.
 The scripts provided here are licensed under the terms and conditions of the MIT License accompanying the software ("License"). The scripts are distributed "AS IS" as set forth in the License. The script also include certain third party code. All such third party code is also distributed "AS IS" and is licensed by the respective copyright holders under the applicable terms and conditions (including, without limitation, warranty and liability disclaimers) identified in the license notices accompanying the software.
