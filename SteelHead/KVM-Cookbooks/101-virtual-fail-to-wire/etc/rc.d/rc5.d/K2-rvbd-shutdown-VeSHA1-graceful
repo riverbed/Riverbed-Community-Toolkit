@@ -1,0 +1,18 @@
+#!/bin/bash
+#
+# May 10, 2024
+# Platform is for KVM Virtual SteelHead Deployments
+# Multiple In-Path Interface Failover Capability
+#
+#
+
+####### Force Disk Check and Repair at boot ############
+sudo touch /forcefsck                                  #
+ls / | grep force                                      #
+sleep 3                                                #
+####### End Force Disk Check and Repair at boot ########
+
+######### RVBD Shutdown Virtual SHA VeSHA1 Graceful ###########
+/usr/bin/virsh destroy VeSHA1 --graceful                      #
+###### End RVBD Shutdown Virtual SHA VeSHA1 Graceful ##########
+
