@@ -54,9 +54,9 @@ Modify the docker-compose file environment variables APIC_URL, APIC_LOGIN and AP
 ```
 It may also be necessary to change the default network (172.18.0.0/24) used if this conflicts with existing network allocations - any such changes will require changes to the various YML files and to commands shown below.
 
-Start the `docker-compose` (use `docker compose` if the `docker-compose` command is not available) process:
+Start the `docker compose` process to create the containers:
 ```
-docker-compose -f docker-compose-final.yml up -d
+docker compose -f docker-compose-final.yml up -d
 ```
 Verify that all 3 containers are up and running:
 ```
