@@ -161,4 +161,7 @@ optional arguments:
   --restart             if run as a process, restart it
   -o, --oneoff          Run one pass only and exit
 ```
-## Copyright (c) 2024 Riverbed Technology
+## License
+Copyright (c) 2021-2024 Riverbed Technology, Inc.
+
+The scripts provided here are licensed under the terms and conditions of the MIT License accompanying the software ("License"). The scripts are distributed "AS IS" as set forth in the License. The script also include certain third party code. All such third party code is also distributed "AS IS" and is licensed by the respective copyright holders under the applicable terms and conditions (including, without limitation, warranty and liability disclaimers) identified in the license notices accompanying the software.
