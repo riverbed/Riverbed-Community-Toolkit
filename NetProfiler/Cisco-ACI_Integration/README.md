@@ -126,18 +126,16 @@ It will be necessary to ensure the containers are shutdown cleanly when the syst
 4. If there are Python errors make sure that nothing is installed that is not compatible with the old version of Python used by the ACI toolkit (Python version 2.7)
 
 ## Reference
-The [aci-endpoint-tracker](acitoolkit/applications/endpointtracker/aci-endpoint-tracker-rvbd.py) script provides the following online help:
+The [aci-endpoint-tracker](acitoolkit/applications/endpointtracker/aci-endpoint-tracker.py) script provides the following online help:
 ```
-root@c5aa4f455f11:/opt/acitoolkit/applications/endpointtracker# python aci-endpoint-tracker-rvbd.py --help
-usage: aci-endpoint-tracker-rvbd.py [-h] [-u URL] [-l LOGIN] [-p PASSWORD]
-                                    [--cert-name CERT_NAME] [--key KEY]
-                                    [--snapshotfiles SNAPSHOTFILES [SNAPSHOTFILES ...]]
-                                    [-i MYSQLIP] [-a MYSQLLOGIN]
-                                    [-s MYSQLPASSWORD] [-d] [--kill]
-                                    [--restart] [-o]
+root@2085cd500c8a:/opt/acitoolkit/applications/endpointtracker# python aci-endpoint-tracker.py --help
+usage: aci-endpoint-tracker.py [-h] [-u URL] [-l LOGIN] [-p PASSWORD]
+                               [--cert-name CERT_NAME] [--key KEY]
+                               [--snapshotfiles SNAPSHOTFILES [SNAPSHOTFILES ...]]
+                               [-i MYSQLIP] [-a MYSQLLOGIN] [-s MYSQLPASSWORD]
+                               [-d] [--kill] [--restart] [-o]
 
-Application that logs on to the APIC and tracks all of the Endpoints in a
-MySQL database.
+Application that logs on to the APIC and tracks all of the Endpoints in a MySQL database.
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -162,5 +160,5 @@ optional arguments:
   --kill                if run as a process, kill it
   --restart             if run as a process, restart it
   -o, --oneoff          Run one pass only and exit
-  ```
-## Copyright (c) 2023 Riverbed Technology
+```
+## Copyright (c) 2024 Riverbed Technology
