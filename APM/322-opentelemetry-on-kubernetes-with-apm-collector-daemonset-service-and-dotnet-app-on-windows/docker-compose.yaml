@@ -1,0 +1,41 @@
+# docker-compose.yaml
+# 23.9.230915
+# Riverbed-Community-Toolkit (https://github.com/riverbed/Riverbed-Community-Toolkit)
+#
+# Usage
+#
+#   docker-compose up
+#
+#   Example 1:
+#
+#     $env:OTEL_EXPORTER_OTLP_ENDPOINT="http://apm-collector-service_on_k8s:4317"
+#     docker-compose up
+#
+#   Example 2:
+#
+#     $env:OTEL_EXPORTER_OTLP_ENDPOINT="http://10.0.0.80:4317"
+#     docker-compose up
+#
+version: "3.8"
+
+services:
+
+  service322_dotnet:   
+    
+    environment:  
+
+      # app external webservice configuration (demo)
+      URL_WEBSERVICE : "http://www.riverbed.com"
+
+      ###########################################################
+      # Add OpenTelemetry instrumentation configuration
+      ###########################################################    
+      OTEL_SERVICE_NAME: cookbook-322-dotnet
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT}
+
+    ports:
+      - "8080:80"
+
+    build:
+      context: dotnet_webapp/.
+      dockerfile: Dockerfile

@@ -1,0 +1,43 @@
+# otel-collector-config.yaml
+#
+# Riverbed-Community-Toolkit
+# 109-opentelemetry-export
+# version: 24.10.4
+#
+# OpenTelemetry Collector Configuration
+#
+# ref. https://opentelemetry.io/docs/collector/configuration/
+
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: "0.0.0.0:4317"
+
+exporters:
+
+  otlp:
+    endpoint: http://riverbed-apm-opentelemetry-collector:4317
+    compression: none
+    tls:
+      insecure: true
+    
+
+  zipkin:
+    endpoint: http://zipkin-all-in-one:9411/api/v2/spans
+
+  logging:
+    loglevel: debug
+
+processors:
+
+extensions:
+  health_check:
+
+service:
+  extensions: [health_check]
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: []
+      exporters: [otlp,zipkin,logging]

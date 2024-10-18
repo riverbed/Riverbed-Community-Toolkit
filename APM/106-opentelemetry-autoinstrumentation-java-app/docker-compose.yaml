@@ -1,0 +1,94 @@
+# docker-compose.yaml
+#
+# Riverbed-Community-Toolkit (https://github.com/riverbed/Riverbed-Community-Toolkit)
+# 106-opentelemetry-autoinstrumentation-java-app
+# version: 24.3.4
+#
+# Simple Java application with OpenTelemetry automatic instrumentation with multiple telemetry exporters
+# to demonstrate logging, OTLP-gRPC with the APM OpenTelemetry Collector and Jaeger telemetry
+
+services:
+
+  riverbed-apm-opentelemetry-collector:
+
+    # APM OpenTelemetry Collector
+    # https://hub.docker.com/r/aternity/apm-collector
+
+    image: registry.hub.docker.com/aternity/apm-collector:2022.4.0-4
+    
+    mem_limit: 128M
+
+    container_name: riverbed-apm-opentelemetry-collector
+
+    environment:
+    
+      SERVER_URL: "wss://${RIVERBED_APM_SAAS_SERVER_HOST}/?RPM_AGENT_CUSTOMER_ID=${RIVERBED_APM_CUSTOMER_ID}"
+    
+    ports:
+
+      # Uncomment the telemetry protocol used by the exporter of the application
+
+      # OpenTelemetry, https://opentelemetry.io
+      - "4317:4317/tcp"     # OpenTelemetry OTLP over gRPC
+      # - "4318:4318/tcp"   # OpenTelemetry OTLP JSON/Protobuf over HTTP
+      # - "55681:55681/tcp" # OpenTelemetry OTLP JSON/Protobuf over HTTP
+      
+      # Jaeger, https://www.jaegertracing.io
+      # - "14268:14268/tcp" # Jaeger Thrift Binary over HTTP
+      # - "6831:6831/udp"   # Jaeger Thrift Compact
+      # - "6832:6832/udp"   # Jaeger Thrift Binary
+      
+      # Zipkin, https://zipkin.io
+      # - "9411:9411/tcp"   # Zipkin v2 json/protobuf and v1 json/thrift
+      # - "5775:5775/udp"   # Jaeger's Thrift support for Zipkin v1
+
+    healthcheck:
+      test: ["CMD", "nc", "-zv", "localhost","4317"]
+      interval: 1m
+      timeout: 10s
+      retries: 6
+      start_period: 10s
+      start_interval: 5s
+
+
+  service106-java:
+
+    environment:
+
+      OTEL_SERVICE_NAME: "service106-java-otlp"
+
+      OTEL_TRACES_EXPORTER: logging,otlp,jaeger
+
+      # OTLP-gRPC
+      OTEL_EXPORTER_OTLP_PROTOCOL: "grpc"
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://riverbed-apm-opentelemetry-collector:4317
+      OTEL_METRICS_EXPORTER: none      
+      OTEL_LOGS_EXPORTER: none  
+
+      # Jaeger
+      OTEL_EXPORTER_JAEGER_ENDPOINT: http://jaeger-all-in-one:14250
+
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    mem_limit: 128M
+
+    restart: always
+
+    depends_on:
+      riverbed-apm-opentelemetry-collector:
+        condition: service_healthy
+      jaeger-all-in-one:
+        condition: service_started
+
+
+  jaeger-all-in-one:
+    # Jaeger
+    # UI: http://localhost:16686
+    container_name: jaeger-all-in-one
+    image: jaegertracing/all-in-one:latest
+    mem_limit: 128M
+    ports:
+      - "16686:16686" # frontend
+      - "14250"       # model.proto

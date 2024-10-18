@@ -1,0 +1,147 @@
+# apm-daemonset-pod-agent.yaml
+# 23.1.21
+# Riverbed-Community-Toolkit (https://github.com/riverbed/Riverbed-Community-Toolkit)
+#
+# Description
+#
+#   Deploy the APM Daemonset POD agent
+#
+# Usage:
+#
+#     1. Customize the env variables in the container definition (container name: apm-daemonset-pod-agent)
+#
+#       replace {{APM Daemonset POD agent image path}} for example: myproject/myrepo/alluvio-aternity-apm-daemonset-pod-agent:latest
+#       replace {{ALLUVIO_ATERNITY_APM_CUSTOMER_ID}}, for example: 12312341234-1234-124356
+#       replace {{ALLUVIO_ATERNITY_APM_SAAS_SERVER_HOST}} for example: agents.apm.my-account.aternity.com
+#
+#     2. Apply  
+#
+#       kubectl apply -f apm-daemonset-pod-agent.yaml
+#
+#     3. Check resources
+#
+#       kubectl --namespace alluvio-aternity get daemonset
+#       kubectl --namespace alluvio-aternity get pod
+#
+#     4. Remove
+#
+#       kubectl delete -f apm-daemonset-pod-agent.yaml
+#
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: alluvio-aternity
+---
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  namespace: alluvio-aternity
+  name: apm-daemonset-pod-agent
+  labels:
+    app.kubernetes.io/name: daemonset-pod-agent
+    app.kubernetes.io/component: apm-agent
+    app.kubernetes.io/part-of: alluvio-aternity
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: daemonset-pod-agent
+      app.kubernetes.io/component: apm-agent
+      app.kubernetes.io/part-of: alluvio-aternity
+  template:
+    metadata:
+      name: apm-daemonset-pod-agent
+      labels:
+        app.kubernetes.io/name: daemonset-pod-agent
+        app.kubernetes.io/component: apm-agent
+        app.kubernetes.io/part-of: alluvio-aternity        
+    spec:
+      containers:
+        # TODO: Replace {{APM Daemonset POD agent image path}} with the actual value
+        - name: apm-daemonset-pod-agent
+          image : {{APM Daemonset POD agent image path}}
+          env:
+          # TODO: Replace {{ALLUVIO_ATERNITY_APM_CUSTOMER_ID}} and {{ALLUVIO_ATERNITY_APM_SAAS_SERVER_HOST}} with actual values
+          - name: ALLUVIO_ATERNITY_APM_CUSTOMER_ID
+            value: {{ALLUVIO_ATERNITY_APM_CUSTOMER_ID}}
+          - name: ALLUVIO_ATERNITY_APM_SAAS_SERVER_HOST
+            value: {{ALLUVIO_ATERNITY_APM_SAAS_SERVER_HOST}}
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 100m
+            limits:
+              memory: 2G
+              cpu: 1000m
+          ports:
+            - containerPort: 2111
+              hostPort: 2111 
+              name: dsaport
+              protocol: TCP
+            - containerPort: 7071
+              hostPort: 7071 
+              name: daport
+              protocol: TCP
+            - containerPort: 7072
+              hostPort: 7072 
+              name: agentrtport
+              protocol: TCP
+            - containerPort: 7073
+              hostPort: 7073 
+              name: profilerport
+              protocol: TCP
+            - containerPort: 7074
+              hostPort: 7074
+              name: cmxport
+              protocol: TCP 
+          volumeMounts:
+            - name: alluvio-aternity-apm
+              mountPath: /opt
+              readOnly: false
+            - name: dockersocket
+              mountPath: /var/run/dockersocket
+            - name: pks-dockersocket
+              mountPath: /var/run/pks-dockersocket
+            - name: proc
+              mountPath: /host/proc
+              readOnly: true
+            - name: cgroup
+              mountPath: /host/sys/fs/cgroup
+              readOnly: true
+          securityContext:
+            privileged: true
+          readinessProbe:
+            exec:
+              command: ["/opt/Panorama/hedzup/mn/bin/agent","status"]
+            initialDelaySeconds: 15
+            periodSeconds: 30
+            timeoutSeconds: 30
+            failureThreshold: 3
+      volumes:
+        - name: alluvio-aternity-apm
+          hostPath:
+            # Must be a writable node path
+            path: /var/lib/toolbox/alluvio-aternity-apm
+        - name: dockersocket
+          hostPath:
+            path: /var/run/docker.sock
+        - name: pks-dockersocket
+          hostPath:
+            path: /var/vcap/data/sys/run/docker/docker.sock
+        - name: proc
+          hostPath:
+            path: /proc
+        - name: cgroup
+          hostPath:
+            path: /sys/fs/cgroup
+      hostNetwork: true
+      hostIPC: true
+      hostPID: true
+      dnsPolicy: ClusterFirstWithHostNet
+      tolerations:
+        - operator: "Exists"
+          effect: "NoSchedule"
+        - operator: "Exists"
+          effect: "NoExecute"
+  updateStrategy:
+    type: RollingUpdate

@@ -20,27 +20,34 @@ The technical solution exists in different form factors so that it can be deploy
 
 ### Cookbooks for Azure
 
-- [Azure-101 - Chaining Accelerator in VNET having a gateway appliance (VPN or SD-WAN)](Azure-Cloud-Cookbooks/101-service-chain-gw-appliance)
-- [Azure-102 - Cloud Accelerators with Load-Balancing and Scale Out in Azure](Azure-Cloud-Cookbooks/102-scale-out)
-- [Azure-103 - Cluster of 2 active Cloud Accelerator](Azure-Cloud-Cookbooks/103-deploy-active-active)
-- [Azure-104 - Backup and Restore Cloud Accelerator](Azure-Cloud-Cookbooks/104-Backup-and-Restore)
-- [Azure-300 - PowerShell script to configure Route Tables for Service Chaining](Azure-ServiceChain)
+| ID | Description | Tags | Last update |
+| --- | --- | --- | --- | 
+| [Azure-101](Azure-Cloud-Cookbooks/101-service-chain-gw-appliance) | Chaining Accelerator in VNET having a gateway appliance (VPN or SD-WAN) | Azure, Cloud | jun 2023 |
+| [Azure-102](Azure-Cloud-Cookbooks/102-scale-out) | Cloud Accelerators with Load-Balancing and Scale Out in Azure | Azure, Cloud | jun 2021 |
+| [Azure-103](Azure-Cloud-Cookbooks/103-deploy-active-active) | Cluster of 2 active Cloud Accelerator | Azure, Cloud | oct 2020 |
+| [Azure-104](Azure-Cloud-Cookbooks/104-Backup-and-Restore) | Backup and Restore Cloud Accelerator | Azure, Cloud | aug 2022 |
+| [Azure-300](Azure-ServiceChain) | PowerShell script to configure Route Tables for Service Chaining | Azure, Cloud | jun 2020 |
 
 *Other topics in preparation: - Active/Passive, Monitoring, VNET to VNET Acceleration, MTTR/Availability, SteelConnect SD-WAN, 3rd party SD-WAN, ExpressRoute, AzureVWAN, Azure Virtual Gateway*
 
 ### Cookbooks for AWS
 
-- [AWS-101 - Deploying Accelerator in existing VPC having a gateway appliance (VPN or SD-WAN)](AWS-Cloud-Cookbooks/101-service-chain-gw-appliance.md)
-- [AWS-102 - Create VPC, Subnets, Workload, Acceleration and service chain with gateway appliance](AWS-Cloud-Cookbooks/102-vpc-and-service-chain-gw-appliance.md)
-- [AWS-103 - Deploying Accelerator and SteelConnect-EX SD-WAN gateway](AWS-Cloud-Cookbooks/103-sconex-and-cloud-accelerator)
+| ID | Description | Tags | Last update |
+| --- | --- | --- | --- | 
+| [AWS-101](AWS-Cloud-Cookbooks/101-service-chain-gw-appliance.md) | Deploying Accelerator in existing VPC having a gateway appliance (VPN or SD-WAN) | AWS, Cloud | mar 2020
+| [AWS-102](AWS-Cloud-Cookbooks/102-vpc-and-service-chain-gw-appliance.md) | Create VPC, Subnets, Workload, Acceleration and service chain with gateway appliance | AWS, Cloud | mar 2020
+| [AWS-103](AWS-Cloud-Cookbooks/103-sconex-and-cloud-accelerator) | Deploying Accelerator and SteelConnect-EX SD-WAN gateway | AWS, Cloud | jun 2022
 
 *Other topics in preparation: AWS Gateway Load Balancer, AWS Transit Gateway, VPC ingress routing*
 
-### Cookbooks for GNS3
+### Other Cookbooks
 
-- [GNS3 - Deploy Accelerator virtual appliance in your labs)](GNS3/)
+| ID | Description | Tags | Last update |
+| --- | --- | --- | --- | 
+| [GNS3](GNS3) | Deploy Accelerator virtual appliance in your labs | GNS3 | apr 2021
+| [KVM-101](KVM-Cookbooks/101-virtual-fail-to-wire/) | Virtual fail to wire for KVM | KVM | oct 2024
 
 ## License
 
-Copyright (c) 2021 Riverbed Technology, Inc.
+Copyright (c) 2021 - 2024 Riverbed Technology, Inc.
 The scripts provided here are licensed under the terms and conditions of the MIT License accompanying the software ("License"). The scripts are distributed "AS IS" as set forth in the License. The script also include certain third party code. All such third party code is also distributed "AS IS" and is licensed by the respective copyright holders under the applicable terms and conditions (including, without limitation, warranty and liability disclaimers) identified in the license notices accompanying the software.

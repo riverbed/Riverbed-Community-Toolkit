@@ -1,0 +1,22 @@
+# Dockerfile_without_apm
+# 24.10.4
+# Cookbook 203 - Riverbed-Community-Toolkit (https://github.com/riverbed/Riverbed-Community-Toolkit)
+
+###############################################################################
+# App section
+###############################################################################
+
+# Start a build stage to copy local sources and build
+FROM maven:3-openjdk-11-slim as builder
+WORKDIR /app-build
+COPY ./app/. .
+RUN mvn clean package 
+
+# Switch to the app stage
+FROM openjdk:11-jre-slim-buster as app
+COPY --from=builder /app-build/target/demo-*.jar /app/spring-demo.jar
+EXPOSE 8080
+
+# Launch the app
+WORKDIR /app
+CMD ["java","-jar", "spring-demo.jar"]

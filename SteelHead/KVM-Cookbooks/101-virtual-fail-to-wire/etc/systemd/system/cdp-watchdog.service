@@ -1,0 +1,9 @@
+[Unit]
+Description=CDP Watchdog
+[Service]
+Type=simple
+ExecStart=/usr/sbin/cdp-watchdog.sh
+Restart=always
+RestartSec=5
+[Install]
+WantedBy=multi-user.target

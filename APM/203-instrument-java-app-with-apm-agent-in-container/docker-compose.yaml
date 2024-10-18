@@ -1,0 +1,35 @@
+# docker-compose.yaml
+# version: 24.10.4
+# Cookbook 203 - Riverbed-Community-Toolkit (https://github.com/riverbed/Riverbed-Community-Toolkit)
+#
+# Usage:
+#
+#   docker-compose up
+#
+# Example with Bash:
+#
+#   export RIVERBED_APM_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
+#   export RIVERBED_APM_CUSTOMER_ID="12341234-12341234-13241234"
+#   docker-compose up
+#
+# Example PowerShell
+#
+#   $env:RIVERBED_APM_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
+#   $env:RIVERBED_APM_CUSTOMER_ID="12341234-12341234-13241234"
+#   docker-compose up
+
+services:
+
+  demo-app-apm:
+
+    environment:
+    - RIVERBED_APM_SAAS_SERVER_HOST
+    - RIVERBED_APM_CUSTOMER_ID
+    - RVBD_APP_INSTANCE=cookbook-203
+
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    ports:
+    - "8080:8080/tcp"

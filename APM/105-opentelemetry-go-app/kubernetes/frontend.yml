@@ -1,0 +1,42 @@
+# Riverbed-Community-Toolkit
+# 105-opentelemetry-go-app
+# version: 22.03.15
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  type: NodePort
+  ports:
+    - port: 8081
+      targetPort: 8081
+  selector:
+    app: go-frontend
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-frontend
+spec:
+  selector:
+    matchLabels:
+      app: go-frontend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: go-frontend
+    spec:
+      containers:
+        - name: go-frontend
+          image: smlobo/opentelemetry-go-example
+          args: ["frontend"]
+          ports:
+            - containerPort: 8081
+#          imagePullPolicy: Never
+          env:
+            - name: EXPORTER
+#              value: "otlp"
+              value: "jaeger"
+#              value: "zipkin"

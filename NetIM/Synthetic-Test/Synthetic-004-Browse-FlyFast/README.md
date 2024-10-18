@@ -3,7 +3,7 @@
 Usecase: App monitoring
 Recommended Robot: Web Selenium
 
-This synthetic test is for FlyFast, a flight booking demo app shared on GitHub by the [ALLUVIO Aternity Tech Community](https://github.com/Aternity/Tech-Community).
+This synthetic test is for FlyFast, a flight booking demo app shared on GitHub by the [Riverbed-Community-Toolkit](https://github.com/riverbed/Riverbed-Community-Toolkit).
 It runs on a simple [Web Selenium robot setup](../Robot-001-WebSelenium) (based on Windows, Chrome, Python, Selenium,...).
 
 ## Preparation
@@ -12,7 +12,7 @@ It runs on a simple [Web Selenium robot setup](../Robot-001-WebSelenium) (based 
 
 The URL can be the IP address, for example if deployed locally http://192.168.0.23, or a FQDN for example http://flyfast.yourcorp.net.
 
-If you want to install your own instance of FlyFast, please refer to the Cookbook 001 in [ALLUVIO Aternity Tech Community](https://github.com/Aternity/Tech-Community).
+If you want to install your own instance of FlyFast, please refer to the Cookbook 001 in [Riverbed-Community-Toolkit](https://github.com/riverbed/Riverbed-Community-Toolkit).
 
 ### Step 2. Fetch the script on the machine to run the test
 
@@ -40,9 +40,9 @@ In PowerShell
 python.exe "C:\Riverbed-Community-Toolkit\NetIM\Synthetic-Test\Synthetic-004-Browse-FlyFast\Chrome-browse-flyfast.py"
 ```
 
-### *optional* Configure a monitor in ALLUVIO NetIM
+### *optional* Configure a monitor in NetIM
 
-In ALLUVIO NetIM web console, create a new Synthetic Test
+In NetIM web console, create a new Synthetic Test
 
 - Type: External Script
 - Command: 

@@ -1,0 +1,74 @@
+# docker-compose.yaml
+#
+# Riverbed-Community-Toolkit (https://github.com/riverbed/Riverbed-Community-Toolkit)
+# 111-opentelemetry-autoinstrumentation-spring-demo-app
+# version: 24.10.4
+#
+# Srpingboot petclinic app with OpenTelemetry automatic instrumentation
+# to demonstrate OTLP-gRPC with the APM OpenTelemetry Collector
+
+services:
+
+  riverbed-apm-opentelemetry-collector:
+
+    # APM OpenTelemetry Collector
+    # https://hub.docker.com/r/aternity/apm-collector
+
+    image: registry.hub.docker.com/aternity/apm-collector:2022.4.0-4
+    
+    environment:
+    
+      SERVER_URL: "wss://${RIVERBED_APM_SAAS_SERVER_HOST}/?RPM_AGENT_CUSTOMER_ID=${RIVERBED_APM_CUSTOMER_ID}"
+    
+    ports:
+
+      # Uncomment the telemetry protocol to expose
+
+      # OpenTelemetry, https://opentelemetry.io
+      - "4317:4317/tcp"     # OpenTelemetry OTLP over gRPC
+      # - "4318:4318/tcp"   # OpenTelemetry OTLP JSON/Protobuf over HTTP
+      # - "55681:55681/tcp" # OpenTelemetry OTLP JSON/Protobuf over HTTP
+      
+      # Jaeger, https://www.jaegertracing.io
+      # - "14268:14268/tcp" # Jaeger Thrift Binary over HTTP
+      # - "6831:6831/udp"   # Jaeger Thrift Compact
+      # - "6832:6832/udp"   # Jaeger Thrift Binary
+      
+      # Zipkin, https://zipkin.io
+      # - "9411:9411/tcp"   # Zipkin v2 json/protobuf and v1 json/thrift
+      # - "5775:5775/udp"   # Jaeger's Thrift support for Zipkin v1
+
+    healthcheck:
+      test: ["CMD", "nc", "-zv", "localhost","4317"]
+      interval: 1m
+      timeout: 10s
+      retries: 6
+      start_period: 10s
+      start_interval: 5s   
+
+  service111:
+
+    environment:
+
+      OTEL_SERVICE_NAME: "cookbook111-springboot-petclinic"
+      OTEL_EXPORTER_OTLP_TRACES_ENDPOINT: http://riverbed-apm-opentelemetry-collector:4317
+      OTEL_METRICS_EXPORTER: none
+      OTEL_TRACES_EXPORTER: otlp,logging
+      OTEL_EXPORTER_OTLP_PROTOCOL: "grpc"
+
+      JAVA_TOOL_OPTIONS: "-javaagent:./opentelemetry-javaagent.jar"
+
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    ports:
+    
+      - "8080:8080/tcp"
+
+    restart: always
+
+    depends_on:
+
+      riverbed-apm-opentelemetry-collector:
+        condition: service_healthy
