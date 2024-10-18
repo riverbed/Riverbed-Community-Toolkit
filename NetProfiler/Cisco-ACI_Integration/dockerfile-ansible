@@ -8,6 +8,7 @@ RUN apt-get update && apt-get -y upgrade && \
     apt-get install --no-install-recommends -y mysql-client
 
 RUN pip3 install steelscript
+RUN pip3 install steelscript.appresponse
 RUN pip3 install mysql-connector-python
 
 RUN echo "localhost" >> /etc/ansible/hosts
@@ -16,6 +17,7 @@ RUN mkdir /usr/lib/python3/dist-packages/ansible/modules/riverbed/
 COPY ./modules/service.py /usr/local/lib/python3.8/dist-packages/steelscript/common/
 COPY ./modules/create_hostgroup_from_json.py /usr/lib/python3/dist-packages/ansible/modules/riverbed/
 COPY ./modules/update_hostgroup_from_json.py /usr/lib/python3/dist-packages/ansible/modules/riverbed/
+COPY ./modules/host_group_upload.py /usr/lib/python3/dist-packages/ansible/modules/riverbed/
 COPY ./modules/aci_mysql*.py /usr/lib/python3/dist-packages/ansible/modules/riverbed/
 
 WORKDIR /app
