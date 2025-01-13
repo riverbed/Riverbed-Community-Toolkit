@@ -12,7 +12,7 @@ You can download the Runbook files from the tables below and import thems into y
 
 * Step 1: Choose a runbook type: Incident Runbooks, Lifecyle Runbook, On-Demand Runbooks, External Runbooks or Subflows
 
-* Step 2: In the section below, hit the link of a Runbook and download the file (.json)
+* Step 2: In the section below, follow the link of a Runbook and hit "Download raw file" to get the .json file
 
 * Step 3: Navigate to IQ, open the Menu, go to Automation to import the runbook.
 
