@@ -16,8 +16,6 @@ You can download the Runbook files from the tables below and import thems into y
 
 * Step 3: Navigate to IQ, open the Menu, go to Automation to import the runbook.
 
-![import](images/iq-external-runbooks-import.png)
-
 ## Automation runbooks
 
 ### External Runbooks
