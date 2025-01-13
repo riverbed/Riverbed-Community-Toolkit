@@ -4,7 +4,7 @@ A public toolkit shared by [Riverbed](https://www.riverbed.com) and the [Riverbe
 
 | Folders | Contents | Technologies and 3rd party |
 | --- | --- | --- |
-| [IQ](/IQ)] | Automation runbooks for AIOps with [Riverbed IQ](https://www.riverbed.com/products/riverbed-iq/) | Automation, AIOps, Runbooks |
+| [IQ](/IQ) | Automation runbooks for AIOps with [Riverbed IQ](https://www.riverbed.com/products/riverbed-iq/) | Automation, AIOps, Runbooks |
 | [APM](/APM) | Cookbooks and technical contents for [Riverbed APM](https://www.riverbed.com/products/application-performance-monitoring) | OpenTelemetry, Java, .Net, Instrumentation, API, Windows, Linux, Kubernetes, Docker |
 | [Aternity](https://github.com/Aternity) | Repos with technical contents for [Aternity DEM](https://www.riverbed.com/products/digital-experience-management)| Windows, PowerShell |
 | [Cloud Accelerator (SteelHead)](/SteelHead) | Community Cloud Cookbooks: scripts and howto to deploy the Riverbed Accelerator in the Cloud and in your labs | Azure, AWS, GNS3, KVM, ARM, PowerShell |
