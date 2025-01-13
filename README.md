@@ -2,8 +2,9 @@
 
 A public toolkit shared by [Riverbed](https://www.riverbed.com) and the [Riverbed Community](https://community.riverbed.com) for Solution Engineering and integration with the [Riverbed Platform](https://www.riverbed.com/platform)
 
-| Folders | Contents | Related 3rd party technology |
+| Folders | Contents | Technologies and 3rd party |
 | --- | --- | --- |
+| [IQ](/IQ)] | Automation runbooks for AIOps with [Riverbed IQ](https://www.riverbed.com/products/riverbed-iq/) | Automation, AIOps, Runbooks |
 | [APM](/APM) | Cookbooks and technical contents for [Riverbed APM](https://www.riverbed.com/products/application-performance-monitoring) | OpenTelemetry, Java, .Net, Instrumentation, API, Windows, Linux, Kubernetes, Docker |
 | [Aternity](https://github.com/Aternity) | Repos with technical contents for [Aternity DEM](https://www.riverbed.com/products/digital-experience-management)| Windows, PowerShell |
 | [Cloud Accelerator (SteelHead)](/SteelHead) | Community Cloud Cookbooks: scripts and howto to deploy the Riverbed Accelerator in the Cloud and in your labs | Azure, AWS, GNS3, KVM, ARM, PowerShell |
@@ -19,14 +20,12 @@ A public toolkit shared by [Riverbed](https://www.riverbed.com) and the [Riverbe
 
 ## How to contribute?
 
-Feel free to submit any code using Pull Request (hit the Fork button at the top right corner to get a copy of the repo in your own account, modify your own copy of the repo and then create a [pull request from here](https://github.com/riverbed/Riverbed-Community-Toolkit/pulls)). 
-
-For problem or suggestions, simply create [Issues](https://github.com/riverbed/Riverbed-Community-Toolkit/issues).
+Feel free to submit any problem or suggestions, simply create [Issues](https://github.com/riverbed/Riverbed-Community-Toolkit/issues).
 
 Thanks for sharing with the [Riverbed Community](https://community.riverbed.com)!
 
 ## License
 
-Copyright (c) 2021-2024 Riverbed Technology, Inc.
+Copyright (c) 2021-2025 Riverbed Technology, Inc.
 
 The scripts provided here are licensed under the terms and conditions of the MIT License accompanying the software ("License"). The scripts are distributed "AS IS" as set forth in the License. The script also include certain third party code. All such third party code is also distributed "AS IS" and is licensed by the respective copyright holders under the applicable terms and conditions (including, without limitation, warranty and liability disclaimers) identified in the license notices accompanying the software.
