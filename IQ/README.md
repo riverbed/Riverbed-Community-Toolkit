@@ -14,7 +14,7 @@ You can download the Runbook files from the tables below and import into your Ri
 
 | Runbook | Description | Tags | Last update |
 | --- | --- | --- | --- | 
-| [Magic Sample](Automation/External%20Runbooks/101/Magic Sample.json) | *work in progress* Magic Sample | AIOps, Aternity EUEM, ISD, SNOW | jan. 2025 |
+| [Magic Sample](https://github.com/riverbed/Riverbed-Community-Toolkit/raw/refs/heads/2501-iq/IQ/Automation/External%20Runbooks/101/Magic%20Sample.json) | *work in progress* Magic Sample | AIOps, Aternity EUEM, ISD, SNOW | jan. 2025 |
 
 ### Incident Runbooks
 
