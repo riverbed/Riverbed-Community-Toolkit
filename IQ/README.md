@@ -10,7 +10,7 @@ You can download the Runbook files from the tables below and import thems into y
 
 ## Quick start
 
-* Step 1: Choose a runbook type: Incident Runbooks, Lifecyle Runbook, On-Demand Runbooks, External Runbooks ok Subflows
+* Step 1: Choose a runbook type: Incident Runbooks, Lifecyle Runbook, On-Demand Runbooks, External Runbooks or Subflows
 
 * Step 2: In the section below, hit the link of a Runbook and download the file (.json)
 
