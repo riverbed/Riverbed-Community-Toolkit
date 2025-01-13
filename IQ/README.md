@@ -2,11 +2,21 @@
 
 This folder contains samples of AIOPs Runbooks for the Riverbed Platform.
 
-You can download the Runbook files from the tables below and import into your Riverbed IQ account. 
+You can download the Runbook files from the tables below and import thems into your Riverbed IQ account. 
 
 > [!NOTE]
 > * To use runbook the you need active licenses of the Riverbed Products.  Please visit the website of Riverbed for more information about the [Riverbed Platform](https://www.riverbed.com/platform)
 > * For help about Riverbed IQ, please refer to the [help page](https://help.cloud.riverbed.com/) 
+
+## Quick start
+
+* Step 1: Choose a runbook type: Incident Runbooks, Lifecyle Runbook, On-Demand Runbooks, External Runbooks ok Subflows
+
+* Step 2: In the section below, hit the link of a Runbook and download the file (.json)
+
+* Step 3: Navigate to IQ, open the Menu, go to Automation to import the runbook.
+
+![import](images/iq-external-runbooks-import.png)
 
 ## Automation runbooks
 
@@ -39,17 +49,6 @@ You can download the Runbook files from the tables below and import into your Ri
 | Runbook | Description | Tags | Last update |
 | --- | --- | --- | --- | 
 | [Magic Subflow Sample](#) | *work in progress* | | |
-
-## How to use?
-
-* Step 1: Choose a runbook type: Incident Runbooks, Lifecyle Runbook, On-Demand Runbooks, External Runbooks ok Subflows
-
-* Step 2: Hit the link in the table to download the Runbook file (.json)
-
-* Step 3: Navigate to IQ, open the Menu, go to Automation to import the runbook.
-
-![import](images/iq-external-runbooks-import.png)
-
 
 ### License
 
