@@ -4,7 +4,7 @@ This folder contains samples of AIOPs Runbooks for the Riverbed Platform.
 
 You can download the Runbook files from the tables below and import into your Riverbed IQ account. 
 
-> [NOTES]
+> [!NOTE]
 > * To use runbook the you need active licenses of the Riverbed Products.  Please visit the website of Riverbed for more information about the [Riverbed Platform](https://www.riverbed.com/platform)
 > * For help about Riverbed IQ, please refer to the [help page](https://help.cloud.riverbed.com/) 
 
