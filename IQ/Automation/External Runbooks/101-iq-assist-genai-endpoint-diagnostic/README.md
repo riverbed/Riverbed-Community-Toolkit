@@ -17,11 +17,9 @@ After downloading the [runbook file](./Demo%20-%20IQ%20Assist%20-%20Create%20ITS
 
 1. Edit the runbook and set the user-defined variables: the variable EUE_ENV with the name of Aternity environment (for example: your-env), and the variable EUE_ACCOUNT_ID with the account id (for example: 365)
 
-2. Edit both "ServiceNow" nodes (create and update ticket) to set the Connector with your own (for example: your-itsm)
+2. Save the runbook toggling on "Allow Automation" to make the runbook available in the Aternity ISD Alerts configuration page
 
-3. Save the runbook toggling on "Allow Automation" to make the runbook available in the Aternity ISD Alerts configuration page
-
-Then go the Alerts page in Aternity, and edit an existing Rule or create a new Alert Rule. And in the Actions section, select the runbook from the drop-down list.
+Then go to the Alerts page in Aternity, and edit an existing Rule or create a new Alert Rule. And in the Actions section, select the runbook from the drop-down list.
 
 ### License
 
