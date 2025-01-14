@@ -22,7 +22,7 @@ You can download the Runbook files from the tables below and import thems into y
 
 | Runbook | File | Description | Tags | Last update |
 | --- | --- | --- | --- | --- |
-| Magic Sample | [Download](Automation/External%20Runbooks/101/Magic%20Sample.json) | *work in progress* [More details](Automation/External%20Runbooks/101) | AIOps, Aternity EUEM, ISD, ITSM | jan. 2025 |
+| ITSM ticket with Endpoint Diagnostic | [Download](Automation/External%20Runbooks/101-iq-assist-genai-endpoint-diagnostic/Demo%20-%20IQ%20Assist%20-%20Create%20ITSM%20ticket%20with%20Endpoint%20Diagnostic.txt) | *work in progress* [More details](Automation/External%20Runbooks/101-iq-assist-genai-endpoint-diagnostic) | AIOps, Aternity EUEM, ISD, ITSM | jan. 2025 |
 
 ### More runbooks
 

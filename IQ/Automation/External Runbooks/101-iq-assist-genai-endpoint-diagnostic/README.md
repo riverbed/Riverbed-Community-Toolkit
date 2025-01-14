@@ -1,7 +1,7 @@
-# Magic Sample
+# Demo - IQ Assist - Create ITSM ticket with Endpoint Diagnostic
 
-The [Magic Sample](Magic%20Sample.json) runbook is an AIOps automation that can be attached to any Aternity ISD Alert.
-When triggered it diagnoses the end-user endpoint and then creates a ticket in a 3rd party ITSM (e.g. ServiceNow). 
+The runbook [Demo - IQ Assist - Create ITSM ticket with Endpoint Diagnostic](./Demo%20-%20IQ%20Assist%20-%20Create%20ITSM%20ticket%20with%20Endpoint%20Diagnostic.txt) is an AIOps automation that can be attached to any Aternity ISD Alert.
+When triggered it diagnoses the end-user endpoint and then creates a ticket in a 3rd party ITSM (e.g. ServiceNow).
 
 ## Prerequisistes
 
@@ -13,7 +13,7 @@ When triggered it diagnoses the end-user endpoint and then creates a ticket in a
 
 ## Quick Setup
 
-After downloading the [runbook file](Magic%20Sample.json), go to IQ Automation, import the runbook in the External Runbooks and proceed with the following configuration steps:
+After downloading the [runbook file](./Demo%20-%20IQ%20Assist%20-%20Create%20ITSM%20ticket%20with%20Endpoint%20Diagnostic.txt), go to IQ Automation, import the runbook in the External Runbooks and proceed with the following configuration steps:
 
 1. Edit the runbook and set the user-defined variables: the variable EUE_ENV with the name of Aternity environment (for example: your-env), and the variable EUE_ACCOUNT_ID with the account id (for example: 365)
 
