@@ -13,11 +13,7 @@ When triggered it diagnoses the end-user endpoint and then creates a ticket in a
 
 ## Quick Setup
 
-After downloading the [runbook file](./Demo%20-%20IQ%20Assist%20-%20Create%20ITSM%20ticket%20with%20Endpoint%20Diagnostic.txt), go to IQ Automation, import the runbook in the External Runbooks and proceed with the following configuration steps:
-
-1. Edit the runbook and set the user-defined variables: the variable EUE_ENV with the name of Aternity environment (for example: your-env), and the variable EUE_ACCOUNT_ID with the account id (for example: 365)
-
-2. Save the runbook toggling on "Allow Automation" to make the runbook available in the Aternity ISD Alerts configuration page
+After downloading the [runbook file](./Demo%20-%20IQ%20Assist%20-%20Create%20ITSM%20ticket%20with%20Endpoint%20Diagnostic.txt), go to IQ Automation, import the runbook in the External Runbooks. And toggle "Allow Automation" on.
 
 Then go to the Alerts page in Aternity, and edit an existing Rule or create a new Alert Rule. And in the Actions section, select the runbook from the drop-down list.
 
