@@ -15,14 +15,13 @@ When triggered it diagnoses the end-user endpoint and then creates a ticket in a
 
 After downloading the [runbook file](Magic%20Sample.json), go to IQ Automation, import the runbook in the External Runbooks and proceed with the following configuration steps:
 
-1. Edit the runbook and set the user-defined variables: the name of Aternity environment (domain name) in the variable EUE_ENV (for example: your-env) and 
-the account id in the variable EUE_ACCOUNT_ID (for example: 365)
+1. Edit the runbook and set the user-defined variables: the variable EUE_ENV with the name of Aternity environment (for example: your-env), and the variable EUE_ACCOUNT_ID with the account id (for example: 365)
 
-2. Edit both "ServiceNow" nodes (create and update ticket), set the ServiceNow connector to use your own you configured in the Integration Library (for example: your-itsm)
+2. Edit both "ServiceNow" nodes (create and update ticket) to set the Connector with your own (for example: your-itsm)
 
-4. Save the runbook toggling on "Allow Automation" to make the runbook available in the Aternity ISD Alerts configuration page
+3. Save the runbook toggling on "Allow Automation" to make the runbook available in the Aternity ISD Alerts configuration page
 
-Then in the Aternity Alerts page, you can edit an existing or create a new Alert Rule. And in the Actions section, you can select the runbook from the drop-down.
+Then go the Alerts page in Aternity, and edit an existing Rule or create a new Alert Rule. And in the Actions section, select the runbook from the drop-down list.
 
 ### License
 
