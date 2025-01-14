@@ -10,43 +10,29 @@ You can download the Runbook files from the tables below and import thems into y
 
 ## Quick start
 
-* Step 1: Choose a runbook type: Incident Runbooks, Lifecyle Runbook, On-Demand Runbooks, External Runbooks or Subflows
+1. Choose a runbook in the table below. There are different runbook types: Incident Runbooks, Lifecyle Runbook, On-Demand Runbooks, External Runbooks or Subflows
 
-* Step 2: In the section below, follow the link of a Runbook and hit "Download raw file" to get the .json file
+2. Follow the download link and hit "Download raw file" to get the runbook file (.json).
 
-* Step 3: Navigate to IQ, open the Menu, go to Automation to import the runbook.
+3. In Riverbed IQ, open the Menu, go to Automation, select the runbook type and import the runbook
 
 ## Automation runbooks
 
 ### External Runbooks
 
-| Runbook | Description | Tags | Last update |
-| --- | --- | --- | --- | 
-| [Magic Sample](Automation/External%20Runbooks/101/Magic%20Sample.json) | *work in progress* Magic Sample | AIOps, Aternity EUEM, ISD, SNOW | jan. 2025 |
+| Runbook | File | Description | Tags | Last update |
+| --- | --- | --- | --- | --- |
+| Magic Sample | [Download](Automation/External%20Runbooks/101/Magic%20Sample.json) | *work in progress* [More details](Automation/External%20Runbooks/101) | AIOps, Aternity EUEM, ISD, ITSM | jan. 2025 |
 
-### Incident Runbooks
+### Other runbooks
 
-| Runbook | Description | Tags | Last update |
-| --- | --- | --- | --- | 
-| [Sample](#) | *work in progress* | | |
+*Incident Runbooks*
 
-### Lifecyle Runbooks
+*Lifecyle Runbooks*
 
-| Runbook | Description | Tags | Last update |
-| --- | --- | --- | --- | 
-| [Sample](#) | *work in progress* | | |
+*On-Demand Runbooks*
 
-### On-Demand Runbooks
-
-| Runbook | Description | Tags | Last update |
-| --- | --- | --- | --- | 
-| [Sample](#) | *work in progress* | | |
-
-### Subflows
-
-| Runbook | Description | Tags | Last update |
-| --- | --- | --- | --- | 
-| [Magic Subflow Sample](#) | *work in progress* | | |
+*Subflows*
 
 ### License
 
