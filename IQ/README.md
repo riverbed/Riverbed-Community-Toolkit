@@ -24,7 +24,9 @@ You can download the Runbook files from the tables below and import thems into y
 | --- | --- | --- | --- | --- |
 | Magic Sample | [Download](Automation/External%20Runbooks/101/Magic%20Sample.json) | *work in progress* [More details](Automation/External%20Runbooks/101) | AIOps, Aternity EUEM, ISD, ITSM | jan. 2025 |
 
-### Other runbooks
+### More runbooks
+
+Other Runbooks for other Runbooks types are in preparation.
 
 *Incident Runbooks*
 
