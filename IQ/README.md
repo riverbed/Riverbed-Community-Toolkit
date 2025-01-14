@@ -1,6 +1,6 @@
 # Riverbed-Community-Toolkit - IQ Automation
 
-This folder contains samples of AIOps Runbooks for the Riverbed Platform.
+This folder contains samples of Runbooks for Automation and AIOps in the Riverbed Platform.
 
 You can download the Runbook files from the tables below and import thems into your Riverbed IQ account. 
 
