@@ -2,7 +2,7 @@
 
 This folder contains samples of Runbooks for Automation and AIOps in the Riverbed Platform.
 
-You can download the Runbook files from the tables below and import thems into your Riverbed IQ account. 
+You can download the Runbook files from the tables below and import them into your Riverbed IQ account. 
 
 > [!NOTE]
 > * To use runbooks below you need active licenses of the Riverbed Products. Please visit the website of Riverbed for more information about the [Riverbed Platform](https://www.riverbed.com/platform)
