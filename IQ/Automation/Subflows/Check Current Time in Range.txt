@@ -3,7 +3,7 @@
         "runbook": {
             "id": "f68cdc16-ac7a-4eb8-b543-9ffc33a69df2",
             "createdTime": "1726058190.938367900",
-            "lastUpdatedTime": "1737024592.068387200",
+            "lastUpdatedTime": "1737025552.039446900",
             "factoryResourceName": null,
             "isFactory": false,
             "name": "Check Current Time in Range",
@@ -2170,7 +2170,7 @@
                                 "description": "Time specified in 24h format with HH:MM. ",
                                 "required": true,
                                 "validateWithRegex": "^([01]\\d|2[0-3]):([0-5]\\d)$",
-                                "valueType": "any"
+                                "valueType": "from-regular-expression"
                             }
                         ]
                     },
@@ -2297,7 +2297,7 @@
             ],
             "lastUpdatedUser": "ddurand@riverbed.com",
             "createdByUser": "ddurand@riverbed.com",
-            "eTag": "W/\"datetime'2025-01-16T10%3A49%3A52.0735564Z'\"",
+            "eTag": "W/\"datetime'2025-01-16T11%3A05%3A52.0443744Z'\"",
             "variant": "subflow",
             "seriesId": "f68cdc16-ac7a-4eb8-b543-9ffc33a69df2",
             "version": "1.1.0",
@@ -2306,6 +2306,6 @@
             "isValidated": true
         },
         "dependencies": [],
-        "token": "gI6F9YyATXv1pORpJjN2WhnQuhJZihlQDN4uvhpd9hQ="
+        "token": "h5xUAVCuV9CnsN6wf96sgEbSiSc5Hbaj7GP4vg6DNwU="
     }
 }
