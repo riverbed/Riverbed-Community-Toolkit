@@ -12,7 +12,7 @@ After downloading the [subflow file](./Check%20Current%20Time%20in%20Range.txt),
 
 Then, when creating a new runbook, the subflow *Check Current Time in Range* will be available in the list of subflow nodes.
 
-![image](./Check_Current_Time_in_Range_Screenshot1.png)
+![image](./Screenshot1.png)
 
 ### License
 
