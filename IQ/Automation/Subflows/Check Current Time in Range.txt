@@ -1,0 +1,2311 @@
+{
+    "data": {
+        "runbook": {
+            "id": "f68cdc16-ac7a-4eb8-b543-9ffc33a69df2",
+            "createdTime": "1726058190.938367900",
+            "lastUpdatedTime": "1737024592.068387200",
+            "factoryResourceName": null,
+            "isFactory": false,
+            "name": "Check Current Time in Range",
+            "description": "This subflow checks if the current time is between a given start time and end time for a specified time zone.",
+            "isReady": false,
+            "triggerType": "subflow_input",
+            "runtimeVariables": null,
+            "subflowVariables": {
+                "primitiveVariables": [
+                    {
+                        "type": "string",
+                        "defaultValue": "",
+                        "name": "subflow.startTime",
+                        "isReadonly": false
+                    },
+                    {
+                        "type": "string",
+                        "defaultValue": "",
+                        "name": "subflow.endTime",
+                        "isReadonly": false
+                    },
+                    {
+                        "type": "string",
+                        "defaultValue": "Europe/London",
+                        "name": "subflow.timeZone",
+                        "isReadonly": false
+                    },
+                    {
+                        "type": "boolean",
+                        "defaultValue": "false",
+                        "name": "subflow.inRange",
+                        "isReadonly": false
+                    }
+                ],
+                "structuredVariables": []
+            },
+            "nodes": [
+                {
+                    "id": "44edf8d1-e115-469e-b1b7-f00cb29fc8ef",
+                    "type": "subflow_input",
+                    "label": "Subflow Input",
+                    "description": "",
+                    "properties": {
+                        "x": 233,
+                        "y": 260,
+                        "triggerType": "subflow_input",
+                        "debug": false,
+                        "outputDataFormat": "summary",
+                        "synthKeys": [],
+                        "inputVariables": [
+                            "subflow.startTime",
+                            "subflow.endTime",
+                            "subflow.timeZone"
+                        ],
+                        "outputVariables": [
+                            "subflow.inRange"
+                        ],
+                        "integrationIds": {},
+                        "tagIds": {},
+                        "staticInputValuesLists": {
+                            "subflow.startTime": [],
+                            "subflow.endTime": [],
+                            "subflow.timeZone": [
+                                {
+                                    "display": "Africa/Abidjan",
+                                    "label": "Africa/Abidjan",
+                                    "value": "Africa/Abidjan",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Africa/Accra",
+                                    "label": "Africa/Accra",
+                                    "value": "Africa/Accra",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Africa/Algiers",
+                                    "label": "Africa/Algiers",
+                                    "value": "Africa/Algiers",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Africa/Bissau",
+                                    "label": "Africa/Bissau",
+                                    "value": "Africa/Bissau",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Africa/Cairo",
+                                    "label": "Africa/Cairo",
+                                    "value": "Africa/Cairo",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Africa/Casablanca",
+                                    "label": "Africa/Casablanca",
+                                    "value": "Africa/Casablanca",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Africa/Ceuta",
+                                    "label": "Africa/Ceuta",
+                                    "value": "Africa/Ceuta",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Africa/El_Aaiun",
+                                    "label": "Africa/El_Aaiun",
+                                    "value": "Africa/El_Aaiun",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Africa/Johannesburg",
+                                    "label": "Africa/Johannesburg",
+                                    "value": "Africa/Johannesburg",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Africa/Juba",
+                                    "label": "Africa/Juba",
+                                    "value": "Africa/Juba",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Africa/Khartoum",
+                                    "label": "Africa/Khartoum",
+                                    "value": "Africa/Khartoum",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Africa/Lagos",
+                                    "label": "Africa/Lagos",
+                                    "value": "Africa/Lagos",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Africa/Maputo",
+                                    "label": "Africa/Maputo",
+                                    "value": "Africa/Maputo",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Africa/Monrovia",
+                                    "label": "Africa/Monrovia",
+                                    "value": "Africa/Monrovia",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Africa/Nairobi",
+                                    "label": "Africa/Nairobi",
+                                    "value": "Africa/Nairobi",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Africa/Ndjamena",
+                                    "label": "Africa/Ndjamena",
+                                    "value": "Africa/Ndjamena",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Africa/Sao_Tome",
+                                    "label": "Africa/Sao_Tome",
+                                    "value": "Africa/Sao_Tome",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Africa/Tripoli",
+                                    "label": "Africa/Tripoli",
+                                    "value": "Africa/Tripoli",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Africa/Tunis",
+                                    "label": "Africa/Tunis",
+                                    "value": "Africa/Tunis",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Africa/Windhoek",
+                                    "label": "Africa/Windhoek",
+                                    "value": "Africa/Windhoek",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Adak",
+                                    "label": "America/Adak",
+                                    "value": "America/Adak",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Anchorage",
+                                    "label": "America/Anchorage",
+                                    "value": "America/Anchorage",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Araguaina",
+                                    "label": "America/Araguaina",
+                                    "value": "America/Araguaina",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Argentina/Buenos_Aires",
+                                    "label": "America/Argentina/Buenos_Aires",
+                                    "value": "America/Argentina/Buenos_Aires",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Argentina/Catamarca",
+                                    "label": "America/Argentina/Catamarca",
+                                    "value": "America/Argentina/Catamarca",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Argentina/Cordoba",
+                                    "label": "America/Argentina/Cordoba",
+                                    "value": "America/Argentina/Cordoba",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Argentina/Jujuy",
+                                    "label": "America/Argentina/Jujuy",
+                                    "value": "America/Argentina/Jujuy",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Argentina/La_Rioja",
+                                    "label": "America/Argentina/La_Rioja",
+                                    "value": "America/Argentina/La_Rioja",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Argentina/Mendoza",
+                                    "label": "America/Argentina/Mendoza",
+                                    "value": "America/Argentina/Mendoza",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Argentina/Rio_Gallegos",
+                                    "label": "America/Argentina/Rio_Gallegos",
+                                    "value": "America/Argentina/Rio_Gallegos",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Argentina/Salta",
+                                    "label": "America/Argentina/Salta",
+                                    "value": "America/Argentina/Salta",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Argentina/San_Juan",
+                                    "label": "America/Argentina/San_Juan",
+                                    "value": "America/Argentina/San_Juan",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Argentina/San_Luis",
+                                    "label": "America/Argentina/San_Luis",
+                                    "value": "America/Argentina/San_Luis",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Argentina/Tucuman",
+                                    "label": "America/Argentina/Tucuman",
+                                    "value": "America/Argentina/Tucuman",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Argentina/Ushuaia",
+                                    "label": "America/Argentina/Ushuaia",
+                                    "value": "America/Argentina/Ushuaia",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Asuncion",
+                                    "label": "America/Asuncion",
+                                    "value": "America/Asuncion",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Atikokan",
+                                    "label": "America/Atikokan",
+                                    "value": "America/Atikokan",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Bahia",
+                                    "label": "America/Bahia",
+                                    "value": "America/Bahia",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Bahia_Banderas",
+                                    "label": "America/Bahia_Banderas",
+                                    "value": "America/Bahia_Banderas",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Barbados",
+                                    "label": "America/Barbados",
+                                    "value": "America/Barbados",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Belem",
+                                    "label": "America/Belem",
+                                    "value": "America/Belem",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Belize",
+                                    "label": "America/Belize",
+                                    "value": "America/Belize",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Blanc-Sablon",
+                                    "label": "America/Blanc-Sablon",
+                                    "value": "America/Blanc-Sablon",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Boa_Vista",
+                                    "label": "America/Boa_Vista",
+                                    "value": "America/Boa_Vista",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Bogota",
+                                    "label": "America/Bogota",
+                                    "value": "America/Bogota",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Boise",
+                                    "label": "America/Boise",
+                                    "value": "America/Boise",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Cambridge_Bay",
+                                    "label": "America/Cambridge_Bay",
+                                    "value": "America/Cambridge_Bay",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Campo_Grande",
+                                    "label": "America/Campo_Grande",
+                                    "value": "America/Campo_Grande",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Cancun",
+                                    "label": "America/Cancun",
+                                    "value": "America/Cancun",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Caracas",
+                                    "label": "America/Caracas",
+                                    "value": "America/Caracas",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Cayenne",
+                                    "label": "America/Cayenne",
+                                    "value": "America/Cayenne",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Chicago",
+                                    "label": "America/Chicago",
+                                    "value": "America/Chicago",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Chihuahua",
+                                    "label": "America/Chihuahua",
+                                    "value": "America/Chihuahua",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Costa_Rica",
+                                    "label": "America/Costa_Rica",
+                                    "value": "America/Costa_Rica",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Creston",
+                                    "label": "America/Creston",
+                                    "value": "America/Creston",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Cuiaba",
+                                    "label": "America/Cuiaba",
+                                    "value": "America/Cuiaba",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Curacao",
+                                    "label": "America/Curacao",
+                                    "value": "America/Curacao",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Danmarkshavn",
+                                    "label": "America/Danmarkshavn",
+                                    "value": "America/Danmarkshavn",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Dawson",
+                                    "label": "America/Dawson",
+                                    "value": "America/Dawson",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Dawson_Creek",
+                                    "label": "America/Dawson_Creek",
+                                    "value": "America/Dawson_Creek",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Denver",
+                                    "label": "America/Denver",
+                                    "value": "America/Denver",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Detroit",
+                                    "label": "America/Detroit",
+                                    "value": "America/Detroit",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Edmonton",
+                                    "label": "America/Edmonton",
+                                    "value": "America/Edmonton",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Eirunepe",
+                                    "label": "America/Eirunepe",
+                                    "value": "America/Eirunepe",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/El_Salvador",
+                                    "label": "America/El_Salvador",
+                                    "value": "America/El_Salvador",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Fort_Nelson",
+                                    "label": "America/Fort_Nelson",
+                                    "value": "America/Fort_Nelson",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Fortaleza",
+                                    "label": "America/Fortaleza",
+                                    "value": "America/Fortaleza",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Glace_Bay",
+                                    "label": "America/Glace_Bay",
+                                    "value": "America/Glace_Bay",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Goose_Bay",
+                                    "label": "America/Goose_Bay",
+                                    "value": "America/Goose_Bay",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Grand_Turk",
+                                    "label": "America/Grand_Turk",
+                                    "value": "America/Grand_Turk",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Guatemala",
+                                    "label": "America/Guatemala",
+                                    "value": "America/Guatemala",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Guayaquil",
+                                    "label": "America/Guayaquil",
+                                    "value": "America/Guayaquil",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Guyana",
+                                    "label": "America/Guyana",
+                                    "value": "America/Guyana",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Halifax",
+                                    "label": "America/Halifax",
+                                    "value": "America/Halifax",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Havana",
+                                    "label": "America/Havana",
+                                    "value": "America/Havana",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Hermosillo",
+                                    "label": "America/Hermosillo",
+                                    "value": "America/Hermosillo",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Indiana/Indianapolis",
+                                    "label": "America/Indiana/Indianapolis",
+                                    "value": "America/Indiana/Indianapolis",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Indiana/Knox",
+                                    "label": "America/Indiana/Knox",
+                                    "value": "America/Indiana/Knox",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Indiana/Marengo",
+                                    "label": "America/Indiana/Marengo",
+                                    "value": "America/Indiana/Marengo",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Indiana/Petersburg",
+                                    "label": "America/Indiana/Petersburg",
+                                    "value": "America/Indiana/Petersburg",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Indiana/Tell_City",
+                                    "label": "America/Indiana/Tell_City",
+                                    "value": "America/Indiana/Tell_City",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Indiana/Vevay",
+                                    "label": "America/Indiana/Vevay",
+                                    "value": "America/Indiana/Vevay",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Indiana/Vincennes",
+                                    "label": "America/Indiana/Vincennes",
+                                    "value": "America/Indiana/Vincennes",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Indiana/Winamac",
+                                    "label": "America/Indiana/Winamac",
+                                    "value": "America/Indiana/Winamac",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Inuvik",
+                                    "label": "America/Inuvik",
+                                    "value": "America/Inuvik",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Iqaluit",
+                                    "label": "America/Iqaluit",
+                                    "value": "America/Iqaluit",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Jamaica",
+                                    "label": "America/Jamaica",
+                                    "value": "America/Jamaica",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Juneau",
+                                    "label": "America/Juneau",
+                                    "value": "America/Juneau",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Kentucky/Louisville",
+                                    "label": "America/Kentucky/Louisville",
+                                    "value": "America/Kentucky/Louisville",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Kentucky/Monticello",
+                                    "label": "America/Kentucky/Monticello",
+                                    "value": "America/Kentucky/Monticello",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/La_Paz",
+                                    "label": "America/La_Paz",
+                                    "value": "America/La_Paz",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Lima",
+                                    "label": "America/Lima",
+                                    "value": "America/Lima",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Los_Angeles",
+                                    "label": "America/Los_Angeles",
+                                    "value": "America/Los_Angeles",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Maceio",
+                                    "label": "America/Maceio",
+                                    "value": "America/Maceio",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Managua",
+                                    "label": "America/Managua",
+                                    "value": "America/Managua",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Manaus",
+                                    "label": "America/Manaus",
+                                    "value": "America/Manaus",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Martinique",
+                                    "label": "America/Martinique",
+                                    "value": "America/Martinique",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Matamoros",
+                                    "label": "America/Matamoros",
+                                    "value": "America/Matamoros",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Mazatlan",
+                                    "label": "America/Mazatlan",
+                                    "value": "America/Mazatlan",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Menominee",
+                                    "label": "America/Menominee",
+                                    "value": "America/Menominee",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Merida",
+                                    "label": "America/Merida",
+                                    "value": "America/Merida",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Metlakatla",
+                                    "label": "America/Metlakatla",
+                                    "value": "America/Metlakatla",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Mexico_City",
+                                    "label": "America/Mexico_City",
+                                    "value": "America/Mexico_City",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Miquelon",
+                                    "label": "America/Miquelon",
+                                    "value": "America/Miquelon",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Moncton",
+                                    "label": "America/Moncton",
+                                    "value": "America/Moncton",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Monterrey",
+                                    "label": "America/Monterrey",
+                                    "value": "America/Monterrey",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Montevideo",
+                                    "label": "America/Montevideo",
+                                    "value": "America/Montevideo",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Nassau",
+                                    "label": "America/Nassau",
+                                    "value": "America/Nassau",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/New_York",
+                                    "label": "America/New_York",
+                                    "value": "America/New_York",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Nipigon",
+                                    "label": "America/Nipigon",
+                                    "value": "America/Nipigon",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Nome",
+                                    "label": "America/Nome",
+                                    "value": "America/Nome",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Noronha",
+                                    "label": "America/Noronha",
+                                    "value": "America/Noronha",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/North_Dakota/Beulah",
+                                    "label": "America/North_Dakota/Beulah",
+                                    "value": "America/North_Dakota/Beulah",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/North_Dakota/Center",
+                                    "label": "America/North_Dakota/Center",
+                                    "value": "America/North_Dakota/Center",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/North_Dakota/New_Salem",
+                                    "label": "America/North_Dakota/New_Salem",
+                                    "value": "America/North_Dakota/New_Salem",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Nuuk",
+                                    "label": "America/Nuuk",
+                                    "value": "America/Nuuk",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Ojinaga",
+                                    "label": "America/Ojinaga",
+                                    "value": "America/Ojinaga",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Panama",
+                                    "label": "America/Panama",
+                                    "value": "America/Panama",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Pangnirtung",
+                                    "label": "America/Pangnirtung",
+                                    "value": "America/Pangnirtung",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Paramaribo",
+                                    "label": "America/Paramaribo",
+                                    "value": "America/Paramaribo",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Phoenix",
+                                    "label": "America/Phoenix",
+                                    "value": "America/Phoenix",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Port_of_Spain",
+                                    "label": "America/Port_of_Spain",
+                                    "value": "America/Port_of_Spain",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Port-au-Prince",
+                                    "label": "America/Port-au-Prince",
+                                    "value": "America/Port-au-Prince",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Porto_Velho",
+                                    "label": "America/Porto_Velho",
+                                    "value": "America/Porto_Velho",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Puerto_Rico",
+                                    "label": "America/Puerto_Rico",
+                                    "value": "America/Puerto_Rico",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Punta_Arenas",
+                                    "label": "America/Punta_Arenas",
+                                    "value": "America/Punta_Arenas",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Rainy_River",
+                                    "label": "America/Rainy_River",
+                                    "value": "America/Rainy_River",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Rankin_Inlet",
+                                    "label": "America/Rankin_Inlet",
+                                    "value": "America/Rankin_Inlet",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Recife",
+                                    "label": "America/Recife",
+                                    "value": "America/Recife",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Regina",
+                                    "label": "America/Regina",
+                                    "value": "America/Regina",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Resolute",
+                                    "label": "America/Resolute",
+                                    "value": "America/Resolute",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Rio_Branco",
+                                    "label": "America/Rio_Branco",
+                                    "value": "America/Rio_Branco",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Santarem",
+                                    "label": "America/Santarem",
+                                    "value": "America/Santarem",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Santiago",
+                                    "label": "America/Santiago",
+                                    "value": "America/Santiago",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Santo_Domingo",
+                                    "label": "America/Santo_Domingo",
+                                    "value": "America/Santo_Domingo",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Sao_Paulo",
+                                    "label": "America/Sao_Paulo",
+                                    "value": "America/Sao_Paulo",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Scoresbysund",
+                                    "label": "America/Scoresbysund",
+                                    "value": "America/Scoresbysund",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Sitka",
+                                    "label": "America/Sitka",
+                                    "value": "America/Sitka",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/St_Johns",
+                                    "label": "America/St_Johns",
+                                    "value": "America/St_Johns",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Swift_Current",
+                                    "label": "America/Swift_Current",
+                                    "value": "America/Swift_Current",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Tegucigalpa",
+                                    "label": "America/Tegucigalpa",
+                                    "value": "America/Tegucigalpa",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Thule",
+                                    "label": "America/Thule",
+                                    "value": "America/Thule",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Thunder_Bay",
+                                    "label": "America/Thunder_Bay",
+                                    "value": "America/Thunder_Bay",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Tijuana",
+                                    "label": "America/Tijuana",
+                                    "value": "America/Tijuana",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Toronto",
+                                    "label": "America/Toronto",
+                                    "value": "America/Toronto",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Vancouver",
+                                    "label": "America/Vancouver",
+                                    "value": "America/Vancouver",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Whitehorse",
+                                    "label": "America/Whitehorse",
+                                    "value": "America/Whitehorse",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Winnipeg",
+                                    "label": "America/Winnipeg",
+                                    "value": "America/Winnipeg",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Yakutat",
+                                    "label": "America/Yakutat",
+                                    "value": "America/Yakutat",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "America/Yellowknife",
+                                    "label": "America/Yellowknife",
+                                    "value": "America/Yellowknife",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Antarctica/Casey",
+                                    "label": "Antarctica/Casey",
+                                    "value": "Antarctica/Casey",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Antarctica/Davis",
+                                    "label": "Antarctica/Davis",
+                                    "value": "Antarctica/Davis",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Antarctica/DumontDUrville",
+                                    "label": "Antarctica/DumontDUrville",
+                                    "value": "Antarctica/DumontDUrville",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Antarctica/Macquarie",
+                                    "label": "Antarctica/Macquarie",
+                                    "value": "Antarctica/Macquarie",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Antarctica/Mawson",
+                                    "label": "Antarctica/Mawson",
+                                    "value": "Antarctica/Mawson",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Antarctica/Palmer",
+                                    "label": "Antarctica/Palmer",
+                                    "value": "Antarctica/Palmer",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Antarctica/Rothera",
+                                    "label": "Antarctica/Rothera",
+                                    "value": "Antarctica/Rothera",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Antarctica/Syowa",
+                                    "label": "Antarctica/Syowa",
+                                    "value": "Antarctica/Syowa",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Antarctica/Troll",
+                                    "label": "Antarctica/Troll",
+                                    "value": "Antarctica/Troll",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Antarctica/Vostok",
+                                    "label": "Antarctica/Vostok",
+                                    "value": "Antarctica/Vostok",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Almaty",
+                                    "label": "Asia/Almaty",
+                                    "value": "Asia/Almaty",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Amman",
+                                    "label": "Asia/Amman",
+                                    "value": "Asia/Amman",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Anadyr",
+                                    "label": "Asia/Anadyr",
+                                    "value": "Asia/Anadyr",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Aqtau",
+                                    "label": "Asia/Aqtau",
+                                    "value": "Asia/Aqtau",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Aqtobe",
+                                    "label": "Asia/Aqtobe",
+                                    "value": "Asia/Aqtobe",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Ashgabat",
+                                    "label": "Asia/Ashgabat",
+                                    "value": "Asia/Ashgabat",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Atyrau",
+                                    "label": "Asia/Atyrau",
+                                    "value": "Asia/Atyrau",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Baghdad",
+                                    "label": "Asia/Baghdad",
+                                    "value": "Asia/Baghdad",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Baku",
+                                    "label": "Asia/Baku",
+                                    "value": "Asia/Baku",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Bangkok",
+                                    "label": "Asia/Bangkok",
+                                    "value": "Asia/Bangkok",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Barnaul",
+                                    "label": "Asia/Barnaul",
+                                    "value": "Asia/Barnaul",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Beirut",
+                                    "label": "Asia/Beirut",
+                                    "value": "Asia/Beirut",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Bishkek",
+                                    "label": "Asia/Bishkek",
+                                    "value": "Asia/Bishkek",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Brunei",
+                                    "label": "Asia/Brunei",
+                                    "value": "Asia/Brunei",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Chita",
+                                    "label": "Asia/Chita",
+                                    "value": "Asia/Chita",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Choibalsan",
+                                    "label": "Asia/Choibalsan",
+                                    "value": "Asia/Choibalsan",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Colombo",
+                                    "label": "Asia/Colombo",
+                                    "value": "Asia/Colombo",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Damascus",
+                                    "label": "Asia/Damascus",
+                                    "value": "Asia/Damascus",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Dhaka",
+                                    "label": "Asia/Dhaka",
+                                    "value": "Asia/Dhaka",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Dili",
+                                    "label": "Asia/Dili",
+                                    "value": "Asia/Dili",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Dubai",
+                                    "label": "Asia/Dubai",
+                                    "value": "Asia/Dubai",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Dushanbe",
+                                    "label": "Asia/Dushanbe",
+                                    "value": "Asia/Dushanbe",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Famagusta",
+                                    "label": "Asia/Famagusta",
+                                    "value": "Asia/Famagusta",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Gaza",
+                                    "label": "Asia/Gaza",
+                                    "value": "Asia/Gaza",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Hebron",
+                                    "label": "Asia/Hebron",
+                                    "value": "Asia/Hebron",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Ho_Chi_Minh",
+                                    "label": "Asia/Ho_Chi_Minh",
+                                    "value": "Asia/Ho_Chi_Minh",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Hong_Kong",
+                                    "label": "Asia/Hong_Kong",
+                                    "value": "Asia/Hong_Kong",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Hovd",
+                                    "label": "Asia/Hovd",
+                                    "value": "Asia/Hovd",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Irkutsk",
+                                    "label": "Asia/Irkutsk",
+                                    "value": "Asia/Irkutsk",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Jakarta",
+                                    "label": "Asia/Jakarta",
+                                    "value": "Asia/Jakarta",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Jayapura",
+                                    "label": "Asia/Jayapura",
+                                    "value": "Asia/Jayapura",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Jerusalem",
+                                    "label": "Asia/Jerusalem",
+                                    "value": "Asia/Jerusalem",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Kabul",
+                                    "label": "Asia/Kabul",
+                                    "value": "Asia/Kabul",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Kamchatka",
+                                    "label": "Asia/Kamchatka",
+                                    "value": "Asia/Kamchatka",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Karachi",
+                                    "label": "Asia/Karachi",
+                                    "value": "Asia/Karachi",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Kathmandu",
+                                    "label": "Asia/Kathmandu",
+                                    "value": "Asia/Kathmandu",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Khandyga",
+                                    "label": "Asia/Khandyga",
+                                    "value": "Asia/Khandyga",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Kolkata",
+                                    "label": "Asia/Kolkata",
+                                    "value": "Asia/Kolkata",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Krasnoyarsk",
+                                    "label": "Asia/Krasnoyarsk",
+                                    "value": "Asia/Krasnoyarsk",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Kuala_Lumpur",
+                                    "label": "Asia/Kuala_Lumpur",
+                                    "value": "Asia/Kuala_Lumpur",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Kuching",
+                                    "label": "Asia/Kuching",
+                                    "value": "Asia/Kuching",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Macau",
+                                    "label": "Asia/Macau",
+                                    "value": "Asia/Macau",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Magadan",
+                                    "label": "Asia/Magadan",
+                                    "value": "Asia/Magadan",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Makassar",
+                                    "label": "Asia/Makassar",
+                                    "value": "Asia/Makassar",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Manila",
+                                    "label": "Asia/Manila",
+                                    "value": "Asia/Manila",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Nicosia",
+                                    "label": "Asia/Nicosia",
+                                    "value": "Asia/Nicosia",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Novokuznetsk",
+                                    "label": "Asia/Novokuznetsk",
+                                    "value": "Asia/Novokuznetsk",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Novosibirsk",
+                                    "label": "Asia/Novosibirsk",
+                                    "value": "Asia/Novosibirsk",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Omsk",
+                                    "label": "Asia/Omsk",
+                                    "value": "Asia/Omsk",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Oral",
+                                    "label": "Asia/Oral",
+                                    "value": "Asia/Oral",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Pontianak",
+                                    "label": "Asia/Pontianak",
+                                    "value": "Asia/Pontianak",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Pyongyang",
+                                    "label": "Asia/Pyongyang",
+                                    "value": "Asia/Pyongyang",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Qatar",
+                                    "label": "Asia/Qatar",
+                                    "value": "Asia/Qatar",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Qostanay",
+                                    "label": "Asia/Qostanay",
+                                    "value": "Asia/Qostanay",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Qyzylorda",
+                                    "label": "Asia/Qyzylorda",
+                                    "value": "Asia/Qyzylorda",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Riyadh",
+                                    "label": "Asia/Riyadh",
+                                    "value": "Asia/Riyadh",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Sakhalin",
+                                    "label": "Asia/Sakhalin",
+                                    "value": "Asia/Sakhalin",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Samarkand",
+                                    "label": "Asia/Samarkand",
+                                    "value": "Asia/Samarkand",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Seoul",
+                                    "label": "Asia/Seoul",
+                                    "value": "Asia/Seoul",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Shanghai",
+                                    "label": "Asia/Shanghai",
+                                    "value": "Asia/Shanghai",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Singapore",
+                                    "label": "Asia/Singapore",
+                                    "value": "Asia/Singapore",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Srednekolymsk",
+                                    "label": "Asia/Srednekolymsk",
+                                    "value": "Asia/Srednekolymsk",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Taipei",
+                                    "label": "Asia/Taipei",
+                                    "value": "Asia/Taipei",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Tashkent",
+                                    "label": "Asia/Tashkent",
+                                    "value": "Asia/Tashkent",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Tbilisi",
+                                    "label": "Asia/Tbilisi",
+                                    "value": "Asia/Tbilisi",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Tehran",
+                                    "label": "Asia/Tehran",
+                                    "value": "Asia/Tehran",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Thimphu",
+                                    "label": "Asia/Thimphu",
+                                    "value": "Asia/Thimphu",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Tokyo",
+                                    "label": "Asia/Tokyo",
+                                    "value": "Asia/Tokyo",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Tomsk",
+                                    "label": "Asia/Tomsk",
+                                    "value": "Asia/Tomsk",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Ulaanbaatar",
+                                    "label": "Asia/Ulaanbaatar",
+                                    "value": "Asia/Ulaanbaatar",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Urumqi",
+                                    "label": "Asia/Urumqi",
+                                    "value": "Asia/Urumqi",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Ust-Nera",
+                                    "label": "Asia/Ust-Nera",
+                                    "value": "Asia/Ust-Nera",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Vladivostok",
+                                    "label": "Asia/Vladivostok",
+                                    "value": "Asia/Vladivostok",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Yakutsk",
+                                    "label": "Asia/Yakutsk",
+                                    "value": "Asia/Yakutsk",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Yangon",
+                                    "label": "Asia/Yangon",
+                                    "value": "Asia/Yangon",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Yekaterinburg",
+                                    "label": "Asia/Yekaterinburg",
+                                    "value": "Asia/Yekaterinburg",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Asia/Yerevan",
+                                    "label": "Asia/Yerevan",
+                                    "value": "Asia/Yerevan",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Atlantic/Azores",
+                                    "label": "Atlantic/Azores",
+                                    "value": "Atlantic/Azores",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Atlantic/Bermuda",
+                                    "label": "Atlantic/Bermuda",
+                                    "value": "Atlantic/Bermuda",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Atlantic/Canary",
+                                    "label": "Atlantic/Canary",
+                                    "value": "Atlantic/Canary",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Atlantic/Cape_Verde",
+                                    "label": "Atlantic/Cape_Verde",
+                                    "value": "Atlantic/Cape_Verde",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Atlantic/Faroe",
+                                    "label": "Atlantic/Faroe",
+                                    "value": "Atlantic/Faroe",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Atlantic/Madeira",
+                                    "label": "Atlantic/Madeira",
+                                    "value": "Atlantic/Madeira",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Atlantic/Reykjavik",
+                                    "label": "Atlantic/Reykjavik",
+                                    "value": "Atlantic/Reykjavik",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Atlantic/South_Georgia",
+                                    "label": "Atlantic/South_Georgia",
+                                    "value": "Atlantic/South_Georgia",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Atlantic/Stanley",
+                                    "label": "Atlantic/Stanley",
+                                    "value": "Atlantic/Stanley",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Australia/Adelaide",
+                                    "label": "Australia/Adelaide",
+                                    "value": "Australia/Adelaide",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Australia/Brisbane",
+                                    "label": "Australia/Brisbane",
+                                    "value": "Australia/Brisbane",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Australia/Broken_Hill",
+                                    "label": "Australia/Broken_Hill",
+                                    "value": "Australia/Broken_Hill",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Australia/Darwin",
+                                    "label": "Australia/Darwin",
+                                    "value": "Australia/Darwin",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Australia/Eucla",
+                                    "label": "Australia/Eucla",
+                                    "value": "Australia/Eucla",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Australia/Hobart",
+                                    "label": "Australia/Hobart",
+                                    "value": "Australia/Hobart",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Australia/Lindeman",
+                                    "label": "Australia/Lindeman",
+                                    "value": "Australia/Lindeman",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Australia/Lord_Howe",
+                                    "label": "Australia/Lord_Howe",
+                                    "value": "Australia/Lord_Howe",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Australia/Melbourne",
+                                    "label": "Australia/Melbourne",
+                                    "value": "Australia/Melbourne",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Australia/Perth",
+                                    "label": "Australia/Perth",
+                                    "value": "Australia/Perth",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Australia/Sydney",
+                                    "label": "Australia/Sydney",
+                                    "value": "Australia/Sydney",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Amsterdam",
+                                    "label": "Europe/Amsterdam",
+                                    "value": "Europe/Amsterdam",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Andorra",
+                                    "label": "Europe/Andorra",
+                                    "value": "Europe/Andorra",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Astrakhan",
+                                    "label": "Europe/Astrakhan",
+                                    "value": "Europe/Astrakhan",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Athens",
+                                    "label": "Europe/Athens",
+                                    "value": "Europe/Athens",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Belgrade",
+                                    "label": "Europe/Belgrade",
+                                    "value": "Europe/Belgrade",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Berlin",
+                                    "label": "Europe/Berlin",
+                                    "value": "Europe/Berlin",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Brussels",
+                                    "label": "Europe/Brussels",
+                                    "value": "Europe/Brussels",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Bucharest",
+                                    "label": "Europe/Bucharest",
+                                    "value": "Europe/Bucharest",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Budapest",
+                                    "label": "Europe/Budapest",
+                                    "value": "Europe/Budapest",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Chisinau",
+                                    "label": "Europe/Chisinau",
+                                    "value": "Europe/Chisinau",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Copenhagen",
+                                    "label": "Europe/Copenhagen",
+                                    "value": "Europe/Copenhagen",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Dublin",
+                                    "label": "Europe/Dublin",
+                                    "value": "Europe/Dublin",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Gibraltar",
+                                    "label": "Europe/Gibraltar",
+                                    "value": "Europe/Gibraltar",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Helsinki",
+                                    "label": "Europe/Helsinki",
+                                    "value": "Europe/Helsinki",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Istanbul",
+                                    "label": "Europe/Istanbul",
+                                    "value": "Europe/Istanbul",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Kaliningrad",
+                                    "label": "Europe/Kaliningrad",
+                                    "value": "Europe/Kaliningrad",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Kiev",
+                                    "label": "Europe/Kiev",
+                                    "value": "Europe/Kiev",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Kirov",
+                                    "label": "Europe/Kirov",
+                                    "value": "Europe/Kirov",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Lisbon",
+                                    "label": "Europe/Lisbon",
+                                    "value": "Europe/Lisbon",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/London",
+                                    "label": "Europe/London",
+                                    "value": "Europe/London",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Luxembourg",
+                                    "label": "Europe/Luxembourg",
+                                    "value": "Europe/Luxembourg",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Madrid",
+                                    "label": "Europe/Madrid",
+                                    "value": "Europe/Madrid",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Malta",
+                                    "label": "Europe/Malta",
+                                    "value": "Europe/Malta",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Minsk",
+                                    "label": "Europe/Minsk",
+                                    "value": "Europe/Minsk",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Monaco",
+                                    "label": "Europe/Monaco",
+                                    "value": "Europe/Monaco",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Moscow",
+                                    "label": "Europe/Moscow",
+                                    "value": "Europe/Moscow",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Oslo",
+                                    "label": "Europe/Oslo",
+                                    "value": "Europe/Oslo",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Paris",
+                                    "label": "Europe/Paris",
+                                    "value": "Europe/Paris",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Prague",
+                                    "label": "Europe/Prague",
+                                    "value": "Europe/Prague",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Riga",
+                                    "label": "Europe/Riga",
+                                    "value": "Europe/Riga",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Rome",
+                                    "label": "Europe/Rome",
+                                    "value": "Europe/Rome",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Samara",
+                                    "label": "Europe/Samara",
+                                    "value": "Europe/Samara",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Saratov",
+                                    "label": "Europe/Saratov",
+                                    "value": "Europe/Saratov",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Simferopol",
+                                    "label": "Europe/Simferopol",
+                                    "value": "Europe/Simferopol",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Sofia",
+                                    "label": "Europe/Sofia",
+                                    "value": "Europe/Sofia",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Stockholm",
+                                    "label": "Europe/Stockholm",
+                                    "value": "Europe/Stockholm",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Tallinn",
+                                    "label": "Europe/Tallinn",
+                                    "value": "Europe/Tallinn",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Tirane",
+                                    "label": "Europe/Tirane",
+                                    "value": "Europe/Tirane",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Ulyanovsk",
+                                    "label": "Europe/Ulyanovsk",
+                                    "value": "Europe/Ulyanovsk",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Uzhgorod",
+                                    "label": "Europe/Uzhgorod",
+                                    "value": "Europe/Uzhgorod",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Vienna",
+                                    "label": "Europe/Vienna",
+                                    "value": "Europe/Vienna",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Vilnius",
+                                    "label": "Europe/Vilnius",
+                                    "value": "Europe/Vilnius",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Volgograd",
+                                    "label": "Europe/Volgograd",
+                                    "value": "Europe/Volgograd",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Warsaw",
+                                    "label": "Europe/Warsaw",
+                                    "value": "Europe/Warsaw",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Zaporozhye",
+                                    "label": "Europe/Zaporozhye",
+                                    "value": "Europe/Zaporozhye",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Europe/Zurich",
+                                    "label": "Europe/Zurich",
+                                    "value": "Europe/Zurich",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Indian/Chagos",
+                                    "label": "Indian/Chagos",
+                                    "value": "Indian/Chagos",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Indian/Christmas",
+                                    "label": "Indian/Christmas",
+                                    "value": "Indian/Christmas",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Indian/Cocos",
+                                    "label": "Indian/Cocos",
+                                    "value": "Indian/Cocos",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Indian/Kerguelen",
+                                    "label": "Indian/Kerguelen",
+                                    "value": "Indian/Kerguelen",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Indian/Mahe",
+                                    "label": "Indian/Mahe",
+                                    "value": "Indian/Mahe",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Indian/Maldives",
+                                    "label": "Indian/Maldives",
+                                    "value": "Indian/Maldives",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Indian/Mauritius",
+                                    "label": "Indian/Mauritius",
+                                    "value": "Indian/Mauritius",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Indian/Reunion",
+                                    "label": "Indian/Reunion",
+                                    "value": "Indian/Reunion",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Pacific/Apia",
+                                    "label": "Pacific/Apia",
+                                    "value": "Pacific/Apia",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Pacific/Auckland",
+                                    "label": "Pacific/Auckland",
+                                    "value": "Pacific/Auckland",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Pacific/Bougainville",
+                                    "label": "Pacific/Bougainville",
+                                    "value": "Pacific/Bougainville",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Pacific/Chatham",
+                                    "label": "Pacific/Chatham",
+                                    "value": "Pacific/Chatham",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Pacific/Chuuk",
+                                    "label": "Pacific/Chuuk",
+                                    "value": "Pacific/Chuuk",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Pacific/Easter",
+                                    "label": "Pacific/Easter",
+                                    "value": "Pacific/Easter",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Pacific/Efate",
+                                    "label": "Pacific/Efate",
+                                    "value": "Pacific/Efate",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Pacific/Enderbury",
+                                    "label": "Pacific/Enderbury",
+                                    "value": "Pacific/Enderbury",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Pacific/Fakaofo",
+                                    "label": "Pacific/Fakaofo",
+                                    "value": "Pacific/Fakaofo",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Pacific/Fiji",
+                                    "label": "Pacific/Fiji",
+                                    "value": "Pacific/Fiji",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Pacific/Funafuti",
+                                    "label": "Pacific/Funafuti",
+                                    "value": "Pacific/Funafuti",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Pacific/Galapagos",
+                                    "label": "Pacific/Galapagos",
+                                    "value": "Pacific/Galapagos",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Pacific/Gambier",
+                                    "label": "Pacific/Gambier",
+                                    "value": "Pacific/Gambier",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Pacific/Guadalcanal",
+                                    "label": "Pacific/Guadalcanal",
+                                    "value": "Pacific/Guadalcanal",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Pacific/Guam",
+                                    "label": "Pacific/Guam",
+                                    "value": "Pacific/Guam",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Pacific/Honolulu",
+                                    "label": "Pacific/Honolulu",
+                                    "value": "Pacific/Honolulu",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Pacific/Kiritimati",
+                                    "label": "Pacific/Kiritimati",
+                                    "value": "Pacific/Kiritimati",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Pacific/Kosrae",
+                                    "label": "Pacific/Kosrae",
+                                    "value": "Pacific/Kosrae",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Pacific/Kwajalein",
+                                    "label": "Pacific/Kwajalein",
+                                    "value": "Pacific/Kwajalein",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Pacific/Majuro",
+                                    "label": "Pacific/Majuro",
+                                    "value": "Pacific/Majuro",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Pacific/Marquesas",
+                                    "label": "Pacific/Marquesas",
+                                    "value": "Pacific/Marquesas",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Pacific/Nauru",
+                                    "label": "Pacific/Nauru",
+                                    "value": "Pacific/Nauru",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Pacific/Niue",
+                                    "label": "Pacific/Niue",
+                                    "value": "Pacific/Niue",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Pacific/Norfolk",
+                                    "label": "Pacific/Norfolk",
+                                    "value": "Pacific/Norfolk",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Pacific/Noumea",
+                                    "label": "Pacific/Noumea",
+                                    "value": "Pacific/Noumea",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Pacific/Pago_Pago",
+                                    "label": "Pacific/Pago_Pago",
+                                    "value": "Pacific/Pago_Pago",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Pacific/Palau",
+                                    "label": "Pacific/Palau",
+                                    "value": "Pacific/Palau",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Pacific/Pitcairn",
+                                    "label": "Pacific/Pitcairn",
+                                    "value": "Pacific/Pitcairn",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Pacific/Pohnpei",
+                                    "label": "Pacific/Pohnpei",
+                                    "value": "Pacific/Pohnpei",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Pacific/Port_Moresby",
+                                    "label": "Pacific/Port_Moresby",
+                                    "value": "Pacific/Port_Moresby",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Pacific/Rarotonga",
+                                    "label": "Pacific/Rarotonga",
+                                    "value": "Pacific/Rarotonga",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Pacific/Tahiti",
+                                    "label": "Pacific/Tahiti",
+                                    "value": "Pacific/Tahiti",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Pacific/Tarawa",
+                                    "label": "Pacific/Tarawa",
+                                    "value": "Pacific/Tarawa",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Pacific/Tongatapu",
+                                    "label": "Pacific/Tongatapu",
+                                    "value": "Pacific/Tongatapu",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Pacific/Wake",
+                                    "label": "Pacific/Wake",
+                                    "value": "Pacific/Wake",
+                                    "type": "string"
+                                },
+                                {
+                                    "display": "Pacific/Wallis",
+                                    "label": "Pacific/Wallis",
+                                    "value": "Pacific/Wallis",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "inputOrOutputValuesDescriptions": [
+                            {
+                                "valueName": "subflow.timeZone",
+                                "description": "Time zone specified using IANA timezone description. Default: Europe/London.",
+                                "required": true,
+                                "valueType": "from-list"
+                            },
+                            {
+                                "valueName": "subflow.startTime",
+                                "description": "Time specified in 24h format with HH:MM. ",
+                                "required": true,
+                                "validateWithRegex": "^([01]\\d|2[0-3]):([0-5]\\d)$",
+                                "valueType": "from-regular-expression"
+                            },
+                            {
+                                "valueName": "subflow.endTime",
+                                "description": "Time specified in 24h format with HH:MM. ",
+                                "required": true,
+                                "validateWithRegex": "^([01]\\d|2[0-3]):([0-5]\\d)$",
+                                "valueType": "any"
+                            }
+                        ]
+                    },
+                    "wires": [
+                        [
+                            "ee94945c-7d2f-4a0f-92b4-9dc209413468"
+                        ]
+                    ]
+                },
+                {
+                    "id": "e9b5655e-a89c-4596-b1ff-3283b7b0df75",
+                    "type": "subflow_output",
+                    "label": "Subflow Output - Successful Check",
+                    "description": "",
+                    "properties": {
+                        "x": 924,
+                        "y": 180,
+                        "index": 0,
+                        "debug": false
+                    },
+                    "wires": []
+                },
+                {
+                    "id": "65042a50-29fd-4ebd-97c5-100008b60e82",
+                    "type": "set_primitive_variables",
+                    "label": "Check Range",
+                    "description": "",
+                    "properties": {
+                        "x": 697,
+                        "y": 180,
+                        "variables": [
+                            {
+                                "name": "subflow.inRange"
+                            }
+                        ],
+                        "transformTemplate": "{% assign startTime =  variables['subflow.startTime'] %}\n{% assign endTime =  variables['subflow.endTime'] %}\n{% assign timeZone =  variables['subflow.timeZone'] %}\n{% assign timeOffset = 'now' | time_zone: timeZone | date: '%z' %}\n\n{% assign dateToday = 'now' | time_zone: timeZone | date: '%Y-%m-%d ' %}\n{% assign startTimeAsString = dateToday | append: startTime | append: timeOffset %}\n{% assign endTimeAsString = dateToday | append: endTime | append: timeOffset %}\n\n{% assign startTimeStamp = startTimeAsString | date: '%s' | times: 1 %}\n{% assign endTimeStamp = endTimeAsString | date: '%s' | times: 1 %}\n{% assign nowTimeStamp = 'now' | date: '%s' | times: 1 %}\n\n{% if nowTimeStamp >= startTimeStamp and nowTimeStamp <= endTimeStamp %}\n{\n    \"subflow.inRange\": \"true\"\n}\n{%- else -%}\n{\n    \"subflow.inRange\": \"false\"\n}\n{% endif %}\n",
+                        "debug": false
+                    },
+                    "wires": [
+                        [
+                            "e9b5655e-a89c-4596-b1ff-3283b7b0df75"
+                        ]
+                    ]
+                },
+                {
+                    "id": "aab5a969-20f1-4b93-9f13-6db980ab0fde",
+                    "type": "comment",
+                    "label": "Comment",
+                    "description": "",
+                    "properties": {
+                        "x": 216,
+                        "y": 340,
+                        "comment": "<p>Start and end time specified in 24h format with HH:MM.&nbsp;</p>\n<p>Time zone specified using IANA timezone description as found here: https://data.iana.org/time-zones/tzdb-2021a/zone1970.tab</p>\n<p>If time zone is not specified, Europe/London will be used.</p>\n<p><br></p>",
+                        "debug": false
+                    },
+                    "wires": []
+                },
+                {
+                    "id": "ee94945c-7d2f-4a0f-92b4-9dc209413468",
+                    "type": "decision",
+                    "label": "Validate inputs",
+                    "description": "",
+                    "properties": {
+                        "x": 457,
+                        "y": 250,
+                        "dataType": "SUMMARY",
+                        "outputs": [
+                            {
+                                "id": "o06628",
+                                "passedData": "MATCHED",
+                                "expression": {
+                                    "id": "o4536",
+                                    "type": "block",
+                                    "operation": "AND",
+                                    "conditions": [
+                                        {
+                                            "type": "condition",
+                                            "id": "c-1726059279391",
+                                            "category": "variable",
+                                            "key": "$VARIABLE.subflow.startTime",
+                                            "op": "REGEX",
+                                            "value": "^([01]\\d|2[0-3]):([0-5]\\d)$"
+                                        },
+                                        {
+                                            "type": "condition",
+                                            "id": "c-1726134908075",
+                                            "category": "variable",
+                                            "key": "$VARIABLE.subflow.endTime",
+                                            "op": "REGEX",
+                                            "value": "^([01]\\d|2[0-3]):([0-5]\\d)$"
+                                        }
+                                    ]
+                                },
+                                "label": "Correct"
+                            },
+                            {
+                                "id": "default"
+                            }
+                        ],
+                        "debug": false
+                    },
+                    "wires": [
+                        [
+                            "65042a50-29fd-4ebd-97c5-100008b60e82"
+                        ],
+                        [
+                            "16a3b43a-ee31-48a4-b66c-be8acc79d938"
+                        ]
+                    ]
+                },
+                {
+                    "id": "16a3b43a-ee31-48a4-b66c-be8acc79d938",
+                    "type": "subflow_output",
+                    "label": "Subflow Output - Invalid inputs",
+                    "description": "",
+                    "properties": {
+                        "x": 695,
+                        "y": 350,
+                        "index": 0,
+                        "debug": false
+                    },
+                    "wires": []
+                }
+            ],
+            "lastUpdatedUser": "ddurand@riverbed.com",
+            "createdByUser": "ddurand@riverbed.com",
+            "eTag": "W/\"datetime'2025-01-16T10%3A49%3A52.0735564Z'\"",
+            "variant": "subflow",
+            "seriesId": "f68cdc16-ac7a-4eb8-b543-9ffc33a69df2",
+            "version": "1.1.0",
+            "otherVersions": null,
+            "isScheduled": false,
+            "isValidated": true
+        },
+        "dependencies": [],
+        "token": "gI6F9YyATXv1pORpJjN2WhnQuhJZihlQDN4uvhpd9hQ="
+    }
+}
