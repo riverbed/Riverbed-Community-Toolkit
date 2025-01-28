@@ -3,13 +3,15 @@
 The runbook [Demo - IQ Assist - Create ITSM ticket with Endpoint Diagnostic](./Demo%20-%20IQ%20Assist%20-%20Create%20ITSM%20ticket%20with%20Endpoint%20Diagnostic.txt) is an AIOps automation that can be attached to any Aternity ISD Alert.
 When triggered it diagnoses the end-user endpoint and then creates a ticket in a 3rd party ITSM (e.g. ServiceNow).
 
+![IQ Assist in Aternity ISD](101-riverbed-iq-assist-isd.png)
+
 ## Prerequisistes
 
 1. ISD Alert feature is enabled (Aternity EUEM > Configuration > Alerts)
 
 2. ServiceNow integration is installed and the connector is configured (IQ > Integration Library)
 
-3. GenAI feature are enabled
+3. IQ Assist feature is enabled (see [help page](https://help.cloud.riverbed.com/IQ/Content/runbook_node_ai.htm?Highlight=GenAI))
 
 ## Quick Setup
 
