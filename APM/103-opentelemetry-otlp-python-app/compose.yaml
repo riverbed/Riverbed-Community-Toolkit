@@ -1,8 +1,8 @@
-# docker-compose.yaml
+# compose.yaml
 #
 # Riverbed-Community-Toolkit
 # 103-opentelemetry-otlp-python-app
-# version: 24.10.3
+# version: 25.3.4
 #
 # Usage
 #   docker compose up
@@ -69,9 +69,7 @@ services:
       bash -c "
         
         # Install prepreqs
-        # TODO: revert the patch when OTEL supports auto-instrumentation for flask 3 and werkzeug 3 (ref; https://opentelemetry.io/docs/languages/python/automatic/example/)
-        # pip install -q opentelemetry-distro[otlp] opentelemetry-instrumentation opentelemetry-instrumentation-flask flask requests  > /dev/null 2>&1 ;
-        pip install -q opentelemetry-distro[otlp] opentelemetry-instrumentation-flask 'flask<3' 'werkzeug<3' requests > /dev/null 2>&1 ;
+        pip install -q opentelemetry-distro[otlp] opentelemetry-instrumentation opentelemetry-instrumentation-flask flask requests  > /dev/null 2>&1 ;
         
         # Fetch the app
         curl -s -o app.py $$PY_APP_URL ;
