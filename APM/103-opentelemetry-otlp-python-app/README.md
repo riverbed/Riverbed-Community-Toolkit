@@ -1,6 +1,6 @@
 # 103-opentelemetry-otlp-python-app
 
-This cookbook deploys multiple containers using docker-compose: a **python** web app, that is based on Flask and auto-instrumented using [OpenTelemetry](https://opentelemetry.io/) to export OLTP telemetry, a simple traffic generator and the [APM OpenTelemetry Collector](https://hub.docker.com/r/aternity/apm-collector) container.
+This cookbook deploys multiple containers using docker compose: a **python** web app, that is based on Flask and auto-instrumented using [OpenTelemetry](https://opentelemetry.io/) to export OLTP telemetry, a simple traffic generator and the [APM OpenTelemetry Collector](https://hub.docker.com/r/aternity/apm-collector) container.
 
 The [APM OpenTelemetry Collector](https://hub.docker.com/r/aternity/apm-collector) is a container that collects the telemetry exported by the application whether using OTLP, the OpenTelemetry native telemetry protocols, Jaeger or Zipkin.
 
@@ -24,7 +24,7 @@ Those information are required to activate the APM OpenTelemetry Collector conta
 
 ### 2. Start the containers
 
-Get a local copy of the [docker-compose.yaml](docker-compose.yaml) file. 
+Get a local copy of the [compose.yaml](compose.yaml) file. 
 
 Edit the file if you want to manually configure the `SERVER_URL` variable, replacing *RIVERBED_APM_SAAS_SERVER_HOST* and *RIVERBED_APM_CUSTOMER_ID* with actual values. The remaining is all set to pull the container image from [DockerHub](https://hub.docker.com/r/aternity/apm-collector) and receive telemetry on the OTLP gRPC port (4317 tcp port 4317.
 
@@ -50,7 +50,7 @@ Then, start the containers from the shell. The collector can be configured at th
 For example using Bash:
 
 ```bash
-# Go to the directory that contains docker-compose.yaml
+# Go to the directory that contains compose.yaml
 cd Riverbed-Community-Toolkit/APM/103-opentelemetry-otlp-python-app
 
 # Configure the environment variables for the APM OpenTelemetry Collector
@@ -64,7 +64,7 @@ docker compose up
 Using PowerShell:
 
 ```PowerShell
-# Go to the directory that contains docker-compose.yaml
+# Go to the directory that contains compose.yaml
 cd Riverbed-Community-Toolkit/APM/103-opentelemetry-otlp-python-app
 
 # Configure the environment variable for the APM OpenTelemetry Collector
@@ -101,7 +101,7 @@ Search transaction, browse the spans for the selected transaction :
 
 Press CTRL + C in the shell where it is running.
 
-Or in a shell, go to the folder where you keep the [docker-compose.yaml](docker-compose.yaml) and run:
+Or in a shell, go to the folder where you keep the [compose.yaml](compose.yaml) and run:
 
 ```shell
 docker compose down
@@ -123,6 +123,6 @@ On the application container side, the `OTEL_EXPORTER_OTLP_ENDPOINT` environment
 
 #### License
 
-Copyright (c) 2022 Riverbed Technology, Inc.
+Copyright (c) 2022-2025 Riverbed Technology, Inc.
 
 The contents provided here are licensed under the terms and conditions of the MIT License accompanying the software ("License"). The scripts are distributed "AS IS" as set forth in the License. The script also include certain third party code. All such third party code is also distributed "AS IS" and is licensed by the respective copyright holders under the applicable terms and conditions (including, without limitation, warranty and liability disclaimers) identified in the license notices accompanying the software.
