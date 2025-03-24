@@ -25,14 +25,14 @@ Those information are required to activate the APM OpenTelemetry Collector conta
 Download a local copy of the files of this cookbook, for example store them in the folder *Tech-Community/110-opentelemetry-php-app*
 
 ```
-|- docker-compose.yaml
+|- compose.yaml
 |- src
     |- index.php
     |- SampleOTLPhttpExporter.php
     |- SampleZipkinExporter.php
 ```
 
-Start the containers using the [docker-compose.yaml](docker-compose.yaml), for example with Bash:
+Start the containers using the [compose.yaml](compose.yaml), for example with Bash:
 
 ```bash
 cd Riverbed-Community-Toolkit/APM/110-opentelemetry-php-app
@@ -41,7 +41,7 @@ cd Riverbed-Community-Toolkit/APM/110-opentelemetry-php-app
 export RIVERBED_APM_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
 export RIVERBED_APM_CUSTOMER_ID="12341234-12341234-13241234"
 
-docker-compose up
+docker compose up
 ```
 
 or with PowerShell:
@@ -53,7 +53,7 @@ cd Riverbed-Community-Toolkit/APM/110-opentelemetry-php-app
 $env:RIVERBED_APM_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
 $env:RIVERBED_APM_CUSTOMER_ID="12341234-12341234-13241234"
 
-docker-compose up
+docker compose up
 ```
 
 ### Step 3. Try the app
@@ -75,14 +75,14 @@ Browse the local urls
 
 Press CTRL + C in the shell where it is running.
 
-Or in a shell, go to the folder where you keep the [docker-compose.yaml](docker-compose.yaml) and run:
+Or in a shell, go to the folder where you keep the [compose.yaml](compose.yaml) and run:
 
 ```shell
-docker-compose down
+docker compose down
 ```
 
 #### License
 
-Copyright (c) 2022-2024 Riverbed Technology, Inc.
+Copyright (c) 2022-2025 Riverbed Technology, Inc.
 
 The contents provided here are licensed under the terms and conditions of the MIT License accompanying the software ("License"). The scripts are distributed "AS IS" as set forth in the License. The script also include certain third party code. All such third party code is also distributed "AS IS" and is licensed by the respective copyright holders under the applicable terms and conditions (including, without limitation, warranty and liability disclaimers) identified in the license notices accompanying the software.
