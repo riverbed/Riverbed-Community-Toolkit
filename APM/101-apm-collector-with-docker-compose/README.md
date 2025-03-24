@@ -35,9 +35,9 @@ $env:RIVERBED_APM_SAAS_SERVER_HOST="agents.apm.myaccount.aternity.com"
 $env:RIVERBED_APM_CUSTOMER_ID="12341234-12341234-13241234"
 ```
 
-### Step 3. Start the containers
+### Step 3. Start the container
 
-Start the containers using the [compose.yaml](compose.yaml), for example with Bash:
+Start using the [compose.yaml](compose.yaml), for example with Bash:
 
 ```bash
 cd Riverbed-Community-Toolkit/APM/101-apm-collector-with-docker-compose
