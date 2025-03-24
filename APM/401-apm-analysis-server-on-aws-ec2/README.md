@@ -1,6 +1,6 @@
 # Cookbook 401 - APM Analysis Server on AWS EC2
 
-This cookbook deploys the  AterALLUVIOnity [APM](https://www.riverbed.com/products/application-performance-monitoring/) Analysis Server in few clicks. It creates an EC2 instance into an existing VPC/Subnet in your AWS account.
+This cookbook deploys the Analysis Server of [Riverbed APM](https://www.riverbed.com/products/application-performance-monitoring/) in few clicks. It creates an EC2 instance into an existing VPC/Subnet in your AWS account.
 
 <div align="center">
 <img src="images/alluvio-apm-as-on-aws-ec2_login.png" alt="APM AS on AWS EC2" width="70%" height="auto">
@@ -76,6 +76,6 @@ When the stack is created you should be able to connect to web console using the
 
 #### License
 
-Copyright (c) 2024 Riverbed
+Copyright (c) 2024-2025 Riverbed
 
 The contents provided here are licensed under the terms and conditions of the MIT License accompanying the software ("License"). The scripts are distributed "AS IS" as set forth in the License.
