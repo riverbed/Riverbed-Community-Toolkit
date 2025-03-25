@@ -1,5 +1,8 @@
 # 233-instrument-java-app-with-apm-agentless-on-gke
 
+> [!WARNING]
+> Before using this cookbook, consider exploring the [Riverbed Operator](https://github.com/riverbed/riverbed-operator) and also the [cookbook for OpenShift](APM/285-auto-instrument-app-with-riverbed-apm-on-openshift), the recommended deployment methods for Kubernetes environments supported by [Riverbed](https://www.riverbed.com).
+
 In this cookbook a Java web app ([Spring PetClinic](https://github.com/spring-projects/spring-petclinic)) is containerized with the APM agentless for Java (the APM Java agent library for Linux), and deployed along with a [PostgreSQL](https://www.postgresql.org) database on the Linux node pool of a [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine).
 
 With this setup, the pods and nodes of the Kubernetes cluster can scaleout, the [APM](https://www.riverbed.com/products/application-performance-monitoring) will collect every transaction.
