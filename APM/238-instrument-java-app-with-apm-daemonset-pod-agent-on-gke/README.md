@@ -1,7 +1,7 @@
 # 238-instrument-java-app-with-apm-daemonset-pod-agent-on-gke
 
 > [!WARNING]
-> Before using this cookbook, consider exploring the [Riverbed Operator](https://github.com/riverbed/riverbed-operator) and also the [cookbook for OpenShift](APM/285-auto-instrument-app-with-riverbed-apm-on-openshift), the recommended deployment methods for Kubernetes environments supported by [Riverbed](https://www.riverbed.com).
+> Before using this cookbook, consider exploring the [Riverbed Operator](https://github.com/riverbed/riverbed-operator) and also the [cookbook for OpenShift](/APM/285-auto-instrument-app-with-riverbed-apm-on-openshift), the recommended deployment methods for Kubernetes environments supported by [Riverbed](https://www.riverbed.com).
 
 In this cookbook a Java web-application deployed with multiple replicas on a Kubernetes cluster, is  instrumented with APM using a custom Daemonset POD agent
 
