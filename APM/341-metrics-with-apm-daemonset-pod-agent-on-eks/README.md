@@ -1,7 +1,7 @@
 # 341-metrics-with-apm-daemonset-pod-agent-on-eks
 
 > [!WARNING]
-> Before using this cookbook, consider exploring the [Riverbed Operator](https://github.com/riverbed/riverbed-operator) and also the [cookbook for OpenShift](APM/285-auto-instrument-app-with-riverbed-apm-on-openshift), the recommended deployment methods for Kubernetes environments supported by [Riverbed](https://www.riverbed.com).
+> Before using this cookbook, consider exploring the [Riverbed Operator](https://github.com/riverbed/riverbed-operator) and also the [cookbook for OpenShift](/APM/285-auto-instrument-app-with-riverbed-apm-on-openshift), the recommended deployment methods for Kubernetes environments supported by [Riverbed](https://www.riverbed.com).
 
 In a Kubernetes cluster in AWS Elastic Kubernetes Serivce (EKS), the pods and applications can send their metrics to the Riverbed APM via the CMX endpoint exposed by the APM agent.
 
