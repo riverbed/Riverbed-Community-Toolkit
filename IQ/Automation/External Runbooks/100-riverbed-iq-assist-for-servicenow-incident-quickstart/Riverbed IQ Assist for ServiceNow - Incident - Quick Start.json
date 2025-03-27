@@ -1,0 +1,315 @@
+{
+    "runbook": {
+        "id": "d06e1303-3284-4ff6-85f2-0c2752e55b3a",
+        "createdTime": "1743066689.555370100",
+        "lastUpdatedTime": "1743084676.108831700",
+        "factoryResourceName": null,
+        "isFactory": false,
+        "name": "Riverbed IQ Assist for ServiceNow - Incident - Quick Start",
+        "description": "This quick start runbook can be used as-is for Incidents assistance with Riverbed IQ Assist for ServiceNow. When triggered from ServiceNow, the runbook diagnoses the end-user endpoint and updates the incident ticket.",
+        "isReady": true,
+        "triggerType": "webhook",
+        "runtimeVariables": {
+            "primitiveVariables": [
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.ServiceNow_Incident_Sys_Id",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.ServiceNow_Configuration_Item",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.ServiceNow_Configuration_Item_Sys_Id",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.ServiceNow_Incident_Number",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Insight",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.User_Endpoint_Name",
+                    "isReadonly": false
+                }
+            ],
+            "structuredVariables": []
+        },
+        "subflowVariables": null,
+        "nodes": [
+            {
+                "id": "7188fe23-1ba3-44ea-9b82-7bbcdbee84ab",
+                "isIntegrationSubflowNode": false,
+                "type": "trigger",
+                "label": "Riverbed IQ Assist in ServiceNow Incident",
+                "description": "",
+                "properties": {
+                    "x": 353,
+                    "y": 625,
+                    "triggerType": "webhook",
+                    "timeReference": "RUNBOOK_EXECUTION",
+                    "timeOffset": 900,
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "2c121822-8447-4cee-8c23-89106ae879ff"
+                    ]
+                ]
+            },
+            {
+                "id": "74694749-c74d-4d90-bc55-d9472ffcb69d",
+                "isIntegrationSubflowNode": false,
+                "type": "comment",
+                "label": "Comment",
+                "description": "",
+                "properties": {
+                    "x": 50,
+                    "y": 430,
+                    "comment": "<h3><strong>Riverbed IQ Assist for ServiceNow</strong></h3>\n<p>Runbook for Incident in ServiceNow: Diagnose the End-User endpoint.</p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "3e59caf3-461a-42b0-b8d8-8896102423bf",
+                "isIntegrationSubflowNode": false,
+                "type": "comment",
+                "label": "Comment 2",
+                "description": "",
+                "properties": {
+                    "x": 51,
+                    "y": 665,
+                    "comment": "<p>Test payload TEMPLATE&nbsp;</p>\n<p>{</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"recordType\" : \"incident\",&nbsp;</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"recordID\" : \"e51dccec878c62d02f43\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"recordNumber\" : \"INC0013262\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"ciName\" : \"Adam_Covert_WKS\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"ciID\" : \"65498\",</p>\n<p>&nbsp;&nbsp;\"user\" : {</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"UserID\" : \"adam_covert\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"Email\" : \"acovert@acme.net\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"DisplayName\" : \"Adam Covert\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"Name\" : &nbsp;&nbsp;&nbsp;\"adam_covert\"</p>\n<p>&nbsp;&nbsp;}</p>\n<p>}</p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "2c121822-8447-4cee-8c23-89106ae879ff",
+                "isIntegrationSubflowNode": false,
+                "type": "set_primitive_variables",
+                "label": "Extract Basic info (Incident Sys Id, ...)",
+                "description": "",
+                "properties": {
+                    "x": 537,
+                    "y": 625,
+                    "variables": [
+                        {
+                            "name": "runtime.ServiceNow_Incident_Sys_Id"
+                        },
+                        {
+                            "name": "runtime.ServiceNow_Incident_Number"
+                        },
+                        {
+                            "name": "runtime.ServiceNow_Configuration_Item"
+                        },
+                        {
+                            "name": "runtime.ServiceNow_Configuration_Item_Sys_Id"
+                        }
+                    ],
+                    "transformTemplate": "{\n\"runtime.ServiceNow_Incident_Sys_Id\": \"{{trigger[\"requestBody\"][\"recordID\"]}}\",\n\"runtime.ServiceNow_Configuration_Item\": \"{{trigger[\"requestBody\"][\"ciName\"]}}\",\n\"runtime.ServiceNow_Configuration_Item_Sys_Id\": \"{{trigger[\"requestBody\"][\"ciID\"]}}\",\n\"runtime.ServiceNow_Incident_Number\": \"{{trigger[\"requestBody\"][\"recordNumber\"]}}\"\n}",
+                    "debug": true
+                },
+                "wires": [
+                    [
+                        "a4652722-2365-46c0-bcc1-43aa6355521c"
+                    ]
+                ]
+            },
+            {
+                "id": "f992b3e9-77c3-4cd6-9601-1d4e0f67dd00",
+                "isIntegrationSubflowNode": false,
+                "type": "genai",
+                "label": "IQ Assist: Diagnose Health Events (GenAI)",
+                "description": "",
+                "properties": {
+                    "x": 928,
+                    "y": 615,
+                    "instructions": "You are Riverbed IQ Assist, a trusted and expert assistant specializing in diagnosing and troubleshooting issues related to end-user endpoints (Windows, Mac). \nYour analyze recent health events that can impact the stability of the device. Follow these instructions carefully:\n\n1. Adopt the persona of a professional, concise analyst specializing in troubleshooting performance issues related to endpoints and applications.\n2. Process the provided data thoroughly to analyze anomalies. Focus on identifying the **top 5 most relevant findings or anomalies** that are critical to performance.\n3. For each identified issue, include a brief but detailed summary explaining the finding, why it is important, and its potential impact on the system or user experience.\n4. Structure each finding as an itemized, numbered list within an HTML `<div>` tag to ensure easily readable output. Each item should clearly and concisely describe the issue while maintaining a professional tone.\n5. Ensure that the information is organized, unambiguous, and actionable for the person relying on it.\n6. Based on the analysis: \n   a. Determine the probability of the findings impacting the user experience.\n   b. Translate your evaluation into one of four probabilities: `\"high\"`, `\"medium\"`, `\"low\"`, or `\"n.a.\"`. If there is no health events data the probability is `\"n.a.\"`   \n7. Your response should strictly adhere to the structure below, with no additional commentary or explanation outside the HTML format, as shown in this example :\n\"\"\"\nprobability: [probability]\n<br>\n<b>Health Events</b>\n<br>\n<div>\n    <p><b>Finding #1:</b> [Issue description]. <br><b>Explanation</b>: [Why this matters and the potential impact].</p>\n    <p><b>Finding #2:</b> [Issue description]. <br><b>Explanation</b>: [Why this matters and the potential impact].</p>\n    <p><b>Finding #3:</b> [Issue description]. <br><b>Explanation</b>: [Why this matters and the potential impact].</p>\n    <p><b>Finding #4:</b> [Issue description]. <br><b>Explanation</b>: [Why this matters and the potential impact].</p>\n    <p><b>Finding #5:</b> [Issue description]. <br><b>Explanation</b>: [Why this matters and the potential impact].</p>\n</div>\n<div>\n<p><small>AI-generated content</small></p>\n</div>\n\"\"\"\n\nOnly include the top 5 most relevant findings, and no more than 5. Avoid redundancies and keep the focus on critical insights.",
+                    "instructionsLocation": "enter",
+                    "queryLocation": "$parent",
+                    "debug": true
+                },
+                "wires": [
+                    [
+                        "fc9ab290-e7a2-4029-b98e-5fb47e5e85de"
+                    ]
+                ]
+            },
+            {
+                "id": "fc9ab290-e7a2-4029-b98e-5fb47e5e85de",
+                "isIntegrationSubflowNode": false,
+                "type": "set_primitive_variables",
+                "label": "Collect Health Findings",
+                "description": "",
+                "properties": {
+                    "x": 1127.5405847611269,
+                    "y": 635,
+                    "variables": [
+                        {
+                            "name": "runtime.Insight"
+                        }
+                    ],
+                    "transformTemplate": "{%- assign html_string_orig = node_input.output.data[0].keys['gen_ai.response'] | replace: '```html', \"\" | replace: '```', \"\" | replace: '\\n', \"\" | replace: '\\\"', \"&quot;\" -%}\n{%- assign RED = \"#ff001f\" -%}\n{%- assign GREEN = \"#0bf90b\" -%}\n{%- assign YELLOW = \"#e8db18\" -%}\n{%- assign GRAY = \"#a7a9ac\" -%}\n{%- assign ClientColor = GRAY -%}\n{%- assign NetworkColor = GRAY -%}\n{%- assign ServerColor = GRAY -%}\n{%- assign first_line = html_string_orig | slice: 0, 25 -%}\n{%- if first_line contains \"low\" -%}\n  {%- assign ClientColor = GREEN -%}\n  {%- assign html_string = html_string_orig | remove_first: 'probability: low' -%}\n{%- elsif first_line contains \"medium\" -%}\n  {%- assign ClientColor = YELLOW -%}\n  {%- assign html_string = html_string_orig | remove_first: 'probability: medium' -%}\n{%- elsif first_line contains \"high\" -%}\n  {%- assign ClientColor = RED -%}\n  {%- assign html_string = html_string_orig | remove_first: 'probability: high' -%}\n{%- else %}\n  {%- assign html_string = html_string_orig | remove_first: 'probability: n.a.' -%}\n{%- endif -%}\n{%- assign svg_content = \"<?xml version='1.0' encoding='UTF-8'?>\n<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' viewBox='0 0 420 110'>\n  <!-- Generator: Adobe Illustrator 29.3.1, SVG Export Plug-In . SVG Version: 2.1.0 Build 151)  -->\n  <defs>\n    <style>\n      .st0 {\n        fill: none;\n      }\n\n      .ring1 {\n        fill: ClientColor;\n      }\n\n      .ring2 {\n        fill: NetworkColor;\n      }\n\n      .ring3 {\n        fill: ServerColor;\n      }      \n\n      .inner {\n        fill: #fcfcfc;\n      }\n\n      .st5 {\n        fill: #fcfcfc;\n      }\n\n      .st7 {\n        isolation: isolate;\n      }\n\n      .st9 {\n        mix-blend-mode: multiply;\n      }\n\n      .st10 {\n        clip-path: url(#clippath-1);\n      }\n\n      .st11 {\n        clip-path: url(#clippath-2);\n      }\n\n      .st12 {\n        fill: #fcfcfc;\n      }    \n\n      .st14 {\n        fill: #fcfcfc;\n      }\n\n      .st16 {\n        clip-path: url(#clippath);\n      }\n    </style>\n    <clipPath id='clippath'>\n      <rect class='st0' x='150.2' y='0' width='119.6' height='110.1'/>\n    </clipPath>\n    <linearGradient id='linear-gradient' x1='172.9' y1='25.6' x2='244.2' y2='85.4' gradientUnits='userSpaceOnUse'>\n      <stop offset='0' stop-color='#fff'/>\n      <stop offset='1' stop-color='silver'/>\n    </linearGradient>\n    <clipPath id='clippath-1'>\n      <rect class='st0' x='290.9' y='.5' width='126.4' height='109.3'/>\n    </clipPath>\n    <linearGradient id='linear-gradient1' x1='317.6' y1='25.6' x2='389' y2='85.4' xlink:href='#linear-gradient'/>\n    <clipPath id='clippath-2'>\n      <rect class='st0' x='-.4' y='1.2' width='133.3' height='108.6'/>\n    </clipPath>\n    <linearGradient id='linear-gradient2' x1='28.5' y1='25.6' x2='99.8' y2='85.4' xlink:href='#linear-gradient'/>\n  </defs>\n  <g class='st7'>\n    <g id='Layer_1'>\n      <g class='st16'>\n        <g>\n          <path class='ring2' d='M208.6,108.9c-29.4,0-53.4-24-53.4-53.4S179.1,2.1,208.6,2.1s53.4,24,53.4,53.4-24,53.4-53.4,53.4Z'/>\n          <path class='ring2' d='M208.6,107.8c-28.8,0-52.3-23.4-52.3-52.3S179.7,3.2,208.6,3.2s52.3,23.4,52.3,52.3-23.4,52.3-52.3,52.3Z'/>\n          <path class='inner' d='M208.6,102.1c-25.7,0-46.6-20.9-46.6-46.6s20.9-46.6,46.6-46.6,46.6,20.9,46.6,46.6-20.9,46.6-46.6,46.6Z'/>          \n          <circle class='st14' cx='208.6' cy='55.5' r='43.2'/>\n        </g>\n      </g>\n      <g class='st10'>\n        <g>\n          <path class='ring3' d='M353.3,108.9c-29.4,0-53.4-24-53.4-53.4S323.8,2.1,353.3,2.1s53.4,24,53.4,53.4-24,53.4-53.4,53.4Z'/>\n          <path class='ring3' d='M353.3,107.8c-28.8,0-52.3-23.4-52.3-52.3S324.5,3.2,353.3,3.2s52.3,23.4,52.3,52.3-23.4,52.3-52.3,52.3Z'/>\n          <path class='inner' d='M353.3,102.1c-25.7,0-46.6-20.9-46.6-46.6s20.9-46.6,46.6-46.6,46.6,20.9,46.6,46.6-20.9,46.6-46.6,46.6Z'/>\n          <circle class='st12' cx='353.3' cy='55.5' r='43.2'/>\n        </g>\n      </g>\n      <g class='st11'>\n        <g>\n          <path class='ring1' d='M64.1,108.9c-29.4,0-53.4-24-53.4-53.4S34.7,2.1,64.1,2.1s53.4,24,53.4,53.4-24,53.4-53.4,53.4Z'/>\n          <path class='ring1' d='M64.1,107.8c-28.8,0-52.3-23.4-52.3-52.3S35.3,3.2,64.1,3.2s52.3,23.4,52.3,52.3-23.4,52.3-52.3,52.3Z'/>\n          <path class='inner' d='M64.1,102.1c-25.7,0-46.6-20.9-46.6-46.6S38.4,8.9,64.1,8.9s46.6,20.9,46.6,46.6-20.9,46.6-46.6,46.6Z'/>\n          <circle class='st5' cx='64.1' cy='55.5' r='43.2'/>\n        </g>\n      </g>\n      <g>\n        <path d='M47.9,46.8v-6.2s1.7,0,1.7,0v6.2c0,1.7.8,2.5,2.3,2.5s2.3-.8,2.3-2.5v-6.2h1.7v6.2c0,2.6-1.3,4.1-4,4.1s-3.9-1.5-4-4.1Z'/>\n        <path d='M57.5,48.2l1.5-.2c.1,1.1.9,1.5,1.9,1.5s1.4-.3,1.4-.9-.6-.8-1.6-1.1c-2.1-.4-2.9-1-2.9-2.3,0-1.5,1.2-2.3,2.9-2.3s3.1,1,3.2,2.6l-1.4.2c0-1.1-.7-1.5-1.7-1.5s-1.3.4-1.3.9.5.9,1.7,1.1c1.8.4,2.9.8,2.9,2.3s-1.1,2.3-2.9,2.3-3.3-.8-3.4-2.6Z'/>\n        <path d='M72.2,47.4h-5.5c.2,1.3.9,2.1,2.1,2.1s1.6-.4,1.9-1.2l1.3.3c-.4,1.5-1.6,2.3-3.2,2.3s-3.7-1.7-3.7-3.9,1.4-3.9,3.6-3.9,3.5,1.5,3.5,3.8,0,.4,0,.6ZM66.7,46.2h3.9c0-1.2-.8-1.9-1.9-1.9s-1.8.7-2,1.9Z'/>\n        <path d='M75.3,44.7c.5-1.3,1.5-1.9,2.9-1.7v1.7c-1.4-.3-2.8.5-2.8,2.3v3.6h-1.6v-7.6h1.5v1.5Z'/>\n        <path d='M32.2,64.3v-10.1h6.4v1.5h-4.7v2.7h4.1v1.4h-4.1v3h4.8v1.5h-6.5Z'/>\n        <path d='M47.5,59.5v4.7h-1.6v-4.3c0-1.3-.5-1.9-1.5-1.9s-2,.8-2,2.4v3.8h-1.6v-7.6h1.5v1.4c.4-1,1.3-1.6,2.5-1.6,1.9,0,2.7,1.1,2.7,3Z'/>\n        <path d='M54.8,53.4h1.6v10.9h-1.5v-1.4c-.5,1-1.3,1.5-2.6,1.5-2.1,0-3.5-1.6-3.5-4s1.3-3.9,3.5-3.9,2,.4,2.4,1.3v-4.4ZM54.9,60.5c0-1.4-.9-2.5-2.2-2.5s-2.1,1-2.1,2.5.7,2.5,2.1,2.5,2.2-1.1,2.2-2.5Z'/>\n        <path d='M66.1,60.5c0,2.4-1.3,4-3.4,4s-2-.5-2.5-1.4v4.2h-1.6v-10.6h1.5v1.3c.5-1,1.4-1.5,2.6-1.5,2.1,0,3.4,1.6,3.4,3.9ZM64.4,60.5c0-1.5-.7-2.5-2.1-2.5s-2.2,1-2.2,2.5.9,2.5,2.2,2.5,2.1-1,2.1-2.5Z'/>\n        <path d='M67.2,60.5c0-2.3,1.5-3.9,3.8-3.9s3.8,1.7,3.8,3.9-1.5,3.9-3.8,3.9-3.8-1.7-3.8-3.9ZM73.3,60.5c0-1.5-.9-2.5-2.2-2.5s-2.2,1-2.2,2.5.9,2.5,2.2,2.5,2.2-1,2.2-2.5Z'/>\n        <path d='M76.2,54.5c0-.6.5-1,1.1-1s1.1.5,1.1,1-.5,1.1-1.1,1.1-1.1-.5-1.1-1.1ZM76.5,64.3v-7.6h1.6v7.6h-1.6Z'/>\n        <path d='M87,59.5v4.7h-1.6v-4.3c0-1.3-.5-1.9-1.5-1.9s-2,.8-2,2.4v3.8h-1.6v-7.6h1.5v1.4c.4-1,1.3-1.6,2.5-1.6,1.9,0,2.7,1.1,2.7,3Z'/>\n        <path d='M93.8,64.1c-.5.2-1,.3-1.6.3-1.7,0-2.5-.9-2.5-2.6v-3.7h-1.4v-1.4h1.4v-2.2l1.6-.2v2.4h2.4v1.4h-2.4v3.5c0,.9.3,1.4,1.2,1.4s.7,0,1-.2l.3,1.3Z'/>\n      </g>\n      <g>\n        <path d='M184.8,50.4h1.7v10.1h-1.8l-3.4-5.7c-.3-.5-.6-1.1-1-1.7,0,.6,0,1.2,0,1.8v5.7h-1.7v-10.1h1.8l3.4,5.7c.3.5.6,1.1,1,1.7,0-.6,0-1.2,0-1.8v-5.7Z'/>\n        <path d='M195.3,57.2h-5.5c.2,1.3.9,2.1,2.1,2.1s1.6-.4,1.9-1.2l1.3.3c-.4,1.5-1.6,2.3-3.2,2.3s-3.7-1.7-3.7-3.9,1.4-3.9,3.6-3.9,3.5,1.5,3.5,3.8,0,.4,0,.6ZM189.9,56h3.9c0-1.2-.8-1.9-1.9-1.9s-1.8.7-2,1.9Z'/>\n        <path d='M201.7,60.3c-.5.2-1,.3-1.6.3-1.7,0-2.5-.9-2.5-2.6v-3.7h-1.4v-1.4h1.4v-2.2l1.6-.2v2.4h2.4v1.4h-2.4v3.5c0,.9.3,1.4,1.2,1.4s.7,0,1-.2l.3,1.3Z'/>\n        <path d='M211.9,52.9h1.7l-2,7.6h-2.1l-1.2-4.5c-.1-.5-.2-1-.4-1.5-.1.6-.2,1-.4,1.5l-1.2,4.5h-2.1l-2-7.6h1.7l1,4.1c.2.8.3,1.5.5,2.3.2-.9.3-1.6.5-2.3l1-4.1h1.9l1,4.1c.2.7.4,1.5.5,2.3.2-.8.3-1.5.5-2.3l1-4.1Z'/>\n        <path d='M214.4,56.7c0-2.3,1.5-3.9,3.8-3.9s3.8,1.7,3.8,3.9-1.5,3.9-3.8,3.9-3.8-1.7-3.8-3.9ZM220.5,56.7c0-1.5-.9-2.5-2.2-2.5s-2.2,1-2.2,2.5.9,2.5,2.2,2.5,2.2-1,2.2-2.5Z'/>\n        <path d='M225.1,54.4c.5-1.3,1.5-1.9,2.9-1.7v1.7c-1.4-.3-2.8.5-2.8,2.3v3.6h-1.6v-7.6h1.5v1.5Z'/>\n        <path d='M234.3,60.5l-2.4-3.4-1,1.1v2.3h-1.6v-10.9h1.6v6.8l3.1-3.5h2l-2.9,3.2,3.2,4.4h-1.9Z'/>\n      </g>\n      <g>\n        <path d='M321.2,60.9l-.8-2.3h-4.3l-.8,2.3h-1.9l3.5-10.1h2.6l3.5,10.1h-1.9ZM316.6,57.2h3.4l-1.7-5.1-1.7,5.1Z'/>\n        <path d='M332.1,57.1c0,2.4-1.3,4-3.4,4s-2-.5-2.5-1.4v4.2h-1.6v-10.6h1.5v1.3c.5-1,1.4-1.5,2.6-1.5,2.1,0,3.4,1.6,3.4,3.9ZM330.4,57.1c0-1.5-.7-2.5-2.1-2.5s-2.2,1-2.2,2.5.9,2.5,2.2,2.5,2.1-1,2.1-2.5Z'/>\n        <path d='M341.1,57.1c0,2.4-1.3,4-3.4,4s-2-.5-2.5-1.4v4.2h-1.6v-10.6h1.5v1.3c.5-1,1.4-1.5,2.6-1.5,2.1,0,3.4,1.6,3.4,3.9ZM339.5,57.1c0-1.5-.7-2.5-2.1-2.5s-2.2,1-2.2,2.5.9,2.5,2.2,2.5,2.1-1,2.1-2.5Z'/>\n        <path d='M342.6,60.9v-10.9h1.6v10.9h-1.6Z'/>\n        <path d='M346.1,51.1c0-.6.5-1,1.1-1s1.1.5,1.1,1-.5,1.1-1.1,1.1-1.1-.5-1.1-1.1ZM346.4,60.9v-7.6h1.6v7.6h-1.6Z'/>\n        <path d='M349.5,57.1c0-2.3,1.4-3.9,3.8-3.9s3.1.8,3.5,2.8l-1.5.2c-.2-1-.9-1.5-1.9-1.5s-2.1,1.1-2.1,2.5.8,2.5,2.1,2.5,1.7-.5,1.9-1.5l1.5.2c-.4,1.9-1.7,2.8-3.5,2.8s-3.8-1.7-3.8-4Z'/>\n        <path d='M365.6,59.6v1.3c-.3,0-.5,0-.8,0-1.1,0-1.5-.4-1.6-1.2-.5.8-1.4,1.3-2.6,1.3s-2.6-.9-2.6-2.3,1.5-2.2,3.6-2.2,1,0,1.5.1v-.4c0-1-.4-1.8-1.6-1.8s-1.5.4-1.7,1.3l-1.5-.3c.3-1.6,1.4-2.4,3.2-2.4,3.1,0,3.2,2.2,3.2,3.1v2.6c0,.5.1.7.6.7s.3,0,.4,0ZM363.1,58.7v-1c-.5,0-.9,0-1.4,0-1.3,0-2,.3-2,1s.5,1,1.3,1,1.7-.4,2.1-1Z'/>\n        <path d='M371.4,60.7c-.5.2-1,.3-1.6.3-1.7,0-2.5-.9-2.5-2.6v-3.7h-1.4v-1.4h1.4v-2.2l1.6-.2v2.4h2.4v1.4h-2.4v3.5c0,.9.3,1.4,1.2,1.4s.7,0,1-.2l.3,1.3Z'/>\n        <path d='M372.6,51.1c0-.6.5-1,1.1-1s1.1.5,1.1,1-.5,1.1-1.1,1.1-1.1-.5-1.1-1.1ZM372.8,60.9v-7.6h1.6v7.6h-1.6Z'/>\n        <path d='M376,57.1c0-2.3,1.5-3.9,3.8-3.9s3.8,1.7,3.8,3.9-1.5,3.9-3.8,3.9-3.8-1.7-3.8-3.9ZM382.1,57.1c0-1.5-.9-2.5-2.2-2.5s-2.2,1-2.2,2.5.9,2.5,2.2,2.5,2.2-1,2.2-2.5Z'/>\n        <path d='M392,56.1v4.7h-1.6v-4.3c0-1.3-.5-1.9-1.5-1.9s-2,.8-2,2.4v3.8h-1.6v-7.6h1.5v1.4c.4-1,1.3-1.6,2.5-1.6,1.9,0,2.7,1.1,2.7,3Z'/>\n      </g>\n    </g>\n  </g>\n</svg>\" | replace: \"ClientColor\", ClientColor | replace: \"NetworkColor\", NetworkColor | replace: \"ServerColor\", ServerColor -%}\n{\n\"runtime.Insight\": \"[code] <img src='data:image/svg+xml;base64,{{svg_content | base64_encode}}' alt='Rings' width=420>\n<br> {{ html_string}}\"\n}",
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "7e6ed4d8-816d-4bc6-9273-203746a3cb50"
+                    ]
+                ]
+            },
+            {
+                "id": "a4652722-2365-46c0-bcc1-43aa6355521c",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow",
+                "label": "Aternity: Get Device Health Events",
+                "description": "",
+                "properties": {
+                    "x": 729,
+                    "y": 625,
+                    "debug": true,
+                    "configurationId": "f0274fc1-bf02-48a8-9e72-29b9b628256f",
+                    "in": [
+                        {
+                            "inner": "subflow.Aternity_Connector",
+                            "outer": "00000000-0000-0000-0000-000000000000",
+                            "method": "connector",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Device_Name",
+                            "outer": "runtime.ServiceNow_Configuration_Item",
+                            "method": "runtime",
+                            "isUnset": false
+                        }
+                    ],
+                    "out": [
+                        {
+                            "inner": "subflow.Successful",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Error_Message",
+                            "outer": ""
+                        }
+                    ]
+                },
+                "wires": [
+                    [
+                        "f992b3e9-77c3-4cd6-9601-1d4e0f67dd00"
+                    ]
+                ]
+            },
+            {
+                "id": "7e6ed4d8-816d-4bc6-9273-203746a3cb50",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow",
+                "label": "ServiceNow: Post Comment",
+                "description": "",
+                "properties": {
+                    "x": 1324.5405847611269,
+                    "y": 625,
+                    "debug": true,
+                    "configurationId": "f4bba99e-50a8-417a-8e61-b6cb15851cab",
+                    "in": [
+                        {
+                            "inner": "subflow.Connector",
+                            "outer": "00000000-0000-0000-0000-000000000000",
+                            "method": "connector"
+                        },
+                        {
+                            "inner": "subflow.Record_Type",
+                            "outer": "incident",
+                            "method": "static",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Sys_Id",
+                            "outer": "runtime.ServiceNow_Incident_Sys_Id",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Content",
+                            "outer": "runtime.Insight",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Visibility",
+                            "outer": "work_notes",
+                            "method": "static",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Format",
+                            "outer": "html",
+                            "method": "static"
+                        }
+                    ],
+                    "out": [
+                        {
+                            "inner": "subflow.Successful",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Error_Message",
+                            "outer": ""
+                        }
+                    ]
+                },
+                "wires": []
+            }
+        ],
+        "lastUpdatedUser": "Runbook Export",
+        "createdByUser": "Runbook Export",
+        "eTag": "W/\"datetime'2025-03-27T14%3A11%3A16.1181171Z'\"",
+        "variant": "incident",
+        "seriesId": "d06e1303-3284-4ff6-85f2-0c2752e55b3a",
+        "version": "1.0",
+        "otherVersions": null,
+        "isScheduled": false,
+        "isValidated": true,
+        "isProprietary": false
+    },
+    "dependencies": [
+        {
+            "id": "f0274fc1-bf02-48a8-9e72-29b9b628256f",
+            "type": "subflow",
+            "name": "Aternity: Get Device Health Events",
+            "globalId": "Aternity::Get_Device_Health_Events",
+            "originalVersion": "2.1.0",
+            "nodeLabel": "Aternity: Get Device Health Events",
+            "sourceLocation": "integrationLibrary",
+            "sourcePackageId": "Aternity"
+        },
+        {
+            "id": "f4bba99e-50a8-417a-8e61-b6cb15851cab",
+            "type": "subflow",
+            "name": "ServiceNow: Post Comment",
+            "globalId": "ServiceNow::Post_Comment",
+            "originalVersion": "1.0.3",
+            "nodeLabel": "ServiceNow: Post Comment",
+            "sourceLocation": "integrationLibrary",
+            "sourcePackageId": "ServiceNow"
+        }
+    ],
+    "token": "VT4tHZa50BflwDeL775x666TDTrgkGm3ZepcF7hsjts="
+}
