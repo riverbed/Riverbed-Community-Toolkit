@@ -7,13 +7,13 @@ When triggered from ServiceNow, the runbook diagnoses the end-user endpoint and 
 
 ## Prerequisistes
 
-1. IQ Assist feature is enabled (see [help page](https://help.cloud.riverbed.com/IQ/Content/runbook_node_ai.htm?Highlight=GenAI))
+1. IQ Assist feature is enabled (see [help page](https://help.cloud.riverbed.com/IQ/Content/runbook_node_ai.htm?Highlight=GenAI)).
 
-2. Application 'Riverbed IQ Assist for ServiceNow' is installed from ServiceNow Store
+2. [Riverbed IQ Assist for ServiceNow](https://store.servicenow.com/sn_appstore_store.do#!/store/search?listingtype=allintegrations%253Bancillary_app%253Bcertified_apps%253Bcontent%253Bindustry_solution%253Boem%253Butility%253Btemplate%253Bgenerative_ai%253Bsnow_solution&q=riverbed%20IQ%20Assist) is installed from ServiceNow Store.
 
-3. Aternity integration on Riverbed IQ is installed
+3. Aternity integration on Riverbed IQ is installed.
 
-4. ServiceNow integration is installed (IQ > Integration Library)
+4. ServiceNow integration is installed (IQ > Integration Library).
 
 
 ## Quick Setup
