@@ -22,8 +22,8 @@ You can download the Runbook files from the tables below and import them into yo
 
 | Runbook | File | Description | Tags | Last update |
 | --- | --- | --- | --- | --- |
-| Riverbed IQ Assist for ServiceNow - Incident - Quick Start | [Download](Automation/External%20Runbooks/101-iq-assist-genai-endpoint-diagnostic/Riverbed%20IQ%20Assist%20for%20ServiceNow%20-%20Incident%20-%20Quick%20Start.json) | [More details](Automation/External%20Runbooks/100-riverbed-iq-assist-for-servicenow-incident-quickstart) | AIOps, Aternity EUEM, ISD, ITSM, ServiceNow | march 2025 |
-| Demo - IQ Assist - Create ITSM ticket with Endpoint Diagnostic | [Download](Automation/External%20Runbooks/101-iq-assist-genai-endpoint-diagnostic/Demo%20-%20ISD%20-%20Riverbed%20IQ%20Assist%20-%20Create%20ITSM%20ticket%20with%20Endpoint%20Diagnostic.json) | [More details](Automation/External%20Runbooks/200-riverbed-iq-assist-isd-endpoint-diagnostic) | AIOps, Aternity EUEM, ISD, ITSM | jan. 2025 |
+| Riverbed IQ Assist for ServiceNow - Incident - Quick Start | [Download](Automation/External%20Runbooks/100-riverbed-iq-assist-for-servicenow-incident-quickstart/Riverbed%20IQ%20Assist%20for%20ServiceNow%20-%20Incident%20-%20Quick%20Start.json) | [More details](Automation/External%20Runbooks/100-riverbed-iq-assist-for-servicenow-incident-quickstart) | AIOps, Aternity EUEM, ISD, ITSM, ServiceNow | march 2025 |
+| Demo - IQ Assist - Create ITSM ticket with Endpoint Diagnostic | [Download](Automation/External%20Runbooks/200-riverbed-iq-assist-isd-endpoint-diagnostic/Demo%20-%20ISD%20-%20Riverbed%20IQ%20Assist%20-%20Create%20ITSM%20ticket%20with%20Endpoint%20Diagnostic.json) | [More details](Automation/External%20Runbooks/200-riverbed-iq-assist-isd-endpoint-diagnostic) | AIOps, Aternity EUEM, ISD, ITSM | jan. 2025 |
 
 ### Subflows
 
