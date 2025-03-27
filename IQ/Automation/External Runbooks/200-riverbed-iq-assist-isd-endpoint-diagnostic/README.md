@@ -1,9 +1,9 @@
 # Demo - IQ Assist - Create ITSM ticket with Endpoint Diagnostic
 
-The runbook [Demo - IQ Assist - Create ITSM ticket with Endpoint Diagnostic](./Demo%20-%20IQ%20Assist%20-%20Create%20ITSM%20ticket%20with%20Endpoint%20Diagnostic.txt) is an AIOps automation that can be attached to any Aternity ISD Alert.
+The runbook [Demo - IQ Assist - Create ITSM ticket with Endpoint Diagnostic](./Demo%20-%20ISD%20-%20Riverbed%20IQ%20Assist%20-%20Create%20ITSM%20ticket%20with%20Endpoint%20Diagnostic.json) is an AIOps automation that can be attached to any Aternity ISD Alert.
 When triggered it diagnoses the end-user endpoint and then creates a ticket in a 3rd party ITSM (e.g. ServiceNow).
 
-![IQ Assist in Aternity ISD](101-riverbed-iq-assist-isd.png)
+![IQ Assist in Aternity ISD](200-riverbed-iq-assist-isd.png)
 
 ## Prerequisistes
 
@@ -15,7 +15,7 @@ When triggered it diagnoses the end-user endpoint and then creates a ticket in a
 
 ## Quick Setup
 
-After downloading the [runbook file](./Demo%20-%20IQ%20Assist%20-%20Create%20ITSM%20ticket%20with%20Endpoint%20Diagnostic.txt), go to IQ Automation, import the runbook in the External Runbooks. And toggle "Allow Automation" on.
+After downloading the [runbook file](./Demo%20-%20ISD%20-%20Riverbed%20IQ%20Assist%20-%20Create%20ITSM%20ticket%20with%20Endpoint%20Diagnostic.json), go to IQ Automation, import the runbook in the External Runbooks. And toggle "Allow Automation" on.
 
 Then go to the Alerts page in Aternity, and edit an existing Rule or create a new Alert Rule. And in the Actions section, select the runbook from the drop-down list.
 
