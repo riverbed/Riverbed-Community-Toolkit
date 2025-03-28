@@ -2,7 +2,7 @@
     "runbook": {
         "id": "d06e1303-3284-4ff6-85f2-0c2752e55b3a",
         "createdTime": "1743066689.555370100",
-        "lastUpdatedTime": "1743152495.352585300",
+        "lastUpdatedTime": "1743180200.241253500",
         "factoryResourceName": null,
         "isFactory": false,
         "name": "Riverbed IQ Assist for ServiceNow - Incident - Quick Start",
@@ -124,7 +124,7 @@
                         }
                     ],
                     "transformTemplate": "{\n\"runtime.ServiceNow_Incident_Sys_Id\": \"{{trigger[\"requestBody\"][\"recordID\"]}}\",\n\"runtime.ServiceNow_Configuration_Item\": \"{{trigger[\"requestBody\"][\"ciName\"]}}\",\n\"runtime.ServiceNow_Configuration_Item_Sys_Id\": \"{{trigger[\"requestBody\"][\"ciID\"]}}\",\n\"runtime.ServiceNow_Incident_Number\": \"{{trigger[\"requestBody\"][\"recordNumber\"]}}\"\n}",
-                    "debug": true
+                    "debug": false
                 },
                 "wires": [
                     [
@@ -144,7 +144,7 @@
                     "instructions": "You are Riverbed IQ Assist, a trusted and expert assistant specializing in diagnosing and troubleshooting issues related to end-user endpoints (Windows, Mac). \nYour analyze recent health events that can impact the stability of the device. Follow these instructions carefully:\n\n1. Adopt the persona of a professional, concise analyst specializing in troubleshooting performance issues related to endpoints and applications.\n2. Process the provided data thoroughly to analyze anomalies. Focus on identifying the **top 5 most relevant findings or anomalies** that are critical to performance.\n3. For each identified issue, include a brief but detailed summary explaining the finding, why it is important, and its potential impact on the system or user experience.\n4. Structure each finding as an itemized, numbered list within an HTML `<div>` tag to ensure easily readable output. Each item should clearly and concisely describe the issue while maintaining a professional tone.\n5. Ensure that the information is organized, unambiguous, and actionable for the person relying on it.\n6. Based on the analysis: \n   a. Determine the probability of the findings impacting the user experience.\n   b. Translate your evaluation into one of four probabilities: `\"high\"`, `\"medium\"`, `\"low\"`, or `\"n.a.\"`. If there is no health events data the probability is `\"n.a.\"`   \n7. Your response should strictly adhere to the structure below, with no additional commentary or explanation outside the HTML format, as shown in this example :\n\"\"\"\nprobability: [probability]\n<br>\n<b>Health Events</b>\n<br>\n<div>\n    <p><b>Finding #1:</b> [Issue description]. <br><b>Explanation</b>: [Why this matters and the potential impact].</p>\n    <p><b>Finding #2:</b> [Issue description]. <br><b>Explanation</b>: [Why this matters and the potential impact].</p>\n    <p><b>Finding #3:</b> [Issue description]. <br><b>Explanation</b>: [Why this matters and the potential impact].</p>\n    <p><b>Finding #4:</b> [Issue description]. <br><b>Explanation</b>: [Why this matters and the potential impact].</p>\n    <p><b>Finding #5:</b> [Issue description]. <br><b>Explanation</b>: [Why this matters and the potential impact].</p>\n</div>\n<div>\n<p><small>AI-generated content</small></p>\n</div>\n\"\"\"\n\nOnly include the top 5 most relevant findings, and no more than 5. Avoid redundancies and keep the focus on critical insights.",
                     "instructionsLocation": "enter",
                     "queryLocation": "$parent",
-                    "debug": true
+                    "debug": false
                 },
                 "wires": [
                     [
@@ -184,7 +184,7 @@
                 "properties": {
                     "x": 729,
                     "y": 625,
-                    "debug": true,
+                    "debug": false,
                     "configurationId": "f0274fc1-bf02-48a8-9e72-29b9b628256f",
                     "in": [
                         {
@@ -226,7 +226,7 @@
                 "properties": {
                     "x": 1324.5405847611269,
                     "y": 625,
-                    "debug": true,
+                    "debug": false,
                     "configurationId": "f4bba99e-50a8-417a-8e61-b6cb15851cab",
                     "in": [
                         {
@@ -280,7 +280,7 @@
         ],
         "lastUpdatedUser": "Runbook Export",
         "createdByUser": "Runbook Export",
-        "eTag": "W/\"datetime'2025-03-28T09%3A01%3A35.3752309Z'\"",
+        "eTag": "W/\"datetime'2025-03-28T16%3A43%3A20.2406741Z'\"",
         "variant": "incident",
         "seriesId": "d06e1303-3284-4ff6-85f2-0c2752e55b3a",
         "version": "1.0",
@@ -311,5 +311,5 @@
             "sourcePackageId": "ServiceNow"
         }
     ],
-    "token": "TRVYtEHYKb5rW1waSJv47Mgl3Zb/tuunWdCHViLQhbM="
+    "token": "2G8qH5jluEa6CJ37cMtlyTEjhRpN5usymR+vOVDp2sc="
 }
