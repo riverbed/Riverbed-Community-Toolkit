@@ -2,7 +2,7 @@
     "runbook": {
         "id": "d06e1303-3284-4ff6-85f2-0c2752e55b3a",
         "createdTime": "1743066689.555370100",
-        "lastUpdatedTime": "1743084676.108831700",
+        "lastUpdatedTime": "1743152495.352585300",
         "factoryResourceName": null,
         "isFactory": false,
         "name": "Riverbed IQ Assist for ServiceNow - Incident - Quick Start",
@@ -81,7 +81,7 @@
                 "properties": {
                     "x": 50,
                     "y": 430,
-                    "comment": "<h3><strong>Riverbed IQ Assist for ServiceNow</strong></h3>\n<p>Runbook for Incident in ServiceNow: Diagnose the End-User endpoint.</p>",
+                    "comment": "<h3>Riverbed IQ Assist for ServiceNow</h3>\n<p>Runbook for Incident in ServiceNow: Diagnose the End-User endpoint.</p>",
                     "debug": false
                 },
                 "wires": []
@@ -95,7 +95,7 @@
                 "properties": {
                     "x": 51,
                     "y": 665,
-                    "comment": "<p>Test payload TEMPLATE&nbsp;</p>\n<p>{</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"recordType\" : \"incident\",&nbsp;</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"recordID\" : \"e51dccec878c62d02f43\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"recordNumber\" : \"INC0013262\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"ciName\" : \"Adam_Covert_WKS\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"ciID\" : \"65498\",</p>\n<p>&nbsp;&nbsp;\"user\" : {</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"UserID\" : \"adam_covert\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"Email\" : \"acovert@acme.net\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"DisplayName\" : \"Adam Covert\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"Name\" : &nbsp;&nbsp;&nbsp;\"adam_covert\"</p>\n<p>&nbsp;&nbsp;}</p>\n<p>}</p>",
+                    "comment": "<p><strong>Example payload template</strong></p>\n<p>{<br>\n&nbsp;&nbsp; \"recordType\" : \"incident\",<br>\n&nbsp;&nbsp; \"recordID\" : \"e51dccec878c\",<br>\n&nbsp;&nbsp; \"recordNumber\" : \"INC0013262\",<br>\n&nbsp;&nbsp; \"ciName\" : \"Adam_Covert_WKS\",<br>\n&nbsp;&nbsp; \"ciID\" : \"65498\",<br>\n&nbsp;\"user\" : {<br>\n&nbsp;&nbsp; \"UserID\" : \"cindy.johnson\",<br>\n&nbsp;&nbsp; \"Email\" : \"cjohnson@acme.net\",<br>\n&nbsp;&nbsp; \"DisplayName\" : \"Cindy Johnson\",<br>\n&nbsp;&nbsp; \"Name\" :&nbsp;&nbsp;&nbsp; \"cindy.johnson\"<br>\n&nbsp;}<br>\n}</p>",
                     "debug": false
                 },
                 "wires": []
@@ -221,7 +221,7 @@
                 "id": "7e6ed4d8-816d-4bc6-9273-203746a3cb50",
                 "isIntegrationSubflowNode": false,
                 "type": "subflow",
-                "label": "ServiceNow: Post Comment",
+                "label": "ServiceNow: Post Work Notes",
                 "description": "",
                 "properties": {
                     "x": 1324.5405847611269,
@@ -280,7 +280,7 @@
         ],
         "lastUpdatedUser": "Runbook Export",
         "createdByUser": "Runbook Export",
-        "eTag": "W/\"datetime'2025-03-27T14%3A11%3A16.1181171Z'\"",
+        "eTag": "W/\"datetime'2025-03-28T09%3A01%3A35.3752309Z'\"",
         "variant": "incident",
         "seriesId": "d06e1303-3284-4ff6-85f2-0c2752e55b3a",
         "version": "1.0",
@@ -306,10 +306,10 @@
             "name": "ServiceNow: Post Comment",
             "globalId": "ServiceNow::Post_Comment",
             "originalVersion": "1.0.3",
-            "nodeLabel": "ServiceNow: Post Comment",
+            "nodeLabel": "ServiceNow: Post Work Notes",
             "sourceLocation": "integrationLibrary",
             "sourcePackageId": "ServiceNow"
         }
     ],
-    "token": "VT4tHZa50BflwDeL775x666TDTrgkGm3ZepcF7hsjts="
+    "token": "TRVYtEHYKb5rW1waSJv47Mgl3Zb/tuunWdCHViLQhbM="
 }
