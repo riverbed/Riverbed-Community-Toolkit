@@ -1,0 +1,298 @@
+{
+    "runbook": {
+        "id": "27ec2b9f-c20a-4eb5-9265-dd7ba3f491e8",
+        "createdTime": "1741702751.742479800",
+        "lastUpdatedTime": "1741703170.787960200",
+        "factoryResourceName": null,
+        "isFactory": false,
+        "name": "Demo - Sync Device Group from Intune to Unified Agent",
+        "description": "Synchronize device members from the group in Intune to the group in Unified Agent. The name of each group must be provided in the parameters.\n\n\nTest:\n* Group Intune: Intune-Device-Region-EMEA\n* Group Unified Agent: Demo-IQ_Runbook_Sync_From_Intune",
+        "isReady": false,
+        "triggerType": "on_demand_input",
+        "runtimeVariables": {
+            "primitiveVariables": [
+                {
+                    "type": "boolean",
+                    "defaultValue": null,
+                    "name": "runtime.Successful",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Error_Message",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": "Intune-Device-Region-EMEA",
+                    "name": "runtime.Group_Intune",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Members_CSV",
+                    "isReadonly": false
+                },
+                {
+                    "type": "integer",
+                    "defaultValue": null,
+                    "name": "runtime.Members_Count",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": "lms",
+                    "name": "runtime.UNIFIED_AGENT_ENV",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": "9001",
+                    "name": "runtime.UNIFIED_AGENT_ACCOUNT_ID",
+                    "isReadonly": false
+                },
+                {
+                    "type": "auth_profile",
+                    "defaultValue": null,
+                    "name": "runtime.UNIFIED_AGENT_AUTH_PROFILE",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": "Demo-IQ_Runbook_Sync_From_Intune",
+                    "name": "runtime.Group_Unified_Agent",
+                    "isReadonly": false
+                }
+            ],
+            "structuredVariables": []
+        },
+        "subflowVariables": null,
+        "nodes": [
+            {
+                "id": "e2183d5c-81e8-4c0b-873d-5a4bfb61611b",
+                "isIntegrationSubflowNode": false,
+                "type": "on_demand_input",
+                "label": "Input",
+                "description": "",
+                "properties": {
+                    "x": 357,
+                    "y": 310,
+                    "triggerType": "on_demand_input",
+                    "debug": false,
+                    "outputDataFormat": "summary",
+                    "synthKeys": [],
+                    "inputVariables": [
+                        "runtime.UNIFIED_AGENT_AUTH_PROFILE",
+                        "runtime.Group_Intune",
+                        "runtime.Group_Unified_Agent",
+                        "runtime.UNIFIED_AGENT_ACCOUNT_ID",
+                        "runtime.UNIFIED_AGENT_ENV"
+                    ],
+                    "outputVariables": []
+                },
+                "wires": [
+                    [
+                        "548e5a83-44a6-4956-a66e-35c9c9b45b88"
+                    ]
+                ]
+            },
+            {
+                "id": "548e5a83-44a6-4956-a66e-35c9c9b45b88",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow",
+                "label": "MS Graph: List Entra ID Group Devices",
+                "description": "List the devices in a Entra ID group.",
+                "properties": {
+                    "x": 611,
+                    "y": 310,
+                    "debug": true,
+                    "configurationId": "1adb70ca-221b-4a8b-b7d6-240ec8cbb3a9",
+                    "in": [
+                        {
+                            "inner": "subflow.Microsoft_Graph_Connector",
+                            "outer": "00000000-0000-0000-0000-000000000000",
+                            "method": "connector",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Group_Identifier_Type",
+                            "outer": "displayName",
+                            "method": "static",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Group_Identifier",
+                            "outer": "runtime.Group_Intune",
+                            "method": "runtime",
+                            "isUnset": false
+                        }
+                    ],
+                    "out": [
+                        {
+                            "inner": "subflow.Successful",
+                            "outer": "runtime.Successful",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Error_Message",
+                            "outer": "runtime.Error_Message",
+                            "method": "runtime"
+                        }
+                    ]
+                },
+                "wires": [
+                    [
+                        "392b3b46-bdfd-4837-abf3-9415064db981",
+                        "b3c4a3f3-176c-481f-ae98-b7d02d5262c7"
+                    ]
+                ]
+            },
+            {
+                "id": "2ea71e85-77e7-4517-9b55-7e593eb9550f",
+                "isIntegrationSubflowNode": false,
+                "type": "rvbd_ui_text",
+                "label": "Text",
+                "description": "",
+                "properties": {
+                    "x": 1347,
+                    "y": 390,
+                    "title": "Groups",
+                    "row": "10",
+                    "notes": "<ul>\n  <li>Group Intune: <strong>{{variables[\"runtime.Group_Intune\"]}}</strong>&nbsp;</li>\n</ul>\n<p><br></p>\n<ul>\n  <li>Group Unified Agent: <strong>{{variables[\"runtime.Group_Unified_Agent\"]}}</strong>&nbsp;</li>\n</ul>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "392b3b46-bdfd-4837-abf3-9415064db981",
+                "isIntegrationSubflowNode": false,
+                "type": "set_primitive_variables",
+                "label": "Format Data",
+                "description": "",
+                "properties": {
+                    "x": 861,
+                    "y": 230,
+                    "variables": [
+                        {
+                            "name": "runtime.Members_Count"
+                        }
+                    ],
+                    "transformTemplate": "{% assign data = node_input.output.data %}\n{% assign item_count = data | size %}\n\n{\n    \"runtime.Members_Count\": {{ item_count }}\n}",
+                    "debug": true
+                },
+                "wires": [
+                    [
+                        "fe95c007-7b29-4ebd-b837-1bd6d87285e8"
+                    ]
+                ]
+            },
+            {
+                "id": "ffc6e11d-f8a6-42c5-9322-387bec2d8ac3",
+                "isIntegrationSubflowNode": false,
+                "type": "insight",
+                "label": "Add Insight: Device Count",
+                "description": "",
+                "properties": {
+                    "x": 1353,
+                    "y": 230.00000000000003,
+                    "template": "<p>Synchronized Devices: <strong>{{variables[\"runtime.Members_Count\"]}}</strong></p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "fe95c007-7b29-4ebd-b837-1bd6d87285e8",
+                "isIntegrationSubflowNode": false,
+                "type": "http",
+                "label": "Unified Agent: Update Groups",
+                "description": "",
+                "properties": {
+                    "x": 1100,
+                    "y": 310,
+                    "syncCall": {
+                        "request": {
+                            "httpVerbTemplate": "POST",
+                            "endpointTemplate": "https://{{variables[\"runtime.UNIFIED_AGENT_ENV\"]}}.aternity.com/services/entityGroups/api/groups/members/injectByName/{{variables[\"runtime.Group_Unified_Agent\"]}}?BACCT={{variables[\"runtime.UNIFIED_AGENT_ACCOUNT_ID\"]}}",
+                            "headers": {
+                                "contentType": "application/json",
+                                "accept": "application/json"
+                            },
+                            "bodyTemplate": "{% assign data = node_input.output.data %}\n{% assign members = \"\" %}\n{% for device in data %}\n  {% if forloop.first %}\n    {% assign members = '\"' | append: device[\"keys\"].displayName | append: '\"' %}\n  {% else %}\n    {% assign members = members | append: ', \"' | append: device[\"keys\"].displayName | append: '\"' %}\n  {% endif %}\n{% endfor %}\n\n{\n  \"members\": [{{ members }}]\n}",
+                            "authenticationProfileId": "runtime.UNIFIED_AGENT_AUTH_PROFILE",
+                            "edgeDeviceId": ""
+                        }
+                    },
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "ffc6e11d-f8a6-42c5-9322-387bec2d8ac3",
+                        "2ea71e85-77e7-4517-9b55-7e593eb9550f"
+                    ]
+                ]
+            },
+            {
+                "id": "5582be78-fd40-4553-be5c-acab3873c0e2",
+                "isIntegrationSubflowNode": false,
+                "type": "comment",
+                "label": "Comment",
+                "description": "",
+                "properties": {
+                    "x": 50,
+                    "y": 120,
+                    "comment": "<h2><strong>Setup</strong></h2>\n<p>in Unified Agent, create a group (for example: your_group).</p>\n<p>in IQ,</p>\n<ol>\n  <li>Integration Library &gt; Add MS Graph integration and configure a connector</li>\n  <li>Unified Agent configure the authentication profile</li>\n  <li>Import this runbook and set the variables for unified agent (ENV LMS and ACCOUNT_ID)</li>\n  <li>Configure a schedule, for example\n    <ul>\n      <li>Hourly schedule</li>\n      <li>Intune group: your_intune_group</li>\n      <li>Unified Agent group: your_group</li>\n    </ul>\n  </li>\n</ol>\n<p><br></p>\n<p><br></p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "b3c4a3f3-176c-481f-ae98-b7d02d5262c7",
+                "isIntegrationSubflowNode": false,
+                "type": "rvbd_ui_table",
+                "label": "Table",
+                "description": "",
+                "properties": {
+                    "x": 864,
+                    "y": 400,
+                    "title": "Top Devices (Extract)",
+                    "row": "100",
+                    "notesPosition": "left",
+                    "notes": "",
+                    "sortColumn": "displayName",
+                    "sortOrder": "asc",
+                    "columns": [
+                        "displayName"
+                    ],
+                    "includeAllColumns": false,
+                    "flipTable": false,
+                    "debug": false
+                },
+                "wires": []
+            }
+        ],
+        "lastUpdatedUser": "Runbook Export",
+        "createdByUser": "Runbook Export",
+        "eTag": "W/\"datetime'2025-03-11T14%3A26%3A10.8007034Z'\"",
+        "variant": "on_demand",
+        "seriesId": "27ec2b9f-c20a-4eb5-9265-dd7ba3f491e8",
+        "version": "1.0",
+        "otherVersions": null,
+        "isScheduled": false,
+        "isValidated": true
+    },
+    "dependencies": [
+        {
+            "id": "1adb70ca-221b-4a8b-b7d6-240ec8cbb3a9",
+            "type": "subflow",
+            "name": "MS Graph: List Entra ID Group Devices",
+            "globalId": "Microsoft_Graph::List_Entra_ID_Group_Devices",
+            "originalVersion": "1.0.0",
+            "nodeLabel": "MS Graph: List Entra ID Group Devices",
+            "sourceLocation": "integrationLibrary",
+            "sourcePackageId": "Microsoft_Graph"
+        }
+    ],
+    "token": "/PzF20pZalHgJX3Gev27YeWJmpS+CpwwK4bQoL4OhQQ="
+}
