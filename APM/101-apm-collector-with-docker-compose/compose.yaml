@@ -2,7 +2,7 @@
 #
 # Riverbed-Community-Toolkit
 # 101-apm-collector-with-docker-compose
-# version: 25.3.24
+# version: 25.3.29
 #
 # Compose file to deploy the Riverbed APM Collector on a docker host
 #
@@ -40,9 +40,9 @@ services:
       # Uncomment the telemetry protocol to expose the collector ports
 
       # OpenTelemetry, https://opentelemetry.io
+      - "4317:4317/tcp"   # OpenTelemetry OTLP over gRPC
       - "4318:4318/tcp"     # OpenTelemetry OTLP JSON/Protobuf over HTTP
       # - "55681:55681/tcp" # OpenTelemetry OTLP JSON/Protobuf over HTTP
-      # - "4317:4317/tcp"   # OpenTelemetry OTLP over gRPC
       
       # Jaeger, https://www.jaegertracing.io
       # - "14268:14268/tcp" # Jaeger Thrift Binary over HTTP
