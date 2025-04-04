@@ -1,6 +1,6 @@
 # 285-auto-instrument-app-with-riverbed-apm-on-openshift
 
-> [!NOTE]
+> [!WARNING]
 > Before starting with this community cookbook, be aware the [Riverbed Operator](https://github.com/riverbed/riverbed-operator) is now fully supported by Riverbed and the documentation is up to date, 
 > follow the link to the [Riverbed Operator](https://github.com/riverbed/riverbed-operator)
 
