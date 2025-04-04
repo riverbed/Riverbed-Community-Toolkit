@@ -1,5 +1,9 @@
 # 285-auto-instrument-app-with-riverbed-apm-on-openshift
 
+> [!NOTE]
+> Before starting with this community cookbook, be aware the [Riverbed Operator](https://github.com/riverbed/riverbed-operator) is now fully supported by Riverbed and the documentation is up to date, 
+> follow the link to the [Riverbed Operator](https://github.com/riverbed/riverbed-operator)
+
 Enable Riverbed APM on an app running in a Red Hat OpenShift cluster, using the [Riverbed Operator](https://github.com/riverbed/riverbed-operator) and configuring the automatic instrumentation.
 
 ## Prerequisites
