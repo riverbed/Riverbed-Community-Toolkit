@@ -3,7 +3,7 @@
 This community cookbook shows how to enable Riverbed APM on an app running in a Red Hat OpenShift cluster, using the [Riverbed Operator](https://github.com/riverbed/riverbed-operator) and configuring the automatic instrumentation.
 
 > [!NOTE]
-> Refer to [Riverbed Operator](https://github.com/riverbed/riverbed-operator) to learn more details on how to deploy the Riverbed Operator on OpenShift and Kubernetes clusters.
+> Refer to [Riverbed Operator](https://github.com/riverbed/riverbed-operator) to learn more details on how to deploy the Riverbed Operator on OpenShift and any Kubernetes clusters.
 
 ## Prerequisites
 
