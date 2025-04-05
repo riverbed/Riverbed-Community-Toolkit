@@ -1,9 +1,9 @@
 # 285-auto-instrument-app-with-riverbed-apm-on-openshift
 
-> [!WARNING]
-> Before starting with this community cookbook, be aware that the [Riverbed Operator](https://github.com/riverbed/riverbed-operator) supports OpenShift and it is now fully documented on its own repository. To learn more about it, please follow the link: [Riverbed Operator](https://github.com/riverbed/riverbed-operator)
->
-> This community cookbook has been made for the Riverbed Operator version 1.0.0. It shows how to enable Riverbed APM on an app running in a Red Hat OpenShift cluster, using the [Riverbed Operator](https://github.com/riverbed/riverbed-operator) and configuring the automatic instrumentation.
+This community cookbook shows how to enable Riverbed APM on an app running in a Red Hat OpenShift cluster, using the [Riverbed Operator](https://github.com/riverbed/riverbed-operator) and configuring the automatic instrumentation.
+
+> [!NOTE]
+> Refer to [Riverbed Operator](https://github.com/riverbed/riverbed-operator) to learn more details on how to deploy the Riverbed Operator on OpenShift and Kubernetes clusters.
 
 ## Prerequisites
 
@@ -32,36 +32,31 @@ Start a shell and connect to your cluster using `oc login`, the full command wou
 oc login --token=yourtoken --server=yourserver
 ```
 
-
 ## Step 3. Deploy the Riverbed Operator on the Cluster
 
-### 3.1 Permissions
+### 3.1 Prerequisites 
 
-Run the following command to configure the required permissions for the Riverbed Operator and APM Agent:
+Cert-manager is a prerequisite. It can be installed with the following command (refer to the [cert-manager docs](https://cert-manager.io/docs/reference/cmctl/#installation) )
 
 ```shell
-# Set the permissions
-oc apply -f https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads/master/APM/285-auto-instrument-app-with-riverbed-apm-on-openshift/riverbed-operator-permissions-openshift.yaml
+# Install Cert-manager prerequisite
+oc apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.17.0/cert-manager.yaml
+
+# Wait at least 2 min for cert-manager to get running and ready
+sleep 120
 ```
 
 ### 3.2 Riverbed Operator
 
-Execute the scripts below to deploy the Riverbed Operator (using the `oc` command)
-
-```shell
-# Install Cert-manager prerequisite
-oc apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.14.5/cert-manager.yaml
-
-# Wait at least 2 min for cert-manager to get ready
-sleep 120
+Execute the script below to deploy the latest version of the Riverbed Operator (using the `oc` command).  
 
 # Install the Riverbed Operator
-oc apply -f https://raw.githubusercontent.com/riverbed/riverbed-operator/1.0.0/riverbed-operator.yaml
+oc apply -f https://github.com/riverbed/riverbed-operator/releases/latest/download/riverbed-operator-openshift.yaml
 ```
 
 ### 3.3 Riverbed Operator configuration
 
-Download locally the [riverbed operator configuration manifest](https://raw.githubusercontent.com/riverbed/riverbed-operator/1.0.0/riverbed_configuration_v1.0.0.yaml), and edit the file to change the lines `customerId: ""` and `analysisServerHost: "agents.apm.YOUR-ENV.aternity.com"` adding the values of the **Customer Id** and **SaaS Analysis Server Host** obtained in Step 1. 
+Download locally the [riverbed operator configuration manifest](https://github.com/riverbed/riverbed-operator/releases/latest/download/riverbed_configuration.yaml), and edit the file to change the lines `customerId: ""` and `analysisServerHost: "agents.apm.YOUR-ENV.aternity.com"` adding the values of the **Customer Id** and **SaaS Analysis Server Host** obtained in Step 1. 
 
 For example the related lines in the configuration will look like this:
 
@@ -76,18 +71,17 @@ Then apply the configuration:
 
 ```shell
 # Apply the Riverbed Operator configuration with your Customer Id and SaaS Analysis Server Host
-oc apply -f riverbed_configuration_v1.0.0.yaml
+oc apply -f riverbed_configuration.yaml
 ```
 
 > [!TIP]
 > The following command can also be used to automatically open the configuration in your editor. The configuration will be applied when you save and close the file from the editor.
 > ```shell
 > # Configure the Riverbed Operator with your Customer Id and SaaS Analysis Server Host
-> oc create -f https://raw.githubusercontent.com/riverbed/riverbed-operator/1.0.0/riverbed_configuration_v1.0.0.yaml --namespace=riverbed-operator --edit
+> oc create -f https://github.com/riverbed/riverbed-operator/releases/latest/download/riverbed_configuration.yaml --namespace=riverbed-operator --edit
 > ```
-
-> [!NOTE]
-> Please refer to the [Riverbed Operator](https://github.com/riverbed/riverbed-operator) to learn more details on how to deploy the Riverbed Operator on a Kubernetes cluster.
+> 
+> Refer to the [Riverbed Operator](https://github.com/riverbed/riverbed-operator) to learn more details on how to deploy the Riverbed Operator on a Kubernetes cluster.
 
 ## Step 4. Check the setup
 
