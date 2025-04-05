@@ -204,9 +204,8 @@ oc delete  -f https://raw.githubusercontent.com/riverbed/Riverbed-Community-Tool
 
 ### How to clean-up the operator
 
-
 ```shell
-oc delete -f https://raw.githubusercontent.com/riverbed/riverbed-operator/1.0.0/riverbed-operator.yaml
+oc delete -f https://github.com/riverbed/riverbed-operator/releases/latest/download/riverbed-operator-openshift.yaml
 ```
 
 > [!NOTE]
