@@ -34,7 +34,7 @@ oc login --token=yourtoken --server=yourserver
 
 ## Step 3. Deploy the Riverbed Operator on the Cluster
 
-### 3.1 Prerequisites 
+### 3.1 Cert Manager 
 
 Cert-manager is a prerequisite. It can be installed with the following command (refer to the [cert-manager docs](https://cert-manager.io/docs/reference/cmctl/#installation) )
 
@@ -48,8 +48,9 @@ sleep 120
 
 ### 3.2 Riverbed Operator
 
-Execute the script below to deploy the latest version of the Riverbed Operator (using the `oc` command).  
+Execute the script below to deploy the latest version of the Riverbed Operator (using the `oc` command).
 
+```shell
 # Install the Riverbed Operator
 oc apply -f https://github.com/riverbed/riverbed-operator/releases/latest/download/riverbed-operator-openshift.yaml
 ```
