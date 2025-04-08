@@ -7,7 +7,7 @@ When triggered from ServiceNow, the runbook diagnoses the end-user endpoint and 
 
 ## Prerequisistes
 
-1. Riverbed IQ Assist opt-in feature is enabled (IQ > Adminsitration > Riverbed IQ Assist configuration).
+1. Riverbed IQ Assist opt-in feature is enabled (IQ > Administration > Riverbed IQ Assist configuration).
 
 2. [Riverbed IQ Assist for ServiceNow](https://store.servicenow.com/sn_appstore_store.do#!/store/search?q=Riverbed) is installed from the ServiceNow Store.
 
