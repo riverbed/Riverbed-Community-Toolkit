@@ -12,7 +12,7 @@ You can download the Runbook files from the tables below and import them into yo
 
 1. Choose a runbook in the table below. There are different runbook types: Incident Runbooks, Lifecyle Runbook, On-Demand Runbooks, External Runbooks or Subflows
 
-2. Follow the download link and hit "Download raw file" to get the runbook file (.txt).
+2. Follow the download link and hit "Download raw file" to get the runbook file (.json).
 
 3. In Riverbed IQ, open the Menu, go to Automation, select the runbook type and import the runbook
 
