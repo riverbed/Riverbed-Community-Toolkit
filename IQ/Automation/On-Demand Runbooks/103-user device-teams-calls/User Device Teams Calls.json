@@ -1,0 +1,770 @@
+{
+    "runbook": {
+        "id": "39f35f17-b930-4d93-9828-c19b6f37a49d",
+        "createdTime": "1749688228.134593600",
+        "lastUpdatedTime": "1749688594.808571400",
+        "factoryResourceName": null,
+        "isFactory": false,
+        "name": "User Device Teams Calls",
+        "description": "This On-Demand Runbook example takes an input User Device and checks Teams call data, NPM+ metrics and other data before running a remediation.",
+        "isReady": false,
+        "triggerType": "on_demand_input",
+        "runtimeVariables": {
+            "primitiveVariables": [
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Device_Name",
+                    "isReadonly": false
+                },
+                {
+                    "type": "boolean",
+                    "defaultValue": null,
+                    "name": "runtime.Successful",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Message",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Reference_ID",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Error_Message",
+                    "isReadonly": false
+                },
+                {
+                    "type": "boolean",
+                    "defaultValue": "true",
+                    "name": "runtime.Break",
+                    "isReadonly": false
+                }
+            ],
+            "structuredVariables": []
+        },
+        "subflowVariables": null,
+        "nodes": [
+            {
+                "id": "ecdb2f26-d614-4525-9c54-379e0904ec01",
+                "isIntegrationSubflowNode": false,
+                "type": "on_demand_input",
+                "label": "Input",
+                "description": "",
+                "properties": {
+                    "x": 50,
+                    "y": 280,
+                    "triggerType": "on_demand_input",
+                    "debug": false,
+                    "outputDataFormat": "summary",
+                    "synthKeys": [
+                        {
+                            "id": "user_device",
+                            "label": "User Device",
+                            "type": "object",
+                            "unit": "",
+                            "dataOceanId": "user_device",
+                            "dataOceanKeys": [
+                                {
+                                    "id": "user_device.device_name",
+                                    "label": "User Device Name",
+                                    "type": "string",
+                                    "category": "Device",
+                                    "unit": "none"
+                                }
+                            ]
+                        }
+                    ],
+                    "inputVariables": [],
+                    "outputVariables": []
+                },
+                "wires": [
+                    [
+                        "11b39dd0-1d85-49d6-bde3-48cbfdce98e0"
+                    ]
+                ]
+            },
+            {
+                "id": "902b50cc-58cd-4a94-b6fd-4a937724206f",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow",
+                "label": "Aternity: Get MS Teams Calls",
+                "description": "Returns Microsoft Teams calls in the last 7 days for a device. They include analysis of call quality and in-depth understanding of factors affecting call quality.\n\nAn error message is returned when unsuccessful.",
+                "properties": {
+                    "x": 691,
+                    "y": 320,
+                    "debug": true,
+                    "configurationId": "39734c15-b614-4e38-b5cb-9b30bb26536d",
+                    "in": [
+                        {
+                            "inner": "subflow.Aternity_Connector",
+                            "outer": "00000000-0000-0000-0000-000000000000",
+                            "method": "connector",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Device_Name",
+                            "outer": "runtime.Device_Name",
+                            "method": "runtime",
+                            "isUnset": false
+                        }
+                    ],
+                    "out": [
+                        {
+                            "inner": "subflow.Successful",
+                            "outer": "runtime.Successful",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Error_Message",
+                            "outer": "runtime.Error_Message",
+                            "method": "runtime"
+                        }
+                    ]
+                },
+                "wires": [
+                    [
+                        "635c7de2-1856-4e1e-bcb7-32b390d2192a"
+                    ]
+                ]
+            },
+            {
+                "id": "635c7de2-1856-4e1e-bcb7-32b390d2192a",
+                "isIntegrationSubflowNode": false,
+                "type": "decision",
+                "label": "Check Result",
+                "description": "",
+                "properties": {
+                    "x": 905,
+                    "y": 240,
+                    "dataType": "SUMMARY",
+                    "outputs": [
+                        {
+                            "id": "o19777",
+                            "passedData": "MATCHED",
+                            "expression": {
+                                "id": "o2939",
+                                "type": "block",
+                                "operation": "AND",
+                                "conditions": [
+                                    {
+                                        "type": "condition",
+                                        "id": "c-1749569570535",
+                                        "category": "variable",
+                                        "key": "$VARIABLE.runtime.Successful",
+                                        "op": "EQ",
+                                        "value": "false"
+                                    }
+                                ]
+                            },
+                            "label": "Failed"
+                        },
+                        {
+                            "id": "o05856",
+                            "passedData": "MATCHED",
+                            "expression": {
+                                "id": "o1464",
+                                "type": "block",
+                                "operation": "AND",
+                                "conditions": [
+                                    {
+                                        "type": "condition",
+                                        "id": "c-1747957286247",
+                                        "category": "input.metric",
+                                        "key": "$DATA.DATA.Call_Audio_Inbound_Jitter_Average",
+                                        "op": "GT-EQ",
+                                        "value": "1"
+                                    },
+                                    {
+                                        "type": "condition",
+                                        "id": "c-1747957560110",
+                                        "category": "input.metric",
+                                        "key": "$DATA.DATA.Call_Audio_Inbound_Packet_Loss_Average",
+                                        "op": "GT-EQ",
+                                        "value": "0.01"
+                                    },
+                                    {
+                                        "type": "condition",
+                                        "id": "c-1747957577597",
+                                        "category": "input.metric",
+                                        "key": "$DATA.DATA.Call_Audio_Inbound_Round_Trip_Time_Average",
+                                        "op": "GT-EQ",
+                                        "value": "20"
+                                    }
+                                ]
+                            },
+                            "label": "Bad Calls"
+                        },
+                        {
+                            "id": "default"
+                        }
+                    ],
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "05bed564-9344-4381-8c72-92c106f414d1"
+                    ],
+                    [
+                        "dade52ba-849f-4245-a087-fae62a65aa11",
+                        "09d98b3e-0176-431e-92e8-bf9115fbf08a",
+                        "5ac650f9-0d72-40bc-95dc-f96089dceb10",
+                        "9437ad0d-5c6a-4cdb-89ff-66f4cdbd2df5",
+                        "9dd08839-f5e3-4c91-96c2-a3275e4c6807"
+                    ],
+                    [
+                        "c451fc65-f78a-4e84-b1a4-2456614107c7"
+                    ]
+                ]
+            },
+            {
+                "id": "dade52ba-849f-4245-a087-fae62a65aa11",
+                "isIntegrationSubflowNode": false,
+                "type": "rvbd_ui_table",
+                "label": "Display Calls",
+                "description": "",
+                "properties": {
+                    "x": 1178,
+                    "y": 190,
+                    "title": "Display Calls",
+                    "row": "1",
+                    "notesPosition": "left",
+                    "notes": "",
+                    "sortColumn": "Call_ID",
+                    "sortOrder": "asc",
+                    "columns": [
+                        "Measurement_Start_Timestamp",
+                        "Call_ID",
+                        "Call_Network_Connection_Received_Audio_Quality_Impact",
+                        "Call_Network_Connection_Delayed_Audio_Impact",
+                        "Call_Network_Connection_Low_Bandwidth_Audio_Impact",
+                        "Call_Network_Connection_WiFi_Signal_Strength",
+                        "Call_Network_Connection_Sent_Audio_Quality_Impact",
+                        "Call_Audio_Inbound_Packet_Loss_Average",
+                        "Call_Audio_Outbound_Jitter_Average",
+                        "Call_Audio_Outbound_Packet_Loss_Average",
+                        "Call_Audio_Combined_Network_Degradation",
+                        "Call_Audio_Inbound_Network_Degradation",
+                        "Call_Audio_Outbound_Network_Degradation",
+                        "Call_Audio_Inbound_Round_Trip_Time_Average",
+                        "Call_Audio_Inbound_Jitter_Average",
+                        "Call_Duration"
+                    ],
+                    "includeAllColumns": true,
+                    "flipTable": true,
+                    "showBarsForColumnValues": false,
+                    "isBreakDownTable": false,
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "ae1c2403-0e8b-48f9-9071-3d3682205305",
+                "isIntegrationSubflowNode": false,
+                "type": "rvbd_ui_table",
+                "label": "Device Details",
+                "description": "",
+                "properties": {
+                    "x": 1419,
+                    "y": 180,
+                    "title": "Device Details",
+                    "row": "2",
+                    "notesPosition": "left",
+                    "notes": "",
+                    "sortColumn": "user_device.device_name",
+                    "sortOrder": "asc",
+                    "columns": [
+                        "device_cpu_cores",
+                        "device_cpu_generation",
+                        "device_cpu_type",
+                        "device_days_from_last_boot",
+                        "device_manufacturer",
+                        "device_memory",
+                        "device_model",
+                        "device_physical_memory",
+                        "os_free_disk_space",
+                        "user_device.device_name"
+                    ],
+                    "includeAllColumns": true,
+                    "flipTable": true,
+                    "showBarsForColumnValues": false,
+                    "isBreakDownTable": false,
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "9dd08839-f5e3-4c91-96c2-a3275e4c6807",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow",
+                "label": "Aternity: Run Remediation",
+                "description": "Run Aternity remediation service on a device.\n\n'Description' and 'Parameter' inputs are optional.\n\n'Reference_ID' can be used to retrieve status of the remediation action when successfully triggered.",
+                "properties": {
+                    "x": 1445,
+                    "y": 260,
+                    "debug": false,
+                    "configurationId": "f0a8dfe2-b592-4559-a4a3-453db3fe09be",
+                    "in": [
+                        {
+                            "inner": "subflow.Aternity_Connector",
+                            "outer": "00000000-0000-0000-0000-000000000000",
+                            "method": "connector",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Device_Name",
+                            "outer": "runtime.Device_Name",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Remediation_Name",
+                            "outer": "Blank",
+                            "method": "static",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Description",
+                            "outer": "runtime.builtin.runbook.name",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Parameter",
+                            "outer": "",
+                            "isUnset": true
+                        }
+                    ],
+                    "out": [
+                        {
+                            "inner": "subflow.Successful",
+                            "outer": "runtime.Successful",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Message",
+                            "outer": "runtime.Message",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Reference_ID",
+                            "outer": "runtime.Reference_ID",
+                            "method": "runtime"
+                        }
+                    ]
+                },
+                "wires": [
+                    [
+                        "69fec579-da41-4d93-b315-551a1477c997"
+                    ]
+                ]
+            },
+            {
+                "id": "69fec579-da41-4d93-b315-551a1477c997",
+                "isIntegrationSubflowNode": false,
+                "type": "decision",
+                "label": "Check Success",
+                "description": "",
+                "properties": {
+                    "x": 1709,
+                    "y": 240,
+                    "dataType": "SUMMARY",
+                    "outputs": [
+                        {
+                            "id": "o02130",
+                            "passedData": "MATCHED",
+                            "expression": {
+                                "id": "o3642",
+                                "type": "block",
+                                "operation": "AND",
+                                "conditions": [
+                                    {
+                                        "type": "condition",
+                                        "id": "c-1747960812394",
+                                        "category": "variable",
+                                        "key": "$VARIABLE.runtime.Successful",
+                                        "op": "EQ",
+                                        "value": "true"
+                                    }
+                                ]
+                            },
+                            "label": "True"
+                        },
+                        {
+                            "id": "default"
+                        }
+                    ],
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "694a1b88-082c-406f-9443-75a315f462b8"
+                    ],
+                    [
+                        "8b849311-acc5-4956-86a9-fed1480e11a5"
+                    ]
+                ]
+            },
+            {
+                "id": "694a1b88-082c-406f-9443-75a315f462b8",
+                "isIntegrationSubflowNode": false,
+                "type": "rvbd_ui_text",
+                "label": "Success",
+                "description": "",
+                "properties": {
+                    "x": 1990,
+                    "y": 159.99999999999997,
+                    "title": "Success",
+                    "row": "5",
+                    "notes": "<p>Remediation requested.</p>\n<p>Reference: {{variables[\"runtime.Reference_ID\"]}}</p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "8b849311-acc5-4956-86a9-fed1480e11a5",
+                "isIntegrationSubflowNode": false,
+                "type": "rvbd_ui_text",
+                "label": "Failed",
+                "description": "",
+                "properties": {
+                    "x": 1995,
+                    "y": 310,
+                    "title": "Failed",
+                    "row": "5",
+                    "notes": "<p>Failed to initiation remediation.</p>\n<p>Message: {{variables[\"runtime.Message\"]}}</p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "5ac650f9-0d72-40bc-95dc-f96089dceb10",
+                "isIntegrationSubflowNode": false,
+                "type": "data_ocean_dynamic",
+                "label": "NPM+ Throughput",
+                "description": "",
+                "properties": {
+                    "x": 1186,
+                    "y": 320,
+                    "objType": "npm_plus_rollup_min.traffic",
+                    "timeSeries": true,
+                    "metrics": [
+                        "throughput"
+                    ],
+                    "limit": 10,
+                    "topBy": [
+                        {
+                            "id": "throughput",
+                            "direction": "desc"
+                        }
+                    ],
+                    "groupBy": [
+                        "application.name"
+                    ],
+                    "duration": 14400,
+                    "filters": {
+                        "userDevice": [
+                            "$onDemandInput.user_device"
+                        ]
+                    },
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "05afeb06-bb49-456f-a3ca-abc0e0f6a0a2"
+                    ]
+                ]
+            },
+            {
+                "id": "05afeb06-bb49-456f-a3ca-abc0e0f6a0a2",
+                "isIntegrationSubflowNode": false,
+                "type": "rvbd_ui_time_chart",
+                "label": "Throughput",
+                "description": "",
+                "properties": {
+                    "x": 1456,
+                    "y": 340,
+                    "title": "Throughput",
+                    "row": "3",
+                    "metrics": [
+                        "throughput"
+                    ],
+                    "style": "line",
+                    "showLegend": true,
+                    "legendPosition": "top",
+                    "notesPosition": "left",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "9437ad0d-5c6a-4cdb-89ff-66f4cdbd2df5",
+                "isIntegrationSubflowNode": false,
+                "type": "data_ocean_dynamic",
+                "label": "WiFi Stats",
+                "description": "",
+                "properties": {
+                    "x": 1186,
+                    "y": 360,
+                    "objType": "aternity_wifi_stats_hourly.traffic",
+                    "timeSeries": true,
+                    "metrics": [
+                        "wifi_signal_strength"
+                    ],
+                    "limit": 10,
+                    "topBy": [
+                        {
+                            "id": "wifi_signal_strength",
+                            "direction": "desc"
+                        }
+                    ],
+                    "groupBy": [
+                        "wifi_ssid"
+                    ],
+                    "duration": 14400,
+                    "filters": {
+                        "userDevice": [
+                            "$node:11b39dd0-1d85-49d6-bde3-48cbfdce98e0.user_device"
+                        ]
+                    },
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "922a0a39-483b-47ab-a325-32e56ccb98f3"
+                    ]
+                ]
+            },
+            {
+                "id": "922a0a39-483b-47ab-a325-32e56ccb98f3",
+                "isIntegrationSubflowNode": false,
+                "type": "rvbd_ui_time_chart",
+                "label": "Signal Stremgth",
+                "description": "",
+                "properties": {
+                    "x": 1456,
+                    "y": 400,
+                    "title": "Signal Stremgth",
+                    "row": "4",
+                    "metrics": [
+                        "wifi_signal_strength"
+                    ],
+                    "style": "line",
+                    "showLegend": false,
+                    "legendPosition": "top",
+                    "notesPosition": "left",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "11b39dd0-1d85-49d6-bde3-48cbfdce98e0",
+                "isIntegrationSubflowNode": false,
+                "type": "set_primitive_variables",
+                "label": "Store Device_Name",
+                "description": "",
+                "properties": {
+                    "x": 259,
+                    "y": 280,
+                    "variables": [
+                        {
+                            "name": "runtime.Device_Name"
+                        }
+                    ],
+                    "transformTemplate": "{\n    \"runtime.Device_Name\": {{ trigger[\"user_devices\"][\"data\"][0].keys[\"user_device.device_name\"] | json }}\n}\n",
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "789fb838-2903-4c33-952d-dd4d5b92f56a"
+                    ]
+                ]
+            },
+            {
+                "id": "0b14370b-cacc-4bfd-a17b-dd827eb98755",
+                "isIntegrationSubflowNode": false,
+                "type": "comment",
+                "label": "Comment",
+                "description": "",
+                "properties": {
+                    "x": 198,
+                    "y": 340,
+                    "comment": "<p>The Aternity subflows use the device name as a variable input. While we don't have all data sources from Aternity we still need this as a variable - will. be removed.&nbsp;</p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "789fb838-2903-4c33-952d-dd4d5b92f56a",
+                "isIntegrationSubflowNode": false,
+                "type": "decision",
+                "label": "Check Empty Name",
+                "description": "",
+                "properties": {
+                    "x": 464,
+                    "y": 270,
+                    "dataType": "SUMMARY",
+                    "outputs": [
+                        {
+                            "id": "o05212",
+                            "passedData": "MATCHED",
+                            "expression": {
+                                "id": "o3598",
+                                "type": "block",
+                                "operation": "AND",
+                                "conditions": [
+                                    {
+                                        "type": "condition",
+                                        "id": "c-1749569208872",
+                                        "category": "variable",
+                                        "key": "$VARIABLE.runtime.Device_Name",
+                                        "op": "REGEX",
+                                        "value": "^$"
+                                    }
+                                ]
+                            },
+                            "label": "Empty"
+                        },
+                        {
+                            "id": "default"
+                        }
+                    ],
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "f7131563-9a08-4fcf-83ef-7dbf532e8453"
+                    ],
+                    [
+                        "902b50cc-58cd-4a94-b6fd-4a937724206f"
+                    ]
+                ]
+            },
+            {
+                "id": "f7131563-9a08-4fcf-83ef-7dbf532e8453",
+                "isIntegrationSubflowNode": false,
+                "type": "rvbd_ui_text",
+                "label": "Empty Input Device",
+                "description": "",
+                "properties": {
+                    "x": 684,
+                    "y": 210,
+                    "title": "Empty Input Device",
+                    "row": "1",
+                    "notes": "<p>Empty input device not allowed.</p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "05bed564-9344-4381-8c72-92c106f414d1",
+                "isIntegrationSubflowNode": false,
+                "type": "rvbd_ui_text",
+                "label": "Request Failed",
+                "description": "",
+                "properties": {
+                    "x": 1139,
+                    "y": 120,
+                    "title": "Request Failed",
+                    "row": "1",
+                    "notes": "<p>Request for Teams Calls failed.<br>\nError: {{variables[\"runtime.Message\"]}}</p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "c451fc65-f78a-4e84-b1a4-2456614107c7",
+                "isIntegrationSubflowNode": false,
+                "type": "rvbd_ui_text",
+                "label": "No bad calls",
+                "description": "",
+                "properties": {
+                    "x": 1118,
+                    "y": 500,
+                    "title": "No bad calls",
+                    "row": "1",
+                    "notes": "No teams calls found with poor quality for \n {{variables[\"runtime.Device_Name\"]}}",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "09d98b3e-0176-431e-92e8-bf9115fbf08a",
+                "isIntegrationSubflowNode": false,
+                "type": "data_ocean_dynamic",
+                "label": "Device Details",
+                "description": "",
+                "properties": {
+                    "x": 1180,
+                    "y": 240,
+                    "objType": "aternity_device_inventory.traffic",
+                    "timeSeries": false,
+                    "limit": 10,
+                    "groupBy": [
+                        "user_device.device_name",
+                        "device_cpu_cores",
+                        "device_cpu_generation",
+                        "device_cpu_type",
+                        "device_days_from_last_boot",
+                        "device_manufacturer",
+                        "device_memory",
+                        "device_model",
+                        "device_physical_memory",
+                        "os_free_disk_space"
+                    ],
+                    "filters": {
+                        "userDevice": [
+                            "$onDemandInput.user_device"
+                        ]
+                    },
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "ae1c2403-0e8b-48f9-9071-3d3682205305"
+                    ]
+                ]
+            }
+        ],
+        "lastUpdatedUser": "Runbook Export",
+        "createdByUser": "Runbook Export",
+        "eTag": "W/\"datetime'2025-06-12T00%3A36%3A34.830758Z'\"",
+        "variant": "on_demand",
+        "seriesId": "39f35f17-b930-4d93-9828-c19b6f37a49d",
+        "version": "1.0",
+        "otherVersions": null,
+        "isScheduled": false,
+        "isValidated": true,
+        "isProprietary": false
+    },
+    "dependencies": [
+        {
+            "id": "39734c15-b614-4e38-b5cb-9b30bb26536d",
+            "type": "subflow",
+            "name": "Aternity: Get MS Teams Calls",
+            "globalId": "Aternity::Get_MS_Teams_Calls",
+            "originalVersion": "1.3.0",
+            "nodeLabel": "Aternity: Get MS Teams Calls",
+            "sourceLocation": "integrationLibrary",
+            "sourcePackageId": "Aternity"
+        },
+        {
+            "id": "f0a8dfe2-b592-4559-a4a3-453db3fe09be",
+            "type": "subflow",
+            "name": "Aternity: Run Remediation",
+            "globalId": "Aternity::Run_Remediation",
+            "originalVersion": "1.2.0",
+            "nodeLabel": "Aternity: Run Remediation",
+            "sourceLocation": "integrationLibrary",
+            "sourcePackageId": "Aternity"
+        }
+    ],
+    "token": "BG7BZ99lpFE6GjLPXyxOfOaWMC4L7s5Lq7sLIcoGxfw="
+}
