@@ -1,12 +1,15 @@
-# User Device Teams Calls Example.
+# User Device Teams Calls
 
 This On-Demand Runbook example takes an input User Device and checks Teams call data, NPM+ metrics and other data before running a remediation.
+
+![image](https://github.com/user-attachments/assets/76bfaf84-3994-400f-9d01-f29294224db4)
 
 
 ## Prerequisistes
 
 1. Aternity integration is installed and the connector is configured (IQ > Integration Library)
 2. Remediations available in the Aternity tenant
+3. NPM+ is required to see the visualization using that data.
 
 
 ## Quick Setup
