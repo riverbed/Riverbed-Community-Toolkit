@@ -45,7 +45,7 @@ Other Runbooks for other Runbooks types are in preparation.
 
 *Incident Runbooks*
 
-*Lifecyle Runbooks*
+*Lifecycle Runbooks*
 
 
 ### License
