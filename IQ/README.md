@@ -31,15 +31,22 @@ You can download the Runbook files from the tables below and import them into yo
 | --- | --- | --- | --- | --- |
 | Check Current Time in Range | [Download](Automation/Subflows/Check%20Current%20Time%20in%20Range/Check%20Current%20Time%20in%20Range.txt) | [More details](Automation/Subflows/Check%20Current%20Time%20in%20Range) | AIOps, IQ | jan. 2025 |
 
+### On-Demand Runbooks
+
+| Runbook | File | Description | Tags | Last update |
+| --- | --- | --- | --- | --- |
+| Riverbed IQ Assist - Suggest Remediation | [Download](Automation/On-Demand%20Runbooks/101-riverbed-iq-assist-suggest-remediation/101-riverbed-iq-assist-suggest-remediation.json) | [More details](Automation/On-Demand%20Runbooks/101-riverbed-iq-assist-suggest-remediation) | AIOps, Remediation | June 2025 |
+| Sync Device Group from Intune to Unified Agent | [Download](Automation/On-Demand%20Runbooks/102-sync-device-group-from-intune-to-unified-agent/102-sync-device-group-from-intune-to-unified-agent.json) | [More details](Automation/On-Demand%20Runbooks/102-sync-device-group-from-intune-to-unified-agent) | Device Management, Intune | June 2025 |
+| User Device Teams Calls | [Download](Automation/On-Demand%20Runbooks/103-user-device-teams-calls/103-user-device-teams-calls.json) | [More details](Automation/On-Demand%20Runbooks/103-user-device-teams-calls) | Teams, Collaboration | June 2025 |
+
 ### More runbooks
 
 Other Runbooks for other Runbooks types are in preparation.
 
 *Incident Runbooks*
 
-*Lifecyle Runbooks*
+*Lifecycle Runbooks*
 
-*On-Demand Runbooks*
 
 ### License
 
