@@ -35,9 +35,9 @@ You can download the Runbook files from the tables below and import them into yo
 
 | Runbook | File | Description | Tags | Last update |
 | --- | --- | --- | --- | --- |
-| Riverbed IQ Assist - Suggest Remediation | [Download](Automation/On-Demand%20Runbooks/101-riverbed-iq-assist-suggest-remediation/101-riverbed-iq-assist-suggest-remediation.json) | [More details](Automation/On-Demand%20Runbooks/101-riverbed-iq-assist-suggest-remediation) | AIOps, Remediation | June 2025 |
-| Sync Device Group from Intune to Unified Agent | [Download](Automation/On-Demand%20Runbooks/102-sync-device-group-from-intune-to-unified-agent/102-sync-device-group-from-intune-to-unified-agent.json) | [More details](Automation/On-Demand%20Runbooks/102-sync-device-group-from-intune-to-unified-agent) | Device Management, Intune | June 2025 |
-| User Device Teams Calls | [Download](Automation/On-Demand%20Runbooks/103-user-device-teams-calls/103-user-device-teams-calls.json) | [More details](Automation/On-Demand%20Runbooks/103-user-device-teams-calls) | Teams, Collaboration | June 2025 |
+| Riverbed IQ Assist - Suggest Remediation | [Download](Automation/On-Demand%20Runbooks/101-riverbed-iq-assist-suggest-remediation/Riverbed%20IQ%20Assist%20-%20Diagnostic%20and%20Remediation%20Suggestion%20for%20User%20Endpoint.json) | [More details](Automation/On-Demand%20Runbooks/101-riverbed-iq-assist-suggest-remediation) | AIOps, Remediation | June 2025 |
+| Sync Device Group from Intune to Unified Agent | [Download](Automation/On-Demand%20Runbooks/102-sync-device-group-from-intune-to-unified-agent/Demo%20-%20Sync%20Device%20Group%20from%20Intune%20to%20Unified%20Agent.json) | [More details](Automation/On-Demand%20Runbooks/102-sync-device-group-from-intune-to-unified-agent) | Device Management, Intune | June 2025 |
+| User Device Teams Calls | [Download](Automation/On-Demand%20Runbooks/103-user-device-teams-calls/User%20Device%20Teams%20Calls.json) | [More details](Automation/On-Demand%20Runbooks/103-user-device-teams-calls) | Teams, Collaboration | June 2025 |
 
 ### More runbooks
 
