@@ -25,21 +25,24 @@ The next paragraph explains how to setup from scratch on a Windows machine. It i
 
 2. Download and install a decent code editor, for example [Visual Studio Code - x64 System Installer](https://code.visualstudio.com/#alt-downloads)
 
-3. Download and install [Python](https://www.python.org). For example [Python 3.12.0 x64](https://www.python.org/downloads/)
+3. Download and install [Python](https://www.python.org). For example [Python 3.13 x64](https://www.python.org/downloads/)
 > - Check the installer option to Add Python to PATH
-> - Hit Custom Install button and in the Advanced Install options check to box to select"Install Python for all users"
+> - Click Customize Installation. On the Advanced Options page, check the box for 'Install Python for all users'.
 
-4. Install **selenium 4** libraries for Python with pip (check [Selenium](https://www.selenium.dev/) and [pip](https://pypi.org/project/selenium/) for details, the latest version is 4.15.2 as of nov. 2023). Open a Windows PowerShell (Admin) and run the following command:
+4. Install **selenium 4** libraries for Python with pip: Open a Windows PowerShell (Admin) and run the following command:
 
 ```PowerShell
 pip install selenium
 ```
 
+> The latest version is 4.34 as of July 2025.
+> Check [Selenium](https://www.selenium.dev/) and [pip](https://pypi.org/project/selenium/) for more details.
+
 ### 2. Edge specific
 
-1. Launch Edge and open the url [edge://settings/help](edge://settings/help) to check the version that is running (if not already there, fetch and install from [here](https://www.microsoft.com/en-us/edge)). 
+1. Launch Edge and open the url [edge://settings/help](edge://settings/help) to check the version that is running (if Edge is not already installed, download and install it from [here](https://www.microsoft.com/en-us/edge)). 
 
-For example Version 119.0.2151.72 (Official build) (64-bit).
+For example Version 138 (Official build) (64-bit).
 
 2. Download the corresponding [MS Edge WebDriver](https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/#downloads) for **Windows 64 bits** and extract it to c:\. 
 
@@ -91,4 +94,4 @@ Then, restart the service and the agent will be ready to run the synthetic test.
 
 The scripts provided here are licensed under the terms and conditions of the MIT License accompanying the software ("License"). The scripts are distributed "AS IS" as set forth in the License. The script also include certain third party code. All such third party code is also distributed "AS IS" and is licensed by the respective copyright holders under the applicable terms and conditions (including, without limitation, warranty and liability disclaimers) identified in the license notices accompanying the software.
 
-## Copyright (c) 2020 Riverbed Technology, Inc.
+## Copyright (c) 2020-2025 Riverbed Technology, Inc.
