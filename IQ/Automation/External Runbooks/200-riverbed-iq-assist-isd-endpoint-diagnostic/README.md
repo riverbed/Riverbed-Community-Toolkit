@@ -5,7 +5,7 @@ When triggered it diagnoses the end-user endpoint and then creates a ticket in a
 
 ![IQ Assist in Aternity ISD](200-riverbed-iq-assist-isd.png)
 
-## Prerequisistes
+## Prerequisites
 
 1. ISD Alert feature is enabled (Aternity EUEM > Configuration > Alerts)
 
