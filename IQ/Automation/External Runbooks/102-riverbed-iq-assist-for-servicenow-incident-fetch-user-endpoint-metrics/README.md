@@ -5,7 +5,7 @@ When triggered from ServiceNow, the runbook updates the incident ticket with use
 
 GenAI feature is not required for this runbook.
 
-## Prerequisistes
+## Prerequisites
 
 1. [Riverbed IQ Assist for ServiceNow](https://store.servicenow.com/sn_appstore_store.do#!/store/search?q=Riverbed) is installed from the ServiceNow Store.
 
