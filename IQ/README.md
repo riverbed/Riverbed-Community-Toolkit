@@ -22,16 +22,16 @@ You can download the Runbook files from the tables below and import them into yo
 
 | Runbook | File | Description | Tags | Last update |
 | --- | --- | --- | --- | --- |
-| Riverbed IQ Assist for ServiceNow - Incident - Quick Start | [Download](Automation/External%20Runbooks/100-riverbed-iq-assist-for-servicenow-incident-quickstart/Riverbed%20IQ%20Assist%20for%20ServiceNow%20-%20Incident%20-%20Quick%20Start.json) | [More details](Automation/External%20Runbooks/100-riverbed-iq-assist-for-servicenow-incident-quickstart) | AIOps, Aternity EUEM, ITSM, ServiceNow | march 2025 |
+| Riverbed IQ Assist for ServiceNow - Incident - Quick Start | [Download](Automation/External%20Runbooks/100-riverbed-iq-assist-for-servicenow-incident-quickstart/Riverbed%20IQ%20Assist%20for%20ServiceNow%20-%20Incident%20-%20Quick%20Start.json) | [More details](Automation/External%20Runbooks/100-riverbed-iq-assist-for-servicenow-incident-quickstart) | AIOps, Aternity EUEM, ITSM, ServiceNow | July 2025 |
 | Riverbed IQ Assist for ServiceNow - Incident - Diagnose User Endpoint | [Download](Automation/External%20Runbooks/101-riverbed-iq-assist-for-servicenow-incident-diagnose-user-endpoint/Riverbed%20IQ%20Assist%20for%20ServiceNow%20-%20Incident%20-%20Diagnose%20User%20Endpoint.json) | [More details](Automation/External%20Runbooks/101-riverbed-iq-assist-for-servicenow-incident-diagnose-user-endpoint/) | AIOps, Aternity EUEM, NPM+, GenAI, ITSM, ServiceNow | July 2025 |
 | Riverbed IQ Assist for ServiceNow - Incident - Fetch User Endpoint Metrics | [Download](Automation/External%20Runbooks/102-riverbed-iq-assist-for-servicenow-incident-fetch-user-endpoint-metrics/Riverbed%20IQ%20Assist%20for%20ServiceNow%20-%20Incident%20-%20Fetch%20User%20Endpoint%20Metrics.json) | [More details](Automation/External%20Runbooks/102-riverbed-iq-assist-for-servicenow-incident-fetch-user-endpoint-metrics/) | AIOps, Aternity EUEM, NPM+, ITSM, ServiceNow | July 2025 |
-| Demo - IQ Assist - Create ITSM ticket with Endpoint Diagnostic | [Download](Automation/External%20Runbooks/200-riverbed-iq-assist-isd-endpoint-diagnostic/Demo%20-%20ISD%20-%20Riverbed%20IQ%20Assist%20-%20Create%20ITSM%20ticket%20with%20Endpoint%20Diagnostic.json) | [More details](Automation/External%20Runbooks/200-riverbed-iq-assist-isd-endpoint-diagnostic) | AIOps, Aternity EUEM, ISD, ITSM | jan. 2025 |
+| Demo - IQ Assist - Create ITSM ticket with Endpoint Diagnostic | [Download](Automation/External%20Runbooks/200-riverbed-iq-assist-isd-endpoint-diagnostic/Demo%20-%20ISD%20-%20Riverbed%20IQ%20Assist%20-%20Create%20ITSM%20ticket%20with%20Endpoint%20Diagnostic.json) | [More details](Automation/External%20Runbooks/200-riverbed-iq-assist-isd-endpoint-diagnostic) | AIOps, Aternity EUEM, ISD, ITSM | Jan 2025 |
 
 ### Subflows
 
 | Subflow | File | Description | Tags | Last update |
 | --- | --- | --- | --- | --- |
-| Check Current Time in Range | [Download](Automation/Subflows/Check%20Current%20Time%20in%20Range/Check%20Current%20Time%20in%20Range.txt) | [More details](Automation/Subflows/Check%20Current%20Time%20in%20Range) | AIOps, IQ | jan. 2025 |
+| Check Current Time in Range | [Download](Automation/Subflows/Check%20Current%20Time%20in%20Range/Check%20Current%20Time%20in%20Range.txt) | [More details](Automation/Subflows/Check%20Current%20Time%20in%20Range) | AIOps, IQ | Jan 2025 |
 
 ### On-Demand Runbooks
 
