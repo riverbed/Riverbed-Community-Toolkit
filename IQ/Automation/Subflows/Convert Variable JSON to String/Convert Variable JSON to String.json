@@ -6,7 +6,7 @@
         "factoryResourceName": null,
         "isFactory": false,
         "name": "Convert Variable JSON to String",
-        "description": "Utiliy subflow that converts a json input variable into a String variable",
+        "description": "Utility subflow that converts a json input variable into a String variable",
         "isReady": false,
         "triggerType": "subflow_input",
         "runtimeVariables": null,

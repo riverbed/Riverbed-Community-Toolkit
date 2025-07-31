@@ -63,7 +63,7 @@
                 "isIntegrationSubflowNode": false,
                 "type": "subflow",
                 "label": "Convert Variable JSON to String",
-                "description": "Utiliy subflow that converts a json input variable into a String variable",
+                "description": "Utility subflow that converts a json input variable into a String variable",
                 "properties": {
                     "x": 470,
                     "y": 60,
