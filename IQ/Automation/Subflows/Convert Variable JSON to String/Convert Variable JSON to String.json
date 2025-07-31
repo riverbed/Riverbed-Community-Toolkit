@@ -1,0 +1,127 @@
+{
+    "runbook": {
+        "id": "a3d6ea91-148e-4ad8-82ff-af56e2ad947e",
+        "createdTime": "1753942771.406714500",
+        "lastUpdatedTime": "1753943021.537130500",
+        "factoryResourceName": null,
+        "isFactory": false,
+        "name": "Convert Variable JSON to String",
+        "description": "Utility subflow that converts a json input variable into a String variable",
+        "isReady": false,
+        "triggerType": "subflow_input",
+        "runtimeVariables": null,
+        "subflowVariables": {
+            "primitiveVariables": [
+                {
+                    "type": "json",
+                    "defaultValue": null,
+                    "name": "subflow.a_json",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "subflow.a_string",
+                    "isReadonly": false
+                }
+            ],
+            "structuredVariables": []
+        },
+        "nodes": [
+            {
+                "id": "af43c31e-46bb-49b0-b546-60460c56f14c",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow_input",
+                "label": "Subflow Input",
+                "description": "",
+                "properties": {
+                    "x": 352,
+                    "y": 160,
+                    "triggerType": "subflow_input",
+                    "outputDataFormat": "summary",
+                    "debug": false,
+                    "synthKeys": [],
+                    "inputVariables": [
+                        "subflow.a_json"
+                    ],
+                    "outputVariables": [
+                        "subflow.a_string"
+                    ],
+                    "integrationIds": {},
+                    "tagIds": {},
+                    "staticInputValuesLists": {
+                        "subflow.a_json": []
+                    },
+                    "inputOrOutputValuesDescriptions": []
+                },
+                "wires": [
+                    [
+                        "e0f3f1b1-727e-4b48-8226-788a9b84ea81"
+                    ]
+                ]
+            },
+            {
+                "id": "fddd61e9-8388-4d99-a4cb-27e8d18f39f6",
+                "isIntegrationSubflowNode": false,
+                "type": "comment",
+                "label": "Comment",
+                "description": "",
+                "properties": {
+                    "x": 50,
+                    "y": 60,
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Example:</span></p><p class=\"editor-paragraph\"><br></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Run with input variable containing the following json</span></p><p class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">```</span></p><p class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">{</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">    \"items\" : </span></p><p class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">    [</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">        { \"id\" : 1 , \"value\" : 175 },</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">        { \"id\" : 2 , \"value\" :  25 }</span></p><p class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">    ],</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">     \"name\" : \"sample1\"</span></p><p class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">} </span></p><p class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">```</span></p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "279f3e70-6c38-499a-ba3f-72ad52175607",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow_output",
+                "label": "Subflow Output",
+                "description": "",
+                "properties": {
+                    "x": 723,
+                    "y": 160,
+                    "index": 0
+                },
+                "wires": []
+            },
+            {
+                "id": "e0f3f1b1-727e-4b48-8226-788a9b84ea81",
+                "isIntegrationSubflowNode": false,
+                "type": "set_primitive_variables",
+                "label": "Set Primitive Variable",
+                "description": "",
+                "properties": {
+                    "x": 533,
+                    "y": 240,
+                    "variables": [
+                        {
+                            "name": "subflow.a_string"
+                        }
+                    ],
+                    "transformTemplate": "{\n    \"subflow.a_string\": '{{variables[\"subflow.a_json\"] | json }}'\n}",
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "279f3e70-6c38-499a-ba3f-72ad52175607"
+                    ]
+                ]
+            }
+        ],
+        "lastUpdatedUser": "Runbook Export",
+        "createdByUser": "Runbook Export",
+        "eTag": "W/\"datetime'2025-07-31T06%3A23%3A41.5442746Z'\"",
+        "variant": "subflow",
+        "seriesId": "a3d6ea91-148e-4ad8-82ff-af56e2ad947e",
+        "version": "1.0",
+        "otherVersions": null,
+        "isScheduled": false,
+        "isValidated": true,
+        "isProprietary": false
+    },
+    "dependencies": [],
+    "token": "YRz/wC9axroAGAUi0ycrgD3M3g+GXuS1noBAOgZyH0w="
+}

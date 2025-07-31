@@ -1,0 +1,117 @@
+{
+    "runbook": {
+        "id": "cbe3c0d4-e766-4238-9bd5-a73721fe8aeb",
+        "createdTime": "1753940483.963350900",
+        "lastUpdatedTime": "1753943417.601197000",
+        "factoryResourceName": null,
+        "isFactory": false,
+        "name": "Demo - Display JSON payload",
+        "description": "",
+        "isReady": false,
+        "triggerType": "webhook",
+        "runtimeVariables": {
+            "primitiveVariables": [
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.a_string",
+                    "isReadonly": false
+                }
+            ],
+            "structuredVariables": []
+        },
+        "subflowVariables": null,
+        "nodes": [
+            {
+                "id": "58dcbd14-781c-4424-9393-7cdb21d57e09",
+                "isIntegrationSubflowNode": false,
+                "type": "trigger",
+                "label": "Webhook",
+                "description": "",
+                "properties": {
+                    "x": 232,
+                    "y": 160,
+                    "triggerType": "webhook",
+                    "timeReference": "RUNBOOK_EXECUTION",
+                    "timeOffset": 900,
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "213be165-cbd4-4325-8a32-a75fbe4a5f7c"
+                    ]
+                ]
+            },
+            {
+                "id": "2139931a-b25c-46ff-97a8-8c93ce78a285",
+                "isIntegrationSubflowNode": false,
+                "type": "rvbd_ui_text",
+                "label": "Text",
+                "description": "",
+                "properties": {
+                    "x": 727,
+                    "y": 160,
+                    "title": "",
+                    "row": "1",
+                    "notes": "<p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\"><span class=\"editor-variable-inner\">{{variables[\"runtime.a_string\"]}}</span></span></p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "213be165-cbd4-4325-8a32-a75fbe4a5f7c",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow",
+                "label": "Convert Variable JSON to String",
+                "description": "Utility subflow that converts a json input variable into a String variable",
+                "properties": {
+                    "x": 470,
+                    "y": 60,
+                    "debug": true,
+                    "configurationId": "a3d6ea91-148e-4ad8-82ff-af56e2ad947e",
+                    "in": [
+                        {
+                            "inner": "subflow.a_json",
+                            "outer": "$trigger.requestBody",
+                            "method": "trigger"
+                        }
+                    ],
+                    "out": [
+                        {
+                            "inner": "subflow.a_string",
+                            "outer": "runtime.a_string",
+                            "method": "runtime"
+                        }
+                    ]
+                },
+                "wires": [
+                    [
+                        "2139931a-b25c-46ff-97a8-8c93ce78a285"
+                    ]
+                ]
+            }
+        ],
+        "lastUpdatedUser": "Runbook Export",
+        "createdByUser": "Runbook Export",
+        "eTag": "W/\"datetime'2025-07-31T06%3A30%3A17.6073842Z'\"",
+        "variant": "incident",
+        "seriesId": "cbe3c0d4-e766-4238-9bd5-a73721fe8aeb",
+        "version": "1.0",
+        "otherVersions": null,
+        "isScheduled": false,
+        "isValidated": true,
+        "isProprietary": false
+    },
+    "dependencies": [
+        {
+            "id": "a3d6ea91-148e-4ad8-82ff-af56e2ad947e",
+            "type": "subflow",
+            "name": "Convert Variable JSON to String",
+            "globalId": "a3d6ea91-148e-4ad8-82ff-af56e2ad947e",
+            "originalVersion": "1.0",
+            "nodeLabel": "Convert Variable JSON to String",
+            "sourceLocation": "custom"
+        }
+    ],
+    "token": "IVnnoL7aG33AVEbOkTOSxlQOmFCVnov8MxGIvFVZK3g="
+}
