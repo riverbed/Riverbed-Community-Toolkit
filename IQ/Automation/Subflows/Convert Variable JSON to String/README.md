@@ -1,6 +1,6 @@
 # Convert Variable JSON to String
 
-This utiliy subflow converts a JSON input variable into a String variable
+This utility subflow converts a JSON input variable into a String variable
 
 ## Setup
 
@@ -10,7 +10,7 @@ Then in IQ, go to *Automation*, *Subflows*, and hit **Import**.
 
 ## Demo
 
-This [external runbook](./Demo%20-%20Display%20JSON%20payload.json) demonstrates how to use the "Convert Variable JSON to String" subflow to display the payload of the rnubook to the Runbook Output.
+This [external runbook](./Demo%20-%20Display%20JSON%20payload.json) demonstrates how to use the "Convert Variable JSON to String" subflow to display the payload of the runbook to the Runbook Output.
 
 ![alt text](image.png)
 
