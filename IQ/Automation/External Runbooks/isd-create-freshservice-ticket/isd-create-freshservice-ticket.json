@@ -1,12 +1,12 @@
 {
     "runbook": {
-        "id": "f6588ef9-7ec9-43d0-ad3a-f6fbec950fca",
-        "createdTime": "1754997315.663591800",
-        "lastUpdatedTime": "1755105718.675732800",
+        "id": "4f3d661f-711d-4870-9dd0-bd4403ef0843",
+        "createdTime": "1755105785.045784400",
+        "lastUpdatedTime": "1755571410.658364400",
         "factoryResourceName": null,
         "isFactory": false,
-        "name": "Freshservice - Create Ticket",
-        "description": "",
+        "name": "isd-create-freshservice-ticket",
+        "description": "Example Runbook which creates a Freshservice ticket from a service desk alert. ",
         "isReady": true,
         "triggerType": "webhook",
         "runtimeVariables": {
@@ -191,7 +191,8 @@
                 },
                 "wires": [
                     [
-                        "6a045be6-788a-423e-b47c-61546e4aba28"
+                        "6a045be6-788a-423e-b47c-61546e4aba28",
+                        "d39bcb65-c4ac-40a7-8b09-e6e4eb251bc1"
                     ],
                     [
                         "ffcd1fc3-108a-4e12-a31b-53b15c058f5e"
@@ -205,8 +206,8 @@
                 "label": "Ticket Details",
                 "description": "",
                 "properties": {
-                    "x": 1310,
-                    "y": 180,
+                    "x": 1311,
+                    "y": 140,
                     "title": "Ticket Details",
                     "row": "1",
                     "notesPosition": "left",
@@ -301,8 +302,8 @@
                 "properties": {
                     "x": 832,
                     "y": 300,
-                    "debug": true,
-                    "configurationId": "8d2de95e-d04e-4b13-af51-81867b42a7be",
+                    "debug": false,
+                    "configurationId": "f03a4383-1e92-4dd2-93d0-9791d0b24cc7",
                     "in": [
                         {
                             "inner": "subflow.FreshService_Connector",
@@ -394,7 +395,7 @@
                     "x": 343,
                     "y": 220.00000000000003,
                     "debug": false,
-                    "configurationId": "6121cb55-d8a7-4713-b632-9e7344d0630c",
+                    "configurationId": "1ae08311-47e4-4911-bf9d-e624e348f967",
                     "in": [
                         {
                             "inner": "subflow.Aternity_Connector",
@@ -564,13 +565,27 @@
                         "38611434-dd7a-40f2-a1d6-a77d4f9c1de4"
                     ]
                 ]
+            },
+            {
+                "id": "d39bcb65-c4ac-40a7-8b09-e6e4eb251bc1",
+                "isIntegrationSubflowNode": false,
+                "type": "insight",
+                "label": "Ticket Id",
+                "description": "",
+                "properties": {
+                    "x": 1309,
+                    "y": 180,
+                    "template": "<p class=\"editor-paragraph\" dir=\"ltr\"><span style=\"white-space: pre-wrap;\">Ticket Id: {{variables[\"runtime.Ticket_ID\"]}}</span></p><p class=\"editor-paragraph\"><br></p>",
+                    "debug": false
+                },
+                "wires": []
             }
         ],
         "lastUpdatedUser": "Runbook Export",
         "createdByUser": "Runbook Export",
-        "eTag": "W/\"datetime'2025-08-13T17%3A21%3A58.699257Z'\"",
+        "eTag": "W/\"datetime'2025-08-19T02%3A43%3A30.6862991Z'\"",
         "variant": "incident",
-        "seriesId": "f6588ef9-7ec9-43d0-ad3a-f6fbec950fca",
+        "seriesId": "4f3d661f-711d-4870-9dd0-bd4403ef0843",
         "version": "1.0",
         "otherVersions": null,
         "isScheduled": false,
@@ -579,7 +594,7 @@
     },
     "dependencies": [
         {
-            "id": "8d2de95e-d04e-4b13-af51-81867b42a7be",
+            "id": "f03a4383-1e92-4dd2-93d0-9791d0b24cc7",
             "type": "subflow",
             "name": "FreshService: Create Incident",
             "globalId": "Freshservice::Create_Incident",
@@ -589,7 +604,7 @@
             "sourcePackageId": "Freshservice"
         },
         {
-            "id": "6121cb55-d8a7-4713-b632-9e7344d0630c",
+            "id": "1ae08311-47e4-4911-bf9d-e624e348f967",
             "type": "subflow",
             "name": "Aternity: Parse Service Desk Alert",
             "globalId": "Aternity::Parse_Service_Desk_Alert",
@@ -599,5 +614,5 @@
             "sourcePackageId": "Aternity"
         }
     ],
-    "token": "oXV0zvm466/TkkLSyHg7mqqVuJvbkJHIYaUozrULKL0="
+    "token": "5qjrjZemPlDrKmXYqIuo7Ju+s6brweWj+fpQGsKKlYg="
 }
