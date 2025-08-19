@@ -1,25 +1,17 @@
 
 # ISD Create Freshservice Ticket - Example
 
-The runbook [Riverbed IQ Assist for ServiceNow - Incident - Quick Start](./Riverbed%20IQ%20Assist%20for%20ServiceNow%20-%20Incident%20-%20Quick%20Start.json) can be used as-is for Incidents assistance with Riverbed IQ Assist for ServiceNow.
-When triggered from ServiceNow, the runbook diagnoses the end-user endpoint and updates the incident ticket.
-
-![Riverbed IQ Assist for ServiceNow](100-riverbed-iq-assist-for-servicenow-incident-quickstart.png)
+The example takes the contents of a service desk alert and creates a ticket in Freshservice with the detail of the alert and which device it happened on.
 
 ## Prerequisistes
 
-1. Riverbed IQ Assist opt-in feature is enabled (IQ > Administration > Riverbed IQ Assist configuration).
+1. Riverbed IQ Aternity integration is installed and configured.
 
-2. [Riverbed IQ Assist for ServiceNow](https://store.servicenow.com/sn_appstore_store.do#!/store/search?q=Riverbed) is installed from the ServiceNow Store.
-
-3. Aternity integration on Riverbed IQ is installed.
-
-4. ServiceNow integration is installed (IQ > Integration Library).
-
+2. Riverbed IQ Freshservice integration is installed and configured.
 
 ## Quick Setup
 
-After downloading the [runbook file](./Riverbed%20IQ%20Assist%20for%20ServiceNow%20-%20Incident%20-%20Quick%20Start.json), go to IQ Automation, import the runbook in the External Runbooks. And toggle "Allow Automation" on.
+After downloading the [runbook file](./isd-create-freshservice-ticket.json), go to IQ Automation, import the runbook in the External Runbooks. Ensure "Allow Automation" is enabled. This Runbook will then be available to be selected in Aternity alert configuration. 
 
 ### License
 
