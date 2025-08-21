@@ -1,0 +1,618 @@
+{
+    "runbook": {
+        "id": "4f3d661f-711d-4870-9dd0-bd4403ef0843",
+        "createdTime": "1755105785.045784400",
+        "lastUpdatedTime": "1755571410.658364400",
+        "factoryResourceName": null,
+        "isFactory": false,
+        "name": "isd-create-freshservice-ticket",
+        "description": "Example Runbook which creates a Freshservice ticket from a service desk alert. ",
+        "isReady": true,
+        "triggerType": "webhook",
+        "runtimeVariables": {
+            "primitiveVariables": [
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Error_Message",
+                    "isReadonly": false
+                },
+                {
+                    "type": "boolean",
+                    "defaultValue": null,
+                    "name": "runtime.Successful",
+                    "isReadonly": false
+                },
+                {
+                    "type": "integer",
+                    "defaultValue": null,
+                    "name": "runtime.Ticket_ID",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Fs_Subject",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Fs_Description",
+                    "isReadonly": false
+                },
+                {
+                    "type": "integer",
+                    "defaultValue": null,
+                    "name": "runtime.Fs_Priority",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Fs_Email",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Fs_Asset_Name",
+                    "isReadonly": false
+                },
+                {
+                    "type": "json",
+                    "defaultValue": null,
+                    "name": "runtime.FS_Additional_Properties",
+                    "isReadonly": false
+                }
+            ],
+            "structuredVariables": []
+        },
+        "subflowVariables": null,
+        "nodes": [
+            {
+                "id": "19afa286-f79a-42ca-824d-458ee41faf6c",
+                "isIntegrationSubflowNode": false,
+                "type": "trigger",
+                "label": "Webhook",
+                "description": "",
+                "properties": {
+                    "x": 50,
+                    "y": 240.00000000000006,
+                    "triggerType": "webhook",
+                    "timeReference": "RUNBOOK_EXECUTION",
+                    "timeOffset": 900,
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "eb49f731-155d-4ac5-95b2-bf155a1b1b30"
+                    ]
+                ]
+            },
+            {
+                "id": "ad144b66-4832-407c-93ee-3a59137638a4",
+                "isIntegrationSubflowNode": false,
+                "type": "rvbd_ui_table",
+                "label": "Alert Details",
+                "description": "",
+                "properties": {
+                    "x": 632,
+                    "y": 120,
+                    "title": "Alert Details",
+                    "row": "20",
+                    "notesPosition": "left",
+                    "notes": "",
+                    "sortColumn": "Alert_ID",
+                    "sortOrder": "asc",
+                    "columns": [
+                        "Account_ID",
+                        "Account_Name",
+                        "Alert_ID",
+                        "sd_alert_rule_name",
+                        "Alert_Event_Name",
+                        "Alert_Timestamp_Epoch",
+                        "Alert_Timestamp",
+                        "Urgency",
+                        "Impact",
+                        "Category",
+                        "sd_alert_identifier",
+                        "sd_alert_last_event_details",
+                        "Last_Event_Timestamp_Epoch",
+                        "sd_alert_last_event_timestamp",
+                        "user_device.device_name",
+                        "device_type",
+                        "device_manufacturer",
+                        "device_model",
+                        "device_memory",
+                        "device_cpu_cores",
+                        "device_cpu_frequency",
+                        "Device_Last_Booted_Epoch",
+                        "Device_Last_Booted",
+                        "username",
+                        "user_domain",
+                        "user_department",
+                        "user_email_address",
+                        "user_title",
+                        "os_name",
+                        "device_subnet",
+                        "location.name",
+                        "custom_attribute_1",
+                        "custom_attribute_2",
+                        "custom_attribute_3",
+                        "custom_attribute_4",
+                        "custom_attribute_5",
+                        "custom_attribute_6"
+                    ],
+                    "includeAllColumns": true,
+                    "flipTable": true,
+                    "showBarsForColumnValues": false,
+                    "isBreakDownTable": false,
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "34c4ea7b-d4e5-4779-8b22-59758bc8c61d",
+                "isIntegrationSubflowNode": false,
+                "type": "decision",
+                "label": "Success",
+                "description": "",
+                "properties": {
+                    "x": 1087,
+                    "y": 280,
+                    "dataType": "SUMMARY",
+                    "outputs": [
+                        {
+                            "id": "o06521",
+                            "passedData": "MATCHED",
+                            "expression": {
+                                "id": "o8330",
+                                "type": "block",
+                                "operation": "AND",
+                                "conditions": [
+                                    {
+                                        "type": "condition",
+                                        "id": "c-1750302970562",
+                                        "category": "variable",
+                                        "key": "$VARIABLE.runtime.Successful",
+                                        "op": "EQ",
+                                        "value": "true"
+                                    }
+                                ]
+                            },
+                            "label": "Yes"
+                        },
+                        {
+                            "id": "default"
+                        }
+                    ],
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "6a045be6-788a-423e-b47c-61546e4aba28",
+                        "d39bcb65-c4ac-40a7-8b09-e6e4eb251bc1"
+                    ],
+                    [
+                        "ffcd1fc3-108a-4e12-a31b-53b15c058f5e"
+                    ]
+                ]
+            },
+            {
+                "id": "6a045be6-788a-423e-b47c-61546e4aba28",
+                "isIntegrationSubflowNode": false,
+                "type": "rvbd_ui_table",
+                "label": "Ticket Details",
+                "description": "",
+                "properties": {
+                    "x": 1311,
+                    "y": 140,
+                    "title": "Ticket Details",
+                    "row": "1",
+                    "notesPosition": "left",
+                    "sortColumn": "ID",
+                    "sortOrder": "asc",
+                    "columns": [
+                        "Fr_Escalated",
+                        "Spam",
+                        "Priority",
+                        "Source",
+                        "Status",
+                        "Subject",
+                        "Type",
+                        "Is_Escalated",
+                        "Description",
+                        "Description_Text",
+                        "Category",
+                        "Sub_Category",
+                        "Item_Category",
+                        "Created_at",
+                        "Updated_at",
+                        "Id"
+                    ],
+                    "includeAllColumns": true,
+                    "flipTable": true,
+                    "showBarsForColumnValues": false,
+                    "isBreakDownTable": false,
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "ffcd1fc3-108a-4e12-a31b-53b15c058f5e",
+                "isIntegrationSubflowNode": false,
+                "type": "rvbd_ui_text",
+                "label": "Error Message",
+                "description": "",
+                "properties": {
+                    "x": 1304,
+                    "y": 420,
+                    "title": "Error Message",
+                    "row": "1",
+                    "notes": "<p>Successul: {{variables[\"runtime.Successful\"]}}&nbsp;</p>\n<p>Error_Message: {{variables[\"runtime.Error_Message\"]}}</p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "38611434-dd7a-40f2-a1d6-a77d4f9c1de4",
+                "isIntegrationSubflowNode": false,
+                "type": "set_primitive_variables",
+                "label": "Create Ticket Info",
+                "description": "",
+                "properties": {
+                    "x": 562,
+                    "y": 300,
+                    "variables": [
+                        {
+                            "name": "runtime.Fs_Subject"
+                        },
+                        {
+                            "name": "runtime.Fs_Description"
+                        },
+                        {
+                            "name": "runtime.Fs_Priority"
+                        },
+                        {
+                            "name": "runtime.Fs_Email"
+                        },
+                        {
+                            "name": "runtime.Fs_Asset_Name"
+                        },
+                        {
+                            "name": "runtime.FS_Additional_Properties"
+                        }
+                    ],
+                    "transformTemplate": "{% assign alert = node_input.output[\"data\"][0].keys[\"sd_alert_rule_name\"] %}\n{% assign device = node_input.output[\"data\"][0].keys[\"user_device.device_name\"] %}\n{% assign email = node_input.output[\"data\"][0].keys[\"user_email_address\"] %}\n{% assign impact = node_input.output[\"data\"][0].keys[\"Impact\"] | downcase %}\n{% assign urgency = node_input.output[\"data\"][0].keys[\"Urgency\"] | downcase %}\n{% assign subject = \"Alert: \" | append: alert %}\n{% if device and device.size > 0 %}\n  {% assign subject = subject | append: \", Device: \" | append: device %}\n{% endif %}\n{% comment %}\n## Create description with multiple sections in format below.\n<b>Heading</b>\n<div>\n    <p>\n        key1: value1<br/>\n        key2: value2<br/>\n    </p>\n</div>\n{% endcomment %}\n{%- assign html_description = \"\n<b>Event Details</b>\n<div>\n    <p>\n        Alert Name: keys_sd_alert_rule_name<br/>\n        Event Details: keys_sd_alert_last_event_details<br/>\n        Event occurred: keys_sd_alert_last_event_timestamp<br/>\n    </p>\n</div>\n<b>Device Details</b>\n<div>\n    <p>\n        Device Name: keys_user_device.device_name<br/>\n        Model: keys_device_model<br/>\n        Type: keys_device_type<br/>\n        OS: keys_os_name<br/>\n        CPU Speed: keys_device_cpu_frequency<br/>\n        CPU Cores: keys_device_cpu_cores<br/>\n        Memory: keys_device_memory<br/>\n        Last booted: keys_Device_Last_Booted<br/>\n    </p>\n</div>\n<b>User Details</b>\n<div>\n    <p>\n        Username: keys_username<br/>\n        E-mail: keys_user_email_address<br/>\n        Domain: keys_user_domain<br/>\n        Role: keys_user_title<br/>\n        Department: keys_user_department<br/>\n    </p>\n</div>\n<b>Location Details</b>\n<div>\n    <p>\n        Location: keys_location.name<br/>\n        Subnet: keys_device_subnet<br/>\n    </p>\n</div>\n<b>Custom</b>\n<div>\n    <p>\n        Custom Attribute 1: keys_custom_attribute_1<br/>\n        Custom Attribute 2: keys_custom_attribute_2<br/>\n        Custom Attribute 3: keys_custom_attribute_3<br/>\n        Custom Attribute 4: keys_custom_attribute_4<br/>\n        Custom Attribute 5: keys_custom_attribute_5<br/>\n        Custom Attribute 6: keys_custom_attribute_6<br/>\n    </p>\n</div>\n<div>\n    <p><b>Aternity Alert Reference Id:</b> keys_Alert_ID</p>\n</div>\"\n  | replace: \"keys_sd_alert_rule_name\", node_input.output[\"data\"][0].keys[\"sd_alert_rule_name\"] \n  | replace: \"keys_sd_alert_last_event_details\", node_input.output[\"data\"][0].keys[\"sd_alert_last_event_details\"] \n  | replace: \"keys_sd_alert_last_event_timestamp\", node_input.output[\"data\"][0].keys[\"sd_alert_last_event_timestamp\"] \n  | replace: \"keys_user_device.device_name\", node_input.output[\"data\"][0].keys[\"user_device.device_name\"] \n  | replace: \"keys_device_model\", node_input.output[\"data\"][0].keys[\"device_model\"] \n  | replace: \"keys_device_type\", node_input.output[\"data\"][0].keys[\"device_type\"] \n  | replace: \"keys_os_name\", node_input.output[\"data\"][0].keys[\"os_name\"] \n  | replace: \"keys_device_cpu_frequency\", node_input.output[\"data\"][0].keys[\"device_cpu_frequency\"] \n  | replace: \"keys_device_cpu_cores\", node_input.output[\"data\"][0].keys[\"device_cpu_cores\"]\n  | replace: \"keys_device_memory\", node_input.output[\"data\"][0].keys[\"device_memory\"] \n  | replace: \"keys_Device_Last_Booted\", node_input.output[\"data\"][0].keys[\"Device_Last_Booted\"] \n  | replace: \"keys_username\", node_input.output[\"data\"][0].keys[\"username\"]\n  | replace: \"keys_user_email_address\", node_input.output[\"data\"][0].keys[\"user_email_address\"] \n  | replace: \"keys_user_domain\", node_input.output[\"data\"][0].keys[\"user_domain\"] \n  | replace: \"keys_user_title\", node_input.output[\"data\"][0].keys[\"user_title\"]\n  | replace: \"keys_user_department\", node_input.output[\"data\"][0].keys[\"user_department\"] \n  | replace: \"keys_location.name\", node_input.output[\"data\"][0].keys[\"location.name\"] \n  | replace: \"keys_device_subnet\", node_input.output[\"data\"][0].keys[\"device_subnet\"] \n  | replace: \"keys_custom_attribute_1\", node_input.output[\"data\"][0].keys[\"custom_attribute_1\"] \n  | replace: \"keys_custom_attribute_2\", node_input.output[\"data\"][0].keys[\"custom_attribute_2\"] \n  | replace: \"keys_custom_attribute_3\", node_input.output[\"data\"][0].keys[\"custom_attribute_3\"] \n  | replace: \"keys_custom_attribute_4\", node_input.output[\"data\"][0].keys[\"custom_attribute_4\"] \n  | replace: \"keys_custom_attribute_5\", node_input.output[\"data\"][0].keys[\"custom_attribute_5\"] \n  | replace: \"keys_custom_attribute_6\", node_input.output[\"data\"][0].keys[\"custom_attribute_6\"] \n  | replace: \"keys_Alert_ID\", node_input.output[\"data\"][0].keys[\"Alert_ID\"] -%}\n{\n    \"runtime.Fs_Subject\": {{ subject | json }},\n    \"runtime.Fs_Description\": {{ html_description | json }},\n  {% if impact and impact.size > 0 %}\n    {% if impact == \"high\" %}\n    \"runtime.Fs_Priority\": 3,\n    {% elsif impact == \"medium\" %}\n    \"runtime.Fs_Priority\": 2,\n    {% else %}\n    \"runtime.Fs_Priority\": 1,\n    {% endif %}\n  {% else %}\n    \"runtime.Fs_Priority\": 1,\n  {% endif %}\n  {% if email and email.size > 0 %}\n    \"runtime.Fs_Email\": {{ email | json }},\n  {% else %}\n    \"runtime.Fs_Email\": null,\n  {% endif %}\n  {% if device and device.size > 0 %}\n    \"runtime.Fs_Asset_Name\": {{ device | json }},\n  {% else %}\n    \"runtime.Fs_Asset_Name\": null,\n  {% endif %}\n    \"runtime.FS_Additional_Properties\": {\n    {% if impact and impact.size > 0 %}\n      {% if impact == \"high\" %}\n        \"impact\": 3,\n      {% elsif impact == \"medium\" %}\n        \"impact\": 2,\n      {% else %}\n        \"impact\": 1,\n      {% endif %}\n    {% endif %}\n    {% if urgency and urgency.size > 0 %}\n      {% if urgency == \"high\" %}\n        \"urgency\": 3,\n      {% elsif urgency == \"medium\" %}\n        \"urgency\": 2,\n      {% else %}\n        \"urgency\": 1,\n      {% endif %}\n    {% endif %}\n        \"source\": 1003\n    }\n}\n",
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "893e8509-7ca8-419b-bc38-b745d8c06d79"
+                    ]
+                ]
+            },
+            {
+                "id": "893e8509-7ca8-419b-bc38-b745d8c06d79",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow",
+                "label": "FreshService: Create Incident",
+                "description": "",
+                "properties": {
+                    "x": 832,
+                    "y": 300,
+                    "debug": false,
+                    "configurationId": "f03a4383-1e92-4dd2-93d0-9791d0b24cc7",
+                    "in": [
+                        {
+                            "inner": "subflow.FreshService_Connector",
+                            "outer": "00000000-0000-0000-0000-000000000000",
+                            "method": "connector",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Subject",
+                            "outer": "runtime.Fs_Subject",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Description",
+                            "outer": "runtime.Fs_Description",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Priority",
+                            "outer": "runtime.Fs_Priority",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Status",
+                            "outer": "2",
+                            "method": "static",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Email",
+                            "outer": "runtime.Fs_Email",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Group_ID",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Asset_Name",
+                            "outer": "runtime.Fs_Asset_Name",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Additional_Properties",
+                            "outer": "runtime.FS_Additional_Properties",
+                            "method": "runtime"
+                        }
+                    ],
+                    "out": [
+                        {
+                            "inner": "subflow.Error_Message",
+                            "outer": "runtime.Error_Message",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Successful",
+                            "outer": "runtime.Successful",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Ticket_ID",
+                            "outer": "runtime.Ticket_ID",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Raw_API_Response",
+                            "outer": ""
+                        }
+                    ]
+                },
+                "wires": [
+                    [
+                        "34c4ea7b-d4e5-4779-8b22-59758bc8c61d"
+                    ]
+                ]
+            },
+            {
+                "id": "eb49f731-155d-4ac5-95b2-bf155a1b1b30",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow",
+                "label": "Aternity: Parse Service Desk Alert",
+                "description": "",
+                "properties": {
+                    "x": 343,
+                    "y": 220.00000000000003,
+                    "debug": false,
+                    "configurationId": "1ae08311-47e4-4911-bf9d-e624e348f967",
+                    "in": [
+                        {
+                            "inner": "subflow.Aternity_Connector",
+                            "method": "connector",
+                            "outer": "00000000-0000-0000-0000-000000000000"
+                        },
+                        {
+                            "inner": "subflow.Service_Desk_Alert_JSON",
+                            "outer": "$trigger.requestBody",
+                            "method": "trigger"
+                        }
+                    ],
+                    "out": [
+                        {
+                            "inner": "subflow.Account_ID",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Account_Name",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Alert_ID",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Alert_Name",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Alert_Event_Name",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Alert_Timestamp_Epoch",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Alert_Timestamp",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Urgency",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Impact",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Category",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Identifier",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Last_Event_Details",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Last_Event_Timestamp_Epoch",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Last_Event_Timestamp",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Device_Name",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Device_Type",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Device_Manufacturer",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Device_Model",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Device_Memory",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Device_CPU_Cores",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Device_CPU_Frequency",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Device_Last_Booted_Epoch",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Device_Last_Booted",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Username",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.User_Domain",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.User_Department",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.User_Email_Address",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.User_Title",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.OS_Name",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Subnet",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Business_Location",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Custom_Attribute_1",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Custom_Attribute_2",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Custom_Attribute_3",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Custom_Attribute_4",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Custom_Attribute_5",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Custom_Attribute_6",
+                            "outer": ""
+                        }
+                    ]
+                },
+                "wires": [
+                    [
+                        "ad144b66-4832-407c-93ee-3a59137638a4",
+                        "38611434-dd7a-40f2-a1d6-a77d4f9c1de4"
+                    ]
+                ]
+            },
+            {
+                "id": "d39bcb65-c4ac-40a7-8b09-e6e4eb251bc1",
+                "isIntegrationSubflowNode": false,
+                "type": "insight",
+                "label": "Ticket Id",
+                "description": "",
+                "properties": {
+                    "x": 1309,
+                    "y": 180,
+                    "template": "<p class=\"editor-paragraph\" dir=\"ltr\"><span style=\"white-space: pre-wrap;\">Ticket Id: {{variables[\"runtime.Ticket_ID\"]}}</span></p><p class=\"editor-paragraph\"><br></p>",
+                    "debug": false
+                },
+                "wires": []
+            }
+        ],
+        "lastUpdatedUser": "Runbook Export",
+        "createdByUser": "Runbook Export",
+        "eTag": "W/\"datetime'2025-08-19T02%3A43%3A30.6862991Z'\"",
+        "variant": "incident",
+        "seriesId": "4f3d661f-711d-4870-9dd0-bd4403ef0843",
+        "version": "1.0",
+        "otherVersions": null,
+        "isScheduled": false,
+        "isValidated": true,
+        "isProprietary": false
+    },
+    "dependencies": [
+        {
+            "id": "f03a4383-1e92-4dd2-93d0-9791d0b24cc7",
+            "type": "subflow",
+            "name": "FreshService: Create Incident",
+            "globalId": "Freshservice::Create_Incident",
+            "originalVersion": "2.0.0",
+            "nodeLabel": "FreshService: Create Incident",
+            "sourceLocation": "integrationLibrary",
+            "sourcePackageId": "Freshservice"
+        },
+        {
+            "id": "1ae08311-47e4-4911-bf9d-e624e348f967",
+            "type": "subflow",
+            "name": "Aternity: Parse Service Desk Alert",
+            "globalId": "Aternity::Parse_Service_Desk_Alert",
+            "originalVersion": "2.0.1",
+            "nodeLabel": "Aternity: Parse Service Desk Alert",
+            "sourceLocation": "integrationLibrary",
+            "sourcePackageId": "Aternity"
+        }
+    ],
+    "token": "5qjrjZemPlDrKmXYqIuo7Ju+s6brweWj+fpQGsKKlYg="
+}
