@@ -15,7 +15,7 @@ With this setup, the pods and nodes of the Kubernetes cluster can scaleout, the 
 
 3. Click on the button to open the cookbook in the Google Cloud Shell
 
-[![Open in Cloud Shell](https://www.gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/riverbed/Riverbed-Community-Toolkit&tutorial=233-instrument-java-app-with-apm-agentless-on-gke/README.md)
+[![Open in Cloud Shell](https://www.gstatic.com/cloudssh/images/open-btn.svg)](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/riverbed/Riverbed-Community-Toolkit&tutorial=APM/233-instrument-java-app-with-apm-agentless-on-gke/README.md)
 
 ## Step 1. Get APM details in APM
 
