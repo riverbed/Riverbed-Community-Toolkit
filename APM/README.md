@@ -40,8 +40,9 @@ To use the following contents you will need active licenses of the Riverbed APM 
 | [235](235-instrument-java-app-with-apm-agent-in-container-on-gke) | *in progress* - Deploy a Java app instrumented with the full APM agent in a container to run on Google Kubernetes Engine | APM agent for Linux, Java, Web App, Google Cloud, Kubernetes, GKE, auto-instrumentation | jan. 2023 |
 | [238](238-instrument-java-app-with-apm-daemonset-pod-agent-on-gke) | Deploy the full APM agent on GKE as a Daemonset POD agent and instrument all the PODs of a Java web-app | APM agent for Linux, Java, Web App, Google Cloud, Kubernetes, GKE, auto-instrumentation | jan. 2023 |
 | [248](248-instrument-java-app-with-apm-daemonset-pod-agent-on-eks) | Deploy the full APM agent on EKS as a Daemonset POD agent and instrument all the PODs of a Java web-app | APM agent for Linux, Java, Web App, AWS, Kubernetes, EKS, auto-instrumentation | aug. 2023 |
-| [285](285-auto-instrument-app-with-riverbed-apm-on-openshift) | *draft* Auto-instrument a java app on a Red Hat OpenShift cluster using the Riverbed Operator | Red Hat OpenShift, auto-instrumentation, APM agent for Linux, Java, Web App | july 2024 |
-| [401](401-apm-analysis-server-on-aws-ec2) | *in progress* APM Analysis Server on AWS EC2 | APM Analysis Server, AWS | feb. 2024 |
+| [281](281-auto-instrument-apps-with-riverbed-apm-on-gke-cluster) | *draft* Auto-instrument in GKE using the Riverbed Operator | GKE, auto-instrumentation, APM agent for Linux, Web App | sept. 2025 |
+| [285](285-auto-instrument-app-with-riverbed-apm-on-openshift) | Auto-instrument a java app on a Red Hat OpenShift cluster using the Riverbed Operator | Red Hat OpenShift, auto-instrumentation, APM agent for Linux, Java, Web App | july 2024 |
+| [401](401-apm-analysis-server-on-aws-ec2) | APM Analysis Server on AWS EC2 | APM Analysis Server, AWS | feb. 2024 |
 | [341](341-metrics-with-apm-daemonset-pod-agent-on-eks) | A Python app sending metrics to the CMX endpoint of the APM agent in Kubernetes (in AWS EKS) | APM agent, Custom Metrics, CMX, Kubernetes, EKS | aug. 2023 |
 | [901](https://github.com/Aternity/custom-metrics-examples) | Getting started with custom Metrics using CMX | CMX, Kubernetes, Gett | feb. 2023
 | [902](https://github.com/Aternity/custom-metrics-snow-plugin) | Example with CMX API | CMX, API | nov. 2022
