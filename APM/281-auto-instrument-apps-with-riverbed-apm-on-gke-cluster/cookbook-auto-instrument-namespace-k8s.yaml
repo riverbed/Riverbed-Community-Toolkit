@@ -1,0 +1,18 @@
+# Riverbed Community Toolkit
+# cookbook-auto-instrument-namespace-k8s.yaml
+#
+# How to use:
+#
+#   kubectl apply -f cookbook-auto-instrument-namespace-k8s.yaml
+
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cookbook-services
+  ###############################################
+  # Riverbed APM configuration
+  # Enable APM auto-instrumentation in this namespace
+  annotations:
+    instrument.apm.riverbed/inject-dotnet: "true"
+  ###############################################  

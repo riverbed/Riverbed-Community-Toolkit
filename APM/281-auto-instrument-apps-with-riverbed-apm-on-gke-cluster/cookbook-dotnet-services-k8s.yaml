@@ -1,0 +1,233 @@
+# Riverbed Community Toolkit
+# cookbook-dotnet-services-k8s.yaml
+# version: 2023-3-17
+#
+# Cookbook dotnet (micro)Services on Kubernetes
+# This file is a template for deploying three simple .NET services in a Kubernetes cluster.
+#
+# How to use:
+#
+#   kubectl apply -f cookbook-dotnet-services-k8s.yaml
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: c-service-dotnet
+  namespace: cookbook-services
+spec:
+  # Uncomment the following line to create a LoadBalancer service (if supported by your Kubernetes environment)
+  # type: LoadBalancer
+  selector:
+    app: c-service-dotnet
+  ports:
+    - port: 8080
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: c-service-dotnet
+  namespace: cookbook-services
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: c-service-dotnet
+  template:
+    metadata:
+      labels:
+        app: c-service-dotnet
+    spec:
+      containers:
+        - name: c-service-dotnet
+          image: mcr.microsoft.com/dotnet/sdk:7.0
+          resources:
+            limits:
+              cpu: 500m
+              memory: 300Mi
+            requests:
+              cpu: 50m
+              memory: 200Mi
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 10
+            successThreshold: 1
+            failureThreshold: 10              
+          ports:
+            - containerPort: 8080
+          env:
+          command: ["bash","-lc"]
+          args:
+            - |
+              set -euo pipefail
+              mkdir -p /app && cd /app
+              echo '<Project Sdk="Microsoft.NET.Sdk.Web"><PropertyGroup><TargetFramework>net7.0</TargetFramework><ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable></PropertyGroup></Project>' >> service.csproj
+              echo 'var serviceName = System.Environment.GetEnvironmentVariable("IMS_SERVICE_NAME") ?? "ims-service";' >> Program.cs
+              echo 'var microservice1 = System.Environment.GetEnvironmentVariable("IMS_MICROSERVICE_1") ?? "http://localhost:8080/work";' >> Program.cs
+              echo 'var microservice2 = System.Environment.GetEnvironmentVariable("IMS_MICROSERVICE_2") ?? "http://localhost:8080/work";' >> Program.cs
+              echo 'var microservice3 = System.Environment.GetEnvironmentVariable("IMS_MICROSERVICE_3") ?? "http://localhost:8080/work";' >> Program.cs
+              echo 'var builder = WebApplication.CreateBuilder(args); builder.Services.AddHttpClient();' >> Program.cs
+              echo 'var app = builder.Build();' >> Program.cs
+              echo 'app.MapGet("/ping", () => Results.Ok(new { service = serviceName, time = DateTimeOffset.UtcNow }));' >> Program.cs
+              echo 'app.MapGet("/health", () => Results.Ok("OK"));' >> Program.cs
+              echo 'app.MapGet("/work", () => { var rand = new Random(); var wait = rand.Next(0, 2000); System.Threading.Thread.Sleep(wait); return Results.Ok("Done");});' >> Program.cs
+              echo 'app.MapGet("/call-sync", () => { var client = new HttpClient(); var resp1 = client.GetAsync(microservice1).Result; var body1 = resp1.Content.ReadAsStringAsync().Result; var resp2 = client.GetAsync(microservice2).Result; var body2 = resp2.Content.ReadAsStringAsync().Result; var resp3 = client.GetAsync(microservice3).Result; var body3 = resp3.Content.ReadAsStringAsync().Result; return Results.Ok(new { from = serviceName, call_1 = body1, result_1 = body1, call_2 = body2, result_2 = body2, call_3 = body3, result_3 = body3 }); });' >> Program.cs
+              echo 'app.Run();' >> Program.cs
+              dotnet run --project service.csproj -c Release --urls http://0.0.0.0:8080
+      restartPolicy: Always
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: b-service-dotnet
+  namespace: cookbook-services
+spec:
+  # Uncomment the following line to create a LoadBalancer service (if supported by your Kubernetes environment)
+  # type: LoadBalancer
+  selector:
+    app: b-service-dotnet
+  ports:
+    - port: 8080
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: b-service-dotnet
+  namespace: cookbook-services
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: b-service-dotnet
+  template:
+    metadata:
+      labels:
+        app: b-service-dotnet
+    spec:
+      containers:
+        - name: b-service-dotnet
+          image: mcr.microsoft.com/dotnet/sdk:7.0
+          resources:
+            limits:
+              cpu: 500m
+              memory: 300Mi
+            requests:
+              cpu: 50m
+              memory: 200Mi
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 10
+            successThreshold: 1
+            failureThreshold: 10
+          ports:
+            - containerPort: 8080
+          env:
+          command: ["bash","-lc"]
+          args:
+            - |
+              set -euo pipefail
+              mkdir -p /app && cd /app
+              echo '<Project Sdk="Microsoft.NET.Sdk.Web"><PropertyGroup><TargetFramework>net7.0</TargetFramework><ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable></PropertyGroup></Project>' >> service.csproj
+              echo 'var serviceName = System.Environment.GetEnvironmentVariable("IMS_SERVICE_NAME") ?? "ims-service";' >> Program.cs
+              echo 'var microservice1 = System.Environment.GetEnvironmentVariable("IMS_MICROSERVICE_1") ?? "http://localhost:8080/work";' >> Program.cs
+              echo 'var microservice2 = System.Environment.GetEnvironmentVariable("IMS_MICROSERVICE_2") ?? "http://localhost:8080/work";' >> Program.cs
+              echo 'var microservice3 = System.Environment.GetEnvironmentVariable("IMS_MICROSERVICE_3") ?? "http://localhost:8080/work";' >> Program.cs
+              echo 'var builder = WebApplication.CreateBuilder(args); builder.Services.AddHttpClient();' >> Program.cs
+              echo 'var app = builder.Build();' >> Program.cs
+              echo 'app.MapGet("/ping", () => Results.Ok(new { service = serviceName, time = DateTimeOffset.UtcNow }));' >> Program.cs
+              echo 'app.MapGet("/health", () => Results.Ok("OK"));' >> Program.cs
+              echo 'app.MapGet("/work", () => { var rand = new Random(); var wait = rand.Next(0, 2000); System.Threading.Thread.Sleep(wait); return Results.Ok("Done");});' >> Program.cs
+              echo 'app.MapGet("/call-sync", () => { var client = new HttpClient(); var resp1 = client.GetAsync(microservice1).Result; var body1 = resp1.Content.ReadAsStringAsync().Result; var resp2 = client.GetAsync(microservice2).Result; var body2 = resp2.Content.ReadAsStringAsync().Result; var resp3 = client.GetAsync(microservice3).Result; var body3 = resp3.Content.ReadAsStringAsync().Result; return Results.Ok(new { from = serviceName, call_1 = body1, result_1 = body1, call_2 = body2, result_2 = body2, call_3 = body3, result_3 = body3 }); });' >> Program.cs
+              echo 'app.Run();' >> Program.cs
+              dotnet run --project service.csproj -c Release --urls http://0.0.0.0:8080
+      restartPolicy: Always
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: a-service-dotnet
+  namespace: cookbook-services
+spec:
+  # Uncomment the following line to create a LoadBalancer service (if supported by your Kubernetes environment)
+  type: LoadBalancer
+  selector:
+    app: a-service-dotnet
+  ports:
+    - port: 80
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: a-service-dotnet
+  namespace: cookbook-services
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: a-service-dotnet
+  template:
+    metadata:
+      labels:
+        app: a-service-dotnet
+    spec:
+      containers:
+        - name: a-service-dotnet
+          image: mcr.microsoft.com/dotnet/sdk:7.0
+          resources:
+            limits:
+              cpu: 500m
+              memory: 300Mi
+            requests:
+              cpu: 50m
+              memory: 200Mi
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 8080
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            timeoutSeconds: 10
+            successThreshold: 1
+            failureThreshold: 10
+          ports:
+            - containerPort: 8080
+          env:
+            - name: IMS_MICROSERVICE_2
+              value: http://b-service-dotnet:8080/work
+            - name: IMS_MICROSERVICE_3
+              value: http://c-service-dotnet:8080/work
+          command: ["bash","-lc"]
+          args:
+            - |
+              set -euo pipefail
+              mkdir -p /app && cd /app
+              echo '<Project Sdk="Microsoft.NET.Sdk.Web"><PropertyGroup><TargetFramework>net7.0</TargetFramework><ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable></PropertyGroup></Project>' >> service.csproj
+              echo 'var serviceName = System.Environment.GetEnvironmentVariable("IMS_SERVICE_NAME") ?? "ims-service";' >> Program.cs
+              echo 'var microservice1 = System.Environment.GetEnvironmentVariable("IMS_MICROSERVICE_1") ?? "http://localhost:8080/work";' >> Program.cs
+              echo 'var microservice2 = System.Environment.GetEnvironmentVariable("IMS_MICROSERVICE_2") ?? "http://localhost:8080/work";' >> Program.cs
+              echo 'var microservice3 = System.Environment.GetEnvironmentVariable("IMS_MICROSERVICE_3") ?? "http://localhost:8080/work";' >> Program.cs
+              echo 'var builder = WebApplication.CreateBuilder(args); builder.Services.AddHttpClient();' >> Program.cs
+              echo 'var app = builder.Build();' >> Program.cs
+              echo 'app.MapGet("/ping", () => Results.Ok(new { service = serviceName, time = DateTimeOffset.UtcNow }));' >> Program.cs
+              echo 'app.MapGet("/health", () => Results.Ok("OK"));' >> Program.cs
+              echo 'app.MapGet("/work", () => { var rand = new Random(); var wait = rand.Next(0, 2000); System.Threading.Thread.Sleep(wait); return Results.Ok("Done");});' >> Program.cs
+              echo 'app.MapGet("/call-sync", () => { var client = new HttpClient(); var resp1 = client.GetAsync(microservice1).Result; var body1 = resp1.Content.ReadAsStringAsync().Result; var resp2 = client.GetAsync(microservice2).Result; var body2 = resp2.Content.ReadAsStringAsync().Result; var resp3 = client.GetAsync(microservice3).Result; var body3 = resp3.Content.ReadAsStringAsync().Result; return Results.Ok(new { from = serviceName, call_1 = body1, result_1 = body1, call_2 = body2, result_2 = body2, call_3 = body3, result_3 = body3 }); });' >> Program.cs
+              echo 'app.Run();' >> Program.cs
+              dotnet run --project service.csproj -c Release --urls http://0.0.0.0:8080
+      restartPolicy: Always
+
