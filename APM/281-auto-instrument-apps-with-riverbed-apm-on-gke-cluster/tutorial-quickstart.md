@@ -33,6 +33,14 @@ You will deploy the [Riverbed Operator](https://github.com/riverbed/riverbed-ope
 
 <walkthrough-tutorial-duration duration="2"></walkthrough-tutorial-duration>
 
+### Set the current folder
+
+Go the folder of the cookbook 281
+
+```sh
+cd APM/281-auto-instrument-apps-with-riverbed-apm-on-gke-cluster
+```
+
 ### Set the active project
 
 Run the following command to set the active project, replacing `<PROJECT_ID>` with your actual project ID:
