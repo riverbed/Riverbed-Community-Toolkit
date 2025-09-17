@@ -269,8 +269,7 @@ The following will deploy a simple Java application in a new Kubernetes namespac
 - Deploy
 
 ```bash
-kubectl apply -f
-https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads/master/APM/281-auto-instrument-apps-with-riverbed-apm-on-gke-cluster/cookbook-java-service-k8s.yaml
+kubectl apply -f https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads/master/APM/281-auto-instrument-apps-with-riverbed-apm-on-gke-cluster/cookbook-java-service-k8s.yaml
 ```
 
 - Check the EXTERNAL-IP of the Java App
