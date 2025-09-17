@@ -216,7 +216,7 @@ kubectl apply -f cookbook-auto-instrument-namespace-k8s.yaml
 
 ### Deploy .NET services
 
-Apply the manfiest of the app, that will deploy few .NET services expose an http endpoint (using a Load Balancer). 
+Apply the manifest of the app, that will deploy a few .NET services and expose an http endpoint (using a Load Balancer). 
 
 ```bash
 kubectl apply -f cookbook-dotnet-services-k8s.yaml
