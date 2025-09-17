@@ -224,7 +224,7 @@ kubectl apply -f cookbook-dotnet-services-k8s.yaml
 
 ### Find the External IP address of the endpoint
 
-To find the external ip address, run the following command. It can take few minutes before the EXTERNAL-IP is assigned and get displayed.
+To find the external ip address, run the following command. It can take a few minutes before the EXTERNAL-IP is assigned and gets displayed.
 
 ```bash
 kubectl get service -n cookbook-services a-service-dotnet
