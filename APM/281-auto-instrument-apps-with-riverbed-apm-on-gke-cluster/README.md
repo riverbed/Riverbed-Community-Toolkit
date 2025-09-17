@@ -3,8 +3,9 @@
 This cookbook guides you through deploying the [Riverbed Operator](https://github.com/riverbed/riverbed-operator) on a Kubernetes cluster hosted on Google Kubernetes Engine (GKE), and enabling auto-instrumentation for your applications with [Riverbed APM](https://www.riverbed.com/products/application-performance-monitoring).
 
 
-You can [open in one-page](tutorial-quickstart.md), or else click on the button to open the cookbook in Google Cloud Shell: 
- [![Open in Google Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.png)](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/riverbed/Riverbed-Community-Toolkit&tutorial=APM/281-auto-instrument-apps-with-riverbed-apm-on-gke-cluster/tutorial-quickstart.md) 
+You can [open in one-page](tutorial-quickstart.md), or else click on the button to open the cookbook in Google Cloud Shell:
+
+[![Open in Google Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.png)](https://console.cloud.google.com/cloudshell/open?git_repo=https://github.com/riverbed/Riverbed-Community-Toolkit&tutorial=APM/281-auto-instrument-apps-with-riverbed-apm-on-gke-cluster/tutorial-quickstart.md) 
 
 
 This cookbook is part of the [Riverbed Community Toolkit](https://github.com/riverbed/Riverbed-Community-Toolkit), a collection of resources shared by the shared by the [Riverbed](https://www.riverbed.com) community.

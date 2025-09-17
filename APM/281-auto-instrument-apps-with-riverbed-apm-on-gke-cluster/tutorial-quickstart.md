@@ -25,13 +25,22 @@ You will deploy the [Riverbed Operator](https://github.com/riverbed/riverbed-ope
 3. Riverbed APM account details
 4. Riverbed Operator installation
 5. Riverbed Operator configuration
-6. Enable Auto-Instrumentation for workloads in a namespace
-7. Observe transactions with Riverbed APM
+6. Enable Auto-Instrumentation
+7. Deploy a workload
+8. Observe transactions with Riverbed APM
 
 
 ## Step 1. Connect to your GKE cluster
 
 <walkthrough-tutorial-duration duration="2"></walkthrough-tutorial-duration>
+
+### Set the current folder
+
+Go the folder of the cookbook 281
+
+```sh
+cd APM/281-auto-instrument-apps-with-riverbed-apm-on-gke-cluster
+```
 
 ### Set the active project
 
@@ -187,9 +196,9 @@ riverbed-apm-agent-zzwcb                                1/1     Running   0     
 riverbed-operator-controller-manager-78874b995f-cdw2t   1/1     Running   0          6m25s
 ```
 
-## Step 6. Enable Auto-Instrumentation for workloads in a namespace
+## Step 6. Enable Auto-Instrumentation
 
-<walkthrough-tutorial-duration duration="5"></walkthrough-tutorial-duration>
+<walkthrough-tutorial-duration duration="2"></walkthrough-tutorial-duration>
 
 ### Auto-Instrumentation
 
@@ -201,9 +210,13 @@ The following command will create the namespace `cookbook-services` and enable a
 kubectl apply -f cookbook-auto-instrument-namespace-k8s.yaml
 ```
 
-### Deploy .NET workload
+## Step 7. Deploy a workload
 
-Run this command to deploy the workload and expose an http endpoint (Load Balancer). 
+<walkthrough-tutorial-duration duration="3"></walkthrough-tutorial-duration>
+
+### Deploy .NET services
+
+Apply the manifest of the app, that will deploy a few .NET services and expose an http endpoint (using a Load Balancer). 
 
 ```bash
 kubectl apply -f cookbook-dotnet-services-k8s.yaml
@@ -211,8 +224,7 @@ kubectl apply -f cookbook-dotnet-services-k8s.yaml
 
 ### Find the External IP address of the endpoint
 
-Run the following command to get the external ip address. It can take few minutes before the EXTERNAL-IP shows up.
-
+To find the external ip address, run the following command. It can take a few minutes before the EXTERNAL-IP is assigned and gets displayed.
 
 ```bash
 kubectl get service -n cookbook-services a-service-dotnet
@@ -225,7 +237,7 @@ NAME               TYPE           CLUSTER-IP       EXTERNAL-IP      PORT(S)     
 a-service-dotnet   LoadBalancer   10.10.10.5       1.2.3.4          8080:32251/TCP   10m36s
 ```
 
-## Step 7. Observe transactions with Riverbed APM
+## Step 8. Observe transactions with Riverbed APM
 
 <walkthrough-tutorial-duration duration="5"></walkthrough-tutorial-duration>
 
@@ -248,7 +260,7 @@ Go to the Riverbed APM web console and find the generated transactions
 
 Congrats the tutorial is done!
 
-### Notes
+## Notes
 
 #### How to clean-up the cookbook demo workloads
 
@@ -266,7 +278,7 @@ Run the following command to delete the Riverbed Operator:
 kubectl delete -f https://github.com/riverbed/riverbed-operator/releases/latest/download/riverbed-operator.yaml
 ```
 
-#### How to learn more about Riverbed APM
+#### Learn more about Riverbed APM
 
 Go to the [Riverbed Operator page](https://github.com/riverbed/riverbed-operator)
 
