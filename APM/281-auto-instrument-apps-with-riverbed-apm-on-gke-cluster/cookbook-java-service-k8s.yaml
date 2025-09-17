@@ -3,7 +3,7 @@
 #
 # Usage:
 #
-#   kubctl apply -f cookbook-java-service-k8s.yaml
+#   kubectl apply -f cookbook-java-service-k8s.yaml
 ---
 apiVersion: v1
 kind: Namespace
