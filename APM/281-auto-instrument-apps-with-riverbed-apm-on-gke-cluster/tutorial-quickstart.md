@@ -262,6 +262,35 @@ Congrats the tutorial is done!
 
 ## Notes
 
+### How to try with a Java app?
+
+The following will deploy a simple Java application in a new Kubernetes namespace: `cookbook-app`. The APM auto-instrumentation annotation is set at the deployment level, so that it will be automatically instrumented.
+
+- Deploy
+
+```bash
+kubectl apply -f https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads/master/APM/281-auto-instrument-apps-with-riverbed-apm-on-gke-cluster/cookbook-java-service-k8s.yaml
+```
+
+- Check the EXTERNAL-IP of the Java App
+
+```bash
+kubectl get service -n cookbook-app
+```
+
+- Navigate on the url to generate some traffic. Every transaction will be recorded in Riverbed APM.
+
+```
+http://<EXTERNAL-IP Java App>
+```
+
+- Cleanup the namespace
+
+```bash 
+kubectl delete namespace cookbook-app
+```
+
+
 #### How to clean-up the cookbook demo workloads
 
 Run the following command to delete workloads:
