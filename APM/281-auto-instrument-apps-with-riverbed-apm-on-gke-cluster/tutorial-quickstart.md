@@ -281,7 +281,7 @@ kubectl get service -n cookbook-app
 - Navigate on the url to generate some traffic. Every transaction will be recorded in Riverbed APM.
 
 ```
-http://<EXTERNAL-IP Java Appp>
+http://<EXTERNAL-IP Java App>
 ```
 
 - Cleanup the namespace
