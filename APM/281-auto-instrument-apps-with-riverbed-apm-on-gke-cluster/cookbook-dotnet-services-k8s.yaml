@@ -1,6 +1,6 @@
 # Riverbed Community Toolkit
 # cookbook-dotnet-services-k8s.yaml
-# version: 2023-3-17
+# version: 2025-9-19
 #
 # Cookbook dotnet (micro)Services on Kubernetes
 # This file is a template for deploying three simple .NET services in a Kubernetes cluster.
@@ -8,6 +8,43 @@
 # How to use:
 #
 #   kubectl apply -f cookbook-dotnet-services-k8s.yaml
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dotnet-service-src
+  namespace: cookbook-services
+data:
+  Program.cs: |
+    var serviceName = System.Environment.GetEnvironmentVariable("IMS_SERVICE_NAME") ?? "ims-service";
+    var microservice1 = System.Environment.GetEnvironmentVariable("IMS_MICROSERVICE_1") ?? "http://localhost:8080/work";
+    var microservice2 = System.Environment.GetEnvironmentVariable("IMS_MICROSERVICE_2") ?? "http://localhost:8080/work";
+    var microservice3 = System.Environment.GetEnvironmentVariable("IMS_MICROSERVICE_3") ?? "http://localhost:8080/work";
+    var builder = WebApplication.CreateBuilder(args); builder.Services.AddHttpClient();
+    var app = builder.Build();
+    app.MapGet("/ping", () => Results.Ok(new { service = serviceName, time = DateTimeOffset.UtcNow }));
+    app.MapGet("/health", () => Results.Ok("OK"));
+    app.MapGet("/work", () => { var rand = new Random(); var wait = rand.Next(0, 2000); System.Threading.Thread.Sleep(wait); return Results.Ok("Done");});
+    app.MapGet("/call-sync", () => {
+      var client = new HttpClient();
+      var resp1 = client.GetAsync(microservice1).Result;
+      var body1 = resp1.Content.ReadAsStringAsync().Result;
+      var resp2 = client.GetAsync(microservice2).Result;
+      var body2 = resp2.Content.ReadAsStringAsync().Result;
+      var resp3 = client.GetAsync(microservice3).Result;
+      var body3 = resp3.Content.ReadAsStringAsync().Result;
+      return Results.Ok(new { service = serviceName, results = new [] { body1, body2, body3 } });
+    });
+    app.Run();
+  service.csproj: |
+    <Project Sdk="Microsoft.NET.Sdk.Web">
+      <PropertyGroup>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+      </PropertyGroup>
+    </Project>
 
 ---
 apiVersion: v1
@@ -57,30 +94,23 @@ spec:
             periodSeconds: 5
             timeoutSeconds: 10
             successThreshold: 1
-            failureThreshold: 10              
+            failureThreshold: 10
           ports:
             - containerPort: 8080
-          env:
-          command: ["bash","-lc"]
-          args:
-            - |
-              set -euo pipefail
-              mkdir -p /app && cd /app
-              echo '<Project Sdk="Microsoft.NET.Sdk.Web"><PropertyGroup><TargetFramework>net7.0</TargetFramework><ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable></PropertyGroup></Project>' >> service.csproj
-              echo 'var serviceName = System.Environment.GetEnvironmentVariable("IMS_SERVICE_NAME") ?? "ims-service";' >> Program.cs
-              echo 'var microservice1 = System.Environment.GetEnvironmentVariable("IMS_MICROSERVICE_1") ?? "http://localhost:8080/work";' >> Program.cs
-              echo 'var microservice2 = System.Environment.GetEnvironmentVariable("IMS_MICROSERVICE_2") ?? "http://localhost:8080/work";' >> Program.cs
-              echo 'var microservice3 = System.Environment.GetEnvironmentVariable("IMS_MICROSERVICE_3") ?? "http://localhost:8080/work";' >> Program.cs
-              echo 'var builder = WebApplication.CreateBuilder(args); builder.Services.AddHttpClient();' >> Program.cs
-              echo 'var app = builder.Build();' >> Program.cs
-              echo 'app.MapGet("/ping", () => Results.Ok(new { service = serviceName, time = DateTimeOffset.UtcNow }));' >> Program.cs
-              echo 'app.MapGet("/health", () => Results.Ok("OK"));' >> Program.cs
-              echo 'app.MapGet("/work", () => { var rand = new Random(); var wait = rand.Next(0, 2000); System.Threading.Thread.Sleep(wait); return Results.Ok("Done");});' >> Program.cs
-              echo 'app.MapGet("/call-sync", () => { var client = new HttpClient(); var resp1 = client.GetAsync(microservice1).Result; var body1 = resp1.Content.ReadAsStringAsync().Result; var resp2 = client.GetAsync(microservice2).Result; var body2 = resp2.Content.ReadAsStringAsync().Result; var resp3 = client.GetAsync(microservice3).Result; var body3 = resp3.Content.ReadAsStringAsync().Result; return Results.Ok(new { from = serviceName, call_1 = body1, result_1 = body1, call_2 = body2, result_2 = body2, call_3 = body3, result_3 = body3 }); });' >> Program.cs
-              echo 'app.Run();' >> Program.cs
-              dotnet run --project service.csproj -c Release --urls http://0.0.0.0:8080
+          volumeMounts:
+            - name: dotnet-src
+              mountPath: /app/Program.cs
+              subPath: Program.cs
+            - name: dotnet-src
+              mountPath: /app/service.csproj
+              subPath: service.csproj
+          command: ["dotnet"]
+          args: ["run", "--project", "/app/service.csproj", "-c", "Release", "--urls", "http://0.0.0.0:8080"]
+      volumes:
+        - name: dotnet-src
+          configMap:
+            name: dotnet-service-src
       restartPolicy: Always
-
 
 ---
 apiVersion: v1
@@ -133,27 +163,20 @@ spec:
             failureThreshold: 10
           ports:
             - containerPort: 8080
-          env:
-          command: ["bash","-lc"]
-          args:
-            - |
-              set -euo pipefail
-              mkdir -p /app && cd /app
-              echo '<Project Sdk="Microsoft.NET.Sdk.Web"><PropertyGroup><TargetFramework>net7.0</TargetFramework><ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable></PropertyGroup></Project>' >> service.csproj
-              echo 'var serviceName = System.Environment.GetEnvironmentVariable("IMS_SERVICE_NAME") ?? "ims-service";' >> Program.cs
-              echo 'var microservice1 = System.Environment.GetEnvironmentVariable("IMS_MICROSERVICE_1") ?? "http://localhost:8080/work";' >> Program.cs
-              echo 'var microservice2 = System.Environment.GetEnvironmentVariable("IMS_MICROSERVICE_2") ?? "http://localhost:8080/work";' >> Program.cs
-              echo 'var microservice3 = System.Environment.GetEnvironmentVariable("IMS_MICROSERVICE_3") ?? "http://localhost:8080/work";' >> Program.cs
-              echo 'var builder = WebApplication.CreateBuilder(args); builder.Services.AddHttpClient();' >> Program.cs
-              echo 'var app = builder.Build();' >> Program.cs
-              echo 'app.MapGet("/ping", () => Results.Ok(new { service = serviceName, time = DateTimeOffset.UtcNow }));' >> Program.cs
-              echo 'app.MapGet("/health", () => Results.Ok("OK"));' >> Program.cs
-              echo 'app.MapGet("/work", () => { var rand = new Random(); var wait = rand.Next(0, 2000); System.Threading.Thread.Sleep(wait); return Results.Ok("Done");});' >> Program.cs
-              echo 'app.MapGet("/call-sync", () => { var client = new HttpClient(); var resp1 = client.GetAsync(microservice1).Result; var body1 = resp1.Content.ReadAsStringAsync().Result; var resp2 = client.GetAsync(microservice2).Result; var body2 = resp2.Content.ReadAsStringAsync().Result; var resp3 = client.GetAsync(microservice3).Result; var body3 = resp3.Content.ReadAsStringAsync().Result; return Results.Ok(new { from = serviceName, call_1 = body1, result_1 = body1, call_2 = body2, result_2 = body2, call_3 = body3, result_3 = body3 }); });' >> Program.cs
-              echo 'app.Run();' >> Program.cs
-              dotnet run --project service.csproj -c Release --urls http://0.0.0.0:8080
+          volumeMounts:
+            - name: dotnet-src
+              mountPath: /app/Program.cs
+              subPath: Program.cs
+            - name: dotnet-src
+              mountPath: /app/service.csproj
+              subPath: service.csproj
+          command: ["dotnet"]
+          args: ["run", "--project", "/app/service.csproj", "-c", "Release", "--urls", "http://0.0.0.0:8080"]
+      volumes:
+        - name: dotnet-src
+          configMap:
+            name: dotnet-service-src
       restartPolicy: Always
-
 
 ---
 apiVersion: v1
@@ -176,7 +199,7 @@ metadata:
   name: a-service-dotnet
   namespace: cookbook-services
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: a-service-dotnet
@@ -204,30 +227,24 @@ spec:
             timeoutSeconds: 10
             successThreshold: 1
             failureThreshold: 10
-          ports:
-            - containerPort: 8080
           env:
             - name: IMS_MICROSERVICE_2
               value: http://b-service-dotnet:8080/work
             - name: IMS_MICROSERVICE_3
               value: http://c-service-dotnet:8080/work
-          command: ["bash","-lc"]
-          args:
-            - |
-              set -euo pipefail
-              mkdir -p /app && cd /app
-              echo '<Project Sdk="Microsoft.NET.Sdk.Web"><PropertyGroup><TargetFramework>net7.0</TargetFramework><ImplicitUsings>enable</ImplicitUsings><Nullable>enable</Nullable></PropertyGroup></Project>' >> service.csproj
-              echo 'var serviceName = System.Environment.GetEnvironmentVariable("IMS_SERVICE_NAME") ?? "ims-service";' >> Program.cs
-              echo 'var microservice1 = System.Environment.GetEnvironmentVariable("IMS_MICROSERVICE_1") ?? "http://localhost:8080/work";' >> Program.cs
-              echo 'var microservice2 = System.Environment.GetEnvironmentVariable("IMS_MICROSERVICE_2") ?? "http://localhost:8080/work";' >> Program.cs
-              echo 'var microservice3 = System.Environment.GetEnvironmentVariable("IMS_MICROSERVICE_3") ?? "http://localhost:8080/work";' >> Program.cs
-              echo 'var builder = WebApplication.CreateBuilder(args); builder.Services.AddHttpClient();' >> Program.cs
-              echo 'var app = builder.Build();' >> Program.cs
-              echo 'app.MapGet("/ping", () => Results.Ok(new { service = serviceName, time = DateTimeOffset.UtcNow }));' >> Program.cs
-              echo 'app.MapGet("/health", () => Results.Ok("OK"));' >> Program.cs
-              echo 'app.MapGet("/work", () => { var rand = new Random(); var wait = rand.Next(0, 2000); System.Threading.Thread.Sleep(wait); return Results.Ok("Done");});' >> Program.cs
-              echo 'app.MapGet("/call-sync", () => { var client = new HttpClient(); var resp1 = client.GetAsync(microservice1).Result; var body1 = resp1.Content.ReadAsStringAsync().Result; var resp2 = client.GetAsync(microservice2).Result; var body2 = resp2.Content.ReadAsStringAsync().Result; var resp3 = client.GetAsync(microservice3).Result; var body3 = resp3.Content.ReadAsStringAsync().Result; return Results.Ok(new { from = serviceName, call_1 = body1, result_1 = body1, call_2 = body2, result_2 = body2, call_3 = body3, result_3 = body3 }); });' >> Program.cs
-              echo 'app.Run();' >> Program.cs
-              dotnet run --project service.csproj -c Release --urls http://0.0.0.0:8080
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+            - name: dotnet-src
+              mountPath: /app/Program.cs
+              subPath: Program.cs
+            - name: dotnet-src
+              mountPath: /app/service.csproj
+              subPath: service.csproj
+          command: ["dotnet"]
+          args: ["run", "--project", "/app/service.csproj", "-c", "Release", "--urls", "http://0.0.0.0:8080"]
+      volumes:
+        - name: dotnet-src
+          configMap:
+            name: dotnet-service-src
       restartPolicy: Always
-
