@@ -70,7 +70,7 @@ http://localhost:5000
 
 5. Restart the application
 
-> After restarting the application, Riverbed APM will being collecting all transactions.
+> After restarting the application, Riverbed APM will be collecting all transactions.
 
 For support please visit [Riverbed Support](https://support.riverbed.com/)
 
