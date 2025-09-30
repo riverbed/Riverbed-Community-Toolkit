@@ -28,7 +28,12 @@ Then on the Windows Server, open a Terminal with PowerShell. Paste the script an
 ## Step 2. Install a dotnet SDK
 
 1.Visit the [.NET download page](https://dotnet.microsoft.com/download/dotnet) 
-2. Download and install the appropriate .NET SDK. (e.g., **.NET Core 3.1** version `sdk-3.1.426-windows-x64-installer`)
+
+2. Download and install the appropriate .NET SDK
+
+* e.g. **.NET 7.0** version [sdk-7.0.410-windows-x64-installer](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
+* e.g., **.NET Core 3.1** version [sdk-3.1.426-windows-x64-installer](https://dotnet.microsoft.com/en-us/download/dotnet/3.1)
+
 
 > [!Note]
 > Ensure your selected SDK version is supported. Check [Riverbed APM supported platforms](https://help.aternity.com/bundle/release_news_apm_agent_console_apm/page/console/topics/apm_supported_platforms.html)
@@ -40,7 +45,7 @@ On your Windows Server, run the following commands in PowerShell:
 ```powershell
 New-Item -type directory -Path C:\app
 Set-Location C:\app
-dotnet new webapp -n YourApp
+dotnet new web -n YourApp
 Set-Location C:\app\YourApp
 dotnet run
 ```
