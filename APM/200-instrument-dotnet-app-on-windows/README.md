@@ -25,7 +25,7 @@ Then on the Windows Server, open a Terminal with PowerShell. Paste the script an
 
 > Installation typically completes within seconds.
 
-## Step 2. Install a dotnet SDK
+## Step 2. Install the .NET SDK
 
 1. Visit the [.NET download page](https://dotnet.microsoft.com/download/dotnet) 
 
@@ -50,7 +50,7 @@ Set-Location C:\app\YourApp
 dotnet run
 ```
 
-## Step 4. Navigate the app
+## Step 4. Access the application
 
 Browse the application, for example open your browser and navigate to:
 
