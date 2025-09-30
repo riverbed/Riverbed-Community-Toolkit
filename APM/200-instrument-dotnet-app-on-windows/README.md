@@ -1,6 +1,6 @@
 # 200-instrument-dotnet-app-on-windows
 
-This cookbook sets up a simple environment with [Riverbed APM](https://www.riverbed.com/products/application-performance-monitoring/) instrumentating a dotnet web application on a Windows Server. 
+This cookbook sets up a simple environment with [Riverbed APM](https://www.riverbed.com/products/application-performance-monitoring/) instrumenting a dotnet web application on a Windows Server. 
 
 ## Prerequisites
 
