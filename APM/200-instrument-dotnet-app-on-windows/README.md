@@ -38,7 +38,7 @@ Then on the Windows Server, open a Terminal with PowerShell. Paste the script an
 > [!Note]
 > Ensure your selected SDK version is supported. Check [Riverbed APM supported platforms](https://help.aternity.com/bundle/release_news_apm_agent_console_apm/page/console/topics/apm_supported_platforms.html)
 
-## Step 3. Create a Wep Application
+## Step 3. Create a Web Application
 
 On your Windows Server, run the following commands in PowerShell:
 
