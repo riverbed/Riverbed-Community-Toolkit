@@ -1,46 +1,43 @@
 # 200-instrument-dotnet-app-on-windows
 
-This cookbook helps to setup a simple dotnet web application on a Windows Server with the APM agent, to start practicing Digital Experience Monitoring (DEM) with [APM](https://www.riverbed.com/products/application-performance-monitoring/).
+This cookbook sets up a simple environment with [Riverbed APM](https://www.riverbed.com/products/application-performance-monitoring/) instrumentating a dotnet web application on a Windows Server. 
 
 ## Prerequisites
 
-1. an APM account
+1. a Riverbed APM account
 2. a Windows Server virtual machine ready to use, for example a Windows Server 2019 instance in the Cloud (AWS, Azure,...)
-3. *optionally* a fileshare accessible from your server, for example a storage account or S3 bucket.
 
-## Step by Step
+## Step 1. Install Riverbed APM
 
-### Connect to APM web console
+Navigate to the APM web console and go to APM > Agents > Install Agents. Copy the **Unattended Agent Installation** script for Windows.
 
-Navigate to APM > Agents > Install Agents:
+Then on the Windows Server, open a Terminal with PowerShell. Paste the script and run it to start the installation. 
 
-1. Find your **CustomerID**, for example *12341234-12341234-13241234*
-2. Grab **SaaS Analysis Server Host**, for example *agents.apm.myaccount.aternity.com*
-3. Download the **Windows Latest Agent** installer, for example *AppInternals_Agent_12.1.0.597_Win.exe*
+The installation would take few seconds.
 
-### Download the installer for dotnet SDK
+## Step 2. Install a dotnet SDK
 
-Go to https://dotnet.microsoft.com/download/dotnet/3.1 to download the latest installer for Windows, for example *dotnet-sdk-3.1.415-win-x64.exe*
+Download the installer for your .NET SDK. 
+For example, go to [dotnet website](https://dotnet.microsoft.com/download/dotnet/3.1) and get the installer for .NET Core 3.1 (*sdk-3.1.426-windows-x64-installer*)
 
-### Store the installers into your storage
+> [!Note]
+> Check [Riverbed APM supported platforms](https://help.aternity.com/bundle/release_news_apm_agent_console_apm/page/console/topics/apm_supported_platforms.html)
 
-Store the installer package in your favorite storage, for example in a Storage Account container (Azure) or S3 bucket (AWS). Then, grab the URLs to be used in the next step.
+## Step 3. Create a new app
 
-1. APM Windows Latest Agent
-2. dotnet SDK installer
+```powershell
+New-Item -type directory -Path C:\app
+Set-Location C:\app
+dotnet new webapp -n YourApp
+Set-Location C:\app\YourApp
+dotnet run
+```
 
-### Grab the Setup script and configure the variables before running it
 
-1. Start a fresh Windows Server
-2. Fetch the script [Setup.ps1](Setup.ps1) and configure variables (replace *{{my-S3-BUCKET}}* with the storage url to fetch packages, *{{my-CustomerId}}* and *{{my-SaaSAnalysisServerHost}}* with your APM informations)
-3. Execute the script with PowerShell (run as admin)
-
-## It is ready! 
-
-You can now start instrumenting the app. Please visit [Aternity](https://www.aternity.com/) if your need Support or Training.
+You can now start instrumenting the app. For support please visit [Riverbed Support](https://support.riverbed.com/)
 
 #### License
 
-Copyright (c) 2022 Riverbed Technology, Inc.
+Copyright (c) 2022 - 2025 Riverbed Technology, Inc.
 
 The contents provided here are licensed under the terms and conditions of the MIT License accompanying the software ("License"). The scripts are distributed "AS IS" as set forth in the License. The script also include certain third party code. All such third party code is also distributed "AS IS" and is licensed by the respective copyright holders under the applicable terms and conditions (including, without limitation, warranty and liability disclaimers) identified in the license notices accompanying the software.
