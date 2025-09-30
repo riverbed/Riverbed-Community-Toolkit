@@ -1,11 +1,11 @@
 # 200-instrument-dotnet-app-on-windows
 
-This cookbook sets up a simple environment with [Riverbed APM](https://www.riverbed.com/products/application-performance-monitoring/) instrumentating a dotnet web application on a Windows Server. 
+This cookbook sets up a simple environment with [Riverbed APM](https://www.riverbed.com/products/application-performance-monitoring/) instrumenting a dotnet web application on a Windows Server. 
 
 ## Prerequisites
 
-1. a Riverbed APM account
-2. a Windows Server virtual machine ready to use, for example a Windows Server 2019 instance in the Cloud (AWS, Azure,...)
+1. a valid **Riverbed APM account**
+2. a **Windows Server** virtual machine ready to use, for example a Windows Server 2019 instance in the Cloud (AWS, Azure,...)
 
 ## Step 1. Install Riverbed APM
 
@@ -13,29 +13,46 @@ Navigate to the APM web console and from the menu go to AGENTS > Install Agents.
 
 Then on the Windows Server, open a Terminal with PowerShell. Paste the script and run it to start the installation. 
 
-The installation would take few seconds.
+1. Log in to the **Riverbed APM** web console
 
-## Step 2. Install a dotnet SDK
+2. Navigate to **AGENTS > Install Agents** and click on **Windows tab**
 
-Download the installer for your .NET SDK. 
-For example, go to [dotnet website](https://dotnet.microsoft.com/download/dotnet/3.1) and get the installer for .NET Core 3.1 (*sdk-3.1.426-windows-x64-installer*)
+3. Copy the **Unattended Agent Installation script** for Windows
+
+4. On your Windows Server, open **PowerShell**
+
+5. Paste and run the script to begin installation
+
+> Installation typically completes within seconds.
+
+## Step 2. Install the .NET SDK
+
+1. Visit the [.NET download page](https://dotnet.microsoft.com/download/dotnet) 
+
+2. Download and install the appropriate .NET SDK. For example:
+
+* **.NET 7.0** version [sdk-7.0.410-windows-x64-installer](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
+* **.NET Core 3.1** version [sdk-3.1.426-windows-x64-installer](https://dotnet.microsoft.com/en-us/download/dotnet/3.1)
+
 
 > [!Note]
-> Check [Riverbed APM supported platforms](https://help.aternity.com/bundle/release_news_apm_agent_console_apm/page/console/topics/apm_supported_platforms.html)
+> Ensure your selected SDK version is supported. Check [Riverbed APM supported platforms](https://help.aternity.com/bundle/release_news_apm_agent_console_apm/page/console/topics/apm_supported_platforms.html)
 
-## Step 3. Create a new app
+## Step 3. Create a Web Application
+
+On your Windows Server, run the following commands in PowerShell:
 
 ```powershell
 New-Item -type directory -Path C:\app
 Set-Location C:\app
-dotnet new webapp -n YourApp
+dotnet new web -n YourApp
 Set-Location C:\app\YourApp
 dotnet run
 ```
 
-## Step 4. Navigate the app
+## Step 4. Access the application
 
-Browse the application, for example:
+Browse the application, for example open your browser and navigate to:
 
 ```shell
 http://localhost:5000
@@ -43,10 +60,17 @@ http://localhost:5000
 
 ## Step 5. Instrument the app with Riverbed APM
 
-In the APM web console, from the menu go to AGENTS > Agent List, and open the agent of your server.
+1. In the APM web console, go to AGENTS > Agent List
 
-Select your application (for example: YourApp) and you can now enable **Instrument** and **Harvest**.
-After restarting the application, it will be instrumented and the Riverbed APM will start collecting every transactions.
+2. Select the agent corresponding to your server
+
+3. Choose your application (e.g. YourApp)
+
+4. Configure and enable both **Instrument** and **Harvest**
+
+5. Restart the application
+
+> After restarting the application, Riverbed APM will be collecting all transactions.
 
 For support please visit [Riverbed Support](https://support.riverbed.com/)
 
