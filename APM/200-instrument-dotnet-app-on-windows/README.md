@@ -9,7 +9,7 @@ This cookbook sets up a simple environment with [Riverbed APM](https://www.river
 
 ## Step 1. Install Riverbed APM
 
-Navigate to the APM web console and go to APM > Agents > Install Agents. Copy the **Unattended Agent Installation** script for Windows.
+Navigate to the APM web console and from the menu go to AGENTS > Install Agents. Copy the **Unattended Agent Installation** script for Windows.
 
 Then on the Windows Server, open a Terminal with PowerShell. Paste the script and run it to start the installation. 
 
@@ -33,8 +33,22 @@ Set-Location C:\app\YourApp
 dotnet run
 ```
 
+## Step 4. Navigate the app
 
-You can now start instrumenting the app. For support please visit [Riverbed Support](https://support.riverbed.com/)
+Browse the application, for example:
+
+```shell
+http://localhost:5000
+```
+
+## Step 5. Instrument the app with Riverbed APM
+
+In the APM web console, from the menu go to AGENTS > Agent List, and open the agent of your server.
+
+Select your application (for example: YourApp) and you can now enable **Instrument** and **Harvest**.
+After restarting the application, it will be instrumented and the Riverbed APM will start collecting every transactions.
+
+For support please visit [Riverbed Support](https://support.riverbed.com/)
 
 #### License
 
