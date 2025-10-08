@@ -124,7 +124,7 @@ http://localhost:5000
 
 ## Step 5. Instrument the app with Riverbed APM
 
-1. In the APM web console, go to AGENTS > Agent List
+1. In the Riverbed APM web console, go to AGENTS > Agent List
 
 2. Select the agent corresponding to your server
 
