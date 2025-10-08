@@ -78,7 +78,7 @@ dotnet run
 
 
 <details>
-  <summary>App Example with specific .NET version and running in IIS (inprocess)</summary>
+  <summary>App Example with specific .NET version and IIS hosting (in-process)</summary>
 
 Run the following commands in PowerShell to generate the application:
 
