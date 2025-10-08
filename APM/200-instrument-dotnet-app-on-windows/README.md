@@ -113,6 +113,19 @@ In IIS, you can then add a new Site and configure. For example:
 
 </details>
 
+<details>
+  <summary>YourWebApp8 Example, ASP.NET Core Razor Pages web app</summary>
+
+```powershell
+New-Item -type directory -Path C:\src
+Set-Location C:\src
+dotnet new webapp --name YourWebApp8 --framework net8.0
+
+Set-Location C:\src\YourWebApp8
+dotnet run
+```
+
+</details>
 
 ## Step 4. Access the application
 
