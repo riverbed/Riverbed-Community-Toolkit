@@ -142,7 +142,7 @@ http://localhost:5000
 
 6. Access the application
 
-After restarting the application, Riverbed APM will be collecting all transactions.
+Riverbed APM will be collecting all transactions.
 
 ## License
 
