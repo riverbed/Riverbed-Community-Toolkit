@@ -44,7 +44,7 @@ For example:
 
 ## Step 3. Create a Web Application
 
-On your Windows Server, follow one of the example below.
+On your Windows Server, follow the instructions for one of the app example below.
 
 <details>
   <summary>Simple App Example</summary>
