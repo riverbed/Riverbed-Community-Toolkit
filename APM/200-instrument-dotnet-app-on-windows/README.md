@@ -23,6 +23,7 @@ Then on the Windows Server, open a Terminal with PowerShell. Paste the script an
 
 5. Paste and run the script to begin installation
 
+> [!Tip]
 > Installation typically completes within seconds.
 
 ## Step 2. Install the .NET SDK
@@ -123,7 +124,7 @@ http://localhost:5000
 
 ## Step 5. Instrument the app with Riverbed APM
 
-1. In the APM web console, go to AGENTS > Agent List
+1. In the Riverbed APM web console, go to AGENTS > Agent List
 
 2. Select the agent corresponding to your server
 
@@ -133,11 +134,17 @@ http://localhost:5000
 
 5. Restart the application
 
-> After restarting the application, Riverbed APM will be collecting all transactions.
+> [!Tip]
+> If the application is hosted on IIS, run the following command to restart IIS:
+> ```Powershell
+> iisreset
+> ```
 
-For support please visit [Riverbed Support](https://support.riverbed.com/)
+6. Access the application
 
-#### License
+Riverbed APM will be collecting all transactions.
+
+## License
 
 Copyright (c) 2022 - 2025 Riverbed Technology, Inc.
 
