@@ -140,6 +140,8 @@ http://localhost:5000
 > iisreset
 > ```
 
+6. Access the application
+
 After restarting the application, Riverbed APM will be collecting all transactions.
 
 ## License
