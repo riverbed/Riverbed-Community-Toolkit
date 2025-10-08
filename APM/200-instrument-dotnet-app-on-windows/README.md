@@ -108,7 +108,7 @@ In IIS, you can then add a new Site and configure. For example:
 * Port: 5000
 
 > [!Tip]
-> If not already configured, IIS would need the .NET Hosting Bundle, refer to the [.NET page](https://dotnet.microsoft.com/download/dotnet)
+> The .NET Hosting Bundle is required for IIS hosting. If it is not already installed refer to the [.NET page](https://dotnet.microsoft.com/download/dotnet)
 
 </details> 
 
