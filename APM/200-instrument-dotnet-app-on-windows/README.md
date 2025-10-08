@@ -29,26 +29,89 @@ Then on the Windows Server, open a Terminal with PowerShell. Paste the script an
 
 1. Visit the [.NET download page](https://dotnet.microsoft.com/download/dotnet) 
 
-2. Download and install the appropriate .NET SDK. For example:
+2. Download and install the appropriate .NET SDK and runtimes.
 
+For example:
+
+* **.NET 8.0** version [sdk-8.0.414-windows-x64-installer](https://dotnet.microsoft.com/en-us/download/dotnet/8.0)
 * **.NET 7.0** version [sdk-7.0.410-windows-x64-installer](https://dotnet.microsoft.com/en-us/download/dotnet/7.0)
 * **.NET Core 3.1** version [sdk-3.1.426-windows-x64-installer](https://dotnet.microsoft.com/en-us/download/dotnet/3.1)
 
-
 > [!Note]
-> Ensure your selected SDK version is supported. Check [Riverbed APM supported platforms](https://help.aternity.com/bundle/release_news_apm_agent_console_apm/page/console/topics/apm_supported_platforms.html)
+> Ensure the runtime version for the application is supported, check [Riverbed APM supported platforms](https://help.aternity.com/bundle/release_news_apm_agent_console_apm/page/console/topics/apm_supported_platforms.html)
+
+
 
 ## Step 3. Create a Web Application
 
-On your Windows Server, run the following commands in PowerShell:
+On your Windows Server, follow one of the example below.
+
+<details>
+  <summary>Simple Example</summary>
+
+Run the following commands in PowerShell:
 
 ```powershell
-New-Item -type directory -Path C:\app
-Set-Location C:\app
+New-Item -type directory -Path C:\src
+Set-Location C:\src
 dotnet new web -n YourApp
-Set-Location C:\app\YourApp
+
+Set-Location C:\src\YourApp
 dotnet run
 ```
+
+</details>
+
+<details>
+  <summary>Example with specific .NET version</summary>
+
+```powershell
+New-Item -type directory -Path C:\src
+Set-Location C:\src
+dotnet new web -n YourApp8  -f net8.0
+
+Set-Location C:\src\YourApp8
+dotnet run
+```
+
+</details>
+
+
+<details>
+  <summary>Example with specific .NET version and running in IIS (inprocess)</summary>
+
+Run the following commands in PowerShell to generate the application:
+
+```powershell
+New-Item -type directory -Path C:\src
+Set-Location C:\src
+dotnet new web -n YourApp8IIS  -f net8.0
+Set-Location C:\src\YourApp8IIS
+```
+
+In this folder, edit the project file `C:\src\YourApp8IIS\YourApp8IIS.csproj` and add the following inside the `PropertyGroup` XML element.
+
+```xml
+<AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+```
+
+Run the following command to build and publish the application inside folder `c:\app`:
+
+```PowerShell
+dotnet publish -c Release -o c:\app\YourApp8IIS
+```
+
+In IIS, you can then add a new Site and configure. For example:
+
+* Name: `YourApp8IIS`
+* Folder: `c:\app\YourApp8IIS`
+* Port: 5000
+
+> [!Tip]
+> If not already configured, IIS would need the .NET Hosting Bundle, refer to the [.NET page](https://dotnet.microsoft.com/download/dotnet)
+
+</details> 
+
 
 ## Step 4. Access the application
 
