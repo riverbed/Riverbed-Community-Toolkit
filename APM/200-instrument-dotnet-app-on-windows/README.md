@@ -115,7 +115,7 @@ In IIS, you can then add a new Site and configure. For example:
 
 ## Step 4. Access the application
 
-Browse the application, for example open your browser and navigate to:
+Check the port of the application and open the URL. For example open a web-browser and navigate to:
 
 ```shell
 http://localhost:5000
