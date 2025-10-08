@@ -47,7 +47,7 @@ For example:
 On your Windows Server, follow the instructions for one of the app example below.
 
 <details>
-  <summary>Simple App Example</summary>
+  <summary>Simple YourApp Example</summary>
 
 Run the following commands in PowerShell:
 
@@ -63,7 +63,7 @@ dotnet run
 </details>
 
 <details>
-  <summary>App Example with specific .NET version</summary>
+  <summary>YourApp Example with specific .NET version</summary>
 
 ```powershell
 New-Item -type directory -Path C:\src
@@ -78,7 +78,7 @@ dotnet run
 
 
 <details>
-  <summary>App Example with specific .NET version and IIS hosting (in-process)</summary>
+  <summary>YourApp Example with specific .NET version and IIS hosting (in-process)</summary>
 
 Run the following commands in PowerShell to generate the application:
 
