@@ -95,7 +95,7 @@ In this folder, edit the project file `C:\src\YourApp8IIS\YourApp8IIS.csproj` an
 <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
 ```
 
-Run the following command to build and publish the application inside folder `c:\app`:
+Run the following command to build and publish the application inside the folder `c:\app`:
 
 ```PowerShell
 dotnet publish -c Release -o c:\app\YourApp8IIS
