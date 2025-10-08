@@ -110,7 +110,7 @@ In IIS, you can then add a new Site and configure. For example:
 > [!Tip]
 > The .NET Hosting Bundle is required for IIS hosting. If it is not already installed refer to the [.NET page](https://dotnet.microsoft.com/download/dotnet)
 
-</details> 
+</details>
 
 
 ## Step 4. Access the application
