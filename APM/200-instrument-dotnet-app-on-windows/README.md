@@ -54,7 +54,7 @@ Run the following commands in PowerShell:
 ```powershell
 New-Item -type directory -Path C:\src
 Set-Location C:\src
-dotnet new web -n YourApp
+dotnet new web --name YourApp
 
 Set-Location C:\src\YourApp
 dotnet run
@@ -68,7 +68,7 @@ dotnet run
 ```powershell
 New-Item -type directory -Path C:\src
 Set-Location C:\src
-dotnet new web -n YourApp8  -f net8.0
+dotnet new web --name YourApp8 --framework net8.0
 
 Set-Location C:\src\YourApp8
 dotnet run
@@ -85,7 +85,7 @@ Run the following commands in PowerShell to generate the application:
 ```powershell
 New-Item -type directory -Path C:\src
 Set-Location C:\src
-dotnet new web -n YourApp8IIS  -f net8.0
+dotnet new web --name YourApp8IIS --framework net8.0
 Set-Location C:\src\YourApp8IIS
 ```
 
@@ -98,7 +98,7 @@ In this folder, edit the project file `C:\src\YourApp8IIS\YourApp8IIS.csproj` an
 Run the following command to build and publish the application inside the folder `c:\app`:
 
 ```PowerShell
-dotnet publish -c Release -o c:\app\YourApp8IIS
+dotnet publish --configuration Release --output c:\app\YourApp8IIS
 ```
 
 In IIS, you can then add a new Site and configure. For example:
