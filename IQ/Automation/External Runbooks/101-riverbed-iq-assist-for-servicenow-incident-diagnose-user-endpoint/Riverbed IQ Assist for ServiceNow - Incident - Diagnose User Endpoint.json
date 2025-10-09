@@ -1,12 +1,12 @@
 {
     "runbook": {
-        "id": "19087890-116c-42b1-a69e-ef9be0ba4b0f",
-        "createdTime": "1753456673.695645100",
-        "lastUpdatedTime": "1753458262.424882900",
+        "id": "e5f9677f-ea48-445f-81e0-38ceb5f84d1f",
+        "createdTime": "1755847187.926234300",
+        "lastUpdatedTime": "1760010896.327476000",
         "factoryResourceName": null,
         "isFactory": false,
         "name": "Riverbed IQ Assist for ServiceNow - Incident - Diagnose User Endpoint",
-        "description": "Triggered in the context of an Incident in ServiceNow, the runbook diagnoses the user endpoint and enriches the incident record with an Insight. \n\nTest payload MY-DEMO Demo\n{\n    \"recordType\" : \"incident\", \n    \"recordID\" : \"123456\",\n    \"recordNumber\" : \"INC045000\",\n    \"user\" : {  \"name\" : \"Adam Covert\" },\n    \"ciName\" : \"Adam_Covert_WKS\",\n    \"ciID\" : \"65498\"\n}\n\nTest payload LMS - Sandbox PM\n{\n    \"recordType\" : \"incident\", \n    \"recordID\" : \"123456\",\n    \"recordNumber\" : \"INC045000\",\n    \"user\" : {  \"name\" : \"Adam Covert\" },\n    \"ciName\" : \"w11full\",\n    \"ciID\" : \"65498\"\n}",
+        "description": "Triggered in the context of an Incident in ServiceNow, the runbook diagnoses the user endpoint and enriches the incident record with an Insight.",
         "isReady": true,
         "triggerType": "webhook",
         "runtimeVariables": {
@@ -303,7 +303,7 @@
                     "x": 1905,
                     "y": 340,
                     "debug": false,
-                    "configurationId": "d78d311c-24ac-4b9e-bd34-891af18fdbe2",
+                    "configurationId": "f4c88032-d05f-4d27-ad96-a1f844c66ba5",
                     "in": [
                         {
                             "inner": "subflow.Connector",
@@ -457,9 +457,9 @@
                 "label": "Comment 1",
                 "description": "",
                 "properties": {
-                    "x": 467.00399189370114,
-                    "y": 670,
-                    "comment": "<p><strong>Payload example</strong></p>\n<p>{<br>\n&nbsp;&nbsp; \"recordType\" : \"incident\",<br>\n&nbsp;&nbsp; \"recordID\" : \"e51dccec878c\",<br>\n&nbsp;&nbsp; \"recordNumber\" : \"INC0013262\",<br>\n&nbsp;&nbsp; \"ciName\" : \"Adam_Covert_WKS\",<br>\n&nbsp;&nbsp; \"ciID\" : \"65498\",<br>\n&nbsp;\"user\" : {<br>\n&nbsp;&nbsp; \"UserID\" : \"cindy.johnson\",<br>\n&nbsp;&nbsp; \"Email\" : \"cjohnson@acme.net\",<br>\n&nbsp;&nbsp; \"DisplayName\" : \"Cindy Johnson\",<br>\n&nbsp;&nbsp; \"Name\" :&nbsp;&nbsp;&nbsp; \"cindy.johnson\"<br>\n&nbsp;}<br>\n}</p>",
+                    "x": 466.00399189370114,
+                    "y": 730,
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Payload example</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">{</span><br><span style=\"white-space: pre-wrap;\">\"recordType\" : \"incident\",</span><br><span style=\"white-space: pre-wrap;\">\"recordID\" : \"e51dccec878c\",</span><br><span style=\"white-space: pre-wrap;\">\"recordNumber\" : \"INC0013262\",</span><br><span style=\"white-space: pre-wrap;\">\"ciName\" : \"Adam_Covert_WKS\",</span><br><span style=\"white-space: pre-wrap;\">\"ciID\" : \"65498\",</span><br><span style=\"white-space: pre-wrap;\">\"user\" : {</span><br><span style=\"white-space: pre-wrap;\">    \"UserID\" : \"cindy.johnson\",</span><br><span style=\"white-space: pre-wrap;\">    \"Email\" : \"cjohnson@acme.net\",</span><br><span style=\"white-space: pre-wrap;\">    \"DisplayName\" : \"Cindy Johnson\",</span><br><span style=\"white-space: pre-wrap;\">    \"Name\" : \"cindy.johnson\"</span><br><span style=\"white-space: pre-wrap;\">  }</span><br><span style=\"white-space: pre-wrap;\">}</span></p>",
                     "debug": false
                 },
                 "wires": []
@@ -474,7 +474,7 @@
                     "x": 1098,
                     "y": 380,
                     "debug": false,
-                    "configurationId": "e1df24e4-b9f8-4af1-9115-67b5eb19b4b7",
+                    "configurationId": "663d7c90-2b9e-4500-82eb-f4d9361140b6",
                     "in": [
                         {
                             "inner": "subflow.Aternity_Connector",
@@ -578,8 +578,12 @@
                     "x": 1351,
                     "y": 360,
                     "debug": false,
-                    "configurationId": "03b3ae95-d98b-4e14-8991-7eeb2b641bf5",
+                    "configurationId": "63ff53ff-b315-4915-bb88-2c7abf9ec24f",
                     "in": [
+                        {
+                            "inner": "subflow.RiverbedIQAssist_Connector",
+                            "method": "connector"
+                        },
                         {
                             "inner": "subflow.Findings_HEALTH",
                             "outer": "runtime.Findings_HEALTH",
@@ -686,9 +690,9 @@
         ],
         "lastUpdatedUser": "Runbook Export",
         "createdByUser": "Runbook Export",
-        "eTag": "W/\"datetime'2025-07-25T15%3A44%3A22.431587Z'\"",
+        "eTag": "W/\"datetime'2025-10-09T11%3A54%3A56.3358658Z'\"",
         "variant": "incident",
-        "seriesId": "19087890-116c-42b1-a69e-ef9be0ba4b0f",
+        "seriesId": "e5f9677f-ea48-445f-81e0-38ceb5f84d1f",
         "version": "1.0",
         "otherVersions": null,
         "isScheduled": false,
@@ -697,7 +701,7 @@
     },
     "dependencies": [
         {
-            "id": "d78d311c-24ac-4b9e-bd34-891af18fdbe2",
+            "id": "f4c88032-d05f-4d27-ad96-a1f844c66ba5",
             "type": "subflow",
             "name": "ServiceNow: Post Comment",
             "globalId": "ServiceNow::Post_Comment",
@@ -707,7 +711,7 @@
             "sourcePackageId": "ServiceNow"
         },
         {
-            "id": "e1df24e4-b9f8-4af1-9115-67b5eb19b4b7",
+            "id": "663d7c90-2b9e-4500-82eb-f4d9361140b6",
             "type": "subflow",
             "name": "Skill: Diagnose User Endpoint",
             "globalId": "Aternity::Diagnose_User_Endpoint",
@@ -717,7 +721,7 @@
             "sourcePackageId": "Aternity"
         },
         {
-            "id": "03b3ae95-d98b-4e14-8991-7eeb2b641bf5",
+            "id": "63ff53ff-b315-4915-bb88-2c7abf9ec24f",
             "type": "subflow",
             "name": "Skill: Generate Insight",
             "globalId": "RiverbedIQAssist::Generate_Insight",
@@ -727,5 +731,5 @@
             "sourcePackageId": "RiverbedIQAssist"
         }
     ],
-    "token": "hQvFiWfmJRZgGsnHU7P+M+3qFSry4an5txrkEGGega0="
+    "token": "EM5sa9lR/GQmPxfwQaxtfNRNe7QmCxuOYdG2YqMLSE0="
 }
