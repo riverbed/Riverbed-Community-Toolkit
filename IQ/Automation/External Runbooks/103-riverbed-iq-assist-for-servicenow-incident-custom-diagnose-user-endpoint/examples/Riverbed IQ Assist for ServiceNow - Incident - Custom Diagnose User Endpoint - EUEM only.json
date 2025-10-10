@@ -1,0 +1,842 @@
+{
+    "runbook": {
+        "id": "a502cf0a-7b04-429e-a160-caeaf3ff9403",
+        "createdTime": "1760020345.824675500",
+        "lastUpdatedTime": "1760021507.443973400",
+        "factoryResourceName": null,
+        "isFactory": false,
+        "name": "Riverbed IQ Assist for ServiceNow - Incident - Custom Diagnose User Endpoint - EUEM only",
+        "description": "Triggered in the context of an Incident in ServiceNow, the runbook diagnoses the user endpoint and enriches the incident record with a Custom Insight.\nUpdate: 2025-10",
+        "isReady": true,
+        "triggerType": "webhook",
+        "runtimeVariables": {
+            "primitiveVariables": [
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Sys_Id",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Number",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Error_Message",
+                    "isReadonly": false
+                },
+                {
+                    "type": "boolean",
+                    "defaultValue": null,
+                    "name": "runtime.Successful",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.ServiceNow_Incident_Sys_Id",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.ServiceNow_User_Data",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.ServiceNow_Configuration_Item",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.ServiceNow_Incident_Number",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.ServiceNow_Configuration_Item_Sys_Id",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": "",
+                    "name": "runtime.ServiceNow_API_Base_URL",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.ServiceNow_Configuration_Item_URL",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.ServiceNow_Incident_URL",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Aternity_EUEM_DEVICE_NAME",
+                    "isReadonly": false
+                },
+                {
+                    "type": "integer",
+                    "defaultValue": null,
+                    "name": "runtime.total_duration",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Findings_CPU_MEM",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Findings_IO",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Findings_HEALTH",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.SVG_CPU_MEM",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.SVG_WIFI_Signal_Strength",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Findings_WIFI",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.SVG_WIFI_Transmission_Speed",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.SVG_NPM_Traffic",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.SVG_NPM_RTCC",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Findings_NPM",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.SVG_IO_RATE_RW",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.SVG_IO_DISK_QUEUE_LENGTH",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Insight",
+                    "isReadonly": false
+                },
+                {
+                    "type": "boolean",
+                    "defaultValue": "true",
+                    "name": "runtime.ENABLE_FEATURE_Post_to_ServiceNow",
+                    "isReadonly": false
+                },
+                {
+                    "type": "boolean",
+                    "defaultValue": "true",
+                    "name": "runtime.ENABLE_FEATURE_Display_Logs",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Custom_Insight_HTML",
+                    "isReadonly": false
+                }
+            ],
+            "structuredVariables": []
+        },
+        "subflowVariables": null,
+        "nodes": [
+            {
+                "id": "b544bfdc-7b12-4cdf-b456-51ee29133618",
+                "isIntegrationSubflowNode": false,
+                "type": "trigger",
+                "label": "Riverbed IQ Assist invoked in ServiceNow Incident",
+                "description": "",
+                "properties": {
+                    "x": 630.0039918937011,
+                    "y": 391.46576340223044,
+                    "triggerType": "webhook",
+                    "timeReference": "RUNBOOK_EXECUTION",
+                    "timeOffset": 900,
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "c2bd4f07-a8e3-41d2-97ea-ee6ed4cfc869"
+                    ]
+                ]
+            },
+            {
+                "id": "cc4f6e6c-aab9-4bf9-87f2-bdab05101b36",
+                "isIntegrationSubflowNode": false,
+                "type": "comment",
+                "label": "Comment Setup Notes",
+                "description": "",
+                "properties": {
+                    "x": 464,
+                    "y": 490,
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Setup Notes</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Prerequisites</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">* Riverbed IQ Assist app must be installed and configured in ServiceNow.</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">* ServiceNow integration must be installed and configured with a connector in Riverbed IQ.</span></p><p class=\"editor-paragraph\"><br></p><p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Setup</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">This runbook can be installed in Riverbed IQ as follows:</span></p><ol class=\"editor-list-ol\"><li dir=\"ltr\" class=\"editor-listitem\" value=\"1\"><span style=\"white-space: pre-wrap;\">Import this runbook file from the </span><i><em style=\"white-space: pre-wrap;\" class=\"editor-text-italic\">External Runbooks</em></i><span style=\"white-space: pre-wrap;\"> page. Make sure to select connectors in the import dialog.</span></li><li dir=\"ltr\" class=\"editor-listitem\" value=\"2\"><span style=\"white-space: pre-wrap;\">Enable </span><i><em style=\"white-space: pre-wrap;\" class=\"editor-text-italic\">Allow Automation</em></i><span style=\"white-space: pre-wrap;\"> on the imported runbook in the </span><i><em style=\"white-space: pre-wrap;\" class=\"editor-text-italic\">External Runbooks</em></i><span style=\"white-space: pre-wrap;\"> page.&nbsp;</span></li><li dir=\"ltr\" class=\"editor-listitem\" value=\"3\"><span style=\"white-space: pre-wrap;\">Create automation rule to link a webhook call to this runbook.</span></li><li dir=\"ltr\" class=\"editor-listitem\" value=\"4\"><span style=\"white-space: pre-wrap;\">Make sure ServiceNow app is configured with the appropriate webhook URL.</span></li></ol>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "c2bd4f07-a8e3-41d2-97ea-ee6ed4cfc869",
+                "isIntegrationSubflowNode": false,
+                "type": "set_primitive_variables",
+                "label": "Extract Incident Basic Info",
+                "description": "",
+                "properties": {
+                    "x": 848.8185145156033,
+                    "y": 397.71056093170466,
+                    "variables": [
+                        {
+                            "name": "runtime.ServiceNow_Incident_Sys_Id"
+                        },
+                        {
+                            "name": "runtime.ServiceNow_User_Data"
+                        },
+                        {
+                            "name": "runtime.ServiceNow_Configuration_Item"
+                        },
+                        {
+                            "name": "runtime.ServiceNow_Incident_Number"
+                        },
+                        {
+                            "name": "runtime.ServiceNow_Configuration_Item_Sys_Id"
+                        },
+                        {
+                            "name": "runtime.ServiceNow_API_Base_URL"
+                        },
+                        {
+                            "name": "runtime.Aternity_EUEM_DEVICE_NAME"
+                        }
+                    ],
+                    "transformTemplate": "{\n    \"runtime.ServiceNow_API_Base_URL\" : \"https://{{variables[\"runtime.ServiceNow_ENV\"]}}.service-now.com\",\n    \"runtime.ServiceNow_Incident_Sys_Id\": \"{{trigger[\"requestBody\"][\"recordID\"]}}\",\n    \"runtime.ServiceNow_User_Data\": \"{{trigger[\"requestBody\"][\"user\"]}}\",\n    \"runtime.ServiceNow_Configuration_Item\": \"{{trigger[\"requestBody\"][\"ciName\"]}}\",\n    \"runtime.ServiceNow_Configuration_Item_Sys_Id\": \"{{trigger[\"requestBody\"][\"ciID\"]}}\",\n    \"runtime.ServiceNow_Incident_Number\": \"{{trigger[\"requestBody\"][\"recordNumber\"]}}\",\n    \"runtime.Aternity_EUEM_DEVICE_NAME\": \"{{trigger[\"requestBody\"][\"ciName\"]}}\"\n}\n",
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "5ebbc927-990c-472e-aee6-f453ca1976ab"
+                    ]
+                ]
+            },
+            {
+                "id": "bd7e6d9e-2eeb-4b3c-98f2-7c9de0e86347",
+                "isIntegrationSubflowNode": false,
+                "type": "comment",
+                "label": "Comment Setup Notes 1",
+                "description": "",
+                "properties": {
+                    "x": 458,
+                    "y": 110,
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Riverbed IQ Assist for ServiceNow</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Runbook for Incident in ServiceNow: </span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Custom Diagnose User endpoint</span></p><p class=\"editor-paragraph\"><br></p><p dir=\"ltr\" class=\"editor-paragraph\"><i><em style=\"white-space: pre-wrap;\" class=\"editor-text-italic\">version: 2025-10</em></i><span style=\"white-space: pre-wrap;\">-09-6 </span><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">EUEM only GB</strong></b></p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "379496c0-7f3d-4334-a5a0-9bf7bf3e76b7",
+                "isIntegrationSubflowNode": false,
+                "type": "insight",
+                "label": "Display Info",
+                "description": "",
+                "properties": {
+                    "x": 1665.1327073769705,
+                    "y": 253.7796785799278,
+                    "template": "<p>Device: <strong>{{variables[\"runtime.Aternity_EUEM_DEVICE_NAME\"]}}</strong></p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "974872fe-8d2f-4ad3-9bfb-9a93449038be",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow",
+                "label": "ServiceNow: Post Comment",
+                "description": "Add a comment or work notes to a ServiceNow incident or problem.\nIf it fails to be added, an error message will be returned.",
+                "properties": {
+                    "x": 2676,
+                    "y": 340,
+                    "debug": false,
+                    "configurationId": "f4c88032-d05f-4d27-ad96-a1f844c66ba5",
+                    "in": [
+                        {
+                            "inner": "subflow.Connector",
+                            "outer": "00000000-0000-0000-0000-000000000000",
+                            "method": "connector",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Record_Type",
+                            "outer": "incident",
+                            "method": "static",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Sys_Id",
+                            "outer": "runtime.ServiceNow_Incident_Sys_Id",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Content",
+                            "outer": "runtime.Insight",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Visibility",
+                            "outer": "work_notes",
+                            "method": "static",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Format",
+                            "outer": "html",
+                            "method": "static"
+                        }
+                    ],
+                    "out": [
+                        {
+                            "inner": "subflow.Successful",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Error_Message",
+                            "outer": ""
+                        }
+                    ],
+                    "runAsSingleActivity": true
+                },
+                "wires": []
+            },
+            {
+                "id": "6ecd0de5-36a0-4ba3-998b-56de8b29b793",
+                "isIntegrationSubflowNode": false,
+                "type": "decision",
+                "label": "Post to ServiceNow?",
+                "description": "",
+                "properties": {
+                    "x": 2432,
+                    "y": 340,
+                    "dataType": "SUMMARY",
+                    "outputs": [
+                        {
+                            "id": "o06306",
+                            "passedData": "MATCHED",
+                            "expression": {
+                                "id": "o1838",
+                                "type": "block",
+                                "operation": "AND",
+                                "conditions": [
+                                    {
+                                        "type": "condition",
+                                        "id": "c-1747220979167",
+                                        "category": "variable",
+                                        "key": "$VARIABLE.runtime.ENABLE_FEATURE_Post_to_ServiceNow",
+                                        "op": "EQ",
+                                        "value": "true"
+                                    }
+                                ]
+                            },
+                            "label": "Yes"
+                        }
+                    ],
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "974872fe-8d2f-4ad3-9bfb-9a93449038be"
+                    ]
+                ]
+            },
+            {
+                "id": "743c3d54-7f2b-4059-8fe0-93fa629d0831",
+                "isIntegrationSubflowNode": false,
+                "type": "decision",
+                "label": "Show in runbook output?",
+                "description": "",
+                "properties": {
+                    "x": 2433.4822282919026,
+                    "y": 446.58845533899023,
+                    "dataType": "SUMMARY",
+                    "outputs": [
+                        {
+                            "id": "o06306",
+                            "passedData": "MATCHED",
+                            "expression": {
+                                "id": "o9906",
+                                "type": "block",
+                                "operation": "AND",
+                                "conditions": [
+                                    {
+                                        "type": "condition",
+                                        "id": "c-1747220979167",
+                                        "category": "variable",
+                                        "key": "$VARIABLE.runtime.ENABLE_FEATURE_Display_Logs",
+                                        "op": "EQ",
+                                        "value": "true"
+                                    }
+                                ]
+                            },
+                            "label": "Yes"
+                        }
+                    ],
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "ceb1eba4-3194-493a-8655-27fa0be982d1"
+                    ]
+                ]
+            },
+            {
+                "id": "ceb1eba4-3194-493a-8655-27fa0be982d1",
+                "isIntegrationSubflowNode": false,
+                "type": "rvbd_ui_text",
+                "label": "Show Insight",
+                "description": "",
+                "properties": {
+                    "x": 2674.4822282919026,
+                    "y": 466.58845533899023,
+                    "title": "Show Insight",
+                    "row": "10",
+                    "notes": "<p class=\"editor-paragraph\" dir=\"ltr\"><span style=\"white-space: pre-wrap;\">{{variables[\"runtime.Insight\"]}}</span></p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "e75a3240-02b7-4119-b4bb-6982b0fcbf04",
+                "isIntegrationSubflowNode": false,
+                "type": "comment",
+                "label": "Comment 1",
+                "description": "",
+                "properties": {
+                    "x": 745.0039918937011,
+                    "y": 490,
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Payload example</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">{</span><br><span style=\"white-space: pre-wrap;\">\"ciName\" : \"Adam_Covert_WKS\"</span><br><span style=\"white-space: pre-wrap;\">}</span></p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "5ebbc927-990c-472e-aee6-f453ca1976ab",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow",
+                "label": "Skill: Diagnose User Endpoint",
+                "description": "Diagnose user endpoint based on health events and metrics such as CPU/memory, I/O and Wi-Fi (signal strength and transmission speed).",
+                "properties": {
+                    "x": 1098,
+                    "y": 380,
+                    "debug": false,
+                    "configurationId": "663d7c90-2b9e-4500-82eb-f4d9361140b6",
+                    "in": [
+                        {
+                            "inner": "subflow.Aternity_Connector",
+                            "outer": "00000000-0000-0000-0000-000000000000",
+                            "method": "connector",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Device_Name",
+                            "outer": "runtime.Aternity_EUEM_DEVICE_NAME",
+                            "method": "runtime",
+                            "isUnset": false
+                        }
+                    ],
+                    "out": [
+                        {
+                            "inner": "subflow.Successful",
+                            "outer": "runtime.Successful",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Error_Message",
+                            "outer": "runtime.Error_Message",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Findings_HEALTH",
+                            "outer": "runtime.Findings_HEALTH",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Findings_WIFI",
+                            "outer": "runtime.Findings_WIFI",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Findings_CPU_MEM",
+                            "outer": "runtime.Findings_CPU_MEM",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Findings_NPM",
+                            "outer": "runtime.Findings_NPM",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Findings_IO",
+                            "outer": "runtime.Findings_IO",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.SVG_CPU_MEM",
+                            "outer": "runtime.SVG_CPU_MEM",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.SVG_WIFI_Signal_Strength",
+                            "outer": "runtime.SVG_WIFI_Signal_Strength",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.SVG_WIFI_Transmission_Speed",
+                            "outer": "runtime.SVG_WIFI_Transmission_Speed",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.SVG_NPM_Traffic",
+                            "outer": "runtime.SVG_NPM_Traffic",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.SVG_NPM_RTCC",
+                            "outer": "runtime.SVG_NPM_RTCC",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.SVG_IO_RATE_RW",
+                            "outer": "runtime.SVG_IO_RATE_RW",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.SVG_IO_DISK_QUEUE_LENGTH",
+                            "outer": "runtime.SVG_IO_DISK_QUEUE_LENGTH",
+                            "method": "runtime"
+                        }
+                    ]
+                },
+                "wires": [
+                    [
+                        "9b59957f-56ba-42ae-8c4e-f6a28c5bb739"
+                    ]
+                ]
+            },
+            {
+                "id": "9b59957f-56ba-42ae-8c4e-f6a28c5bb739",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow",
+                "label": "Skill: Generate Insight",
+                "description": "Generate an HTML formatted insight with charts, that is ready to be displayed in ServiceNow or anywhere else.",
+                "properties": {
+                    "x": 1351,
+                    "y": 360,
+                    "debug": false,
+                    "configurationId": "63ff53ff-b315-4915-bb88-2c7abf9ec24f",
+                    "in": [
+                        {
+                            "inner": "subflow.RiverbedIQAssist_Connector",
+                            "method": "connector"
+                        },
+                        {
+                            "inner": "subflow.Findings_HEALTH",
+                            "outer": "runtime.Findings_HEALTH",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Findings_IO",
+                            "outer": "runtime.Findings_IO",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Findings_WIFI",
+                            "outer": "runtime.Findings_WIFI",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Findings_CPU_MEM",
+                            "outer": "runtime.Findings_CPU_MEM",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Findings_NPM",
+                            "outer": "",
+                            "isUnset": true
+                        },
+                        {
+                            "inner": "subflow.SVG_WIFI_Signal_Strength",
+                            "outer": "",
+                            "isUnset": true
+                        },
+                        {
+                            "inner": "subflow.SVG_CPU_MEM",
+                            "outer": "",
+                            "isUnset": true
+                        },
+                        {
+                            "inner": "subflow.SVG_WIFI_Transmission_Speed",
+                            "outer": "",
+                            "isUnset": true
+                        },
+                        {
+                            "inner": "subflow.SVG_NPM_Traffic",
+                            "outer": "",
+                            "isUnset": true
+                        },
+                        {
+                            "inner": "subflow.SVG_NPM_RTCC",
+                            "outer": "",
+                            "isUnset": true
+                        },
+                        {
+                            "inner": "subflow.SVG_IO_RATE_RW",
+                            "outer": "",
+                            "isUnset": true
+                        },
+                        {
+                            "inner": "subflow.SVG_IO_DISK_QUEUE_LENGTH",
+                            "outer": "",
+                            "isUnset": true
+                        },
+                        {
+                            "inner": "subflow.Format",
+                            "outer": ""
+                        }
+                    ],
+                    "out": [
+                        {
+                            "inner": "subflow.Successful",
+                            "outer": "runtime.Successful",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Error_Message",
+                            "outer": "runtime.Error_Message",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Insight",
+                            "outer": "runtime.Insight",
+                            "method": "runtime"
+                        }
+                    ]
+                },
+                "wires": [
+                    [
+                        "379496c0-7f3d-4334-a5a0-9bf7bf3e76b7",
+                        "2d8d5394-c583-4af0-8915-89ee8dde96f9"
+                    ]
+                ]
+            },
+            {
+                "id": "645b627a-fdd7-4001-a0c7-5b7463184936",
+                "isIntegrationSubflowNode": false,
+                "type": "comment",
+                "label": "Comment",
+                "description": "",
+                "properties": {
+                    "x": 1308,
+                    "y": 580,
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">How to customize? </strong></b><span style=\"white-space: pre-wrap;\">(for advanced users)</span></p><p class=\"editor-paragraph\"><br></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">1. Edit the node \"</span><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Customize HTML Insight</strong></b><span style=\"white-space: pre-wrap;\">\" and extend at will.</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">For example, you can adapt the GenAI prompt to change the HTML format of the output.</span></p><p class=\"editor-paragraph\"><br></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">2. Edit the \"</span><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Compose Insight</strong></b><span style=\"white-space: pre-wrap;\">\" node.</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">In the template section, you can change the layout, customize the header/footer, etc..</span></p><p class=\"editor-paragraph\"><br></p><p dir=\"ltr\" class=\"editor-paragraph\"><i><em style=\"white-space: pre-wrap;\" class=\"editor-text-italic\">Note: It is recommended to enable debug mode during the development / testing phase of the runbook, and disabling debug mode when it is stable.</em></i></p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "05e88900-ef4b-4be6-87a9-1153ba6d66ef",
+                "isIntegrationSubflowNode": false,
+                "type": "set_primitive_variables",
+                "label": "Compose Insight",
+                "description": "",
+                "properties": {
+                    "x": 2148,
+                    "y": 740,
+                    "variables": [
+                        {
+                            "name": "runtime.Insight"
+                        }
+                    ],
+                    "transformTemplate": "{% comment %}\nVersion: 2025-10-09-4\n{% endcomment %}\n\n{% comment %}\n1. Custom Source\n{% endcomment %}\n{% assign custom_source_HTML = '<br><p><b>Sources:</b> Riverbed Aternity EUEM only</p>' %}\n\n{% comment %}\n2. Custom User Endpoint Name\n{% endcomment %}\n{% assign custom_user_endpoint_html = '<br><p>User Endpoint:' | append: variables[\"runtime.Aternity_EUEM_DEVICE_NAME\"] | append: '</p>' %}\n\n{% comment %}\n3. Custom footer with AI disclaimer\n{% endcomment %}\n{% assign custom_footer_HTML = '<p><small>AI-generated content</small></p>' %}\n\n{% comment %}\n4. Extract the widget (rings)\n{% endcomment %}\n{% assign insight_html = variables[\"runtime.Insight\"] %}\n{% assign widget_start = insight_html | split: '<img' | last %}\n{% assign widget_HTML = '<img' | append: widget_start | split: '>' | first | append: '>' %}\n\n{% comment %}\n5. Compose\n* Widget\n* User Endpoint\n* Custom insight\n* Custom Source\n* Custom footer\n{% endcomment %}\n\n{\n    \"runtime.Insight\": \"{{ widget_HTML }}{{ custom_user_endpoint_html }}{{ variables[\"runtime.Custom_Insight_HTML\"] }}{{ custom_source_HTML }}{{ custom_footer_HTML }}\"\n}",
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "6ecd0de5-36a0-4ba3-998b-56de8b29b793",
+                        "743c3d54-7f2b-4059-8fe0-93fa629d0831"
+                    ]
+                ]
+            },
+            {
+                "id": "2d8d5394-c583-4af0-8915-89ee8dde96f9",
+                "isIntegrationSubflowNode": false,
+                "type": "genai",
+                "label": "Customize HTML Insight: add symptoms, format, ... (GenAI)",
+                "description": "",
+                "properties": {
+                    "x": 1662,
+                    "y": 720,
+                    "instructions": "1* Extract the Findings\n2* Add Symptoms\n3* Suggest Recommendations\n4* Only use English language\n5* Display in HTML. Your response should strictly adhere to the structure below, with no additional commentary or explanation outside the HTML format, as shown in this example :\n\"\"\"\n<b>Findings</b>\n<ol>\n<li>[Finding 1]</li>\n<li>[Finding 2]</li>\n<li>[Finding 3]</li>\n</ol>\n<b>Symptoms</b>\n<ol>\n<li>[Symptom 1]</li>\n<li>[Symptom 2]</li>\n<li>[Symptom 3]</li>\n</ol>\n<b>Recommendation</b>\n<ol>\n<li>[Recommendation1]</li>\n<li>[Recommendation2]</li>\n<li>[Recommendation3]</li>\n</ol>\n\"\"\"\n",
+                    "instructionsLocation": "enter",
+                    "queryLocation": "runtime.Insight",
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "eea4f41c-3bcd-4592-bcaa-c8912622daab"
+                    ]
+                ]
+            },
+            {
+                "id": "eea4f41c-3bcd-4592-bcaa-c8912622daab",
+                "isIntegrationSubflowNode": false,
+                "type": "set_primitive_variables",
+                "label": "Extract HTML",
+                "description": "",
+                "properties": {
+                    "x": 1902,
+                    "y": 460,
+                    "variables": [
+                        {
+                            "name": "runtime.Custom_Insight_HTML"
+                        }
+                    ],
+                    "transformTemplate": "{%- assign genai_response_html = node_input.output.data[0].keys['gen_ai.response'] | replace: '```html', \"\" | replace: '```', \"\" | replace: '\"\"\"', \"\" | replace: '\\n', \"\" | replace: '\\\"', \"&quot;\" -%}\n\n{\n    \"runtime.Custom_Insight_HTML\": \"{{ genai_response_html }}\"\n}",
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "05e88900-ef4b-4be6-87a9-1153ba6d66ef"
+                    ]
+                ]
+            },
+            {
+                "id": "07490242-8bca-4506-abaf-952b96d293e3",
+                "isIntegrationSubflowNode": false,
+                "type": "comment",
+                "label": "Comment 2",
+                "description": "",
+                "properties": {
+                    "x": 2128.0039918937014,
+                    "y": 810,
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Customization</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Set the Source to EUEM only</span></p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "9e39a008-9144-438e-8a88-6e32d891d606",
+                "isIntegrationSubflowNode": false,
+                "type": "comment",
+                "label": "Comment 3",
+                "description": "",
+                "properties": {
+                    "x": 1307.0039918937011,
+                    "y": 150,
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Customization</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Removed NPM+ data from the input of \"Generate Insight\"</span></p>",
+                    "debug": false
+                },
+                "wires": []
+            }
+        ],
+        "lastUpdatedUser": "Runbook Export",
+        "createdByUser": "Runbook Export",
+        "eTag": "W/\"datetime'2025-10-09T14%3A51%3A47.4552708Z'\"",
+        "variant": "incident",
+        "seriesId": "a502cf0a-7b04-429e-a160-caeaf3ff9403",
+        "version": "1.0",
+        "otherVersions": null,
+        "isScheduled": false,
+        "isValidated": true,
+        "isProprietary": false
+    },
+    "dependencies": [
+        {
+            "id": "f4c88032-d05f-4d27-ad96-a1f844c66ba5",
+            "type": "subflow",
+            "name": "ServiceNow: Post Comment",
+            "globalId": "ServiceNow::Post_Comment",
+            "originalVersion": "1.0.4",
+            "nodeLabel": "ServiceNow: Post Comment",
+            "sourceLocation": "integrationLibrary",
+            "sourcePackageId": "ServiceNow"
+        },
+        {
+            "id": "663d7c90-2b9e-4500-82eb-f4d9361140b6",
+            "type": "subflow",
+            "name": "Skill: Diagnose User Endpoint",
+            "globalId": "Aternity::Diagnose_User_Endpoint",
+            "originalVersion": "1.0.1",
+            "nodeLabel": "Skill: Diagnose User Endpoint",
+            "sourceLocation": "integrationLibrary",
+            "sourcePackageId": "Aternity"
+        },
+        {
+            "id": "63ff53ff-b315-4915-bb88-2c7abf9ec24f",
+            "type": "subflow",
+            "name": "Skill: Generate Insight",
+            "globalId": "RiverbedIQAssist::Generate_Insight",
+            "originalVersion": "1.0.2",
+            "nodeLabel": "Skill: Generate Insight",
+            "sourceLocation": "integrationLibrary",
+            "sourcePackageId": "RiverbedIQAssist"
+        }
+    ],
+    "token": "qISLsZDqk0ARHiBKGOO4sMZG8RN+f24iVO0KZ9tfZFY="
+}
