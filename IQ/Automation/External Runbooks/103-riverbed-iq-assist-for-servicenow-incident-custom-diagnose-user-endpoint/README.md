@@ -24,7 +24,7 @@ When triggered from ServiceNow, the runbook diagnoses the end-user endpoint and 
 
 4. Toggle "Allow Automation" on.
 
-5. Edit the runbook and check the instruction notes for customization
+5. For customization, edit the runbook and see the notes
 
 
 ### License
