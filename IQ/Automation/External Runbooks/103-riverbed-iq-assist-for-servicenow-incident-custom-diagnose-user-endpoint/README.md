@@ -5,9 +5,13 @@ When triggered from ServiceNow, the runbook diagnoses the end-user endpoint and 
 
 ## Prerequisites
 
-1. Riverbed IQ Assist for ServiceNow is installed in your ServiceNow instance ([open ServiceNow Store](https://store.servicenow.com/sn_appstore_store.do#!/store/search?q=Riverbed)).
+Ensure the following are in place before proceeding:
 
-2. Riverbed IQ Assist opt-in feature is enabled (IQ > Administration > Riverbed IQ Assist configuration) and the integration is installed (IQ > Integration Library).
+1. **Riverbed IQ Assist for ServiceNow** is installed in your ServiceNow instance ([open ServiceNow Store](https://store.servicenow.com/sn_appstore_store.do#!/store/search?q=Riverbed))
+
+2. **Riverbed IQ Assist** is enabled:
+   - Navigate to **IQ > Administration > Riverbed IQ Assist Configuration**
+   - Ensure the integration is installed via **IQ > Integration Library**
 
 3. Aternity integration on Riverbed IQ is installed.
 
@@ -16,13 +20,15 @@ When triggered from ServiceNow, the runbook diagnoses the end-user endpoint and 
 
 ## Quick Setup
 
+Follow these steps to set up the runbook:
+
 1. Download the file of the [runbook](./Riverbed%20IQ%20Assist%20for%20ServiceNow%20-%20Incident%20-%20Custom%20Diagnose%20User%20Endpoint.json)
 
-2. in IQ, go to Automation > External Runbooks
+2. in **IQ**, go to **Automation > External Runbooks**
 
 3. Import the runbook
 
-4. Toggle "Allow Automation" on.
+4. Toggle **Allow Automation** to 'On'
 
 5. For customization, edit the runbook and see the notes in the Runbook
 
