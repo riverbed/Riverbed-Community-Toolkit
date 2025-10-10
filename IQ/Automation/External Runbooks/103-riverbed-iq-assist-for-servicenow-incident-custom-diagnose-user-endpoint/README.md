@@ -27,6 +27,10 @@ When triggered from ServiceNow, the runbook diagnoses the end-user endpoint and 
 5. For customization, edit the runbook and see the notes in the Runbook
 
 
+> [!Tip]
+> This is an example customized to analyze Riverbed Aternity EUEM data only: [example EUEM only](./examples/Riverbed%20IQ%20Assist%20for%20ServiceNow%20-%20Incident%20-%20Custom%20Diagnose%20User%20Endpoint%20-%20EUEM%20only.json) 
+
+
 ### License
 
 Copyright (c) 2025 Riverbed Technology, Inc.
