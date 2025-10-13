@@ -1,0 +1,559 @@
+{
+    "runbook": {
+        "id": "50fd9889-2721-4b27-9b9b-0cfa20be1b69",
+        "createdTime": "1760083595.725231700",
+        "lastUpdatedTime": "1760097591.864118300",
+        "factoryResourceName": null,
+        "isFactory": false,
+        "name": "Riverbed IQ Assist for ServiceNow - Incident - Bring Your Own GenAI and Diagnose User Endpoint - Mistral AI",
+        "description": "This quick start runbook can be used as-is for Incidents assistance with Riverbed IQ Assist for ServiceNow. When triggered from ServiceNow, the runbook diagnoses the end-user endpoint using your own GenAI (leveraging integration with your own Mistral AI) and updates the incident ticket.",
+        "isReady": true,
+        "triggerType": "webhook",
+        "runtimeVariables": {
+            "primitiveVariables": [
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.ServiceNow_Incident_Sys_Id",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.ServiceNow_Configuration_Item",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.ServiceNow_Configuration_Item_Sys_Id",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.ServiceNow_Incident_Number",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Insight",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.User_Endpoint_Name",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Response_Content",
+                    "isReadonly": false
+                },
+                {
+                    "type": "boolean",
+                    "defaultValue": null,
+                    "name": "runtime.Successful",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Error_Message",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Health_Events",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.GenAI_Message",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.GenAI_Response",
+                    "isReadonly": false
+                },
+                {
+                    "type": "boolean",
+                    "defaultValue": "true",
+                    "name": "runtime.ENABLE_FEATURE_Post_to_ServiceNow",
+                    "isReadonly": false
+                }
+            ],
+            "structuredVariables": []
+        },
+        "subflowVariables": null,
+        "nodes": [
+            {
+                "id": "29e7a348-fd2b-4f4c-bf03-f7f0588de5a9",
+                "isIntegrationSubflowNode": false,
+                "type": "trigger",
+                "label": "Riverbed IQ Assist in ServiceNow Incident",
+                "description": "",
+                "properties": {
+                    "x": 333,
+                    "y": 270,
+                    "triggerType": "webhook",
+                    "timeReference": "RUNBOOK_EXECUTION",
+                    "timeOffset": 900,
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "01f55b00-e293-4d18-bc7e-777d3c436e5c"
+                    ]
+                ]
+            },
+            {
+                "id": "80cf5847-c1b8-425a-be8b-14cb584c5cdc",
+                "isIntegrationSubflowNode": false,
+                "type": "comment",
+                "label": "Comment",
+                "description": "",
+                "properties": {
+                    "x": 57,
+                    "y": 370,
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Requirements</strong></b></p><p class=\"editor-paragraph\"><br></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">In the Integration Library</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">* ServiceNow must be configured</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">* Mistral AI must be configured</span></p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "9b7f9c8b-9635-4087-bd0d-612e5c0c69a9",
+                "isIntegrationSubflowNode": false,
+                "type": "comment",
+                "label": "Comment 2",
+                "description": "",
+                "properties": {
+                    "x": 334,
+                    "y": 389.99999999999994,
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Example payload template</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">{</span><br><span style=\"white-space: pre-wrap;\">&nbsp;&nbsp; \"ciName\" : \"Adam_Covert_WKS\"</span><br><span style=\"white-space: pre-wrap;\">}</span></p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "01f55b00-e293-4d18-bc7e-777d3c436e5c",
+                "isIntegrationSubflowNode": false,
+                "type": "set_primitive_variables",
+                "label": "Extract Basic info (Incident Sys Id, ...)",
+                "description": "",
+                "properties": {
+                    "x": 583,
+                    "y": 270,
+                    "variables": [
+                        {
+                            "name": "runtime.ServiceNow_Incident_Sys_Id"
+                        },
+                        {
+                            "name": "runtime.ServiceNow_Incident_Number"
+                        },
+                        {
+                            "name": "runtime.ServiceNow_Configuration_Item"
+                        },
+                        {
+                            "name": "runtime.ServiceNow_Configuration_Item_Sys_Id"
+                        }
+                    ],
+                    "transformTemplate": "{\n\"runtime.ServiceNow_Incident_Sys_Id\": \"{{trigger[\"requestBody\"][\"recordID\"]}}\",\n\"runtime.ServiceNow_Configuration_Item\": \"{{trigger[\"requestBody\"][\"ciName\"]}}\",\n\"runtime.ServiceNow_Configuration_Item_Sys_Id\": \"{{trigger[\"requestBody\"][\"ciID\"]}}\",\n\"runtime.ServiceNow_Incident_Number\": \"{{trigger[\"requestBody\"][\"recordNumber\"]}}\"\n}",
+                    "debug": true
+                },
+                "wires": [
+                    [
+                        "c8a8c53b-47de-4aba-b1c9-bc8a5d78f8ae"
+                    ]
+                ]
+            },
+            {
+                "id": "2aed39fe-8a7b-40e6-8a99-c852a21466a2",
+                "isIntegrationSubflowNode": false,
+                "type": "set_primitive_variables",
+                "label": "Format (GenAI Response)",
+                "description": "",
+                "properties": {
+                    "x": 1541,
+                    "y": 450,
+                    "variables": [
+                        {
+                            "name": "runtime.Insight"
+                        }
+                    ],
+                    "transformTemplate": "{%- assign html = node_input.output.data[0].keys['choices'][0]['message']['content'][1]['text'] | replace: '```html', \"\" | replace: '```', \"\" | replace: '\\n', \"\" | replace: '\\\"', \"&quot;\" -%}\n{\n\"runtime.Insight\": \"{{ html }}\"\n}",
+                    "debug": true
+                },
+                "wires": [
+                    [
+                        "5327c177-021a-46c9-a92c-225286ceca93",
+                        "b17379eb-e02f-4311-903e-9b6f6bcd640a"
+                    ]
+                ]
+            },
+            {
+                "id": "c8a8c53b-47de-4aba-b1c9-bc8a5d78f8ae",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow",
+                "label": "Aternity: Get Device Health Events",
+                "description": "",
+                "properties": {
+                    "x": 833,
+                    "y": 270,
+                    "debug": false,
+                    "configurationId": "5aa197bf-4da0-4d1c-9d81-d6ed0aec7213",
+                    "in": [
+                        {
+                            "inner": "subflow.Aternity_Connector",
+                            "outer": "00000000-0000-0000-0000-000000000000",
+                            "method": "connector",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Device_Name",
+                            "outer": "runtime.ServiceNow_Configuration_Item",
+                            "method": "runtime",
+                            "isUnset": false
+                        }
+                    ],
+                    "out": [
+                        {
+                            "inner": "subflow.Successful",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Error_Message",
+                            "outer": ""
+                        }
+                    ]
+                },
+                "wires": [
+                    [
+                        "8294606a-2cbc-4c5b-a792-3abfbec4363b"
+                    ]
+                ]
+            },
+            {
+                "id": "6f26f208-dee8-4b2d-ba2d-03dd55f557b7",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow",
+                "label": "ServiceNow: Post Work Notes",
+                "description": "",
+                "properties": {
+                    "x": 2103,
+                    "y": 200,
+                    "debug": false,
+                    "configurationId": "f4c88032-d05f-4d27-ad96-a1f844c66ba5",
+                    "in": [
+                        {
+                            "inner": "subflow.Connector",
+                            "outer": "00000000-0000-0000-0000-000000000000",
+                            "method": "connector"
+                        },
+                        {
+                            "inner": "subflow.Record_Type",
+                            "outer": "incident",
+                            "method": "static",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Sys_Id",
+                            "outer": "runtime.ServiceNow_Incident_Sys_Id",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Content",
+                            "outer": "runtime.Insight",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Visibility",
+                            "outer": "work_notes",
+                            "method": "static",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Format",
+                            "outer": "html",
+                            "method": "static"
+                        }
+                    ],
+                    "out": [
+                        {
+                            "inner": "subflow.Successful",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Error_Message",
+                            "outer": ""
+                        }
+                    ]
+                },
+                "wires": []
+            },
+            {
+                "id": "5327c177-021a-46c9-a92c-225286ceca93",
+                "isIntegrationSubflowNode": false,
+                "type": "rvbd_ui_text",
+                "label": "Display Insight",
+                "description": "",
+                "properties": {
+                    "x": 1833,
+                    "y": 320,
+                    "title": "Riverbed IQ Assist",
+                    "row": "1",
+                    "notes": "<p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\"><span class=\"editor-variable-inner\">{{variables[\"runtime.Insight\"]}}</span></span></p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "813874ce-a069-4a9e-8516-3c01936b1eae",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow",
+                "label": "Diagnose Health Events (BYO GenAI / Mistral AI)",
+                "description": "Accepts a list of chat messages as input and generates a response using the specified Mistral AI model.",
+                "properties": {
+                    "x": 1315,
+                    "y": 450,
+                    "debug": false,
+                    "configurationId": "3513bd61-a70b-4178-9996-35730674480e",
+                    "in": [
+                        {
+                            "inner": "subflow.MistralConnector",
+                            "outer": "00000000-0000-0000-0000-000000000000",
+                            "method": "connector"
+                        },
+                        {
+                            "inner": "subflow.model",
+                            "outer": "magistral-small-2509",
+                            "method": "static",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.temperature",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.top_p",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.max_tokens",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.stop",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.random_seed",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.message",
+                            "outer": "runtime.GenAI_Message",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.messages",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.response_format",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.tools",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.tool_choice",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.presence_penalty",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.frequency_penalty",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.n",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.prediction",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.parallel_tool_calls",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.prompt_mode",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.safe_prompt",
+                            "outer": ""
+                        }
+                    ],
+                    "out": [
+                        {
+                            "inner": "subflow.Successful",
+                            "outer": "runtime.Successful",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Response_Content",
+                            "outer": "runtime.Insight",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Error_Message",
+                            "outer": "runtime.Error_Message",
+                            "method": "runtime"
+                        }
+                    ]
+                },
+                "wires": [
+                    [
+                        "2aed39fe-8a7b-40e6-8a99-c852a21466a2"
+                    ]
+                ]
+            },
+            {
+                "id": "8294606a-2cbc-4c5b-a792-3abfbec4363b",
+                "isIntegrationSubflowNode": false,
+                "type": "set_primitive_variables",
+                "label": "Prepare Data (GenAI Message)",
+                "description": "",
+                "properties": {
+                    "x": 1080,
+                    "y": 450,
+                    "variables": [
+                        {
+                            "name": "runtime.GenAI_Message"
+                        }
+                    ],
+                    "transformTemplate": "{%- assign data = node_input.output.data -%}\n{%- assign message = \"\" -%}\n{%- capture message -%}\nYou use your knowledge to help troubleshooting IT issues.\n\n1. Diagnose any issue based on the following health events of a user IT device (laptop, workstation, etc.)\n\n2. Summarize the issues\n\n3. Display the result in HTML format. Your response should strictly adhere to the structure below, with no additional commentary or explanation outside the HTML format, as shown in this example :\n'''\n<strong>Prioritised Issues:</strong>\n<ol>\n<li>Problem A<p>As a result this is causing [explain impact]</p><p><b>Next steps:</b> [suggest how to solve]</p></li>\n<li>Problem B<p>As a result this is causing [explain impact]</p><p><b>Next steps:</b> [suggest how to solve]</p></li>\n<li>Problem C<p>As a result this is causing [explain impact]</p><p><b>Next steps:</b> [suggest how to solve]</p></li>\n</ol>\n<p><small>AI-generated content</small></p>\n'''\n\n{% for event in data %}\n---\nEvent: {{ event['keys']['health_event_name'] }}\nSeverity: {{ event['keys']['health_event_severity'] }}\nTimestamp: {{ event['keys']['health_event_last_timestamp'] }}\nCategory: {{ event['keys']['health_event_category'] }}\nComponent: {{ event['keys']['health_event_component'] }}\nComponent Type: {{ event['keys']['health_event_component_type'] }}\nDetails: {{ event['keys']['health_event_details'] }}\n{% endfor %}\n{% endcapture %}\n\n{\n    \"runtime.GenAI_Message\": \"{{ message }}\"\n}",
+                    "debug": true
+                },
+                "wires": [
+                    [
+                        "813874ce-a069-4a9e-8516-3c01936b1eae"
+                    ]
+                ]
+            },
+            {
+                "id": "b17379eb-e02f-4311-903e-9b6f6bcd640a",
+                "isIntegrationSubflowNode": false,
+                "type": "decision",
+                "label": "Post?",
+                "description": "",
+                "properties": {
+                    "x": 1832,
+                    "y": 215,
+                    "dataType": "SUMMARY",
+                    "outputs": [
+                        {
+                            "id": "o02013",
+                            "passedData": "MATCHED",
+                            "expression": {
+                                "id": "o5378",
+                                "type": "block",
+                                "operation": "AND",
+                                "conditions": [
+                                    {
+                                        "type": "condition",
+                                        "id": "c-1760087107640",
+                                        "category": "variable",
+                                        "key": "$VARIABLE.runtime.ENABLE_FEATURE_Post_to_ServiceNow",
+                                        "op": "EQ",
+                                        "value": "true"
+                                    }
+                                ]
+                            },
+                            "label": "Yes"
+                        }
+                    ],
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "6f26f208-dee8-4b2d-ba2d-03dd55f557b7"
+                    ]
+                ]
+            },
+            {
+                "id": "dcc9fc59-62ad-4aba-83be-a92e00665742",
+                "isIntegrationSubflowNode": false,
+                "type": "comment",
+                "label": "Comment 1",
+                "description": "",
+                "properties": {
+                    "x": 50,
+                    "y": 110,
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Riverbed IQ Assist for ServiceNow</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Runbook for Incident in ServiceNow: Diagnose User endpoint with your own GenAI / LLM - Mistral AI</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">version: 2025-10-10-5</span></p>",
+                    "debug": false
+                },
+                "wires": []
+            }
+        ],
+        "lastUpdatedUser": "Runbook Export",
+        "createdByUser": "Runbook Export",
+        "eTag": "W/\"datetime'2025-10-10T11%3A59%3A51.8800513Z'\"",
+        "variant": "incident",
+        "seriesId": "50fd9889-2721-4b27-9b9b-0cfa20be1b69",
+        "version": "1.0",
+        "otherVersions": null,
+        "isScheduled": false,
+        "isValidated": true,
+        "isProprietary": false
+    },
+    "dependencies": [
+        {
+            "id": "5aa197bf-4da0-4d1c-9d81-d6ed0aec7213",
+            "type": "subflow",
+            "name": "Aternity: Get Device Health Events",
+            "globalId": "Aternity::Get_Device_Health_Events",
+            "originalVersion": "3.0.0",
+            "nodeLabel": "Aternity: Get Device Health Events",
+            "sourceLocation": "integrationLibrary",
+            "sourcePackageId": "Aternity"
+        },
+        {
+            "id": "f4c88032-d05f-4d27-ad96-a1f844c66ba5",
+            "type": "subflow",
+            "name": "ServiceNow: Post Comment",
+            "globalId": "ServiceNow::Post_Comment",
+            "originalVersion": "1.0.4",
+            "nodeLabel": "ServiceNow: Post Work Notes",
+            "sourceLocation": "integrationLibrary",
+            "sourcePackageId": "ServiceNow"
+        },
+        {
+            "id": "3513bd61-a70b-4178-9996-35730674480e",
+            "type": "subflow",
+            "name": "Mistral AI: Chat Completion",
+            "globalId": "MistralAI::Chat_Completion",
+            "originalVersion": "1.0.0",
+            "nodeLabel": "Diagnose Health Events (BYO GenAI / Mistral AI)",
+            "sourceLocation": "integrationLibrary",
+            "sourcePackageId": "MistralAI"
+        }
+    ],
+    "token": "Yc8XEerB+YzqE1BSgYksasvmM2zKNJQLoEAS6wwqyW0="
+}
