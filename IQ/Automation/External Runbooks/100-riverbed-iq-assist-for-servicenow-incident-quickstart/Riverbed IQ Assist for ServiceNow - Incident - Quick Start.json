@@ -2,7 +2,7 @@
     "runbook": {
         "id": "db8e0fd0-8ea7-4433-98bd-d93ada11d815",
         "createdTime": "1760697733.241103000",
-        "lastUpdatedTime": "1760702981.157712800",
+        "lastUpdatedTime": "1760705475.488465600",
         "factoryResourceName": null,
         "isFactory": false,
         "name": "Riverbed IQ Assist for ServiceNow - Incident - Quick Start",
@@ -99,7 +99,7 @@
                 "properties": {
                     "x": 50,
                     "y": 430,
-                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Riverbed IQ Assist for ServiceNow</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Runbook for Incident in ServiceNow: Quick Start for diagnosing the user endpoint.</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">version: 2025-10-17-4</span></p>",
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Riverbed IQ Assist for ServiceNow</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Runbook for Incident in ServiceNow: Quick Start for diagnosing the user endpoint.</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">version: 2025-10-17-5</span></p>",
                     "debug": false
                 },
                 "wires": []
@@ -455,8 +455,8 @@
                 "label": "Data Found?",
                 "description": "",
                 "properties": {
-                    "x": 1171.655887627872,
-                    "y": 660,
+                    "x": 1178.655887627872,
+                    "y": 620,
                     "dataType": "SUMMARY",
                     "inputType": "aternity_device_health_events_hourly.traffic",
                     "outputs": [
@@ -508,7 +508,8 @@
                         "7a01b9f9-5ebf-4005-b5c8-36bbcbe8a330"
                     ],
                     [
-                        "df35e11b-4d27-4afa-8df2-c1411bf9a9a7"
+                        "df35e11b-4d27-4afa-8df2-c1411bf9a9a7",
+                        "71c69dcb-60ee-4fd1-8ec2-9bf6869efa66"
                     ]
                 ]
             },
@@ -519,8 +520,8 @@
                 "label": "ServiceNow: Post Not Data",
                 "description": "",
                 "properties": {
-                    "x": 1404.4006906480286,
-                    "y": 725,
+                    "x": 1405.4006906480286,
+                    "y": 825,
                     "debug": false,
                     "configurationId": "f4c88032-d05f-4d27-ad96-a1f844c66ba5",
                     "in": [
@@ -571,11 +572,27 @@
                     ]
                 },
                 "wires": []
+            },
+            {
+                "id": "71c69dcb-60ee-4fd1-8ec2-9bf6869efa66",
+                "isIntegrationSubflowNode": false,
+                "type": "rvbd_ui_text",
+                "label": "Display Error",
+                "description": "",
+                "properties": {
+                    "x": 1407,
+                    "y": 740,
+                    "title": "Error message",
+                    "row": "1",
+                    "notes": "<p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">No data found. Please check the CI contains the name of the User Endpoint</span></p>",
+                    "debug": false
+                },
+                "wires": []
             }
         ],
         "lastUpdatedUser": "Runbook Export",
         "createdByUser": "Runbook Export",
-        "eTag": "W/\"datetime'2025-10-17T12%3A09%3A41.1746545Z'\"",
+        "eTag": "W/\"datetime'2025-10-17T12%3A51%3A15.5039528Z'\"",
         "variant": "incident",
         "seriesId": "db8e0fd0-8ea7-4433-98bd-d93ada11d815",
         "version": "1.0",
@@ -626,5 +643,5 @@
             "sourcePackageId": "ServiceNow"
         }
     ],
-    "token": "hE8B/7K4+pZrybwtkVBhVi+5JrPxfCYC4ASoBLQt0wk="
+    "token": "M2LihPzclwsfs2gtjV0i+R+zgxROtcv3H2IBUzhe0/0="
 }
