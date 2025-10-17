@@ -2,7 +2,7 @@
     "runbook": {
         "id": "a502cf0a-7b04-429e-a160-caeaf3ff9403",
         "createdTime": "1760020345.824675500",
-        "lastUpdatedTime": "1760719469.250456800",
+        "lastUpdatedTime": "1760726375.796508700",
         "factoryResourceName": null,
         "isFactory": false,
         "name": "Riverbed IQ Assist for ServiceNow - Incident - Custom Diagnose User Endpoint - EUEM only",
@@ -281,7 +281,7 @@
                 "properties": {
                     "x": 458,
                     "y": 110,
-                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Riverbed IQ Assist for ServiceNow</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Runbook for Incident in ServiceNow: </span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Custom Diagnose User endpoint</span></p><p class=\"editor-paragraph\"><br></p><p dir=\"ltr\" class=\"editor-paragraph\"><i><em style=\"white-space: pre-wrap;\" class=\"editor-text-italic\">version: 2025-10</em></i><span style=\"white-space: pre-wrap;\">-17-5 EUEM only</span></p>",
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Riverbed IQ Assist for ServiceNow</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Runbook for Incident in ServiceNow: </span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Custom Diagnose User endpoint</span></p><p class=\"editor-paragraph\"><br></p><p dir=\"ltr\" class=\"editor-paragraph\"><i><em style=\"white-space: pre-wrap;\" class=\"editor-text-italic\">version: 2025-10</em></i><span style=\"white-space: pre-wrap;\">-17-6 EUEM only</span></p>",
                     "debug": false
                 },
                 "wires": []
@@ -934,7 +934,7 @@
                 "id": "7bcb2701-3f6c-487d-946e-799584b6137d",
                 "isIntegrationSubflowNode": false,
                 "type": "decision",
-                "label": "User Endpoint Found?",
+                "label": "Found?",
                 "description": "",
                 "properties": {
                     "x": 1505,
@@ -998,7 +998,7 @@
         ],
         "lastUpdatedUser": "Runbook Export",
         "createdByUser": "Runbook Export",
-        "eTag": "W/\"datetime'2025-10-17T16%3A44%3A29.2656814Z'\"",
+        "eTag": "W/\"datetime'2025-10-17T18%3A39%3A35.805963Z'\"",
         "variant": "incident",
         "seriesId": "a502cf0a-7b04-429e-a160-caeaf3ff9403",
         "version": "1.0",
@@ -1059,5 +1059,5 @@
             "sourcePackageId": "Aternity"
         }
     ],
-    "token": "LR1CKrLmTg9X/I+58zfkbJKNwcv3iyioGyKiYoO3gdg="
+    "token": "T59mpTrlVRBXCB/EpQMYuGz2nYyTd9AktZNj5cimT64="
 }
