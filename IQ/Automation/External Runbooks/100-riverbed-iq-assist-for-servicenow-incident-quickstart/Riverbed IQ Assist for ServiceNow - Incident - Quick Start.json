@@ -2,7 +2,7 @@
     "runbook": {
         "id": "db8e0fd0-8ea7-4433-98bd-d93ada11d815",
         "createdTime": "1760697733.241103000",
-        "lastUpdatedTime": "1760698992.878933100",
+        "lastUpdatedTime": "1760702981.157712800",
         "factoryResourceName": null,
         "isFactory": false,
         "name": "Riverbed IQ Assist for ServiceNow - Incident - Quick Start",
@@ -99,7 +99,7 @@
                 "properties": {
                     "x": 50,
                     "y": 430,
-                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Riverbed IQ Assist for ServiceNow</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Runbook for Incident in ServiceNow: Quick Start for diagnosing the user endpoint.</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">version: 2025-10-17</span></p>",
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Riverbed IQ Assist for ServiceNow</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Runbook for Incident in ServiceNow: Quick Start for diagnosing the user endpoint.</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">version: 2025-10-17-4</span></p>",
                     "debug": false
                 },
                 "wires": []
@@ -149,7 +149,8 @@
                 },
                 "wires": [
                     [
-                        "7e2f5b07-6600-41ae-9c5b-b31b2d37d5bc"
+                        "7e2f5b07-6600-41ae-9c5b-b31b2d37d5bc",
+                        "eb949989-fab3-457f-a33b-8d28d21b02d0"
                     ]
                 ]
             },
@@ -160,7 +161,7 @@
                 "label": "IQ Assist: Diagnose Health Events (GenAI)",
                 "description": "",
                 "properties": {
-                    "x": 1122,
+                    "x": 1404.8601058869017,
                     "y": 615,
                     "instructions": "You are Riverbed IQ Assist, a trusted and expert assistant specializing in diagnosing and troubleshooting issues related to end-user endpoints (Windows, Mac). \nYour analyze recent health events that can impact the stability of the device. Follow these instructions carefully:\n\n1. Adopt the persona of a professional, concise analyst specializing in troubleshooting performance issues related to endpoints and applications.\n2. Process the provided data thoroughly to analyze anomalies. Focus on identifying the **top 5 most relevant findings or anomalies** that are critical to performance.\n3. For each identified issue, include a brief but detailed summary explaining the finding, why it is important, and its potential impact on the system or user experience.\n4. Structure each finding as an itemized, numbered list within an HTML `<div>` tag to ensure easily readable output. Each item should clearly and concisely describe the issue while maintaining a professional tone.\n5. Ensure that the information is organized, unambiguous, and actionable for the person relying on it.\n6. Your response should strictly adhere to the structure below, with no additional commentary or explanation outside the HTML format, as shown in this example :\n\"\"\"\n<b>Health Events</b>\n<br>\n<div>\n    <p><b>Finding #1:</b> [Issue description]. <br><b>Explanation</b>: [Why this matters and the potential impact].</p>\n    <p><b>Finding #2:</b> [Issue description]. <br><b>Explanation</b>: [Why this matters and the potential impact].</p>\n    <p><b>Finding #3:</b> [Issue description]. <br><b>Explanation</b>: [Why this matters and the potential impact].</p>\n    <p><b>Finding #4:</b> [Issue description]. <br><b>Explanation</b>: [Why this matters and the potential impact].</p>\n    <p><b>Finding #5:</b> [Issue description]. <br><b>Explanation</b>: [Why this matters and the potential impact].</p>\n</div>\n<div>\n<p><small>AI-generated content</small></p>\n</div>\n\"\"\"\n\nOnly include the top 5 most relevant findings, and no more than 5. Avoid redundancies and keep the focus on critical insights.",
                     "instructionsLocation": "enter",
@@ -180,7 +181,7 @@
                 "label": "Collect Health Findings",
                 "description": "",
                 "properties": {
-                    "x": 1315.5405847611269,
+                    "x": 1605.4006906480286,
                     "y": 615,
                     "variables": [
                         {
@@ -203,7 +204,7 @@
                 "label": "ServiceNow: Post Work Notes",
                 "description": "",
                 "properties": {
-                    "x": 1786.5405847611269,
+                    "x": 2054.400690648028,
                     "y": 665,
                     "debug": false,
                     "configurationId": "f4c88032-d05f-4d27-ad96-a1f844c66ba5",
@@ -263,7 +264,7 @@
                 "label": "Display Insight",
                 "description": "",
                 "properties": {
-                    "x": 1788,
+                    "x": 2055.860105886901,
                     "y": 540,
                     "title": "Riverbed IQ Assist",
                     "row": "1",
@@ -279,7 +280,7 @@
                 "label": "Fetch Health Events (Data Store)",
                 "description": "",
                 "properties": {
-                    "x": 922,
+                    "x": 962.8601058869012,
                     "y": 620,
                     "objType": "aternity_device_health_events_hourly.traffic",
                     "timeSeries": false,
@@ -310,7 +311,7 @@
                 },
                 "wires": [
                     [
-                        "7a01b9f9-5ebf-4005-b5c8-36bbcbe8a330"
+                        "671f7895-3254-470d-93ce-9a6abde17192"
                     ]
                 ]
             },
@@ -321,7 +322,7 @@
                 "label": "Fetch User Endpoint (Aternity EUEM)",
                 "description": "This subflow takes one or more device names as a comma separated list and outputs User Device objects.",
                 "properties": {
-                    "x": 729,
+                    "x": 757,
                     "y": 620,
                     "debug": false,
                     "configurationId": "352073eb-8d20-4cab-9f7f-db36234a1f51",
@@ -348,8 +349,8 @@
                 "label": "Display Info",
                 "description": "",
                 "properties": {
-                    "x": 1788,
-                    "y": 460,
+                    "x": 755.2042182590283,
+                    "y": 540,
                     "template": "<p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">User Endpoint: </span><b><span style=\"white-space: pre-wrap;\"><strong class=\"editor-variable-inner\">{{variables[\"runtime.User_Endpoint_Name\"]}}</strong></span></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">ServiceNow Incident Number: </span><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">{{variables[\"runtime.ServiceNow_Incident_Number\"]}}</strong></b></p>",
                     "debug": false
                 },
@@ -362,7 +363,7 @@
                 "label": "Skill: Generate Insight",
                 "description": "Generate an HTML formatted insight with charts, that is ready to be displayed in ServiceNow or anywhere else.",
                 "properties": {
-                    "x": 1513,
+                    "x": 1812.8601058869017,
                     "y": 620,
                     "debug": false,
                     "configurationId": "63ff53ff-b315-4915-bb88-2c7abf9ec24f",
@@ -442,16 +443,139 @@
                 },
                 "wires": [
                     [
-                        "eb949989-fab3-457f-a33b-8d28d21b02d0",
                         "51557cab-8c6c-4bcf-94c6-9cfea5c5fb77",
                         "1f1f8fb4-4ac1-4d2a-a740-bde6954c2e65"
                     ]
                 ]
+            },
+            {
+                "id": "671f7895-3254-470d-93ce-9a6abde17192",
+                "isIntegrationSubflowNode": false,
+                "type": "decision",
+                "label": "Data Found?",
+                "description": "",
+                "properties": {
+                    "x": 1171.655887627872,
+                    "y": 660,
+                    "dataType": "SUMMARY",
+                    "inputType": "aternity_device_health_events_hourly.traffic",
+                    "outputs": [
+                        {
+                            "id": "o08178",
+                            "passedData": "MATCHED",
+                            "expression": {
+                                "id": "o7912",
+                                "type": "block",
+                                "operation": "AND",
+                                "conditions": [
+                                    {
+                                        "type": "condition",
+                                        "id": "c-1760700774013",
+                                        "category": "input.rows",
+                                        "key": "count",
+                                        "op": "GT",
+                                        "value": "1"
+                                    }
+                                ]
+                            },
+                            "label": "Found"
+                        },
+                        {
+                            "id": "o19799",
+                            "passedData": "MATCHED",
+                            "expression": {
+                                "id": "o4547",
+                                "type": "block",
+                                "operation": "AND",
+                                "conditions": [
+                                    {
+                                        "type": "condition",
+                                        "id": "c-1760700819305",
+                                        "category": "input.rows",
+                                        "key": "count",
+                                        "op": "EQ",
+                                        "value": "0"
+                                    }
+                                ]
+                            },
+                            "label": "Not Found"
+                        }
+                    ],
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "7a01b9f9-5ebf-4005-b5c8-36bbcbe8a330"
+                    ],
+                    [
+                        "df35e11b-4d27-4afa-8df2-c1411bf9a9a7"
+                    ]
+                ]
+            },
+            {
+                "id": "df35e11b-4d27-4afa-8df2-c1411bf9a9a7",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow",
+                "label": "ServiceNow: Post Not Data",
+                "description": "",
+                "properties": {
+                    "x": 1404.4006906480286,
+                    "y": 725,
+                    "debug": false,
+                    "configurationId": "f4c88032-d05f-4d27-ad96-a1f844c66ba5",
+                    "in": [
+                        {
+                            "inner": "subflow.Connector",
+                            "outer": "00000000-0000-0000-0000-000000000000",
+                            "method": "connector"
+                        },
+                        {
+                            "inner": "subflow.Record_Type",
+                            "outer": "incident",
+                            "method": "static",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Sys_Id",
+                            "outer": "runtime.ServiceNow_Incident_Sys_Id",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Content",
+                            "outer": "No data found. Please check the CI contains the name of the User Endpoint",
+                            "method": "static",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Visibility",
+                            "outer": "work_notes",
+                            "method": "static",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Format",
+                            "outer": "html",
+                            "method": "static"
+                        }
+                    ],
+                    "out": [
+                        {
+                            "inner": "subflow.Successful",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Error_Message",
+                            "outer": ""
+                        }
+                    ]
+                },
+                "wires": []
             }
         ],
         "lastUpdatedUser": "Runbook Export",
         "createdByUser": "Runbook Export",
-        "eTag": "W/\"datetime'2025-10-17T11%3A03%3A12.8892881Z'\"",
+        "eTag": "W/\"datetime'2025-10-17T12%3A09%3A41.1746545Z'\"",
         "variant": "incident",
         "seriesId": "db8e0fd0-8ea7-4433-98bd-d93ada11d815",
         "version": "1.0",
@@ -490,7 +614,17 @@
             "nodeLabel": "Skill: Generate Insight",
             "sourceLocation": "integrationLibrary",
             "sourcePackageId": "RiverbedIQAssist"
+        },
+        {
+            "id": "f4c88032-d05f-4d27-ad96-a1f844c66ba5",
+            "type": "subflow",
+            "name": "ServiceNow: Post Comment",
+            "globalId": "ServiceNow::Post_Comment",
+            "originalVersion": "1.0.4",
+            "nodeLabel": "ServiceNow: Post Not Data",
+            "sourceLocation": "integrationLibrary",
+            "sourcePackageId": "ServiceNow"
         }
     ],
-    "token": "pZcBOOIL6owsGTYu1k8Evx2idWN9iUI9Hr7If2Yk4B0="
+    "token": "hE8B/7K4+pZrybwtkVBhVi+5JrPxfCYC4ASoBLQt0wk="
 }
