@@ -2,7 +2,7 @@
     "runbook": {
         "id": "95d28bc8-c057-4c87-af90-eec0ff0d42b7",
         "createdTime": "1760020223.462624200",
-        "lastUpdatedTime": "1760718026.700793500",
+        "lastUpdatedTime": "1760719406.068511900",
         "factoryResourceName": null,
         "isFactory": false,
         "name": "Riverbed IQ Assist for ServiceNow - Incident - Custom Diagnose User Endpoint",
@@ -268,7 +268,8 @@
                 "wires": [
                     [
                         "dc3a2660-91e0-4ffc-bbcd-545d8a576d90",
-                        "d219fb14-5e36-4ead-96c3-3de5dc15a7ee"
+                        "d219fb14-5e36-4ead-96c3-3de5dc15a7ee",
+                        "480446c5-cbb1-48cc-a903-bf8ac9cbb7a9"
                     ]
                 ]
             },
@@ -281,7 +282,7 @@
                 "properties": {
                     "x": 458,
                     "y": 110,
-                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Riverbed IQ Assist for ServiceNow</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Runbook for Incident in ServiceNow: </span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Custom Diagnose User endpoint</span></p><p class=\"editor-paragraph\"><br></p><p dir=\"ltr\" class=\"editor-paragraph\"><i><em style=\"white-space: pre-wrap;\" class=\"editor-text-italic\">version: 2025-10</em></i><span style=\"white-space: pre-wrap;\">-17-4</span></p>",
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Riverbed IQ Assist for ServiceNow</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Runbook for Incident in ServiceNow: </span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Custom Diagnose User endpoint</span></p><p class=\"editor-paragraph\"><br></p><p dir=\"ltr\" class=\"editor-paragraph\"><i><em style=\"white-space: pre-wrap;\" class=\"editor-text-italic\">version: 2025-10</em></i><span style=\"white-space: pre-wrap;\">-17-5</span></p>",
                     "debug": false
                 },
                 "wires": []
@@ -757,7 +758,7 @@
                 "id": "1e1aa98e-6a28-4092-89a1-3dade34278d8",
                 "isIntegrationSubflowNode": false,
                 "type": "subflow",
-                "label": "ServiceNow: Post Not Data",
+                "label": "ServiceNow: Post Data not found",
                 "description": "",
                 "properties": {
                     "x": 1757,
@@ -784,7 +785,7 @@
                         },
                         {
                             "inner": "subflow.Content",
-                            "outer": "No data found. Please check the CI contains the name of the User Endpoint",
+                            "outer": "Data not found. Please check the CI contains the name of the User Endpoint",
                             "method": "static",
                             "isUnset": false
                         },
@@ -968,11 +969,24 @@
                         "1e1aa98e-6a28-4092-89a1-3dade34278d8"
                     ]
                 ]
+            },
+            {
+                "id": "480446c5-cbb1-48cc-a903-bf8ac9cbb7a9",
+                "isIntegrationSubflowNode": false,
+                "type": "insight",
+                "label": "Display Info 1",
+                "description": "",
+                "properties": {
+                    "x": 1070,
+                    "y": 340,
+                    "template": "<p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">User Endpoint: </span><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">{{variables[\"runtime.User_Endpoint_Name\"]}}</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">ServiceNow Incident Number: </span><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">{{variables[\"runtime.ServiceNow_Incident_Number\"]}}</strong></b></p>"
+                },
+                "wires": []
             }
         ],
         "lastUpdatedUser": "Runbook Export",
         "createdByUser": "Runbook Export",
-        "eTag": "W/\"datetime'2025-10-17T16%3A20%3A26.7103655Z'\"",
+        "eTag": "W/\"datetime'2025-10-17T16%3A43%3A26.0820901Z'\"",
         "variant": "incident",
         "seriesId": "95d28bc8-c057-4c87-af90-eec0ff0d42b7",
         "version": "1.0",
@@ -1018,7 +1032,7 @@
             "name": "ServiceNow: Post Comment",
             "globalId": "ServiceNow::Post_Comment",
             "originalVersion": "1.0.4",
-            "nodeLabel": "ServiceNow: Post Not Data",
+            "nodeLabel": "ServiceNow: Post Data not found",
             "sourceLocation": "integrationLibrary",
             "sourcePackageId": "ServiceNow"
         },
@@ -1033,5 +1047,5 @@
             "sourcePackageId": "Aternity"
         }
     ],
-    "token": "TlWke6ibIAlY0tKZKv4UK1p+gYTKvgpMCKNrDQgzBEw="
+    "token": "dPBy3Gfbh964eg4ir84wNjZc0gAFojV3H+El/zes3BE="
 }
