@@ -2,7 +2,7 @@
     "runbook": {
         "id": "50fd9889-2721-4b27-9b9b-0cfa20be1b69",
         "createdTime": "1760083595.725231700",
-        "lastUpdatedTime": "1760719437.255492700",
+        "lastUpdatedTime": "1760726410.431438900",
         "factoryResourceName": null,
         "isFactory": false,
         "name": "Riverbed IQ Assist for ServiceNow - Incident - Bring Your Own GenAI and Diagnose User Endpoint - Mistral AI",
@@ -468,7 +468,7 @@
                 "properties": {
                     "x": 50,
                     "y": 110,
-                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Riverbed IQ Assist for ServiceNow</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Runbook for Incident in ServiceNow: Diagnose User endpoint with your own GenAI / LLM - Mistral AI</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">version: 2025-10-17-5</span></p>",
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Riverbed IQ Assist for ServiceNow</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Runbook for Incident in ServiceNow: Diagnose User endpoint with your own GenAI / LLM - Mistral AI</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">version: 2025-10-17-6</span></p>",
                     "debug": false
                 },
                 "wires": []
@@ -560,7 +560,7 @@
                 "id": "a224848a-f7cb-4eea-a69a-ad8425523fdc",
                 "isIntegrationSubflowNode": false,
                 "type": "decision",
-                "label": "Data Found?",
+                "label": "Found?",
                 "description": "",
                 "properties": {
                     "x": 1251.655887627872,
@@ -699,7 +699,7 @@
         ],
         "lastUpdatedUser": "Runbook Export",
         "createdByUser": "Runbook Export",
-        "eTag": "W/\"datetime'2025-10-17T16%3A43%3A57.2621941Z'\"",
+        "eTag": "W/\"datetime'2025-10-17T18%3A40%3A10.4479045Z'\"",
         "variant": "incident",
         "seriesId": "50fd9889-2721-4b27-9b9b-0cfa20be1b69",
         "version": "1.0",
@@ -750,5 +750,5 @@
             "sourcePackageId": "ServiceNow"
         }
     ],
-    "token": "f8lQON+/s7eCMMboIJOytwxfvpIixVf8eulOngUDu58="
+    "token": "HaR+ID0BJoVyYuCJuYSWll/p7715RuHvamP7yXKFR4E="
 }
