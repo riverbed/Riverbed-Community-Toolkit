@@ -1,12 +1,12 @@
 {
     "runbook": {
-        "id": "19087890-116c-42b1-a69e-ef9be0ba4b0f",
-        "createdTime": "1753456673.695645100",
-        "lastUpdatedTime": "1753458262.424882900",
+        "id": "e5f9677f-ea48-445f-81e0-38ceb5f84d1f",
+        "createdTime": "1755847187.926234300",
+        "lastUpdatedTime": "1760726352.553030400",
         "factoryResourceName": null,
         "isFactory": false,
         "name": "Riverbed IQ Assist for ServiceNow - Incident - Diagnose User Endpoint",
-        "description": "Triggered in the context of an Incident in ServiceNow, the runbook diagnoses the user endpoint and enriches the incident record with an Insight. \n\nTest payload MY-DEMO Demo\n{\n    \"recordType\" : \"incident\", \n    \"recordID\" : \"123456\",\n    \"recordNumber\" : \"INC045000\",\n    \"user\" : {  \"name\" : \"Adam Covert\" },\n    \"ciName\" : \"Adam_Covert_WKS\",\n    \"ciID\" : \"65498\"\n}\n\nTest payload LMS - Sandbox PM\n{\n    \"recordType\" : \"incident\", \n    \"recordID\" : \"123456\",\n    \"recordNumber\" : \"INC045000\",\n    \"user\" : {  \"name\" : \"Adam Covert\" },\n    \"ciName\" : \"w11full\",\n    \"ciID\" : \"65498\"\n}",
+        "description": "Triggered in the context of an Incident in ServiceNow, the runbook diagnoses the user endpoint and enriches the incident record with an Insight.",
         "isReady": true,
         "triggerType": "webhook",
         "runtimeVariables": {
@@ -184,6 +184,12 @@
                     "defaultValue": "true",
                     "name": "runtime.ENABLE_FEATURE_Display_Logs",
                     "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.User_Endpoint_Name",
+                    "isReadonly": false
                 }
             ],
             "structuredVariables": []
@@ -253,15 +259,16 @@
                             "name": "runtime.ServiceNow_API_Base_URL"
                         },
                         {
-                            "name": "runtime.Aternity_EUEM_DEVICE_NAME"
+                            "name": "runtime.User_Endpoint_Name"
                         }
                     ],
-                    "transformTemplate": "{\n    \"runtime.ServiceNow_API_Base_URL\" : \"https://{{variables[\"runtime.ServiceNow_ENV\"]}}.service-now.com\",\n    \"runtime.ServiceNow_Incident_Sys_Id\": \"{{trigger[\"requestBody\"][\"recordID\"]}}\",\n    \"runtime.ServiceNow_User_Data\": \"{{trigger[\"requestBody\"][\"user\"]}}\",\n    \"runtime.ServiceNow_Configuration_Item\": \"{{trigger[\"requestBody\"][\"ciName\"]}}\",\n    \"runtime.ServiceNow_Configuration_Item_Sys_Id\": \"{{trigger[\"requestBody\"][\"ciID\"]}}\",\n    \"runtime.ServiceNow_Incident_Number\": \"{{trigger[\"requestBody\"][\"recordNumber\"]}}\",\n    \"runtime.Aternity_EUEM_DEVICE_NAME\": \"{{trigger[\"requestBody\"][\"ciName\"]}}\"\n}\n",
+                    "transformTemplate": "{\n    \"runtime.ServiceNow_API_Base_URL\" : \"https://{{variables[\"runtime.ServiceNow_ENV\"]}}.service-now.com\",\n    \"runtime.ServiceNow_Incident_Sys_Id\": \"{{trigger[\"requestBody\"][\"recordID\"]}}\",\n    \"runtime.ServiceNow_User_Data\": \"{{trigger[\"requestBody\"][\"user\"]}}\",\n    \"runtime.ServiceNow_Configuration_Item\": \"{{trigger[\"requestBody\"][\"ciName\"]}}\",\n    \"runtime.ServiceNow_Configuration_Item_Sys_Id\": \"{{trigger[\"requestBody\"][\"ciID\"]}}\",\n    \"runtime.ServiceNow_Incident_Number\": \"{{trigger[\"requestBody\"][\"recordNumber\"]}}\",\n    \"runtime.User_Endpoint_Name\": \"{{trigger[\"requestBody\"][\"ciName\"]}}\"\n}\n",
                     "debug": false
                 },
                 "wires": [
                     [
-                        "71cb10e2-2204-4e5a-bb42-9362361fe224"
+                        "4862cc8a-29c9-4542-9676-71542a896236",
+                        "5234527f-f08e-4af5-9e93-d6630994a3e5"
                     ]
                 ]
             },
@@ -274,7 +281,7 @@
                 "properties": {
                     "x": 466,
                     "y": 530,
-                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Riverbed IQ Assist for ServiceNow</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Runbook for Incident in ServiceNow: Diagnose the End-User endpoint</span></p>",
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Riverbed IQ Assist for ServiceNow</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Runbook for Incident in ServiceNow: Diagnose the End-User endpoint</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">version: 2025-10-17-5</span></p>",
                     "debug": false
                 },
                 "wires": []
@@ -286,9 +293,9 @@
                 "label": "Display Info",
                 "description": "",
                 "properties": {
-                    "x": 1665.1327073769705,
-                    "y": 253.7796785799278,
-                    "template": "<p>Device: <strong>{{variables[\"runtime.Aternity_EUEM_DEVICE_NAME\"]}}</strong></p>",
+                    "x": 1092.5425118640287,
+                    "y": 329.97618612636074,
+                    "template": "<p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">User Endpoint: </span><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">{{variables[\"runtime.User_Endpoint_Name\"]}}</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">ServiceNow Incident Number: </span><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">{{variables[\"runtime.ServiceNow_Incident_Number\"]}}</strong></b></p>",
                     "debug": false
                 },
                 "wires": []
@@ -300,10 +307,10 @@
                 "label": "ServiceNow: Post Comment",
                 "description": "Add a comment or work notes to a ServiceNow incident or problem.\nIf it fails to be added, an error message will be returned.",
                 "properties": {
-                    "x": 1905,
-                    "y": 340,
+                    "x": 2296.4098044870607,
+                    "y": 396.19650754643294,
                     "debug": false,
-                    "configurationId": "d78d311c-24ac-4b9e-bd34-891af18fdbe2",
+                    "configurationId": "f4c88032-d05f-4d27-ad96-a1f844c66ba5",
                     "in": [
                         {
                             "inner": "subflow.Connector",
@@ -337,7 +344,8 @@
                         },
                         {
                             "inner": "subflow.Format",
-                            "outer": ""
+                            "outer": "html",
+                            "method": "static"
                         }
                     ],
                     "out": [
@@ -355,94 +363,14 @@
                 "wires": []
             },
             {
-                "id": "ae3b629d-2c4e-4522-a2d8-dc0a1b01bbd6",
-                "isIntegrationSubflowNode": false,
-                "type": "decision",
-                "label": "Post to ServiceNow?",
-                "description": "",
-                "properties": {
-                    "x": 1661,
-                    "y": 340,
-                    "dataType": "SUMMARY",
-                    "outputs": [
-                        {
-                            "id": "o06306",
-                            "passedData": "MATCHED",
-                            "expression": {
-                                "id": "o1838",
-                                "type": "block",
-                                "operation": "AND",
-                                "conditions": [
-                                    {
-                                        "type": "condition",
-                                        "id": "c-1747220979167",
-                                        "category": "variable",
-                                        "key": "$VARIABLE.runtime.ENABLE_FEATURE_Post_to_ServiceNow",
-                                        "op": "EQ",
-                                        "value": "true"
-                                    }
-                                ]
-                            },
-                            "label": "Yes"
-                        }
-                    ],
-                    "debug": false
-                },
-                "wires": [
-                    [
-                        "adc67e85-83a9-4b87-b3a9-9675fefd59a2"
-                    ]
-                ]
-            },
-            {
-                "id": "45aedabe-bb58-41c3-bd66-e18f9e9c7497",
-                "isIntegrationSubflowNode": false,
-                "type": "decision",
-                "label": "Show in runbook output?",
-                "description": "",
-                "properties": {
-                    "x": 1662.4822282919026,
-                    "y": 446.58845533899023,
-                    "dataType": "SUMMARY",
-                    "outputs": [
-                        {
-                            "id": "o06306",
-                            "passedData": "MATCHED",
-                            "expression": {
-                                "id": "o9906",
-                                "type": "block",
-                                "operation": "AND",
-                                "conditions": [
-                                    {
-                                        "type": "condition",
-                                        "id": "c-1747220979167",
-                                        "category": "variable",
-                                        "key": "$VARIABLE.runtime.ENABLE_FEATURE_Display_Logs",
-                                        "op": "EQ",
-                                        "value": "true"
-                                    }
-                                ]
-                            },
-                            "label": "Yes"
-                        }
-                    ],
-                    "debug": false
-                },
-                "wires": [
-                    [
-                        "50c9dc95-de6f-40ae-b8e0-d4d1a09754f7"
-                    ]
-                ]
-            },
-            {
                 "id": "50c9dc95-de6f-40ae-b8e0-d4d1a09754f7",
                 "isIntegrationSubflowNode": false,
                 "type": "rvbd_ui_text",
                 "label": "Show Insight",
                 "description": "",
                 "properties": {
-                    "x": 1903.4822282919026,
-                    "y": 466.58845533899023,
+                    "x": 2281.8920327789633,
+                    "y": 542.784962885423,
                     "title": "Show Insight",
                     "row": "10",
                     "notes": "<p class=\"editor-paragraph\" dir=\"ltr\"><span style=\"white-space: pre-wrap;\">{{variables[\"runtime.Insight\"]}}</span></p>",
@@ -457,9 +385,9 @@
                 "label": "Comment 1",
                 "description": "",
                 "properties": {
-                    "x": 467.00399189370114,
-                    "y": 670,
-                    "comment": "<p><strong>Payload example</strong></p>\n<p>{<br>\n&nbsp;&nbsp; \"recordType\" : \"incident\",<br>\n&nbsp;&nbsp; \"recordID\" : \"e51dccec878c\",<br>\n&nbsp;&nbsp; \"recordNumber\" : \"INC0013262\",<br>\n&nbsp;&nbsp; \"ciName\" : \"Adam_Covert_WKS\",<br>\n&nbsp;&nbsp; \"ciID\" : \"65498\",<br>\n&nbsp;\"user\" : {<br>\n&nbsp;&nbsp; \"UserID\" : \"cindy.johnson\",<br>\n&nbsp;&nbsp; \"Email\" : \"cjohnson@acme.net\",<br>\n&nbsp;&nbsp; \"DisplayName\" : \"Cindy Johnson\",<br>\n&nbsp;&nbsp; \"Name\" :&nbsp;&nbsp;&nbsp; \"cindy.johnson\"<br>\n&nbsp;}<br>\n}</p>",
+                    "x": 466.00399189370114,
+                    "y": 730,
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Payload example</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">{</span><br><span style=\"white-space: pre-wrap;\">\"recordType\" : \"incident\",</span><br><span style=\"white-space: pre-wrap;\">\"recordID\" : \"e51dccec878c\",</span><br><span style=\"white-space: pre-wrap;\">\"recordNumber\" : \"INC0013262\",</span><br><span style=\"white-space: pre-wrap;\">\"ciName\" : \"Adam_Covert_WKS\",</span><br><span style=\"white-space: pre-wrap;\">\"ciID\" : \"65498\",</span><br><span style=\"white-space: pre-wrap;\">\"user\" : {</span><br><span style=\"white-space: pre-wrap;\">    \"UserID\" : \"cindy.johnson\",</span><br><span style=\"white-space: pre-wrap;\">    \"Email\" : \"cjohnson@acme.net\",</span><br><span style=\"white-space: pre-wrap;\">    \"DisplayName\" : \"Cindy Johnson\",</span><br><span style=\"white-space: pre-wrap;\">    \"Name\" : \"cindy.johnson\"</span><br><span style=\"white-space: pre-wrap;\">  }</span><br><span style=\"white-space: pre-wrap;\">}</span></p>",
                     "debug": false
                 },
                 "wires": []
@@ -471,10 +399,10 @@
                 "label": "Skill: Diagnose User Endpoint",
                 "description": "Diagnose user endpoint based on health events and metrics such as CPU/memory, I/O and Wi-Fi (signal strength and transmission speed).",
                 "properties": {
-                    "x": 1098,
-                    "y": 380,
+                    "x": 1781,
+                    "y": 400,
                     "debug": false,
-                    "configurationId": "e1df24e4-b9f8-4af1-9115-67b5eb19b4b7",
+                    "configurationId": "663d7c90-2b9e-4500-82eb-f4d9361140b6",
                     "in": [
                         {
                             "inner": "subflow.Aternity_Connector",
@@ -484,7 +412,7 @@
                         },
                         {
                             "inner": "subflow.Device_Name",
-                            "outer": "runtime.Aternity_EUEM_DEVICE_NAME",
+                            "outer": "runtime.User_Endpoint_Name",
                             "method": "runtime",
                             "isUnset": false
                         }
@@ -575,11 +503,15 @@
                 "label": "Skill: Generate Insight",
                 "description": "Generate an HTML formatted insight with charts, that is ready to be displayed in ServiceNow or anywhere else.",
                 "properties": {
-                    "x": 1351,
-                    "y": 360,
+                    "x": 2028.111737958262,
+                    "y": 403.4161911155172,
                     "debug": false,
-                    "configurationId": "03b3ae95-d98b-4e14-8991-7eeb2b641bf5",
+                    "configurationId": "63ff53ff-b315-4915-bb88-2c7abf9ec24f",
                     "in": [
+                        {
+                            "inner": "subflow.RiverbedIQAssist_Connector",
+                            "method": "connector"
+                        },
                         {
                             "inner": "subflow.Findings_HEALTH",
                             "outer": "runtime.Findings_HEALTH",
@@ -677,18 +609,219 @@
                 },
                 "wires": [
                     [
-                        "5234527f-f08e-4af5-9e93-d6630994a3e5",
-                        "ae3b629d-2c4e-4522-a2d8-dc0a1b01bbd6",
-                        "45aedabe-bb58-41c3-bd66-e18f9e9c7497"
+                        "adc67e85-83a9-4b87-b3a9-9675fefd59a2",
+                        "50c9dc95-de6f-40ae-b8e0-d4d1a09754f7"
+                    ]
+                ]
+            },
+            {
+                "id": "c8a7de19-e24c-47d1-a6f6-ce796d867f18",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow",
+                "label": "ServiceNow: Post Data Not Found",
+                "description": "",
+                "properties": {
+                    "x": 1781.9859026589504,
+                    "y": 543.4161911155172,
+                    "debug": false,
+                    "configurationId": "f4c88032-d05f-4d27-ad96-a1f844c66ba5",
+                    "in": [
+                        {
+                            "inner": "subflow.Connector",
+                            "outer": "00000000-0000-0000-0000-000000000000",
+                            "method": "connector"
+                        },
+                        {
+                            "inner": "subflow.Record_Type",
+                            "outer": "incident",
+                            "method": "static",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Sys_Id",
+                            "outer": "runtime.ServiceNow_Incident_Sys_Id",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Content",
+                            "outer": "Data not found. Please check the CI contains the name of the User Endpoint",
+                            "method": "static",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Visibility",
+                            "outer": "work_notes",
+                            "method": "static",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Format",
+                            "outer": "html",
+                            "method": "static"
+                        }
+                    ],
+                    "out": [
+                        {
+                            "inner": "subflow.Successful",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Error_Message",
+                            "outer": ""
+                        }
+                    ]
+                },
+                "wires": []
+            },
+            {
+                "id": "39b22511-8b17-4b29-8d0e-251d25683ef2",
+                "isIntegrationSubflowNode": false,
+                "type": "rvbd_ui_text",
+                "label": "Display Error",
+                "description": "",
+                "properties": {
+                    "x": 1780.9859026589504,
+                    "y": 683.4161911155172,
+                    "title": "Error message",
+                    "row": "1",
+                    "notes": "<p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">No data found. Please check the CI contains the name of the User Endpoint</span></p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "4862cc8a-29c9-4542-9676-71542a896236",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow",
+                "label": "Fetch User Endpoint (Aternity EUEM)",
+                "description": "This subflow takes one or more device names as a comma separated list and outputs User Device objects.",
+                "properties": {
+                    "x": 1095,
+                    "y": 405,
+                    "debug": false,
+                    "configurationId": "352073eb-8d20-4cab-9f7f-db36234a1f51",
+                    "in": [
+                        {
+                            "inner": "subflow.Device_Name_List",
+                            "outer": "runtime.User_Endpoint_Name",
+                            "method": "runtime",
+                            "isUnset": false
+                        }
+                    ],
+                    "out": []
+                },
+                "wires": [
+                    [
+                        "e0ff38c0-c469-45ae-9242-19adaf92d925"
+                    ]
+                ]
+            },
+            {
+                "id": "e0ff38c0-c469-45ae-9242-19adaf92d925",
+                "isIntegrationSubflowNode": false,
+                "type": "data_ocean_dynamic",
+                "label": "Check inventory (Data Store)",
+                "description": "",
+                "properties": {
+                    "x": 1317,
+                    "y": 400,
+                    "objType": "aternity_device_inventory.traffic",
+                    "timeSeries": false,
+                    "limit": 10,
+                    "topBy": [
+                        {
+                            "id": "boot_last_timestamp",
+                            "direction": "desc"
+                        }
+                    ],
+                    "groupBy": [
+                        "user_device.device_name"
+                    ],
+                    "filters": {
+                        "userDevice": [
+                            "$node:4862cc8a-29c9-4542-9676-71542a896236.user_device"
+                        ]
+                    },
+                    "debug": true
+                },
+                "wires": [
+                    [
+                        "74d2bd03-337b-4cf5-bf7c-50027137dced"
+                    ]
+                ]
+            },
+            {
+                "id": "74d2bd03-337b-4cf5-bf7c-50027137dced",
+                "isIntegrationSubflowNode": false,
+                "type": "decision",
+                "label": "Found?",
+                "description": "",
+                "properties": {
+                    "x": 1539,
+                    "y": 400,
+                    "dataType": "SUMMARY",
+                    "inputType": "aternity_device_inventory.traffic",
+                    "outputs": [
+                        {
+                            "id": "o08178",
+                            "passedData": "MATCHED",
+                            "expression": {
+                                "id": "o4922",
+                                "type": "block",
+                                "operation": "AND",
+                                "conditions": [
+                                    {
+                                        "type": "condition",
+                                        "id": "c-1760717486679",
+                                        "category": "input.rows",
+                                        "key": "count",
+                                        "op": "GT",
+                                        "value": "0"
+                                    }
+                                ]
+                            },
+                            "label": "Found"
+                        },
+                        {
+                            "id": "o17552",
+                            "passedData": "MATCHED",
+                            "expression": {
+                                "id": "o5580",
+                                "type": "block",
+                                "operation": "AND",
+                                "conditions": [
+                                    {
+                                        "type": "condition",
+                                        "id": "c-1760717505733",
+                                        "category": "input.rows",
+                                        "key": "count",
+                                        "op": "EQ",
+                                        "value": "0"
+                                    }
+                                ]
+                            },
+                            "label": "Not Found"
+                        }
+                    ],
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "71cb10e2-2204-4e5a-bb42-9362361fe224"
+                    ],
+                    [
+                        "39b22511-8b17-4b29-8d0e-251d25683ef2",
+                        "c8a7de19-e24c-47d1-a6f6-ce796d867f18"
                     ]
                 ]
             }
         ],
         "lastUpdatedUser": "Runbook Export",
         "createdByUser": "Runbook Export",
-        "eTag": "W/\"datetime'2025-07-25T15%3A44%3A22.431587Z'\"",
+        "eTag": "W/\"datetime'2025-10-17T18%3A39%3A12.5649761Z'\"",
         "variant": "incident",
-        "seriesId": "19087890-116c-42b1-a69e-ef9be0ba4b0f",
+        "seriesId": "e5f9677f-ea48-445f-81e0-38ceb5f84d1f",
         "version": "1.0",
         "otherVersions": null,
         "isScheduled": false,
@@ -697,7 +830,7 @@
     },
     "dependencies": [
         {
-            "id": "d78d311c-24ac-4b9e-bd34-891af18fdbe2",
+            "id": "f4c88032-d05f-4d27-ad96-a1f844c66ba5",
             "type": "subflow",
             "name": "ServiceNow: Post Comment",
             "globalId": "ServiceNow::Post_Comment",
@@ -707,7 +840,7 @@
             "sourcePackageId": "ServiceNow"
         },
         {
-            "id": "e1df24e4-b9f8-4af1-9115-67b5eb19b4b7",
+            "id": "663d7c90-2b9e-4500-82eb-f4d9361140b6",
             "type": "subflow",
             "name": "Skill: Diagnose User Endpoint",
             "globalId": "Aternity::Diagnose_User_Endpoint",
@@ -717,15 +850,35 @@
             "sourcePackageId": "Aternity"
         },
         {
-            "id": "03b3ae95-d98b-4e14-8991-7eeb2b641bf5",
+            "id": "63ff53ff-b315-4915-bb88-2c7abf9ec24f",
             "type": "subflow",
             "name": "Skill: Generate Insight",
             "globalId": "RiverbedIQAssist::Generate_Insight",
-            "originalVersion": "1.0.1",
+            "originalVersion": "1.0.2",
             "nodeLabel": "Skill: Generate Insight",
             "sourceLocation": "integrationLibrary",
             "sourcePackageId": "RiverbedIQAssist"
+        },
+        {
+            "id": "f4c88032-d05f-4d27-ad96-a1f844c66ba5",
+            "type": "subflow",
+            "name": "ServiceNow: Post Comment",
+            "globalId": "ServiceNow::Post_Comment",
+            "originalVersion": "1.0.4",
+            "nodeLabel": "ServiceNow: Post Data Not Found",
+            "sourceLocation": "integrationLibrary",
+            "sourcePackageId": "ServiceNow"
+        },
+        {
+            "id": "352073eb-8d20-4cab-9f7f-db36234a1f51",
+            "type": "subflow",
+            "name": "Aternity: Create User Device",
+            "globalId": "Aternity::Create_User_Device",
+            "originalVersion": "1.0.2",
+            "nodeLabel": "Fetch User Endpoint (Aternity EUEM)",
+            "sourceLocation": "integrationLibrary",
+            "sourcePackageId": "Aternity"
         }
     ],
-    "token": "hQvFiWfmJRZgGsnHU7P+M+3qFSry4an5txrkEGGega0="
+    "token": "3rFeGdmsRjCGbBH4gUAg7lL/zaC81L1wtkPpVcXVHwQ="
 }
