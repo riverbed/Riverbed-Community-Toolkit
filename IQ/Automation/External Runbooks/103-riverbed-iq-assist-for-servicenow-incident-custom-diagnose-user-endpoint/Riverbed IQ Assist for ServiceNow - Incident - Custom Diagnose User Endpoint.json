@@ -2,7 +2,7 @@
     "runbook": {
         "id": "95d28bc8-c057-4c87-af90-eec0ff0d42b7",
         "createdTime": "1760020223.462624200",
-        "lastUpdatedTime": "1760021387.775326400",
+        "lastUpdatedTime": "1760691495.077610200",
         "factoryResourceName": null,
         "isFactory": false,
         "name": "Riverbed IQ Assist for ServiceNow - Incident - Custom Diagnose User Endpoint",
@@ -280,7 +280,7 @@
                 "properties": {
                     "x": 458,
                     "y": 110,
-                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Riverbed IQ Assist for ServiceNow</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Runbook for Incident in ServiceNow: </span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Custom Diagnose User endpoint</span></p><p class=\"editor-paragraph\"><br></p><p dir=\"ltr\" class=\"editor-paragraph\"><i><em style=\"white-space: pre-wrap;\" class=\"editor-text-italic\">version: 2025-10</em></i><span style=\"white-space: pre-wrap;\">-09-6</span></p>",
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Riverbed IQ Assist for ServiceNow</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Runbook for Incident in ServiceNow: </span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Custom Diagnose User endpoint</span></p><p class=\"editor-paragraph\"><br></p><p dir=\"ltr\" class=\"editor-paragraph\"><i><em style=\"white-space: pre-wrap;\" class=\"editor-text-italic\">version: 2025-10</em></i><span style=\"white-space: pre-wrap;\">-17-1</span></p>",
                     "debug": false
                 },
                 "wires": []
@@ -720,7 +720,8 @@
                 "wires": [
                     [
                         "ae3b629d-2c4e-4522-a2d8-dc0a1b01bbd6",
-                        "45aedabe-bb58-41c3-bd66-e18f9e9c7497"
+                        "45aedabe-bb58-41c3-bd66-e18f9e9c7497",
+                        "6453a81c-66a6-4436-95ff-0c34c86dd899"
                     ]
                 ]
             },
@@ -766,11 +767,25 @@
                         "fdc8f413-4bcb-42aa-b6aa-cc6dc6196661"
                     ]
                 ]
+            },
+            {
+                "id": "6453a81c-66a6-4436-95ff-0c34c86dd899",
+                "isIntegrationSubflowNode": false,
+                "type": "insight",
+                "label": "ServiceNow Incident Number",
+                "description": "",
+                "properties": {
+                    "x": 2424,
+                    "y": 265,
+                    "template": "<p class=\"editor-paragraph\" dir=\"ltr\"><span style=\"white-space: pre-wrap;\">ServiceNow Incident Number: </span><span style=\"white-space: pre-wrap;\"><span class=\"editor-variable-inner\">{{variables[\"runtime.ServiceNow_Incident_Number\"]}}</span></span></p>",
+                    "debug": false
+                },
+                "wires": []
             }
         ],
         "lastUpdatedUser": "Runbook Export",
         "createdByUser": "Runbook Export",
-        "eTag": "W/\"datetime'2025-10-09T14%3A49%3A47.7959627Z'\"",
+        "eTag": "W/\"datetime'2025-10-17T08%3A58%3A15.1011524Z'\"",
         "variant": "incident",
         "seriesId": "95d28bc8-c057-4c87-af90-eec0ff0d42b7",
         "version": "1.0",
@@ -811,5 +826,5 @@
             "sourcePackageId": "RiverbedIQAssist"
         }
     ],
-    "token": "Cw607HAIb6qRCiaOMbOMBjtN6eRL7Nf4Je/bHo+4l7E="
+    "token": "QG3We24VnGbx2KdSlCOErt55Holpt+cSo3qPpCF8dvI="
 }

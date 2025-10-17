@@ -2,7 +2,7 @@
     "runbook": {
         "id": "68f0b3eb-0ac4-42c9-80f8-8d21d1575558",
         "createdTime": "1755847255.812843500",
-        "lastUpdatedTime": "1757059746.943933700",
+        "lastUpdatedTime": "1760694747.210304500",
         "factoryResourceName": null,
         "isFactory": false,
         "name": "Riverbed IQ Assist for ServiceNow - Incident - Fetch User Endpoint Metrics",
@@ -86,7 +86,7 @@
                 {
                     "type": "string",
                     "defaultValue": null,
-                    "name": "runtime.Aternity_EUEM_DEVICE_NAME",
+                    "name": "runtime.User_Endpoint_Name",
                     "isReadonly": false
                 },
                 {
@@ -253,15 +253,16 @@
                             "name": "runtime.ServiceNow_API_Base_URL"
                         },
                         {
-                            "name": "runtime.Aternity_EUEM_DEVICE_NAME"
+                            "name": "runtime.User_Endpoint_Name"
                         }
                     ],
-                    "transformTemplate": "{\n    \"runtime.ServiceNow_API_Base_URL\" : \"https://{{variables[\"runtime.ServiceNow_ENV\"]}}.service-now.com\",\n    \"runtime.ServiceNow_Incident_Sys_Id\": \"{{trigger[\"requestBody\"][\"recordID\"]}}\",\n    \"runtime.ServiceNow_User_Data\": \"{{trigger[\"requestBody\"][\"user\"]}}\",\n    \"runtime.ServiceNow_Configuration_Item\": \"{{trigger[\"requestBody\"][\"ciName\"]}}\",\n    \"runtime.ServiceNow_Configuration_Item_Sys_Id\": \"{{trigger[\"requestBody\"][\"ciID\"]}}\",\n    \"runtime.ServiceNow_Incident_Number\": \"{{trigger[\"requestBody\"][\"recordNumber\"]}}\",\n    \"runtime.Aternity_EUEM_DEVICE_NAME\": \"{{trigger[\"requestBody\"][\"ciName\"]}}\"\n}\n",
+                    "transformTemplate": "{\n    \"runtime.ServiceNow_API_Base_URL\" : \"https://{{variables[\"runtime.ServiceNow_ENV\"]}}.service-now.com\",\n    \"runtime.ServiceNow_Incident_Sys_Id\": \"{{trigger[\"requestBody\"][\"recordID\"]}}\",\n    \"runtime.ServiceNow_User_Data\": \"{{trigger[\"requestBody\"][\"user\"]}}\",\n    \"runtime.ServiceNow_Configuration_Item\": \"{{trigger[\"requestBody\"][\"ciName\"]}}\",\n    \"runtime.ServiceNow_Configuration_Item_Sys_Id\": \"{{trigger[\"requestBody\"][\"ciID\"]}}\",\n    \"runtime.ServiceNow_Incident_Number\": \"{{trigger[\"requestBody\"][\"recordNumber\"]}}\",\n    \"runtime.User_Endpoint_Name\": \"{{trigger[\"requestBody\"][\"ciName\"]}}\"\n}\n",
                     "debug": true
                 },
                 "wires": [
                     [
-                        "919cc953-39c2-43a5-9147-61dede6cc8e3"
+                        "919cc953-39c2-43a5-9147-61dede6cc8e3",
+                        "13b1b112-d809-48d1-9cd1-9ba32329134b"
                     ]
                 ]
             },
@@ -274,7 +275,7 @@
                 "properties": {
                     "x": 50,
                     "y": 450,
-                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Riverbed IQ Assist for ServiceNow</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Runbook for Incident in ServiceNow</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">version: 1.9</span></p>",
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Riverbed IQ Assist for ServiceNow</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Runbook for Incident in ServiceNow</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">version: 1.10-demo</span></p>",
                     "debug": false
                 },
                 "wires": []
@@ -339,11 +340,7 @@
                     ],
                     "runAsSingleActivity": true
                 },
-                "wires": [
-                    [
-                        "fc71919e-ee3e-448e-b82f-a447cc28705d"
-                    ]
-                ]
+                "wires": []
             },
             {
                 "id": "0fda143d-dca4-40b5-831c-649a3f639dff",
@@ -394,7 +391,7 @@
                 "properties": {
                     "x": 54.00399189370114,
                     "y": 630,
-                    "comment": "<p><strong>Payload example</strong></p>\n<p>{<br>\n&nbsp;&nbsp; \"recordType\" : \"incident\",<br>\n&nbsp;&nbsp; \"recordID\" : \"e51dccec878c\",<br>\n&nbsp;&nbsp; \"recordNumber\" : \"INC0013262\",<br>\n&nbsp;&nbsp; \"ciName\" : \"Adam_Covert_WKS\",<br>\n&nbsp;&nbsp; \"ciID\" : \"65498\",<br>\n&nbsp;\"user\" : {<br>\n&nbsp;&nbsp; \"UserID\" : \"cindy.johnson\",<br>\n&nbsp;&nbsp; \"Email\" : \"cjohnson@acme.net\",<br>\n&nbsp;&nbsp; \"DisplayName\" : \"Cindy Johnson\",<br>\n&nbsp;&nbsp; \"Name\" :&nbsp;&nbsp;&nbsp; \"cindy.johnson\"<br>\n&nbsp;}<br>\n}</p>",
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Payload example</strong></b></p><p class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">{</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">\"recordNumber\" : \"INC0013262\",</span><br><span style=\"white-space: pre-wrap;\">\"ciName\" : \"Adam_Covert_WKS\"</span><br><span style=\"white-space: pre-wrap;\">}</span></p>",
                     "debug": false
                 },
                 "wires": []
@@ -403,12 +400,12 @@
                 "id": "fc71919e-ee3e-448e-b82f-a447cc28705d",
                 "isIntegrationSubflowNode": false,
                 "type": "insight",
-                "label": "Show ServiceNow ticket in runbook output",
+                "label": "ServiceNow Incident Number",
                 "description": "",
                 "properties": {
-                    "x": 1444.7705204417337,
-                    "y": 320,
-                    "template": "<p>Device: <strong>{{variables[\"runtime.Aternity_EUEM_DEVICE_NAME\"]}}</strong></p>\n<p>ServiceNow Incident: <strong>{{variables[\"runtime.ServiceNow_Incident_Number\"]}}</strong>&nbsp;</p>",
+                    "x": 944.7705204417337,
+                    "y": 260,
+                    "template": "<p class=\"editor-paragraph\" dir=\"ltr\"><span style=\"white-space: pre-wrap;\">ServiceNow Incident: </span><b><strong class=\"editor-text-bold\" style=\"white-space: pre-wrap;\">{{variables[\"runtime.ServiceNow_Incident_Number\"]}}</strong></b><span style=\"white-space: pre-wrap;\">&nbsp;</span></p>",
                     "debug": false
                 },
                 "wires": []
@@ -420,20 +417,21 @@
                 "label": "Format Insight for ServiceNow",
                 "description": "",
                 "properties": {
-                    "x": 706.7705204417377,
+                    "x": 707.7705204417377,
                     "y": 380,
                     "variables": [
                         {
                             "name": "runtime.Insight"
                         }
                     ],
-                    "transformTemplate": "{\n\"runtime.Insight\": \"{{variables[\"runtime.SVG_CPU_MEM\"]}}\n{{variables[\"runtime.SVG_IO_DISK_QUEUE_LENGTH\"]}}{{variables[\"runtime.SVG_NPM_Traffic\"]}}\n{{variables[\"runtime.SVG_WIFI_Signal_Strength\"]}}\"\n}",
+                    "transformTemplate": "{\n\"runtime.Insight\": \"{{variables[\"runtime.SVG_CPU_MEM\"]}}\"\n}",
                     "debug": false
                 },
                 "wires": [
                     [
                         "0fda143d-dca4-40b5-831c-649a3f639dff",
-                        "ff80fb98-87ec-49e5-a64e-613efc9463df"
+                        "ff80fb98-87ec-49e5-a64e-613efc9463df",
+                        "fc71919e-ee3e-448e-b82f-a447cc28705d"
                     ]
                 ]
             },
@@ -507,12 +505,11 @@
                     "in": [
                         {
                             "inner": "subflow.RiverbedIQAssist_Connector",
-                            "method": "connector",
-                            "outer": "00000000-0000-0000-0000-000000000000"
+                            "method": "connector"
                         },
                         {
                             "inner": "subflow.Device_Name",
-                            "outer": "runtime.Aternity_EUEM_DEVICE_NAME",
+                            "outer": "runtime.User_Endpoint_Name",
                             "method": "runtime",
                             "isUnset": false
                         },
@@ -574,11 +571,25 @@
                         "c8bf7e15-8260-45aa-bd42-13422a070e1c"
                     ]
                 ]
+            },
+            {
+                "id": "13b1b112-d809-48d1-9cd1-9ba32329134b",
+                "isIntegrationSubflowNode": false,
+                "type": "insight",
+                "label": "Display Info",
+                "description": "",
+                "properties": {
+                    "x": 494,
+                    "y": 300,
+                    "template": "<p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">User Endpoint: </span><b><span style=\"white-space: pre-wrap;\"><strong class=\"editor-variable-inner\">{{variables[\"runtime.User_Endpoint_Name\"]}}</strong></span></b></p>",
+                    "debug": false
+                },
+                "wires": []
             }
         ],
         "lastUpdatedUser": "Runbook Export",
         "createdByUser": "Runbook Export",
-        "eTag": "W/\"datetime'2025-09-05T08%3A09%3A06.9516434Z'\"",
+        "eTag": "W/\"datetime'2025-10-17T09%3A52%3A27.2190221Z'\"",
         "variant": "incident",
         "seriesId": "68f0b3eb-0ac4-42c9-80f8-8d21d1575558",
         "version": "1.0",
@@ -609,5 +620,5 @@
             "sourcePackageId": "RiverbedIQAssist"
         }
     ],
-    "token": "qSxZdYTiMha3/TrNpzxB+cMegyl9i/SzkzL9ZIxDaYU="
+    "token": "eSK4TgsX9G15rhrzeTy/94HubwzAHUceCAyiVTA1Xp4="
 }

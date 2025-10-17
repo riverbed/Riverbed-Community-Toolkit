@@ -2,7 +2,7 @@
     "runbook": {
         "id": "50fd9889-2721-4b27-9b9b-0cfa20be1b69",
         "createdTime": "1760083595.725231700",
-        "lastUpdatedTime": "1760097591.864118300",
+        "lastUpdatedTime": "1760694326.150184000",
         "factoryResourceName": null,
         "isFactory": false,
         "name": "Riverbed IQ Assist for ServiceNow - Incident - Bring Your Own GenAI and Diagnose User Endpoint - Mistral AI",
@@ -163,14 +163,18 @@
                         },
                         {
                             "name": "runtime.ServiceNow_Configuration_Item_Sys_Id"
+                        },
+                        {
+                            "name": "runtime.User_Endpoint_Name"
                         }
                     ],
-                    "transformTemplate": "{\n\"runtime.ServiceNow_Incident_Sys_Id\": \"{{trigger[\"requestBody\"][\"recordID\"]}}\",\n\"runtime.ServiceNow_Configuration_Item\": \"{{trigger[\"requestBody\"][\"ciName\"]}}\",\n\"runtime.ServiceNow_Configuration_Item_Sys_Id\": \"{{trigger[\"requestBody\"][\"ciID\"]}}\",\n\"runtime.ServiceNow_Incident_Number\": \"{{trigger[\"requestBody\"][\"recordNumber\"]}}\"\n}",
+                    "transformTemplate": "{\n\"runtime.ServiceNow_Incident_Sys_Id\": \"{{trigger[\"requestBody\"][\"recordID\"]}}\",\n\"runtime.ServiceNow_Configuration_Item\": \"{{trigger[\"requestBody\"][\"ciName\"]}}\",\n\"runtime.ServiceNow_Configuration_Item_Sys_Id\": \"{{trigger[\"requestBody\"][\"ciID\"]}}\",\n\"runtime.ServiceNow_Incident_Number\": \"{{trigger[\"requestBody\"][\"recordNumber\"]}}\",\n\"runtime.User_Endpoint_Name\": \"{{trigger[\"requestBody\"][\"ciName\"]}}\",\n}",
                     "debug": true
                 },
                 "wires": [
                     [
-                        "c8a8c53b-47de-4aba-b1c9-bc8a5d78f8ae"
+                        "c8a8c53b-47de-4aba-b1c9-bc8a5d78f8ae",
+                        "cb08704c-23e6-4112-b43a-80d6e0cb663c"
                     ]
                 ]
             },
@@ -194,7 +198,8 @@
                 "wires": [
                     [
                         "5327c177-021a-46c9-a92c-225286ceca93",
-                        "b17379eb-e02f-4311-903e-9b6f6bcd640a"
+                        "b17379eb-e02f-4311-903e-9b6f6bcd640a",
+                        "a453ec3b-27f0-45cd-889f-5dbe81bb1c67"
                     ]
                 ]
             },
@@ -218,7 +223,7 @@
                         },
                         {
                             "inner": "subflow.Device_Name",
-                            "outer": "runtime.ServiceNow_Configuration_Item",
+                            "outer": "runtime.User_Endpoint_Name",
                             "method": "runtime",
                             "isUnset": false
                         }
@@ -506,7 +511,35 @@
                 "properties": {
                     "x": 50,
                     "y": 110,
-                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Riverbed IQ Assist for ServiceNow</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Runbook for Incident in ServiceNow: Diagnose User endpoint with your own GenAI / LLM - Mistral AI</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">version: 2025-10-10-5</span></p>",
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Riverbed IQ Assist for ServiceNow</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Runbook for Incident in ServiceNow: Diagnose User endpoint with your own GenAI / LLM - Mistral AI</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">version: 2025-10-17-2</span></p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "a453ec3b-27f0-45cd-889f-5dbe81bb1c67",
+                "isIntegrationSubflowNode": false,
+                "type": "insight",
+                "label": "Display Ticket Number info",
+                "description": "",
+                "properties": {
+                    "x": 1832,
+                    "y": 125,
+                    "template": "<p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">ServiceNow Incident Number: </span><span style=\"white-space: pre-wrap;\"><span class=\"editor-variable-inner\">{{variables[\"runtime.ServiceNow_Incident_Number\"]}}</span></span></p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "cb08704c-23e6-4112-b43a-80d6e0cb663c",
+                "isIntegrationSubflowNode": false,
+                "type": "insight",
+                "label": "Display Info",
+                "description": "",
+                "properties": {
+                    "x": 840,
+                    "y": 180,
+                    "template": "<p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">User Endpoint: </span><b><span style=\"white-space: pre-wrap;\"><strong class=\"editor-variable-inner\">{{variables[\"runtime.User_Endpoint_Name\"]}}</strong></span></b></p>",
                     "debug": false
                 },
                 "wires": []
@@ -514,7 +547,7 @@
         ],
         "lastUpdatedUser": "Runbook Export",
         "createdByUser": "Runbook Export",
-        "eTag": "W/\"datetime'2025-10-10T11%3A59%3A51.8800513Z'\"",
+        "eTag": "W/\"datetime'2025-10-17T09%3A45%3A26.1585552Z'\"",
         "variant": "incident",
         "seriesId": "50fd9889-2721-4b27-9b9b-0cfa20be1b69",
         "version": "1.0",
@@ -555,5 +588,5 @@
             "sourcePackageId": "MistralAI"
         }
     ],
-    "token": "Yc8XEerB+YzqE1BSgYksasvmM2zKNJQLoEAS6wwqyW0="
+    "token": "nRuuu9VELRGrZqNzWPbrLfuVb64enb6x+BRxq5pVQnk="
 }
