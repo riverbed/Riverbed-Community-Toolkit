@@ -2,11 +2,11 @@
     "runbook": {
         "id": "4e32a0e3-a25c-4b37-9a71-634af73ef29e",
         "createdTime": "1760780893.341745900",
-        "lastUpdatedTime": "1760784298.218806000",
+        "lastUpdatedTime": "1760784859.551435000",
         "factoryResourceName": null,
         "isFactory": false,
         "name": "Demo - IQ Assist - Create ITSM ticket with Endpoint Diagnosis",
-        "description": "Triggered by an Aternity ISD Alert or via Aternity IT Service Desk, the runbook diagnoses the user endpoint and creates an ITSM ticket enriched with an Insight. \nVersion: 2025-07-3",
+        "description": "Triggered by an Aternity ISD Alert or via Aternity IT Service Desk, the runbook diagnoses the user endpoint and creates an ITSM ticket enriched with an Insight. \nVersion: 2025-10",
         "isReady": true,
         "triggerType": "webhook",
         "runtimeVariables": {
@@ -120,7 +120,7 @@
                 "description": "",
                 "properties": {
                     "x": 369.6017972133959,
-                    "y": 310,
+                    "y": 345,
                     "triggerType": "webhook",
                     "timeReference": "RUNBOOK_EXECUTION",
                     "timeOffset": 900,
@@ -140,7 +140,7 @@
                 "description": "",
                 "properties": {
                     "x": 805.0000000000002,
-                    "y": 189.9999999999999,
+                    "y": 224.9999999999999,
                     "template": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">User Endpoint</strong></b><span style=\"white-space: pre-wrap;\">: {{variables[\"runtime.Device_Name\"]}}</span></p>",
                     "debug": false
                 },
@@ -154,7 +154,7 @@
                 "description": "",
                 "properties": {
                     "x": 1735.6431146863135,
-                    "y": 179.2613896700136,
+                    "y": 214.2613896700136,
                     "title": "IQ Assist Insight (using GenAI node)",
                     "row": "10",
                     "notes": "<p>{{variables[\"runtime.Insight_HTML\"]}}</p>",
@@ -170,7 +170,7 @@
                 "description": "Create an incident in ServiceNow and return the sys_id of the incident record for later updates.",
                 "properties": {
                     "x": 1734.6431146863138,
-                    "y": 309.2613896700137,
+                    "y": 344.2613896700137,
                     "debug": false,
                     "configurationId": "f90f2ec9-0577-445f-9bb1-4ec4c7a7e9a9",
                     "in": [
@@ -262,7 +262,7 @@
                 "description": "",
                 "properties": {
                     "x": 2163.95706988934,
-                    "y": 313.3715023292382,
+                    "y": 348.3715023292382,
                     "template": "<p><strong>ServiceNow Incident</strong>: {{variables[\"runtime.Number\"]}}</p>",
                     "debug": false
                 },
@@ -276,7 +276,7 @@
                 "description": "Update a ServiceNow incident.\nIf the incident was not updated, an error message will be returned.",
                 "properties": {
                     "x": 1947.9570698893394,
-                    "y": 323.3715023292384,
+                    "y": 358.3715023292384,
                     "debug": true,
                     "configurationId": "410968c4-4469-4b3f-8ed0-89619b41fd65",
                     "in": [
@@ -347,7 +347,7 @@
                 "description": "Parse the HTTP payload of a Service Desk Alert received via a webhook automation trigger and transform it for easier access in a runbook.",
                 "properties": {
                     "x": 580.601797213396,
-                    "y": 320,
+                    "y": 355,
                     "debug": false,
                     "configurationId": "c4c3f2f4-3414-49a3-8dd9-7baf1e202704",
                     "in": [
@@ -535,7 +535,7 @@
                 "description": "",
                 "properties": {
                     "x": 1238.0173164264577,
-                    "y": 299.64404506368976,
+                    "y": 334.64404506368976,
                     "instructions": "You are an end-user computing experts, specialist about endpoints especially Windows and Mac OS.\nYour role is to analyze recent health events that can impact the stability of the endpoint. Follow these instructions carefully:\n\n1. Adopt the persona of a professional, concise analyst specializing in troubleshooting performance issues related to endpoints, networks, and applications.\n2. Process the provided data thoroughly to analyze performance trends, metrics, and anomalies. Focus on identifying the **top 5 most relevant findings or anomalies** that are critical to performance.\n3. For each identified issue, include a brief but detailed summary explaining the finding, why it is important, and its potential impact on the system or user experience.\n4. Structure each finding as an itemized, numbered list within an HTML `<div>` tag to ensure easily readable output. Each item should clearly and concisely describe the issue while maintaining a professional tone.\n5. Ensure that the information is organized, unambiguous, and actionable for the person relying on it.\n\nHere is an example of the expected format for the HTML output:\n\"\"\"\n<div>\n    <p><b>Finding #1:</b> [Issue description]. <br><b>Explanation</b>: [Why this matters and the potential impact].</p>\n    <p><b>Finding #2:</b> [Issue description]. <br><b>Explanation</b>: [Why this matters and the potential impact].</p>\n    <p><b>Finding #3:</b> [Issue description]. <br><b>Explanation</b>: [Why this matters and the potential impact].</p>\n    <p><b>Finding #4:</b> [Issue description]. <br><b>Explanation</b>: [Why this matters and the potential impact].</p>\n    <p><b>Finding #5:</b> [Issue description]. <br><b>Explanation</b>: [Why this matters and the potential impact].</p>\n</div>\n<div>\n<p><small>AI-generated content</small></p>\n</div>\n\"\"\"\n\nOnly include the top 5 findings—no more, no less. Avoid redundancies and keep the focus on critical insights.",
                     "instructionsLocation": "enter",
                     "queryLocation": "$parent",
@@ -555,7 +555,7 @@
                 "description": "",
                 "properties": {
                     "x": 1498.0173164264577,
-                    "y": 299.64404506368976,
+                    "y": 334.64404506368976,
                     "variables": [
                         {
                             "name": "runtime.Insight_HTML"
@@ -582,7 +582,7 @@
                 "description": "",
                 "properties": {
                     "x": 58,
-                    "y": 290.00000000000006,
+                    "y": 325.00000000000006,
                     "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Prerequisites</strong></b></p><ul class=\"editor-list-ul\"><li dir=\"ltr\" class=\"editor-listitem\" value=\"1\"><span style=\"white-space: pre-wrap;\">Riverbed IQ Assist integration must be installed (see Integration Library) and opt-in</span></li><li dir=\"ltr\" class=\"editor-listitem\" value=\"2\"><span style=\"white-space: pre-wrap;\">ServiceNow integration must be installed and configured with a connector in Riverbed IQ.</span></li><li dir=\"ltr\" class=\"editor-listitem\" value=\"3\"><span style=\"white-space: pre-wrap;\">Aternity integration be installed (integration library). </span></li><li dir=\"ltr\" class=\"editor-listitem\" value=\"4\"><span style=\"white-space: pre-wrap;\">In Aternity, Intelligent Service Desk must be enabled (see Aternity Alerts)</span></li></ul><p dir=\"ltr\" class=\"editor-paragraph\"><br></p><p class=\"editor-paragraph\"><br></p><p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Setup</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Import the runbook and enable it in Riverbed IQ Automation,</span></p><ol class=\"editor-list-ol\"><li dir=\"ltr\" class=\"editor-listitem\" value=\"1\"><span style=\"white-space: pre-wrap;\">In Automation, open External Runbooks and import the runbook</span></li><li dir=\"ltr\" class=\"editor-listitem\" value=\"2\"><span style=\"white-space: pre-wrap;\">Enable Allow Automation</span></li></ol><p class=\"editor-paragraph\"><br></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">In Aternity EUEM, the runbook can be attached to an </span><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Intelligent Service Desk alert (ISD)</strong></b><span style=\"white-space: pre-wrap;\">. :</span></p><ol class=\"editor-list-ol\"><li dir=\"ltr\" class=\"editor-listitem\" value=\"1\"><span style=\"white-space: pre-wrap;\">Go to the Alerts page, and edit an existing or create a new ISD alert.</span></li><li dir=\"ltr\" class=\"editor-listitem\" value=\"2\"><span style=\"white-space: pre-wrap;\">In the Actions section, select this runbook from the drop-down.</span></li><li dir=\"ltr\" class=\"editor-listitem\" value=\"3\"><span style=\"white-space: pre-wrap;\">Test and save.</span></li></ol><p class=\"editor-paragraph\"><br></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">In Aternity EUEM, the runbook can be added to be available to operators using </span><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Aternity IT Service Desk</strong></b><span style=\"white-space: pre-wrap;\">. </span></p><ol class=\"editor-list-ol\"><li dir=\"ltr\" class=\"editor-listitem\" value=\"1\"><span style=\"white-space: pre-wrap;\">Go the the Runbooks page, and add the runbook</span></li><li dir=\"ltr\" class=\"editor-listitem\" value=\"2\"><span style=\"white-space: pre-wrap;\">Configure the following Parameters </span></li></ol><p class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">{</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">  \"alert_name\": \"Short Description\",</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">  \"alert_event_name\": \"Description\"</span></p><p class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">}</span></p><p class=\"editor-paragraph\"><br></p>",
                     "debug": false
                 },
@@ -595,8 +595,8 @@
                 "label": "Comment",
                 "description": "",
                 "properties": {
-                    "x": 61,
-                    "y": 135,
+                    "x": 51,
+                    "y": 50,
                     "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Riverbed IQ Assist for Aternity</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">\"Create ITSM ticket with Endpoint diagnosis\" triggered by ISD or IT Service Desk</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">version: 2025-10-18-1</span></p>",
                     "debug": false
                 },
@@ -610,7 +610,7 @@
                 "description": "",
                 "properties": {
                     "x": 351,
-                    "y": 400,
+                    "y": 435,
                     "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Payload example</strong></b></p><p class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">{</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">\"device_name\": \"Adam_Covert_WKS\",</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">\"alert_name\": \"Short Description\",</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">\"alert_event_name\": \"Description\"</span></p><p class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">}</span></p>",
                     "debug": false
                 },
@@ -624,7 +624,7 @@
                 "description": "This subflow takes one or more device names as a comma separated list and outputs User Device objects.",
                 "properties": {
                     "x": 795.3585509014063,
-                    "y": 307.79968068854436,
+                    "y": 342.79968068854436,
                     "debug": false,
                     "configurationId": "352073eb-8d20-4cab-9f7f-db36234a1f51",
                     "in": [
@@ -651,7 +651,7 @@
                 "description": "",
                 "properties": {
                     "x": 1004.3585509014063,
-                    "y": 307.79968068854436,
+                    "y": 342.79968068854436,
                     "objType": "aternity_device_health_events_hourly.traffic",
                     "timeSeries": false,
                     "limit": 10,
@@ -688,7 +688,7 @@
         ],
         "lastUpdatedUser": "Runbook Export",
         "createdByUser": "Runbook Export",
-        "eTag": "W/\"datetime'2025-10-18T10%3A44%3A58.2314889Z'\"",
+        "eTag": "W/\"datetime'2025-10-18T10%3A54%3A19.5619042Z'\"",
         "variant": "incident",
         "seriesId": "4e32a0e3-a25c-4b37-9a71-634af73ef29e",
         "version": "1.0",
@@ -739,5 +739,5 @@
             "sourcePackageId": "Aternity"
         }
     ],
-    "token": "czbImLwpntdoOFc/PYJy+VBAKzwlC8EFPG1btNBURws="
+    "token": "r4NcOz0CF5G60bOglIRrZmMhVU9zNQQmt0iO5HVXfSY="
 }
