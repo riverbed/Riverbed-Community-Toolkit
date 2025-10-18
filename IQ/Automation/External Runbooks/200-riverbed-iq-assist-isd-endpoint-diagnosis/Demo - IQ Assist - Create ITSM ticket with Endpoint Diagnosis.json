@@ -1,0 +1,743 @@
+{
+    "runbook": {
+        "id": "4e32a0e3-a25c-4b37-9a71-634af73ef29e",
+        "createdTime": "1760780893.341745900",
+        "lastUpdatedTime": "1760784298.218806000",
+        "factoryResourceName": null,
+        "isFactory": false,
+        "name": "Demo - IQ Assist - Create ITSM ticket with Endpoint Diagnosis",
+        "description": "Triggered by an Aternity ISD Alert or via Aternity IT Service Desk, the runbook diagnoses the user endpoint and creates an ITSM ticket enriched with an Insight. \nVersion: 2025-07-3",
+        "isReady": true,
+        "triggerType": "webhook",
+        "runtimeVariables": {
+            "primitiveVariables": [
+                {
+                    "type": "string",
+                    "defaultValue": "my-demo",
+                    "name": "runtime.EUE_ENV",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": "3",
+                    "name": "runtime.EUE_ACCOUNT_ID",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Insight_HTML",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Insight_ITSM",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Sys_Id",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Number",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Error_Message",
+                    "isReadonly": false
+                },
+                {
+                    "type": "boolean",
+                    "defaultValue": null,
+                    "name": "runtime.Successful",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Alert_Name",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Alert_Event_Name",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Device_Name",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Username",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.User_Email_Address",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.User_Domain",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Device_Type",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Device_Model",
+                    "isReadonly": false
+                }
+            ],
+            "structuredVariables": []
+        },
+        "subflowVariables": null,
+        "nodes": [
+            {
+                "id": "84462458-9309-4388-92ed-d9ad3cb7ac77",
+                "isIntegrationSubflowNode": false,
+                "type": "trigger",
+                "label": "Aternity ISD Alert",
+                "description": "",
+                "properties": {
+                    "x": 369.6017972133959,
+                    "y": 310,
+                    "triggerType": "webhook",
+                    "timeReference": "RUNBOOK_EXECUTION",
+                    "timeOffset": 900,
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "547b1960-349a-4445-9331-067f9b544cc6"
+                    ]
+                ]
+            },
+            {
+                "id": "bcf25d66-4c5c-4755-ba3c-46d8283e0f8a",
+                "isIntegrationSubflowNode": false,
+                "type": "insight",
+                "label": "Display Computer Details in IQ",
+                "description": "",
+                "properties": {
+                    "x": 805.0000000000002,
+                    "y": 189.9999999999999,
+                    "template": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">User Endpoint</strong></b><span style=\"white-space: pre-wrap;\">: {{variables[\"runtime.Device_Name\"]}}</span></p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "18304e8b-3c42-4bc6-a6b2-53ea60ac6a27",
+                "isIntegrationSubflowNode": false,
+                "type": "rvbd_ui_text",
+                "label": "Display Insight in IQ",
+                "description": "",
+                "properties": {
+                    "x": 1735.6431146863135,
+                    "y": 179.2613896700136,
+                    "title": "IQ Assist Insight (using GenAI node)",
+                    "row": "10",
+                    "notes": "<p>{{variables[\"runtime.Insight_HTML\"]}}</p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "e6a71206-56b1-4fca-bbd0-0a0782c96f87",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow",
+                "label": "ServiceNow: Create Incident",
+                "description": "Create an incident in ServiceNow and return the sys_id of the incident record for later updates.",
+                "properties": {
+                    "x": 1734.6431146863138,
+                    "y": 309.2613896700137,
+                    "debug": false,
+                    "configurationId": "f90f2ec9-0577-445f-9bb1-4ec4c7a7e9a9",
+                    "in": [
+                        {
+                            "inner": "subflow.Connector",
+                            "outer": "00000000-0000-0000-0000-000000000000",
+                            "method": "connector"
+                        },
+                        {
+                            "inner": "subflow.Short_Description",
+                            "outer": "runtime.Alert_Name",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Description",
+                            "outer": "runtime.Alert_Event_Name",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Category",
+                            "outer": "Inquiry / Help",
+                            "method": "static"
+                        },
+                        {
+                            "inner": "subflow.Subcategory",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.CMDB_CI",
+                            "outer": "runtime.Device_Name",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Location",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Urgency",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Impact",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Caller",
+                            "outer": "Riverbed IQ",
+                            "method": "static"
+                        },
+                        {
+                            "inner": "subflow.Additional_Fields",
+                            "outer": ""
+                        }
+                    ],
+                    "out": [
+                        {
+                            "inner": "subflow.Sys_Id",
+                            "outer": "runtime.Sys_Id",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Number",
+                            "outer": "runtime.Number",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Error_Message",
+                            "outer": "runtime.Error_Message",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Successful",
+                            "outer": "runtime.Successful",
+                            "method": "runtime"
+                        }
+                    ]
+                },
+                "wires": [
+                    [
+                        "6e895150-7bb3-4d87-a8c3-6e62a5952e46"
+                    ]
+                ]
+            },
+            {
+                "id": "ff8c54e6-535c-4ae7-879a-a4c04d5f6909",
+                "isIntegrationSubflowNode": false,
+                "type": "insight",
+                "label": "Display ServiceNow Ticket in IQ",
+                "description": "",
+                "properties": {
+                    "x": 2163.95706988934,
+                    "y": 313.3715023292382,
+                    "template": "<p><strong>ServiceNow Incident</strong>: {{variables[\"runtime.Number\"]}}</p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "6e895150-7bb3-4d87-a8c3-6e62a5952e46",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow",
+                "label": "Add insight to ServiceNow Incident",
+                "description": "Update a ServiceNow incident.\nIf the incident was not updated, an error message will be returned.",
+                "properties": {
+                    "x": 1947.9570698893394,
+                    "y": 323.3715023292384,
+                    "debug": true,
+                    "configurationId": "410968c4-4469-4b3f-8ed0-89619b41fd65",
+                    "in": [
+                        {
+                            "inner": "subflow.Connector",
+                            "outer": "00000000-0000-0000-0000-000000000000",
+                            "method": "connector"
+                        },
+                        {
+                            "inner": "subflow.Sys_Id",
+                            "outer": "runtime.Sys_Id",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Urgency",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Impact",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.State",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Work_Notes",
+                            "outer": "runtime.Insight_ITSM",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Close_Code",
+                            "outer": "",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Close_Notes",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Caller",
+                            "outer": ""
+                        }
+                    ],
+                    "out": [
+                        {
+                            "inner": "subflow.Error_Message",
+                            "outer": "runtime.Error_Message",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Successful",
+                            "outer": ""
+                        }
+                    ]
+                },
+                "wires": [
+                    [
+                        "ff8c54e6-535c-4ae7-879a-a4c04d5f6909"
+                    ]
+                ]
+            },
+            {
+                "id": "547b1960-349a-4445-9331-067f9b544cc6",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow",
+                "label": "Aternity: Parse Service Desk Alert",
+                "description": "Parse the HTTP payload of a Service Desk Alert received via a webhook automation trigger and transform it for easier access in a runbook.",
+                "properties": {
+                    "x": 580.601797213396,
+                    "y": 320,
+                    "debug": false,
+                    "configurationId": "c4c3f2f4-3414-49a3-8dd9-7baf1e202704",
+                    "in": [
+                        {
+                            "inner": "subflow.Aternity_Connector",
+                            "method": "connector"
+                        },
+                        {
+                            "inner": "subflow.Service_Desk_Alert_JSON",
+                            "outer": "$trigger.requestBody",
+                            "method": "trigger"
+                        }
+                    ],
+                    "out": [
+                        {
+                            "inner": "subflow.Account_ID",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Account_Name",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Alert_ID",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Alert_Name",
+                            "outer": "runtime.Alert_Name",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Alert_Event_Name",
+                            "outer": "runtime.Alert_Event_Name",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Alert_Timestamp_Epoch",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Alert_Timestamp",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Urgency",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Impact",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Category",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Identifier",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Last_Event_Details",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Last_Event_Timestamp_Epoch",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Last_Event_Timestamp",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Device_Name",
+                            "outer": "runtime.Device_Name",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Device_Type",
+                            "outer": "runtime.Device_Type",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Device_Manufacturer",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Device_Model",
+                            "outer": "runtime.Device_Model",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Device_Memory",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Device_CPU_Cores",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Device_CPU_Frequency",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Device_Last_Booted_Epoch",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Device_Last_Booted",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Username",
+                            "outer": "runtime.Username",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.User_Domain",
+                            "outer": "runtime.User_Domain",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.User_Department",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.User_Email_Address",
+                            "outer": "runtime.User_Email_Address",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.User_Title",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.OS_Name",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Subnet",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Business_Location",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Custom_Attribute_1",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Custom_Attribute_2",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Custom_Attribute_3",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Custom_Attribute_4",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Custom_Attribute_5",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Custom_Attribute_6",
+                            "outer": ""
+                        }
+                    ]
+                },
+                "wires": [
+                    [
+                        "bcf25d66-4c5c-4755-ba3c-46d8283e0f8a",
+                        "74545cd4-0740-412e-b0d7-dfe13b7e6d51"
+                    ]
+                ]
+            },
+            {
+                "id": "5fd53d3d-2441-4410-a9a2-472ebbddd069",
+                "isIntegrationSubflowNode": false,
+                "type": "genai",
+                "label": "IQ Assist: Diagnose Health Events (GenAI)",
+                "description": "",
+                "properties": {
+                    "x": 1238.0173164264577,
+                    "y": 299.64404506368976,
+                    "instructions": "You are an end-user computing experts, specialist about endpoints especially Windows and Mac OS.\nYour role is to analyze recent health events that can impact the stability of the endpoint. Follow these instructions carefully:\n\n1. Adopt the persona of a professional, concise analyst specializing in troubleshooting performance issues related to endpoints, networks, and applications.\n2. Process the provided data thoroughly to analyze performance trends, metrics, and anomalies. Focus on identifying the **top 5 most relevant findings or anomalies** that are critical to performance.\n3. For each identified issue, include a brief but detailed summary explaining the finding, why it is important, and its potential impact on the system or user experience.\n4. Structure each finding as an itemized, numbered list within an HTML `<div>` tag to ensure easily readable output. Each item should clearly and concisely describe the issue while maintaining a professional tone.\n5. Ensure that the information is organized, unambiguous, and actionable for the person relying on it.\n\nHere is an example of the expected format for the HTML output:\n\"\"\"\n<div>\n    <p><b>Finding #1:</b> [Issue description]. <br><b>Explanation</b>: [Why this matters and the potential impact].</p>\n    <p><b>Finding #2:</b> [Issue description]. <br><b>Explanation</b>: [Why this matters and the potential impact].</p>\n    <p><b>Finding #3:</b> [Issue description]. <br><b>Explanation</b>: [Why this matters and the potential impact].</p>\n    <p><b>Finding #4:</b> [Issue description]. <br><b>Explanation</b>: [Why this matters and the potential impact].</p>\n    <p><b>Finding #5:</b> [Issue description]. <br><b>Explanation</b>: [Why this matters and the potential impact].</p>\n</div>\n<div>\n<p><small>AI-generated content</small></p>\n</div>\n\"\"\"\n\nOnly include the top 5 findings—no more, no less. Avoid redundancies and keep the focus on critical insights.",
+                    "instructionsLocation": "enter",
+                    "queryLocation": "$parent",
+                    "debug": true
+                },
+                "wires": [
+                    [
+                        "c55d3e7d-52ad-4987-8280-a29da905b13a"
+                    ]
+                ]
+            },
+            {
+                "id": "c55d3e7d-52ad-4987-8280-a29da905b13a",
+                "isIntegrationSubflowNode": false,
+                "type": "set_primitive_variables",
+                "label": "Format Insight Health Events",
+                "description": "",
+                "properties": {
+                    "x": 1498.0173164264577,
+                    "y": 299.64404506368976,
+                    "variables": [
+                        {
+                            "name": "runtime.Insight_HTML"
+                        },
+                        {
+                            "name": "runtime.Insight_ITSM"
+                        }
+                    ],
+                    "transformTemplate": "{% assign title = \"<b>Health Events on \" | append: variables[\"runtime.Device_Name\"] | append: \"</b><br>\" %}\n{% assign html_string = node_input.output.data[0].keys['gen_ai.response'] | replace: '```html', \"\" | replace: '```', \"\" | replace: '\\n', \"\" | replace: '\\\"', \"&quot;\" | prepend: title %}\n{\n    \"runtime.Insight_HTML\": \"{{ html_string }}\",\n    \"runtime.Insight_ITSM\": \"[code] {{ html_string }}\"\n}",
+                    "debug": true
+                },
+                "wires": [
+                    [
+                        "18304e8b-3c42-4bc6-a6b2-53ea60ac6a27",
+                        "e6a71206-56b1-4fca-bbd0-0a0782c96f87"
+                    ]
+                ]
+            },
+            {
+                "id": "547ce06f-2660-47c4-b634-1b41b2808ebe",
+                "isIntegrationSubflowNode": false,
+                "type": "comment",
+                "label": "Comment Setup Notes",
+                "description": "",
+                "properties": {
+                    "x": 58,
+                    "y": 290.00000000000006,
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Prerequisites</strong></b></p><ul class=\"editor-list-ul\"><li dir=\"ltr\" class=\"editor-listitem\" value=\"1\"><span style=\"white-space: pre-wrap;\">Riverbed IQ Assist integration must be installed (see Integration Library) and opt-in</span></li><li dir=\"ltr\" class=\"editor-listitem\" value=\"2\"><span style=\"white-space: pre-wrap;\">ServiceNow integration must be installed and configured with a connector in Riverbed IQ.</span></li><li dir=\"ltr\" class=\"editor-listitem\" value=\"3\"><span style=\"white-space: pre-wrap;\">Aternity integration be installed (integration library). </span></li><li dir=\"ltr\" class=\"editor-listitem\" value=\"4\"><span style=\"white-space: pre-wrap;\">In Aternity, Intelligent Service Desk must be enabled (see Aternity Alerts)</span></li></ul><p dir=\"ltr\" class=\"editor-paragraph\"><br></p><p class=\"editor-paragraph\"><br></p><p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Setup</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Import the runbook and enable it in Riverbed IQ Automation,</span></p><ol class=\"editor-list-ol\"><li dir=\"ltr\" class=\"editor-listitem\" value=\"1\"><span style=\"white-space: pre-wrap;\">In Automation, open External Runbooks and import the runbook</span></li><li dir=\"ltr\" class=\"editor-listitem\" value=\"2\"><span style=\"white-space: pre-wrap;\">Enable Allow Automation</span></li></ol><p class=\"editor-paragraph\"><br></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">In Aternity EUEM, the runbook can be attached to an </span><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Intelligent Service Desk alert (ISD)</strong></b><span style=\"white-space: pre-wrap;\">. :</span></p><ol class=\"editor-list-ol\"><li dir=\"ltr\" class=\"editor-listitem\" value=\"1\"><span style=\"white-space: pre-wrap;\">Go to the Alerts page, and edit an existing or create a new ISD alert.</span></li><li dir=\"ltr\" class=\"editor-listitem\" value=\"2\"><span style=\"white-space: pre-wrap;\">In the Actions section, select this runbook from the drop-down.</span></li><li dir=\"ltr\" class=\"editor-listitem\" value=\"3\"><span style=\"white-space: pre-wrap;\">Test and save.</span></li></ol><p class=\"editor-paragraph\"><br></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">In Aternity EUEM, the runbook can be added to be available to operators using </span><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Aternity IT Service Desk</strong></b><span style=\"white-space: pre-wrap;\">. </span></p><ol class=\"editor-list-ol\"><li dir=\"ltr\" class=\"editor-listitem\" value=\"1\"><span style=\"white-space: pre-wrap;\">Go the the Runbooks page, and add the runbook</span></li><li dir=\"ltr\" class=\"editor-listitem\" value=\"2\"><span style=\"white-space: pre-wrap;\">Configure the following Parameters </span></li></ol><p class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">{</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">  \"alert_name\": \"Short Description\",</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">  \"alert_event_name\": \"Description\"</span></p><p class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">}</span></p><p class=\"editor-paragraph\"><br></p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "cd8b22d4-7974-4a92-8365-44da8d037e31",
+                "isIntegrationSubflowNode": false,
+                "type": "comment",
+                "label": "Comment",
+                "description": "",
+                "properties": {
+                    "x": 61,
+                    "y": 135,
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Riverbed IQ Assist for Aternity</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">\"Create ITSM ticket with Endpoint diagnosis\" triggered by ISD or IT Service Desk</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">version: 2025-10-18-1</span></p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "998f6e5a-3361-4658-af33-56652d45e85e",
+                "isIntegrationSubflowNode": false,
+                "type": "comment",
+                "label": "Comment 2",
+                "description": "",
+                "properties": {
+                    "x": 351,
+                    "y": 400,
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Payload example</strong></b></p><p class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">{</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">\"device_name\": \"Adam_Covert_WKS\",</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">\"alert_name\": \"Short Description\",</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">\"alert_event_name\": \"Description\"</span></p><p class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">}</span></p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "74545cd4-0740-412e-b0d7-dfe13b7e6d51",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow",
+                "label": "Fetch User Endpoint (Aternity EUEM)",
+                "description": "This subflow takes one or more device names as a comma separated list and outputs User Device objects.",
+                "properties": {
+                    "x": 795.3585509014063,
+                    "y": 307.79968068854436,
+                    "debug": false,
+                    "configurationId": "352073eb-8d20-4cab-9f7f-db36234a1f51",
+                    "in": [
+                        {
+                            "inner": "subflow.Device_Name_List",
+                            "outer": "runtime.Device_Name",
+                            "method": "runtime",
+                            "isUnset": false
+                        }
+                    ],
+                    "out": []
+                },
+                "wires": [
+                    [
+                        "f08940b8-6874-41ea-8c41-7334de8f1ef5"
+                    ]
+                ]
+            },
+            {
+                "id": "f08940b8-6874-41ea-8c41-7334de8f1ef5",
+                "isIntegrationSubflowNode": false,
+                "type": "data_ocean_dynamic",
+                "label": "Fetch Health Events (Data Store)",
+                "description": "",
+                "properties": {
+                    "x": 1004.3585509014063,
+                    "y": 307.79968068854436,
+                    "objType": "aternity_device_health_events_hourly.traffic",
+                    "timeSeries": false,
+                    "limit": 10,
+                    "topBy": [
+                        {
+                            "id": "sum_unique_health_events",
+                            "direction": "desc"
+                        }
+                    ],
+                    "groupBy": [
+                        "health_event_name",
+                        "health_event_severity",
+                        "health_event_status",
+                        "health_event_category",
+                        "health_event_sub_category",
+                        "health_event_component",
+                        "health_event_details",
+                        "health_event_last_timestamp"
+                    ],
+                    "duration": 604800,
+                    "filters": {
+                        "userDevice": [
+                            "$node:74545cd4-0740-412e-b0d7-dfe13b7e6d51.user_device"
+                        ]
+                    },
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "5fd53d3d-2441-4410-a9a2-472ebbddd069"
+                    ]
+                ]
+            }
+        ],
+        "lastUpdatedUser": "Runbook Export",
+        "createdByUser": "Runbook Export",
+        "eTag": "W/\"datetime'2025-10-18T10%3A44%3A58.2314889Z'\"",
+        "variant": "incident",
+        "seriesId": "4e32a0e3-a25c-4b37-9a71-634af73ef29e",
+        "version": "1.0",
+        "otherVersions": null,
+        "isScheduled": false,
+        "isValidated": true,
+        "isProprietary": false
+    },
+    "dependencies": [
+        {
+            "id": "f90f2ec9-0577-445f-9bb1-4ec4c7a7e9a9",
+            "type": "subflow",
+            "name": "ServiceNow: Create Incident",
+            "globalId": "ServiceNow::Create_Incident",
+            "originalVersion": "3.0.1",
+            "nodeLabel": "ServiceNow: Create Incident",
+            "sourceLocation": "integrationLibrary",
+            "sourcePackageId": "ServiceNow"
+        },
+        {
+            "id": "410968c4-4469-4b3f-8ed0-89619b41fd65",
+            "type": "subflow",
+            "name": "ServiceNow: Update Incident",
+            "globalId": "ServiceNow::Update_Incident",
+            "originalVersion": "3.0.0",
+            "nodeLabel": "Add insight to ServiceNow Incident",
+            "sourceLocation": "integrationLibrary",
+            "sourcePackageId": "ServiceNow"
+        },
+        {
+            "id": "c4c3f2f4-3414-49a3-8dd9-7baf1e202704",
+            "type": "subflow",
+            "name": "Aternity: Parse Service Desk Alert",
+            "globalId": "Aternity::Parse_Service_Desk_Alert",
+            "originalVersion": "2.0.1",
+            "nodeLabel": "Aternity: Parse Service Desk Alert",
+            "sourceLocation": "integrationLibrary",
+            "sourcePackageId": "Aternity"
+        },
+        {
+            "id": "352073eb-8d20-4cab-9f7f-db36234a1f51",
+            "type": "subflow",
+            "name": "Aternity: Create User Device",
+            "globalId": "Aternity::Create_User_Device",
+            "originalVersion": "1.0.2",
+            "nodeLabel": "Fetch User Endpoint (Aternity EUEM)",
+            "sourceLocation": "integrationLibrary",
+            "sourcePackageId": "Aternity"
+        }
+    ],
+    "token": "czbImLwpntdoOFc/PYJy+VBAKzwlC8EFPG1btNBURws="
+}
