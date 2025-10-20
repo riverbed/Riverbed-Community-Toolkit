@@ -1,7 +1,8 @@
 # Riverbed IQ Assist for ServiceNow - Incident - Diagnose User Endpoint
 
 The runbook [Riverbed IQ Assist for ServiceNow - Incident - Diagnose User Endpoint](./Riverbed%20IQ%20Assist%20for%20ServiceNow%20-%20Incident%20-%20Diagnose%20User%20Endpoint.json) can be used as-is for Incidents assistance with Riverbed IQ Assist for ServiceNow.
-When triggered from ServiceNow, the runbook diagnoses the end-user endpoint and updates the incident ticket.
+
+When triggered from ServiceNow, the runbook diagnoses the user endpoint based on the Configuration Item (CI), and enriches the incident ticket.
 
 ## Prerequisites
 
