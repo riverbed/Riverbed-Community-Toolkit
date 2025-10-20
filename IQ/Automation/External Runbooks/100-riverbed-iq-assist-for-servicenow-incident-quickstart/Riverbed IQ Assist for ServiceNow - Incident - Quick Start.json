@@ -2,7 +2,7 @@
     "runbook": {
         "id": "db8e0fd0-8ea7-4433-98bd-d93ada11d815",
         "createdTime": "1760697733.241103000",
-        "lastUpdatedTime": "1760726441.222492600",
+        "lastUpdatedTime": "1760955393.199825600",
         "factoryResourceName": null,
         "isFactory": false,
         "name": "Riverbed IQ Assist for ServiceNow - Incident - Quick Start",
@@ -99,7 +99,7 @@
                 "properties": {
                     "x": 50,
                     "y": 430,
-                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Riverbed IQ Assist for ServiceNow</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Runbook for Incident in ServiceNow: Quick Start for diagnosing the user endpoint.</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">version: 2025-10-17-7</span></p>",
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Riverbed IQ Assist for ServiceNow</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Runbook for Incident in ServiceNow: Quick Start for diagnosing the user endpoint.</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">version: 2025-10-20-1</span></p>",
                     "debug": false
                 },
                 "wires": []
@@ -464,7 +464,7 @@
                             "id": "o08178",
                             "passedData": "MATCHED",
                             "expression": {
-                                "id": "o7912",
+                                "id": "o5957",
                                 "type": "block",
                                 "operation": "AND",
                                 "conditions": [
@@ -474,7 +474,7 @@
                                         "category": "input.rows",
                                         "key": "count",
                                         "op": "GT",
-                                        "value": "1"
+                                        "value": "0"
                                     }
                                 ]
                             },
@@ -592,7 +592,7 @@
         ],
         "lastUpdatedUser": "Runbook Export",
         "createdByUser": "Runbook Export",
-        "eTag": "W/\"datetime'2025-10-17T18%3A40%3A41.2307777Z'\"",
+        "eTag": "W/\"datetime'2025-10-20T10%3A16%3A33.2102759Z'\"",
         "variant": "incident",
         "seriesId": "db8e0fd0-8ea7-4433-98bd-d93ada11d815",
         "version": "1.0",
@@ -643,5 +643,5 @@
             "sourcePackageId": "ServiceNow"
         }
     ],
-    "token": "+m5CcMvpOF9BP68ZefRapfu8wyArkS/zZOusStULqig="
+    "token": "qlPOQXeijL8ywAA8x/FUijjx+q8HKw04rct/Ffpo6eg="
 }
