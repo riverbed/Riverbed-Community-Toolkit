@@ -1,8 +1,8 @@
-# Riverbed IQ Assist for ServiceNow - Incident - Diagnose User Endpoint
+# Riverbed IQ Assist for ServiceNow - Incident - Find Caller Endpoint
 
-The runbook [Riverbed IQ Assist for ServiceNow - Incident - Diagnose User Endpoint](./Riverbed%20IQ%20Assist%20for%20ServiceNow%20-%20Incident%20-%20Diagnose%20User%20Endpoint.json) can be used as-is for Incidents assistance with Riverbed IQ Assist for ServiceNow.
+The runbook [Riverbed IQ Assist for ServiceNow - Incident - Find Caller Endpoint](./Riverbed%20IQ%20Assist%20for%20ServiceNow%20-%20Incident%20-%20Find%20Caller%20Endpoint.json) can be used as-is for Incidents assistance with Riverbed IQ Assist for ServiceNow.
 
-When triggered from ServiceNow, the runbook diagnoses the user endpoint based on the Configuration Item (CI), and enriches the incident ticket.
+When triggered from ServiceNow, the runbook search the endpoints or devices of the caller and enriches the incident ticket with the result.
 
 ## Prerequisites
 
@@ -17,7 +17,7 @@ When triggered from ServiceNow, the runbook diagnoses the user endpoint based on
 
 ## Quick Setup
 
-After downloading the [runbook file](./Riverbed%20IQ%20Assist%20for%20ServiceNow%20-%20Incident%20-%20Diagnose%20User%20Endpoint.json), go to IQ Automation, import the runbook in the External Runbooks. And toggle "Allow Automation" on.
+After downloading the [runbook file](./Riverbed%20IQ%20Assist%20for%20ServiceNow%20-%20Incident%20-%20Find%20Caller%20Endpoint.json), go to IQ Automation, import the runbook in the External Runbooks. And toggle "Allow Automation" on.
 
 ### License
 
