@@ -2,11 +2,11 @@
     "runbook": {
         "id": "9478d2fe-9bf4-4c3d-adee-53897b21410d",
         "createdTime": "1761291982.217380600",
-        "lastUpdatedTime": "1761293055.773627100",
+        "lastUpdatedTime": "1761552041.670079800",
         "factoryResourceName": null,
         "isFactory": false,
         "name": "Riverbed IQ Assist for ServiceNow - Incident - Diagnose User Endpoint from Incident Custom Field",
-        "description": "Triggered in the context of an Incident in ServiceNow, the runbook will find the user endpoint from an incident custom field, and enrich the incident record with a diagnostic insight.",
+        "description": "Triggered in the context of an Incident in ServiceNow, the runbook will find the user endpoint from a custom field, and enrich the incident record with a diagnostic insight.",
         "isReady": true,
         "triggerType": "webhook",
         "runtimeVariables": {
@@ -232,6 +232,12 @@
                     "defaultValue": null,
                     "name": "runtime.Suggested_User_Device",
                     "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": "x_atern_incident_user_device",
+                    "name": "runtime.ServiceNow_Incident_Custom_Fields",
+                    "isReadonly": false
                 }
             ],
             "structuredVariables": []
@@ -267,7 +273,7 @@
                 "properties": {
                     "x": 228,
                     "y": 770,
-                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Prerequisites</strong></b></p><ul class=\"editor-list-ul\"><li dir=\"ltr\" class=\"editor-listitem\" value=\"1\"><span style=\"white-space: pre-wrap;\">ServiceNow</span></li></ul><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">&nbsp; - Riverbed IQ Assist app is installed and configured.</span></p><ul class=\"editor-list-ul\"><li dir=\"ltr\" class=\"editor-listitem\" value=\"1\"><span style=\"white-space: pre-wrap;\">Riverbed IQ (AIOps)</span></li></ul><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">&nbsp; - IQ Assist opt-in is enabled and the integration is configured.</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">&nbsp; - Aternity integration is configured.</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">&nbsp; - ServiceNow integration is configured, with a connector for Riverbed IQ Assist enabled.</span></p><p class=\"editor-paragraph\"><br></p><p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Setup</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">This runbook can be installed in Riverbed IQ as follows:</span></p><ol class=\"editor-list-ol\"><li dir=\"ltr\" class=\"editor-listitem\" value=\"1\"><span style=\"white-space: pre-wrap;\">Import this runbook file from the </span><i><em style=\"white-space: pre-wrap;\" class=\"editor-text-italic\">External Runbooks</em></i><span style=\"white-space: pre-wrap;\"> page. Make sure to select connectors in the import dialog.</span></li><li dir=\"ltr\" class=\"editor-listitem\" value=\"2\"><span style=\"white-space: pre-wrap;\">Enable </span><i><em style=\"white-space: pre-wrap;\" class=\"editor-text-italic\">Allow Automation</em></i><span style=\"white-space: pre-wrap;\"> on the imported runbook in the </span><i><em style=\"white-space: pre-wrap;\" class=\"editor-text-italic\">External Runbooks</em></i><span style=\"white-space: pre-wrap;\"> page.&nbsp;</span></li><li dir=\"ltr\" class=\"editor-listitem\" value=\"3\"><span style=\"white-space: pre-wrap;\">Create automation rule to link a webhook call to this runbook.</span></li><li dir=\"ltr\" class=\"editor-listitem\" value=\"4\"><span style=\"white-space: pre-wrap;\">Make sure ServiceNow app is configured with the appropriate webhook URL.</span></li></ol>",
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Prerequisites</strong></b></p><ul class=\"editor-list-ul\"><li dir=\"ltr\" class=\"editor-listitem\" value=\"1\"><span style=\"white-space: pre-wrap;\">ServiceNow</span></li></ul><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">&nbsp; - Riverbed IQ Assist app is installed and configured.</span></p><ul class=\"editor-list-ul\"><li dir=\"ltr\" class=\"editor-listitem\" value=\"1\"><span style=\"white-space: pre-wrap;\">Riverbed IQ (AIOps)</span></li></ul><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">&nbsp; - IQ Assist opt-in is enabled and the integration is configured.</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">&nbsp; - Aternity integration is configured.</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">&nbsp; - ServiceNow integration is configured, with a connector for Riverbed IQ Assist enabled.</span></p><p class=\"editor-paragraph\"><br></p><p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Setup</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">This runbook can be installed in Riverbed IQ as follows:</span></p><ol class=\"editor-list-ol\"><li dir=\"ltr\" class=\"editor-listitem\" value=\"1\"><span style=\"white-space: pre-wrap;\">Import this runbook file from the </span><i><em style=\"white-space: pre-wrap;\" class=\"editor-text-italic\">External Runbooks</em></i><span style=\"white-space: pre-wrap;\"> page. Make sure to select connectors in the import dialog.</span></li><li dir=\"ltr\" class=\"editor-listitem\" value=\"2\"><span style=\"white-space: pre-wrap;\">Enable </span><i><em style=\"white-space: pre-wrap;\" class=\"editor-text-italic\">Allow Automation</em></i><span style=\"white-space: pre-wrap;\"> on the imported runbook in the </span><i><em style=\"white-space: pre-wrap;\" class=\"editor-text-italic\">External Runbooks</em></i><span style=\"white-space: pre-wrap;\"> page.&nbsp;</span></li><li dir=\"ltr\" class=\"editor-listitem\" value=\"3\"><span style=\"white-space: pre-wrap;\">Create automation rule to link a webhook call to this runbook.</span></li><li dir=\"ltr\" class=\"editor-listitem\" value=\"4\"><span style=\"white-space: pre-wrap;\">Make sure ServiceNow app is configured with the appropriate webhook URL.</span></li></ol><p class=\"editor-paragraph\"><br></p><p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Configure Custom Fields</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Edit the runbook variables and configure the Default value of the variable ServiceNow_Incident_Custom_Fields. </span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Set the name of the custom field to be fetched from the Incident record in ServiceNow, for example: \"yourfield1\" (at runtime, the output of the ServiceNow Get Incident Details node will contain the value in the entity output property Custom1)</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><br></p>",
                     "debug": false
                 },
                 "wires": []
@@ -279,7 +285,7 @@
                 "label": "Extract Incident Basic Info",
                 "description": "",
                 "properties": {
-                    "x": 419.8185145156033,
+                    "x": 461.8185145156033,
                     "y": 397.71056093170466,
                     "variables": [
                         {
@@ -302,7 +308,7 @@
                         }
                     ],
                     "transformTemplate": "{\n    \"runtime.ServiceNow_API_Base_URL\" : \"https://{{variables[\"runtime.ServiceNow_ENV\"]}}.service-now.com\",\n    \"runtime.ServiceNow_Incident_Sys_Id\": \"{{trigger[\"requestBody\"][\"recordID\"]}}\",\n    \"runtime.ServiceNow_User_Data\": \"{{trigger[\"requestBody\"][\"user\"]}}\",\n    \"runtime.ServiceNow_Configuration_Item\": \"{{trigger[\"requestBody\"][\"ciName\"]}}\",\n    \"runtime.ServiceNow_Configuration_Item_Sys_Id\": \"{{trigger[\"requestBody\"][\"ciID\"]}}\",\n    \"runtime.ServiceNow_Incident_Number\": \"{{trigger[\"requestBody\"][\"recordNumber\"]}}\"\n}\n",
-                    "debug": true
+                    "debug": false
                 },
                 "wires": [
                     [
@@ -319,7 +325,7 @@
                 "properties": {
                     "x": 229,
                     "y": 490,
-                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Riverbed IQ Assist for ServiceNow</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Runbook for Incident in ServiceNow: Diagnose User Endpoint from Incident Custom Field</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">version: 2025-10-24</span></p>",
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Riverbed IQ Assist for ServiceNow</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Runbook for Incident in ServiceNow: Diagnose User Endpoint from Incident Custom Field</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">version: 2025-10-27-2</span></p>",
                     "debug": false
                 },
                 "wires": []
@@ -679,8 +685,8 @@
                 },
                 "wires": [
                     [
-                        "20829265-d406-427b-bfda-74b371d2c196",
-                        "7d3a7296-44da-4f29-bf4f-87f579f5696e"
+                        "7d3a7296-44da-4f29-bf4f-87f579f5696e",
+                        "ab937ac1-c525-40b1-a783-b6224c86b755"
                     ]
                 ]
             },
@@ -691,7 +697,7 @@
                 "label": "Get inventory details (Data Store)",
                 "description": "",
                 "properties": {
-                    "x": 1489.7964187882017,
+                    "x": 1773.7964187882017,
                     "y": 400,
                     "objType": "aternity_device_inventory.traffic",
                     "timeSeries": false,
@@ -714,7 +720,7 @@
                 },
                 "wires": [
                     [
-                        "ab937ac1-c525-40b1-a783-b6224c86b755"
+                        "8f867e03-1735-4570-852b-b2f4ced3d458"
                     ]
                 ]
             },
@@ -727,8 +733,8 @@
                 "properties": {
                     "x": 738.7508315445839,
                     "y": 400,
-                    "debug": true,
-                    "configurationId": "3eb3f06e-4d0f-4f35-8197-7895de70a265",
+                    "debug": false,
+                    "configurationId": "c72fa9e8-fc68-40ab-a20e-62a930940a61",
                     "in": [
                         {
                             "inner": "subflow.ServiceNow_Connector",
@@ -747,6 +753,11 @@
                             "outer": "runtime.ServiceNow_Incident_Sys_Id",
                             "method": "runtime",
                             "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Custom_Fields",
+                            "outer": "runtime.ServiceNow_Incident_Custom_Fields",
+                            "method": "runtime"
                         }
                     ],
                     "out": [
@@ -805,7 +816,7 @@
                 "label": "Found?",
                 "description": "",
                 "properties": {
-                    "x": 1716.509247993817,
+                    "x": 1477.509247993817,
                     "y": 400,
                     "dataType": "SUMMARY",
                     "inputType": "aternity_device_inventory.traffic",
@@ -855,7 +866,7 @@
                 },
                 "wires": [
                     [
-                        "8f867e03-1735-4570-852b-b2f4ced3d458"
+                        "20829265-d406-427b-bfda-74b371d2c196"
                     ],
                     [
                         "1dfe1b8b-bcac-4ef0-a26c-ed60a0b8b040",
@@ -878,7 +889,8 @@
                         {
                             "inner": "subflow.Connector",
                             "outer": "00000000-0000-0000-0000-000000000000",
-                            "method": "connector"
+                            "method": "connector",
+                            "isUnset": false
                         },
                         {
                             "inner": "subflow.Record_Type",
@@ -943,7 +955,7 @@
                 "id": "41289d27-6f06-4426-85ea-581916a284a1",
                 "isIntegrationSubflowNode": false,
                 "type": "set_primitive_variables",
-                "label": "Extract Incident Custom Field (Endpoint)",
+                "label": "Extract Endpoint Name from Incident Custom Field (Endpoint)",
                 "description": "",
                 "properties": {
                     "x": 1000.2558208120836,
@@ -953,7 +965,7 @@
                             "name": "runtime.User_Endpoint_Name"
                         }
                     ],
-                    "transformTemplate": "{\n\"runtime.User_Endpoint_Name\": \"valueOfVariable{{node_input.output[\"data\"][0].keys[\"Custom1\"]}}\"\n}",
+                    "transformTemplate": "{\n\"runtime.User_Endpoint_Name\": \"{{node_input.output[\"data\"][0].keys[\"Custom1\"]}}\"\n}",
                     "debug": false
                 },
                 "wires": [
@@ -961,25 +973,11 @@
                         "b015071c-9c7e-4a8d-9bea-be3365337436"
                     ]
                 ]
-            },
-            {
-                "id": "26bac37f-bfd5-4ff3-a8b4-54b8e7307c33",
-                "isIntegrationSubflowNode": false,
-                "type": "comment",
-                "label": "Comment",
-                "description": "",
-                "properties": {
-                    "x": 689.7508315445839,
-                    "y": 100,
-                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Customization</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Select the custom field to fetch from the Incident record in ServiceNow and map to an entity output property</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">For example:</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">* Custom field: x_atern_incident_user_device</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">* Property: Custom1</span></p>",
-                    "debug": false
-                },
-                "wires": []
             }
         ],
         "lastUpdatedUser": "Runbook Export",
         "createdByUser": "Runbook Export",
-        "eTag": "W/\"datetime'2025-10-24T08%3A04%3A15.777255Z'\"",
+        "eTag": "W/\"datetime'2025-10-27T08%3A00%3A41.6803905Z'\"",
         "variant": "incident",
         "seriesId": "9478d2fe-9bf4-4c3d-adee-53897b21410d",
         "version": "1.0",
@@ -1030,11 +1028,11 @@
             "sourcePackageId": "Aternity"
         },
         {
-            "id": "3eb3f06e-4d0f-4f35-8197-7895de70a265",
+            "id": "c72fa9e8-fc68-40ab-a20e-62a930940a61",
             "type": "subflow",
             "name": "ServiceNow: Get Incident Details",
             "globalId": "ServiceNow::Get_Incident_Details",
-            "originalVersion": "2.0.2",
+            "originalVersion": "3.0.0",
             "nodeLabel": "ServiceNow: Get Incident Details",
             "sourceLocation": "integrationLibrary",
             "sourcePackageId": "ServiceNow"
@@ -1050,5 +1048,5 @@
             "sourcePackageId": "ServiceNow"
         }
     ],
-    "token": "09ro0qSBk77APBt5OMMxuZnQ80e9WeN8hsalWAFW38Y="
+    "token": "BuxPrzQZ5qcz9p0/YNwDW+ZrE6GTXZFxp+U6n04yTgs="
 }
