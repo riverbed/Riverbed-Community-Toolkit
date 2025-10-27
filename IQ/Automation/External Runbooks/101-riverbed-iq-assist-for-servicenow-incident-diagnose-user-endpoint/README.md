@@ -2,22 +2,38 @@
 
 The runbook [Riverbed IQ Assist for ServiceNow - Incident - Diagnose User Endpoint](./Riverbed%20IQ%20Assist%20for%20ServiceNow%20-%20Incident%20-%20Diagnose%20User%20Endpoint.json) can be used as-is for Incidents assistance with Riverbed IQ Assist for ServiceNow.
 
-When triggered from ServiceNow, the runbook diagnoses the user endpoint based on the Configuration Item (CI), and enriches the incident ticket.
+When triggered from ServiceNow, the runbook diagnoses the user’s endpoint and enriches the incident ticket.
 
 ## Prerequisites
 
-1. Riverbed IQ Assist opt-in feature is enabled (IQ > Administration > Riverbed IQ Assist configuration).
+1. ServiceNow:
+  - [Riverbed IQ Assist for ServiceNow](https://store.servicenow.com/sn_appstore_store.do#!/store/search?q=Riverbed) is installed from the ServiceNow Store.
 
-2. [Riverbed IQ Assist for ServiceNow](https://store.servicenow.com/sn_appstore_store.do#!/store/search?q=Riverbed) is installed from the ServiceNow Store.
+2. Riverbed AIOps:
+  - Riverbed IQ Assist opt-in is enabled (IQ > Administration > Riverbed IQ Assist configuration) and the integration is configured (IQ > Integration Library).
+  - Aternity integration is installed and configured (IQ > Integration Library)
+  - ServiceNow integration is installed and configured (IQ > Integration Library)
 
-3. Aternity integration on Riverbed IQ is installed.
+## CI Setup
 
-4. ServiceNow integration is installed (IQ > Integration Library).
+In this setup, Riverbed IQ Assist uses the Incident’s associated Configuration Item (CI) to identify the user endpoint to diagnose.
 
+1. Download the runbook file: [Riverbed IQ Assist for ServiceNow - Incident - Diagnose User Endpoint](./Riverbed%20IQ%20Assist%20for%20ServiceNow%20-%20Incident%20-%20Diagnose%20User%20Endpoint.json).
+2. In IQ, go to Automation > External Runbooks and import the JSON.
+3. Open the imported runbook and enable "Allow Automation"
 
-## Quick Setup
+## Custom Field Setup
 
-After downloading the [runbook file](./Riverbed%20IQ%20Assist%20for%20ServiceNow%20-%20Incident%20-%20Diagnose%20User%20Endpoint.json), go to IQ Automation, import the runbook in the External Runbooks. And toggle "Allow Automation" on.
+In this setup, Riverbed IQ Assist reads a custom Incident field that contains the user endpoint to analyze.
+
+1. Download the custom runbook: [Riverbed IQ Assist for ServiceNow - Incident - Diagnose User Endpoint](./Riverbed%20IQ%20Assist%20for%20ServiceNow%20-%20Incident%20-%20Diagnose%20User%20Endpoint%20from%20Incident%20Custom%20Field.json).
+2. In IQ, go to Automation > External Runbooks and import the JSON.
+3. Open the imported runbook and enable "Allow Automation"
+
+## Other Setup
+
+You can customize the setup to leverage other Riverbed IQ Assist skills. For example, the [runbook 105](../105-riverbed-iq-assist-for-servicenow-incident-caller-endpoint-diagnostic/) uses a skill to find the user endpoint.
+
 
 ### License
 

@@ -2,7 +2,7 @@
     "runbook": {
         "id": "a0063bb8-2a49-472f-8412-0b23a0e8585e",
         "createdTime": "1760964742.895353200",
-        "lastUpdatedTime": "1760965047.825387300",
+        "lastUpdatedTime": "1761549354.554637900",
         "factoryResourceName": null,
         "isFactory": false,
         "name": "Riverbed IQ Assist for ServiceNow - Incident - Find Caller Endpoint",
@@ -319,7 +319,7 @@
                 "properties": {
                     "x": 226,
                     "y": 530,
-                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Riverbed IQ Assist for ServiceNow</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Runbook for Incident in ServiceNow: Find Caller Endpoint</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">version: 2025-10-20-1</span></p>",
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Riverbed IQ Assist for ServiceNow</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Runbook for Incident in ServiceNow: Find Caller Endpoint</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">version: 2025-10-27-1</span></p>",
                     "debug": false
                 },
                 "wires": []
@@ -561,8 +561,8 @@
                 "properties": {
                     "x": 640,
                     "y": 400,
-                    "debug": true,
-                    "configurationId": "3eb3f06e-4d0f-4f35-8197-7895de70a265",
+                    "debug": false,
+                    "configurationId": "c72fa9e8-fc68-40ab-a20e-62a930940a61",
                     "in": [
                         {
                             "inner": "subflow.ServiceNow_Connector",
@@ -581,6 +581,10 @@
                             "outer": "runtime.ServiceNow_Incident_Sys_Id",
                             "method": "runtime",
                             "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Custom_Fields",
+                            "outer": ""
                         }
                     ],
                     "out": [
@@ -699,7 +703,7 @@
         ],
         "lastUpdatedUser": "Runbook Export",
         "createdByUser": "Runbook Export",
-        "eTag": "W/\"datetime'2025-10-20T12%3A57%3A27.83752Z'\"",
+        "eTag": "W/\"datetime'2025-10-27T07%3A15%3A54.5620525Z'\"",
         "variant": "incident",
         "seriesId": "a0063bb8-2a49-472f-8412-0b23a0e8585e",
         "version": "1.0",
@@ -740,15 +744,15 @@
             "sourcePackageId": "Aternity"
         },
         {
-            "id": "3eb3f06e-4d0f-4f35-8197-7895de70a265",
+            "id": "c72fa9e8-fc68-40ab-a20e-62a930940a61",
             "type": "subflow",
             "name": "ServiceNow: Get Incident Details",
             "globalId": "ServiceNow::Get_Incident_Details",
-            "originalVersion": "2.0.2",
+            "originalVersion": "3.0.0",
             "nodeLabel": "ServiceNow: Get Incident Details",
             "sourceLocation": "integrationLibrary",
             "sourcePackageId": "ServiceNow"
         }
     ],
-    "token": "9RyGwEv4VTKFVd4ADfXiXUaJIlAfEoN2qRBdY2Lp4jY="
+    "token": "B7hJ0KlDOORXkOVXbn4bBTmVm6eeUs2+qryE2PAuyx8="
 }
