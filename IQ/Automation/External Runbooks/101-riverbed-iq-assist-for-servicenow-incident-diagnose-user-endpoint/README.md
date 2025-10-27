@@ -6,10 +6,10 @@ When triggered from ServiceNow, the runbook diagnoses the user’s endpoint and 
 
 ## Prerequisites
 
-ServiceNow:
+**ServiceNow**:
 - [Riverbed IQ Assist for ServiceNow](https://store.servicenow.com/sn_appstore_store.do#!/store/search?q=Riverbed) is installed from the ServiceNow Store.
 
-Riverbed AIOps:
+**Riverbed AIOps**:
 - Riverbed IQ Assist opt-in is enabled (IQ > Administration > Riverbed IQ Assist configuration) and the integration is configured (IQ > Integration Library).
 - Aternity integration is installed and configured (IQ > Integration Library)
 - ServiceNow integration is installed and configured (IQ > Integration Library)
@@ -40,4 +40,5 @@ You can customize the setup to leverage other Riverbed IQ Assist skills. For exa
 Copyright (c) 2025 Riverbed Technology, Inc.
 
 The contents provided here are licensed under the terms and conditions of the MIT License accompanying the software ("License"). The scripts are distributed "AS IS" as set forth in the License. The script also include certain third party code. All such third party code is also distributed "AS IS" and is licensed by the respective copyright holders under the applicable terms and conditions (including, without limitation, warranty and liability disclaimers) identified in the license notices accompanying the software.
+
 
