@@ -1,0 +1,301 @@
+{
+    "runbook": {
+        "id": "e32e918e-1d46-4464-a471-18daaf7876ca",
+        "createdTime": "1762951529.633969400",
+        "lastUpdatedTime": "1762954169.462139200",
+        "factoryResourceName": null,
+        "isFactory": false,
+        "name": "Demo - Export NPM+ Time Series Chart to different Format",
+        "description": "Demonstrate how to use the skills to generate a chart image and then convert the image to be used in an Adaptive Cards (for Teams)\nversion: 2025-11-12",
+        "isReady": false,
+        "triggerType": "on_demand_input",
+        "runtimeVariables": {
+            "primitiveVariables": [
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.SVG_Content",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Image_URL",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Adaptive_Cards_Content",
+                    "isReadonly": false
+                }
+            ],
+            "structuredVariables": []
+        },
+        "subflowVariables": null,
+        "nodes": [
+            {
+                "id": "6d70c445-b15d-408a-83bd-6166a4aa5f0a",
+                "isIntegrationSubflowNode": false,
+                "type": "on_demand_input",
+                "label": "Input",
+                "description": "",
+                "properties": {
+                    "x": 232,
+                    "y": 169.99999999999997,
+                    "triggerType": "on_demand_input",
+                    "debug": false,
+                    "outputDataFormat": "summary",
+                    "synthKeys": [
+                        {
+                            "id": "user_device",
+                            "label": "User Device",
+                            "type": "object",
+                            "unit": "",
+                            "dataOceanId": "user_device",
+                            "dataOceanKeys": [
+                                {
+                                    "id": "user_device.device_name",
+                                    "label": "User Device Name",
+                                    "type": "string",
+                                    "category": "Device",
+                                    "unit": "none"
+                                }
+                            ]
+                        }
+                    ],
+                    "inputVariables": [],
+                    "outputVariables": []
+                },
+                "wires": [
+                    [
+                        "c64b84e8-60ac-4c4d-a76c-89da57e0f050"
+                    ]
+                ]
+            },
+            {
+                "id": "c64b84e8-60ac-4c4d-a76c-89da57e0f050",
+                "isIntegrationSubflowNode": false,
+                "type": "data_ocean_dynamic",
+                "label": "Data Store",
+                "description": "",
+                "properties": {
+                    "x": 459,
+                    "y": 169.99999999999997,
+                    "objType": "npm_plus.traffic",
+                    "timeSeries": true,
+                    "metrics": [
+                        "sum_bytes"
+                    ],
+                    "limit": 10,
+                    "topBy": [
+                        {
+                            "id": "throughput",
+                            "direction": "desc"
+                        }
+                    ],
+                    "groupBy": [
+                        "user_device.device_name"
+                    ],
+                    "duration": 3600,
+                    "filters": {
+                        "userDevice": [
+                            "$onDemandInput.user_device"
+                        ]
+                    },
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "5a3aa400-c953-40af-a60d-8c9b840fb07e"
+                    ]
+                ]
+            },
+            {
+                "id": "5a3aa400-c953-40af-a60d-8c9b840fb07e",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow",
+                "label": "Skill: Generate Chart Image",
+                "description": "Generate chart image in SVG format from time series data.",
+                "properties": {
+                    "x": 696,
+                    "y": 169.99999999999997,
+                    "debug": false,
+                    "configurationId": "e7f4c219-7a3e-45fd-be5b-ff4c27945222",
+                    "in": [
+                        {
+                            "inner": "subflow.Title",
+                            "outer": "Traffic",
+                            "method": "static",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Chart_Type",
+                            "outer": "line",
+                            "method": "static",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Width",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Height",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Metrics",
+                            "outer": "sum_bytes",
+                            "method": "static",
+                            "isUnset": false
+                        }
+                    ],
+                    "out": [
+                        {
+                            "inner": "subflow.SVG_Content",
+                            "outer": "runtime.SVG_Content",
+                            "method": "runtime"
+                        }
+                    ]
+                },
+                "wires": [
+                    [
+                        "a9f8c951-e9cb-4f2d-a1f6-3b8bc76144f9"
+                    ]
+                ]
+            },
+            {
+                "id": "a9f8c951-e9cb-4f2d-a1f6-3b8bc76144f9",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow",
+                "label": "Convert SVG image to Adaptive Cards Image URL",
+                "description": "Skill that converts an image in SVG format into a URL for Image Element in Adaptive Cards",
+                "properties": {
+                    "x": 1006,
+                    "y": 169.99999999999997,
+                    "debug": false,
+                    "configurationId": "c73ec47b-de1e-49d0-bb3e-accf8daf5975",
+                    "in": [
+                        {
+                            "inner": "subflow.SVG",
+                            "outer": "runtime.SVG_Content",
+                            "method": "runtime",
+                            "isUnset": false
+                        }
+                    ],
+                    "out": [
+                        {
+                            "inner": "subflow.Image_URL",
+                            "outer": "runtime.Image_URL",
+                            "method": "runtime"
+                        }
+                    ]
+                },
+                "wires": [
+                    [
+                        "c44e0129-946f-46a6-a610-0915a5a7219a"
+                    ]
+                ]
+            },
+            {
+                "id": "c44e0129-946f-46a6-a610-0915a5a7219a",
+                "isIntegrationSubflowNode": false,
+                "type": "set_primitive_variables",
+                "label": "Compose Adaptive Cards",
+                "description": "",
+                "properties": {
+                    "x": 1349,
+                    "y": 189.99999999999997,
+                    "variables": [
+                        {
+                            "name": "runtime.Adaptive_Cards_Content"
+                        }
+                    ],
+                    "transformTemplate": "{% assign content = \"\" %}\n\n{% capture content %}\n{\n  \"type\": \"AdaptiveCard\",\n  \"$schema\": \"http://adaptivecards.io/schemas/adaptive-card.json\",\n  \"version\": \"1.6\",\n  \"body\": [\n    {\n      \"type\": \"TextBlock\",\n      \"text\": \"Metrics\",\n      \"weight\": \"bolder\",\n      \"size\": \"medium\"\n    },\n    {\n      \"type\": \"Image\",\n      \"url\": \"{{variables[\"runtime.Image_URL\"]}}\",\n      \"altText\": \"Chart\",\n      \"size\": \"Auto\"\n    }\n  ]\n}\n{% endcapture %}\n\n{\n    \"runtime.Adaptive_Cards_Content\": {{ content | json }}\n}",
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "b109eb06-a762-4f4a-8bf4-dcb619de3d55"
+                    ]
+                ]
+            },
+            {
+                "id": "b109eb06-a762-4f4a-8bf4-dcb619de3d55",
+                "isIntegrationSubflowNode": false,
+                "type": "rvbd_ui_text",
+                "label": "Display Content (Text)",
+                "description": "",
+                "properties": {
+                    "x": 1653,
+                    "y": 310,
+                    "title": "Adaptive Cards Content (Text)",
+                    "row": "20",
+                    "notes": "<p class=\"editor-paragraph\" dir=\"ltr\"><span style=\"white-space: pre-wrap;\"><span class=\"editor-variable-inner\">{{variables[\"runtime.Adaptive_Cards_Content\"]}}</span></span></p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "77428f27-9a68-4de6-b007-a6d252377c90",
+                "isIntegrationSubflowNode": false,
+                "type": "comment",
+                "label": "Comment",
+                "description": "",
+                "properties": {
+                    "x": 1295,
+                    "y": 50,
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Use  **Image_URL** inside a template composing an Adaptive Cards ( **Adaptive_Cards_Content variable** )</span></p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "3d8c4cee-924a-4c5a-9d57-1f74ab9ef262",
+                "isIntegrationSubflowNode": false,
+                "type": "comment",
+                "label": "Comment 1",
+                "description": "",
+                "properties": {
+                    "x": 963,
+                    "y": 50.00000000000001,
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Convert from **SVG_Content** variable into **Image_URL** variable</span></p>",
+                    "debug": false
+                },
+                "wires": []
+            }
+        ],
+        "lastUpdatedUser": "Runbook Export",
+        "createdByUser": "Runbook Export",
+        "eTag": "W/\"datetime'2025-11-12T13%3A29%3A29.4763094Z'\"",
+        "variant": "on_demand",
+        "seriesId": "e32e918e-1d46-4464-a471-18daaf7876ca",
+        "version": "1.0",
+        "otherVersions": null,
+        "isScheduled": false,
+        "isValidated": false,
+        "isProprietary": false
+    },
+    "dependencies": [
+        {
+            "id": "e7f4c219-7a3e-45fd-be5b-ff4c27945222",
+            "type": "subflow",
+            "name": "Skill: Generate Chart Image",
+            "globalId": "RiverbedIQAssist::Generate_Chart_Image",
+            "originalVersion": "1.0.4",
+            "nodeLabel": "Skill: Generate Chart Image",
+            "sourceLocation": "integrationLibrary",
+            "sourcePackageId": "RiverbedIQAssist"
+        },
+        {
+            "id": "c73ec47b-de1e-49d0-bb3e-accf8daf5975",
+            "type": "subflow",
+            "name": "Convert SVG image to Adaptive Cards Image URL",
+            "globalId": "c73ec47b-de1e-49d0-bb3e-accf8daf5975",
+            "originalVersion": "1.0",
+            "nodeLabel": "Convert SVG image to Adaptive Cards Image URL",
+            "sourceLocation": "custom"
+        }
+    ],
+    "token": "xET9UJzDCOvSg0QkIMoHpho0KDSjw08pCEiLvJy/TAw="
+}

@@ -1,0 +1,141 @@
+{
+    "runbook": {
+        "id": "c73ec47b-de1e-49d0-bb3e-accf8daf5975",
+        "createdTime": "1762951289.899183200",
+        "lastUpdatedTime": "1762951289.899183200",
+        "factoryResourceName": null,
+        "isFactory": false,
+        "name": "Convert SVG image to Adaptive Cards Image URL",
+        "description": "Skill that converts an image in SVG format into a URL for Image Element in Adaptive Cards",
+        "isReady": false,
+        "triggerType": "subflow_input",
+        "runtimeVariables": null,
+        "subflowVariables": {
+            "primitiveVariables": [
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "subflow.SVG",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "subflow.Image_URL",
+                    "isReadonly": false
+                }
+            ],
+            "structuredVariables": []
+        },
+        "nodes": [
+            {
+                "id": "3d0a7a9a-2701-4a90-a367-14f6bdd2d5a8",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow_input",
+                "label": "Subflow Input",
+                "description": "",
+                "properties": {
+                    "x": 321,
+                    "y": 160,
+                    "triggerType": "subflow_input",
+                    "outputDataFormat": "summary",
+                    "debug": false,
+                    "synthKeys": [],
+                    "inputVariables": [
+                        "subflow.SVG"
+                    ],
+                    "outputVariables": [
+                        "subflow.Image_URL"
+                    ],
+                    "integrationIds": {},
+                    "tagIds": {},
+                    "staticInputValuesLists": {
+                        "subflow.SVG": []
+                    },
+                    "inputOrOutputValuesDescriptions": []
+                },
+                "wires": [
+                    [
+                        "dd889921-9fcd-4687-873a-9ea78d4149ef"
+                    ]
+                ]
+            },
+            {
+                "id": "6f245260-40e6-4ede-bd8a-7f3b522b85da",
+                "isIntegrationSubflowNode": false,
+                "type": "comment",
+                "label": "Comment",
+                "description": "",
+                "properties": {
+                    "x": 50,
+                    "y": 105,
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Input</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">SVG: an image in SVG format</span></p><p class=\"editor-paragraph\"><br></p><p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Output</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Image_URL: encoded image to be used in the URL properties of an Image element in Adaptive Cards</span></p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "6ad565c8-a2c4-4f59-a994-0fb5b1152709",
+                "isIntegrationSubflowNode": false,
+                "type": "comment",
+                "label": "Comment 1",
+                "description": "",
+                "properties": {
+                    "x": 333,
+                    "y": 300,
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">SVG sample for testing:</span></p><p class=\"editor-paragraph\"><br></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">&lt;svg width=\"100\" height=\"100\"&gt;</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">&nbsp; &lt;circle cx=\"50\" cy=\"50\" r=\"40\" fill=\"red\"/&gt;</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">&lt;/svg&gt;</span></p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "dd889921-9fcd-4687-873a-9ea78d4149ef",
+                "isIntegrationSubflowNode": false,
+                "type": "set_primitive_variables",
+                "label": "Convert",
+                "description": "",
+                "properties": {
+                    "x": 529,
+                    "y": 160,
+                    "variables": [
+                        {
+                            "name": "subflow.Image_URL"
+                        }
+                    ],
+                    "transformTemplate": "{% comment %}\nConvert the SVG to an URL that can be used in an Image element of an  Adaptive Cards\n{% endcomment %}\n{\n    \"subflow.Image_URL\": \"data:image/svg+xml;base64,{{variables[\"subflow.SVG\"] | base64_encode}}\"\n}",
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "1e38bc14-5b67-49c4-a686-d655c15082d5"
+                    ]
+                ]
+            },
+            {
+                "id": "1e38bc14-5b67-49c4-a686-d655c15082d5",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow_output",
+                "label": "Subflow Output",
+                "description": "",
+                "properties": {
+                    "x": 755,
+                    "y": 160,
+                    "index": 0
+                },
+                "wires": []
+            }
+        ],
+        "lastUpdatedUser": "Runbook Export",
+        "createdByUser": "Runbook Export",
+        "eTag": "W/\"datetime'2025-11-12T12%3A58%3A16.6969134Z'\"",
+        "variant": "subflow",
+        "seriesId": "c73ec47b-de1e-49d0-bb3e-accf8daf5975",
+        "version": "1.0",
+        "otherVersions": null,
+        "isScheduled": false,
+        "isValidated": true,
+        "isProprietary": false
+    },
+    "dependencies": [],
+    "token": "QsPUndMSa2kGcvC4kmxxwZ+ffFkU6pWdIy0frTXzmwE="
+}
