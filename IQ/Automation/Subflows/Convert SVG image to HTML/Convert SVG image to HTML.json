@@ -1,0 +1,141 @@
+{
+    "runbook": {
+        "id": "8bcc8de0-c902-4a06-b9e7-df4186e4ba40",
+        "createdTime": "1763480562.175808100",
+        "lastUpdatedTime": "1763480819.966090500",
+        "factoryResourceName": null,
+        "isFactory": false,
+        "name": "Convert SVG image to HTML Image",
+        "description": "Skill that converts an image in SVG format into an HTML Image tag (img)",
+        "isReady": false,
+        "triggerType": "subflow_input",
+        "runtimeVariables": null,
+        "subflowVariables": {
+            "primitiveVariables": [
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "subflow.SVG",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "subflow.Image_HTML",
+                    "isReadonly": false
+                }
+            ],
+            "structuredVariables": []
+        },
+        "nodes": [
+            {
+                "id": "ae93dcc6-dcd5-47cf-8ebd-51303d3a1a3a",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow_input",
+                "label": "Subflow Input",
+                "description": "",
+                "properties": {
+                    "x": 321,
+                    "y": 160,
+                    "triggerType": "subflow_input",
+                    "debug": false,
+                    "outputDataFormat": "summary",
+                    "synthKeys": [],
+                    "inputVariables": [
+                        "subflow.SVG"
+                    ],
+                    "outputVariables": [
+                        "subflow.Image_HTML"
+                    ],
+                    "integrationIds": {},
+                    "tagIds": {},
+                    "staticInputValuesLists": {
+                        "subflow.SVG": []
+                    },
+                    "inputOrOutputValuesDescriptions": []
+                },
+                "wires": [
+                    [
+                        "6efb3d4e-033f-40d4-9dc1-89739465f32a"
+                    ]
+                ]
+            },
+            {
+                "id": "9dd06d09-f534-4685-a141-0150cd1cacb3",
+                "isIntegrationSubflowNode": false,
+                "type": "comment",
+                "label": "Comment",
+                "description": "",
+                "properties": {
+                    "x": 50,
+                    "y": 105,
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Input</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">SVG: an image in SVG format</span></p><p class=\"editor-paragraph\"><br></p><p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Output</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Image_HTML: img tag for HTML document</span></p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "60008192-19a4-49ac-997d-04f90d37594f",
+                "isIntegrationSubflowNode": false,
+                "type": "comment",
+                "label": "Comment 1",
+                "description": "",
+                "properties": {
+                    "x": 333,
+                    "y": 300,
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">SVG sample for testing:</span></p><p class=\"editor-paragraph\"><br></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">&lt;svg width=\"100\" height=\"100\"&gt;</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">&nbsp; &lt;circle cx=\"50\" cy=\"50\" r=\"40\" fill=\"red\"/&gt;</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">&lt;/svg&gt;</span></p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "6efb3d4e-033f-40d4-9dc1-89739465f32a",
+                "isIntegrationSubflowNode": false,
+                "type": "set_primitive_variables",
+                "label": "Convert",
+                "description": "",
+                "properties": {
+                    "x": 529,
+                    "y": 160,
+                    "variables": [
+                        {
+                            "name": "subflow.Image_HTML"
+                        }
+                    ],
+                    "transformTemplate": "{% comment %}\nConvert the SVG to an HTML img tag \n{% endcomment %}\n{\n    \"subflow.Image_HTML\": \"<img src='data:image/svg+xml;base64,{{variables[\"subflow.SVG\"] | base64_encode}}' >\"\n}",
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "1f456947-2f64-4e67-a66c-3e86be2fbf5e"
+                    ]
+                ]
+            },
+            {
+                "id": "1f456947-2f64-4e67-a66c-3e86be2fbf5e",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow_output",
+                "label": "Subflow Output",
+                "description": "",
+                "properties": {
+                    "x": 755,
+                    "y": 160,
+                    "index": 0
+                },
+                "wires": []
+            }
+        ],
+        "lastUpdatedUser": "Runbook Export",
+        "createdByUser": "Runbook Export",
+        "eTag": "W/\"datetime'2025-11-18T15%3A46%3A59.971042Z'\"",
+        "variant": "subflow",
+        "seriesId": "8bcc8de0-c902-4a06-b9e7-df4186e4ba40",
+        "version": "1.0",
+        "otherVersions": null,
+        "isScheduled": false,
+        "isValidated": true,
+        "isProprietary": false
+    },
+    "dependencies": [],
+    "token": "hHiU5mO9PCmcIZBdtCXvABhUr6lsfIdDtS+pIyYkz1g="
+}
