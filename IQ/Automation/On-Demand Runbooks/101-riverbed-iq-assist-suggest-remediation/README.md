@@ -6,7 +6,7 @@ The runbook fetches health events for the request device, uses a first GenAI nod
 
 ![image](image.png)
 
-## Prerequisistes
+## Prerequisites
 
 1. Riverbed IQ Assist feature is enabled
 
