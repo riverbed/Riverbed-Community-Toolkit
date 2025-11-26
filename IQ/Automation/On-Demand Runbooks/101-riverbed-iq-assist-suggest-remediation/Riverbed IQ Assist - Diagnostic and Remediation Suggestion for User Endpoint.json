@@ -1,11 +1,11 @@
 {
     "runbook": {
-        "id": "18ca3099-32bf-4d53-84a2-4b46759cfe36",
-        "createdTime": "1740577659.648523300",
-        "lastUpdatedTime": "1740577797.861110000",
+        "id": "ed869632-9aae-4db7-8979-c1cb19fa3856",
+        "createdTime": "1740557225.531146600",
+        "lastUpdatedTime": "1764176108.229904400",
         "factoryResourceName": null,
         "isFactory": false,
-        "name": "example - Riverbed IQ Assist - Diagnostic and Remediation Suggestion for User Endpoint",
+        "name": "Demo - Riverbed IQ Assist - On-Demand Diagnostic and Remediation Suggestion for User Endpoint",
         "description": "Diagnose the user endpoint and suggest remediations",
         "isReady": false,
         "triggerType": "on_demand_input",
@@ -13,7 +13,7 @@
             "primitiveVariables": [
                 {
                     "type": "string",
-                    "defaultValue": "devicename",
+                    "defaultValue": "Adam_Covert_WKS",
                     "name": "runtime.Device_Name",
                     "isReadonly": false
                 },
@@ -49,13 +49,13 @@
                 },
                 {
                     "type": "string",
-                    "defaultValue": "",
+                    "defaultValue": "my-demo",
                     "name": "runtime.Aternity_EUEM_ENV",
                     "isReadonly": false
                 },
                 {
                     "type": "string",
-                    "defaultValue": "",
+                    "defaultValue": "3",
                     "name": "runtime.Aternity_EUEM_ACCOUNT_ID",
                     "isReadonly": false
                 },
@@ -83,52 +83,53 @@
         "subflowVariables": null,
         "nodes": [
             {
-                "id": "ec14b9db-670d-4594-a25b-87b224257e68",
+                "id": "1a138bca-e910-45a6-b876-00e2acd374a8",
                 "isIntegrationSubflowNode": false,
                 "type": "on_demand_input",
                 "label": "Input",
                 "description": "",
                 "properties": {
-                    "x": 368.00000000000006,
-                    "y": 350,
+                    "x": 408.0000000000001,
+                    "y": 290,
                     "triggerType": "on_demand_input",
                     "debug": false,
                     "outputDataFormat": "summary",
-                    "synthKeys": [],
-                    "inputVariables": [
-                        "runtime.Device_Name"
+                    "synthKeys": [
+                        {
+                            "id": "user_device",
+                            "label": "User Device",
+                            "type": "object",
+                            "unit": "",
+                            "dataOceanId": "user_device",
+                            "dataOceanKeys": [
+                                {
+                                    "id": "user_device.device_name",
+                                    "label": "User Device Name",
+                                    "type": "string",
+                                    "category": "Device",
+                                    "unit": "none"
+                                }
+                            ]
+                        }
                     ],
+                    "inputVariables": [],
                     "outputVariables": []
                 },
                 "wires": [
                     [
-                        "bf00fa98-1597-4ca7-9eba-ea4edfb9849c"
+                        "a7faf9c0-5399-4b96-8125-f8033dfa1552"
                     ]
                 ]
             },
             {
-                "id": "4f8436da-b45c-4901-8874-cb6cd33e079e",
-                "isIntegrationSubflowNode": false,
-                "type": "insight",
-                "label": "Display Computer Details in IQ",
-                "description": "",
-                "properties": {
-                    "x": 917,
-                    "y": 410,
-                    "template": "<p><strong>User Endpoint</strong>: {{variables[\"runtime.Device_Name\"]}}&nbsp;</p>",
-                    "debug": false
-                },
-                "wires": []
-            },
-            {
-                "id": "4031c6dd-15ce-45e7-8aca-3dd69a7616f8",
+                "id": "c90e3728-3f44-4cfd-a68a-4719b0628cde",
                 "isIntegrationSubflowNode": false,
                 "type": "genai",
                 "label": "Riverbed IQ Assist: Diagnose Health Events (GenAI)",
                 "description": "",
                 "properties": {
                     "x": 907,
-                    "y": 250,
+                    "y": 270,
                     "instructions": "You are an end-user computing experts, specialist about endpoints especially Windows and Mac OS.\nYour role is to analyze recent health events that can impact the stability of the endpoint. Follow these instructions carefully:\n\n1. Adopt the persona of a professional, concise analyst specializing in troubleshooting performance issues related to endpoints, networks, and applications.\n2. Process the provided data thoroughly to analyze performance trends, metrics, and anomalies. Focus on identifying the **top 3 most relevant findings or anomalies** that are critical to performance.\n3. For each identified issue, include a brief but detailed summary explaining the finding, why it is important, and its potential impact on the system or user experience.\n4. Structure each finding as an itemized, numbered list within an HTML `<div>` tag to ensure easily readable output. Each item should clearly and concisely describe the issue while maintaining a professional tone.\n5. Ensure that the information is organized, unambiguous, and actionable for the person relying on it.\n\nHere is an example of the expected format for the HTML output:\n\"\"\"\n<div>\n    <p><b>Finding #1:</b> [Issue description]. <br><b>Explanation</b>: [Why this matters and the potential impact].</p>\n    <p><b>Finding #2:</b> [Issue description]. <br><b>Explanation</b>: [Why this matters and the potential impact].</p>\n    <p><b>Finding #3:</b> [Issue description]. <br><b>Explanation</b>: [Why this matters and the potential impact].</p>\n</div>\n<div>\n<p><small>AI-generated content</small></p>\n</div>\n\"\"\"\n\nOnly include the top 3 findings—no more, no less. Avoid redundancies and keep the focus on critical insights.",
                     "instructionsLocation": "enter",
                     "queryLocation": "$parent",
@@ -136,19 +137,19 @@
                 },
                 "wires": [
                     [
-                        "485bf125-4b2e-4fb3-9ef7-4e1a7ca92da3"
+                        "1b4f7aef-1579-4546-8d85-4d08766ada06"
                     ]
                 ]
             },
             {
-                "id": "485bf125-4b2e-4fb3-9ef7-4e1a7ca92da3",
+                "id": "1b4f7aef-1579-4546-8d85-4d08766ada06",
                 "isIntegrationSubflowNode": false,
                 "type": "set_primitive_variables",
                 "label": "Format Insight Health Events",
                 "description": "",
                 "properties": {
                     "x": 1138,
-                    "y": 270,
+                    "y": 290,
                     "variables": [
                         {
                             "name": "runtime.Insight_Health_HTML"
@@ -159,64 +160,23 @@
                 },
                 "wires": [
                     [
-                        "378955b0-4177-4fca-9f42-eee865adb747",
-                        "17db9e49-1e6f-4f33-8bd6-0b8e57b97658"
+                        "66ccc5ab-0a16-4e79-8839-a1092e8ba2cc",
+                        "99c4fbcd-758e-40e8-bb2b-1fbe2c99f40d"
                     ]
                 ]
             },
             {
-                "id": "bf00fa98-1597-4ca7-9eba-ea4edfb9849c",
-                "isIntegrationSubflowNode": false,
-                "type": "subflow",
-                "label": "Aternity: Get Device Health Events",
-                "description": "",
-                "properties": {
-                    "x": 676,
-                    "y": 350,
-                    "debug": false,
-                    "configurationId": "5a13d267-e1d0-4750-aa7a-fd0416499efc",
-                    "in": [
-                        {
-                            "inner": "subflow.Aternity_Connector",
-                            "outer": "00000000-0000-0000-0000-000000000000",
-                            "method": "connector"
-                        },
-                        {
-                            "inner": "subflow.Device_Name",
-                            "outer": "runtime.Device_Name",
-                            "method": "runtime"
-                        }
-                    ],
-                    "out": [
-                        {
-                            "inner": "subflow.Successful",
-                            "outer": ""
-                        },
-                        {
-                            "inner": "subflow.Error_Message",
-                            "outer": ""
-                        }
-                    ]
-                },
-                "wires": [
-                    [
-                        "4031c6dd-15ce-45e7-8aca-3dd69a7616f8",
-                        "4f8436da-b45c-4901-8874-cb6cd33e079e"
-                    ]
-                ]
-            },
-            {
-                "id": "378955b0-4177-4fca-9f42-eee865adb747",
+                "id": "66ccc5ab-0a16-4e79-8839-a1092e8ba2cc",
                 "isIntegrationSubflowNode": false,
                 "type": "http",
                 "label": "Aternity: Get available Remediations",
                 "description": "",
                 "properties": {
                     "x": 1339,
-                    "y": 350,
+                    "y": 370,
                     "syncCall": {
                         "request": {
-                            "authenticationProfileId": "220091de-418b-4317-889a-c658c4f936ac",
+                            "authenticationProfileId": "6701eda4-14c0-414a-8985-57b1855419a7",
                             "edgeDeviceId": "",
                             "httpVerbTemplate": "GET",
                             "endpointTemplate": "https://{{variables[\"runtime.Aternity_EUEM_ENV\"]}}-odata.aternity.com/aternity.odata/latest/REMEDIATION_ACTIONS_INVENTORY?$filter=ACCOUNT_ID eq {{variables[\"runtime.Aternity_EUEM_ACCOUNT_ID\"]}} &$select=ACTION_DESCRIPTION,ACTION_NAME,IS_SUPPORTED_MACOS,IS_SUPPORTED_WINDOWS",
@@ -230,19 +190,19 @@
                 },
                 "wires": [
                     [
-                        "ec8bc4f2-dffb-47cf-85d9-8ff8b3fd5172"
+                        "e3db3fde-7d9c-4fcc-9f0d-a3d6aeac3d51"
                     ]
                 ]
             },
             {
-                "id": "ec8bc4f2-dffb-47cf-85d9-8ff8b3fd5172",
+                "id": "e3db3fde-7d9c-4fcc-9f0d-a3d6aeac3d51",
                 "isIntegrationSubflowNode": false,
                 "type": "set_primitive_variables",
                 "label": "Extract Remediations",
                 "description": "",
                 "properties": {
                     "x": 1555,
-                    "y": 370,
+                    "y": 390,
                     "variables": [
                         {
                             "name": "runtime.Remediations"
@@ -253,19 +213,19 @@
                 },
                 "wires": [
                     [
-                        "7f2b8ac9-48df-4c2d-b374-02413773acf0"
+                        "55cef427-b5e1-4183-b417-f7f5b4d48275"
                     ]
                 ]
             },
             {
-                "id": "bc7248ff-f875-4354-8bbb-0b1e38cb6fb8",
+                "id": "9616cb12-42ef-47a2-8195-0780e22d8e69",
                 "isIntegrationSubflowNode": false,
                 "type": "set_primitive_variables",
                 "label": "Format Insight",
                 "description": "",
                 "properties": {
                     "x": 2246,
-                    "y": 270,
+                    "y": 290,
                     "variables": [
                         {
                             "name": "runtime.Suggestion_HTML"
@@ -276,19 +236,19 @@
                 },
                 "wires": [
                     [
-                        "94ce60a8-d84e-4c62-adcb-dcb22973ef5b"
+                        "2f991c21-e59d-41ae-a5fc-55cdecc7fea7"
                     ]
                 ]
             },
             {
-                "id": "94ce60a8-d84e-4c62-adcb-dcb22973ef5b",
+                "id": "2f991c21-e59d-41ae-a5fc-55cdecc7fea7",
                 "isIntegrationSubflowNode": false,
                 "type": "rvbd_ui_text",
                 "label": "Display: Remediation",
                 "description": "",
                 "properties": {
                     "x": 2481,
-                    "y": 190,
+                    "y": 210,
                     "title": "Suggested Remediations",
                     "row": "20",
                     "notes": "<p>{{variables[\"runtime.Suggestion_HTML\"]}}</p>",
@@ -297,14 +257,14 @@
                 "wires": []
             },
             {
-                "id": "c794bb00-9130-43fd-8c0c-978939a26443",
+                "id": "8f97a64d-c825-4079-b62b-02953245cd62",
                 "isIntegrationSubflowNode": false,
                 "type": "genai",
                 "label": "Riverbed IQ Assist: Suggest Remediations (GenAI)",
                 "description": "",
                 "properties": {
                     "x": 2019.9999999999998,
-                    "y": 250,
+                    "y": 270,
                     "instructions": "Follow the instructions in the query",
                     "instructionsLocation": "enter",
                     "queryLocation": "runtime.Prompt_Template",
@@ -312,19 +272,19 @@
                 },
                 "wires": [
                     [
-                        "bc7248ff-f875-4354-8bbb-0b1e38cb6fb8"
+                        "9616cb12-42ef-47a2-8195-0780e22d8e69"
                     ]
                 ]
             },
             {
-                "id": "7f2b8ac9-48df-4c2d-b374-02413773acf0",
+                "id": "55cef427-b5e1-4183-b417-f7f5b4d48275",
                 "isIntegrationSubflowNode": false,
                 "type": "set_primitive_variables",
                 "label": "Prepare Query",
                 "description": "",
                 "properties": {
                     "x": 1777,
-                    "y": 370,
+                    "y": 390,
                     "variables": [
                         {
                             "name": "runtime.Prompt_Template"
@@ -335,19 +295,19 @@
                 },
                 "wires": [
                     [
-                        "c794bb00-9130-43fd-8c0c-978939a26443"
+                        "8f97a64d-c825-4079-b62b-02953245cd62"
                     ]
                 ]
             },
             {
-                "id": "17db9e49-1e6f-4f33-8bd6-0b8e57b97658",
+                "id": "99c4fbcd-758e-40e8-bb2b-1fbe2c99f40d",
                 "isIntegrationSubflowNode": false,
                 "type": "rvbd_ui_text",
                 "label": "Display: Diagnostic",
                 "description": "",
                 "properties": {
                     "x": 1344,
-                    "y": 190,
+                    "y": 210,
                     "title": "Diagnostic",
                     "row": "30",
                     "notes": "<p>{{variables[\"runtime.Insight_Health_HTML\"]}}</p>",
@@ -356,41 +316,84 @@
                 "wires": []
             },
             {
-                "id": "33b36b1d-9991-4e2f-9a58-e74ebdaf487e",
+                "id": "4a85d86d-8cf9-4e53-9a70-a116c82a8b51",
                 "isIntegrationSubflowNode": false,
                 "type": "comment",
                 "label": "Comment",
                 "description": "",
                 "properties": {
-                    "x": 50,
+                    "x": 108,
                     "y": 50,
-                    "comment": "<h1>Setup</h1>\n<p>Diagnose the user endpoint and suggest remediations.</p>\n<p><br></p>\n<p><strong>Prerequisites:</strong></p>\n<ul>\n  <li>enable Riverbed IQ Assist</li>\n  <li>install Riverbed Aternity EUEM (connector)</li>\n  <li>configure ENV and ACCOUNT_ID variables</li>\n  <li>check authentication profile in the HTTP query/get remediations node</li>\n</ul>\n<p><br></p>\n<p><br></p>",
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Setup</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Diagnose the user endpoint and suggest remediations.</span></p><p class=\"editor-paragraph\"><br></p><p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Prerequisites:</strong></b></p><ul class=\"editor-list-ul\"><li dir=\"ltr\" class=\"editor-listitem\" value=\"1\"><span style=\"white-space: pre-wrap;\">enable Riverbed IQ Assist</span></li><li dir=\"ltr\" class=\"editor-listitem\" value=\"2\"><span style=\"white-space: pre-wrap;\">install Riverbed Aternity EUEM (connector)</span></li><li dir=\"ltr\" class=\"editor-listitem\" value=\"3\"><span style=\"white-space: pre-wrap;\">configure ENV and ACCOUNT_ID variables</span></li></ul><p class=\"editor-paragraph\"><br></p><p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Demo</strong></b></p><ul class=\"editor-list-ul\"><li dir=\"ltr\" class=\"editor-listitem\" value=\"1\"><span style=\"white-space: pre-wrap;\">Device Name: Adam\\_Covert\\_WKS</span></li></ul>",
                     "debug": false
                 },
                 "wires": []
+            },
+            {
+                "id": "799de0d7-1c42-4eca-81e5-35c263bd9ac9",
+                "isIntegrationSubflowNode": false,
+                "type": "comment",
+                "label": "Comment 1",
+                "description": "",
+                "properties": {
+                    "x": 128,
+                    "y": 520,
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Version 2025-11-05-1</span></p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "a7faf9c0-5399-4b96-8125-f8033dfa1552",
+                "isIntegrationSubflowNode": false,
+                "type": "data_ocean_dynamic",
+                "label": "Data Store",
+                "description": "",
+                "properties": {
+                    "x": 658,
+                    "y": 300,
+                    "objType": "aternity_device_health_events_hourly.traffic",
+                    "timeSeries": false,
+                    "limit": "100",
+                    "topBy": [
+                        {
+                            "id": "sum_unique_health_events",
+                            "direction": "desc"
+                        }
+                    ],
+                    "groupBy": [
+                        "user_device.device_name",
+                        "health_event_name",
+                        "health_event_severity",
+                        "health_event_status",
+                        "health_event_error",
+                        "health_event_details",
+                        "health_event_category",
+                        "health_event_component",
+                        "health_event_last_timestamp"
+                    ],
+                    "duration": 604800,
+                    "filters": {},
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "c90e3728-3f44-4cfd-a68a-4719b0628cde"
+                    ]
+                ]
             }
         ],
         "lastUpdatedUser": "Runbook Export",
         "createdByUser": "Runbook Export",
-        "eTag": "W/\"datetime'2025-02-26T13%3A49%3A57.8808898Z'\"",
+        "eTag": "W/\"datetime'2025-11-26T16%3A55%3A08.2510231Z'\"",
         "variant": "on_demand",
-        "seriesId": "18ca3099-32bf-4d53-84a2-4b46759cfe36",
+        "seriesId": "ed869632-9aae-4db7-8979-c1cb19fa3856",
         "version": "1.0",
         "otherVersions": null,
         "isScheduled": false,
-        "isValidated": true
+        "isValidated": true,
+        "isProprietary": false
     },
-    "dependencies": [
-        {
-            "id": "5a13d267-e1d0-4750-aa7a-fd0416499efc",
-            "type": "subflow",
-            "name": "Aternity: Get Device Health Events",
-            "globalId": "Aternity::Get_Device_Health_Events",
-            "originalVersion": "2.1.0",
-            "nodeLabel": "Aternity: Get Device Health Events",
-            "sourceLocation": "integrationLibrary",
-            "sourcePackageId": "Aternity"
-        }
-    ],
-    "token": "9bbTio6Eq+yPC+robNvU0bGEIdcbLbpPuqJsws+/+vE="
+    "dependencies": [],
+    "token": "rfITEGNI2/Z9i50lZbpmS9Vp1r5QBMPHYi5xnz7b4hA="
 }
