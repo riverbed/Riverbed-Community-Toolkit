@@ -2,7 +2,7 @@
     "runbook": {
         "id": "ed869632-9aae-4db7-8979-c1cb19fa3856",
         "createdTime": "1740557225.531146600",
-        "lastUpdatedTime": "1764176108.229904400",
+        "lastUpdatedTime": "1764176891.810107300",
         "factoryResourceName": null,
         "isFactory": false,
         "name": "Demo - Riverbed IQ Assist - On-Demand Diagnostic and Remediation Suggestion for User Endpoint",
@@ -11,24 +11,6 @@
         "triggerType": "on_demand_input",
         "runtimeVariables": {
             "primitiveVariables": [
-                {
-                    "type": "string",
-                    "defaultValue": "Adam_Covert_WKS",
-                    "name": "runtime.Device_Name",
-                    "isReadonly": false
-                },
-                {
-                    "type": "string",
-                    "defaultValue": null,
-                    "name": "runtime.Device_Type",
-                    "isReadonly": false
-                },
-                {
-                    "type": "string",
-                    "defaultValue": null,
-                    "name": "runtime.Device_Model",
-                    "isReadonly": false
-                },
                 {
                     "type": "boolean",
                     "defaultValue": null,
@@ -49,13 +31,13 @@
                 },
                 {
                     "type": "string",
-                    "defaultValue": "my-demo",
+                    "defaultValue": "",
                     "name": "runtime.Aternity_EUEM_ENV",
                     "isReadonly": false
                 },
                 {
                     "type": "string",
-                    "defaultValue": "3",
+                    "defaultValue": "",
                     "name": "runtime.Aternity_EUEM_ACCOUNT_ID",
                     "isReadonly": false
                 },
@@ -156,7 +138,7 @@
                         }
                     ],
                     "transformTemplate": "{% assign title = \"<b>Health Events on \" | append: variables[\"runtime.Device_Name\"] | append: \"</b>\" %}\n{% assign html_string = node_input.output.data[0].keys['gen_ai.response'] | replace: '```html', \"\" | replace: '```', \"\" | replace: '\\n', \"\" | replace: '\\\"', \"&quot;\" | replace: '\\\\', '&bsol;' | prepend: title %}\n{\n    \"runtime.Insight_Health_HTML\": \"{{ html_string }}\"\n}",
-                    "debug": true
+                    "debug": false
                 },
                 "wires": [
                     [
@@ -176,7 +158,7 @@
                     "y": 370,
                     "syncCall": {
                         "request": {
-                            "authenticationProfileId": "6701eda4-14c0-414a-8985-57b1855419a7",
+                            "authenticationProfileId": "",
                             "edgeDeviceId": "",
                             "httpVerbTemplate": "GET",
                             "endpointTemplate": "https://{{variables[\"runtime.Aternity_EUEM_ENV\"]}}-odata.aternity.com/aternity.odata/latest/REMEDIATION_ACTIONS_INVENTORY?$filter=ACCOUNT_ID eq {{variables[\"runtime.Aternity_EUEM_ACCOUNT_ID\"]}} &$select=ACTION_DESCRIPTION,ACTION_NAME,IS_SUPPORTED_MACOS,IS_SUPPORTED_WINDOWS",
@@ -209,7 +191,7 @@
                         }
                     ],
                     "transformTemplate": "{\n     \"runtime.Remediations\": {{ node_input.output.data[0].keys['http_response.body']['value'] | json }}\n\n}",
-                    "debug": true
+                    "debug": false
                 },
                 "wires": [
                     [
@@ -232,7 +214,7 @@
                         }
                     ],
                     "transformTemplate": "{% assign html_string = node_input.output.data[0].keys['gen_ai.response'] | replace: '```html', \"\" | replace: '```', \"\" | replace: '\\n', \"\" | replace: '\\\"', \"&quot;\" | replace: '\\\\', '&bsol;' %}\n{\n    \"runtime.Suggestion_HTML\": \"{{ html_string }}\"\n}",
-                    "debug": true
+                    "debug": false
                 },
                 "wires": [
                     [
@@ -268,7 +250,7 @@
                     "instructions": "Follow the instructions in the query",
                     "instructionsLocation": "enter",
                     "queryLocation": "runtime.Prompt_Template",
-                    "debug": true
+                    "debug": false
                 },
                 "wires": [
                     [
@@ -291,7 +273,7 @@
                         }
                     ],
                     "transformTemplate": "{\n    \"runtime.Prompt_Template\": \"As an IT specialist with expertise in troubleshooting Windows issues and PowerShell scripting, you analyze the list of remediations to recommend the most suitable. Structure the response within an HTML `<div>` tag to ensure easily readable output. Your response concisely describe suggested remediation while maintaining a professional tone.\n\n\nList of remediations:\n{% for item in variables[\"runtime.Remediations\"] %}\nRemediation Name: {{ item.ACTION_NAME | escape | replace: '\\n', \"\" | replace: '\\\"', \"&quot;\" | replace: '\\\\', '&bsol;' }}\nDescription: {{ item.ACTION_DESCRIPTION | escape | replace: '\\n', \"\" | replace: '\\\"', \"&quot;\" | replace: '\\\\', '&bsol;' }}\n\n{% endfor %}\n\nExample:\n```html\n<ul>\n<li>Remediation 1</li>\n<li>Remediation 2</li>\n<li>Remediation 3</li>\n</ul>\n```\n\nInclude up to 3 relevant remediations—no more, and if not relevant just says 'Could not find relevant remediation'. Avoid redundancies and keep the focus on critical insights.\n\n---\n\n{{variables[\"runtime.Insight_Health_HTML\"]}}\n\"\n}\n\n",
-                    "debug": true
+                    "debug": false
                 },
                 "wires": [
                     [
@@ -357,7 +339,7 @@
                     "limit": "100",
                     "topBy": [
                         {
-                            "id": "sum_unique_health_events",
+                            "id": "health_event_last_timestamp",
                             "direction": "desc"
                         }
                     ],
@@ -385,7 +367,7 @@
         ],
         "lastUpdatedUser": "Runbook Export",
         "createdByUser": "Runbook Export",
-        "eTag": "W/\"datetime'2025-11-26T16%3A55%3A08.2510231Z'\"",
+        "eTag": "W/\"datetime'2025-11-26T17%3A08%3A11.8250787Z'\"",
         "variant": "on_demand",
         "seriesId": "ed869632-9aae-4db7-8979-c1cb19fa3856",
         "version": "1.0",
@@ -395,5 +377,5 @@
         "isProprietary": false
     },
     "dependencies": [],
-    "token": "rfITEGNI2/Z9i50lZbpmS9Vp1r5QBMPHYi5xnz7b4hA="
+    "token": "CKEzfh4EVvW3fNgnKOQlXxqG6ONUxH4Z/KxO+Kn97UU="
 }
