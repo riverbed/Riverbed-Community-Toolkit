@@ -6,7 +6,7 @@ This community cookbook offers step-by-step instructions to integrate Riverbed I
 
 You will learn to create an agent using Microsoft Copilot Studio and add Riverbed IQ Assist skills as tools via a Custom Connector.
 
-This Employee IT Self-Service agent uses Riverbed Platform’s AI Ops and Observability to identify user endpoint and devices, and assist with diagnostics and remediation.
+This Employee IT Self-Service agent uses Riverbed Platform’s AI Ops and Observability to identify user endpoints and devices, and assist with diagnostics and remediation.
 
 After setting up the agent, you’ll learn to customize and extend it with additional tools for advanced scenarios.
 
