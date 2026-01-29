@@ -179,11 +179,11 @@ Base URL: `/api/skills/1.0/tenants/<your Riverbed Tenant Id>` | Base URL: `/api/
 | Resource URL: `<your Resource Id URI>` | Resource URL: `api://987654-654321-321654`
 | Scope: `<your API Scope>` | Scope: `api://987654-654321-321654/.default`
 
-* Leave the other fields as is (Authorization URL `https://login.microsoftonline.com`, Tenant ID: `common`, Enable on behalf-of-login: `false`)
+* Leave the other fields as is (**Authorization URL** `https://login.microsoftonline.com`, **Tenant ID**: `common`, **Enable on behalf-of-login**: `false`)
 
 * Click on **Create connector** (at the top):
 
-* When the connector is created, just close the tab and go back to Copilot Studio
+* When the connector is created, you can close the tab, and go back to Copilot Studio
 
 ## 4. Configure a connection for Riverbed IQ Assist skills
 
