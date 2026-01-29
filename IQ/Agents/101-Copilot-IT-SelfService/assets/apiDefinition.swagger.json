@@ -340,25 +340,25 @@
       "properties": {
         "id": {
           "title": "User ID",
-          "description": "A unique, stable identifier for the human user. Must be set to the System.User.Id environment variable.",
+          "description": "A unique, stable identifier for the human user. In Copilot, the input value must be set to the User.Id system variable.",
           "type": "string",
           "x-ms-visibility": "important"
         },
         "principalName": {
           "title": "User Principal Name",
-          "description": "The user sign-in name. Must be set to the System.User.PrincipalName environment variable.",
+          "description": "The user sign-in name. In Copilot, the input value must be set to the User.PrincipalName system variable.",
           "type": "string",
           "x-ms-visibility": "important"
         },
         "email": {
           "title": "User Email",
-          "description": "Contact email of the user. Must be set to the System.User.Email environment variable.",
+          "description": "Contact email of the user. In Copilot, the input value must be set to the User.Email system variable.",
           "type": "string",
           "x-ms-visibility": "important"
         },
         "displayName": {
           "title": "User Display Name",
-          "description": "Human friendly name of the user. Must be set to the System.User.DisplayName environment variable.",
+          "description": "Human friendly name of the user. In Copilot, the input value must be set to the User.DisplayName system variable.",
           "type": "string",
           "x-ms-visibility": "important"
         },
