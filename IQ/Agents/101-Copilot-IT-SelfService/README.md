@@ -87,7 +87,7 @@ For more details see the FAQ: How to configure the connection in Copilot? where 
 
 * Click on **Configure**
 
-* Set a **Logo**, for example you can use the Riverbed Logo ([logo link](./assets/riverbed-icon.png))
+* Set a **Logo**, for example you can use the Riverbed Logo ([click to download](https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads/master/IQ/Agents/101-Copilot-IT-SelfService/assets/riverbed-icon.png))
 
 * Configure the agent Name, Description and Instruction. For example using this agent sample (*101-Copilot-IT-SelfService*):
 
@@ -133,17 +133,20 @@ Responses should be concise, well-structured, and easy to understand, avoiding t
 Name:
 
 ```
-Cookbook Riverbed IQ Assist Skills
+Cookbook Riverbed IQ Assist
 ```
 
-URL ([raw link of the connector description](./assets/apiDefinition.swagger.json))
+URL
 
 ```
-https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads/main/IQ/Agents/101-Copilot-IT-SelfService/apiDefinition.swagger.json
+https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads/master/IQ/Agents/101-Copilot-IT-SelfService/assets/apiDefinition.swagger.json
 ```
 
+> [!NOTE]
+> This is the *raw link* of the [connector description](./assets/apiDefinition.swagger.json)
 
-* (You are now in the **“1. General”** page), set an icon for your connector, for example you can use the Riverbed Logo ([logo link](./assets/riverbed-icon.png))
+
+* (You are now in the **“1. General”** page), set an icon for your connector, for example you can use the Riverbed Logo ([click to download](https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads/master/IQ/Agents/101-Copilot-IT-SelfService/assets/riverbed-icon.png))
 
 * Set the fields **Host** and **Base URL** using the connector information of your account (refer to the preparation steps):
 
@@ -177,7 +180,7 @@ Back to Copilot Studio > Tools > Add tool window, you can now search and find th
 
 When adding your first tool, configure the connection first.
 
-* Find and click on the tool **“Self-Service: Find My User Endpoint”** (provided by the connector **“Cookbook Riverbed IQ Assist Skills”**).
+* Find and click on the tool **“Self-Service: Find My User Endpoint”** (provided by the connector **Cookbook Riverbed IQ Assist**).
 * Connection: **Create new connection**
 * In Authentication Type, select **Service Principal Connection**.
 
