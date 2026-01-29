@@ -4,13 +4,15 @@ On-demand runbook that suggests remediations to run on a device based on the hea
 
 The runbook fetches health events for the request device, uses a first GenAI node to get an analysis of the events and suggested resolutions, then continues the GenAI conversation though a second genAI node to assess what remediation from the available remediations on the tenant would address the issues.
 
-![image](https://github.com/user-attachments/assets/04e0d58b-a53b-4688-ab6d-e437b2e4a5c3)
+![image](image.png)
 
-## Prerequisistes
+## Prerequisites
 
-1. Aternity integration is installed and the connector is configured (IQ > Integration Library)
-2. Remediations available in the Aternity tenant
-3. IQ Assist feature is enabled (see help page)
+1. Riverbed IQ Assist feature is enabled
+
+2. Aternity integration is installed and the connector is configured (IQ > Integration Library)
+
+3. Remediations available in the Aternity tenant
 
 
 ## Quick Setup
