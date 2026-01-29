@@ -248,8 +248,36 @@ Edit each tool:
 
 ## Testing the conversational Agent
 
+Once the tools are configured, test the agent end-to-end in Microsoft Copilot Studio:
+
+1. In Copilot Studio, open your Employee IT Self-Service agent.
+2. Use the **Test** pane to start a new conversation.
+3. Try typical user prompts, for example:
+   * "Find my laptop"  
+   * "Check if there are any issues with my device"  
+   * "Start remediation on my endpoint"  
+4. Confirm that the agent:
+   * Identifies the user and their endpoint correctly.
+   * Invokes the appropriate Riverbed IQ Assist tools.
+   * Returns clear status messages and next steps to the user.
+5. Review any errors in the tool invocation logs or Copilot Studio trace output and adjust tool configuration (authentication, parameters, or additional details) as needed.
+
+When you are satisfied with the behavior in the test pane, proceed to deploy the agent to Microsoft Teams.
+
 ## Deploying the Agent to Teams
 
+To make the agent available to users in Microsoft Teams:
+
+1. In Copilot Studio, select your Employee IT Self-Service agent.
+2. Choose **Publish** (or **Go live**) to create a production version.
+3. Navigate to the **Channels** section for the agent.
+4. Enable the **Microsoft Teams** channel and follow the guided steps:
+   * Configure the display name and icon for the agent in Teams.
+   * Set who can access the agent (e.g., specific groups or the whole organization).
+5. Complete any required approvals in the Teams admin center, if your organization requires app approval.
+6. From the Teams client, search for the published agent by name, add it to a chat, and run a few of the same test prompts used in Copilot Studio to confirm behavior.
+
+After verifying that the agent works as expected in Teams, communicate availability and basic usage examples to your end users.
 ## Frequently Asked Questions (FAQ)
 
 ### How to set the additional details?
