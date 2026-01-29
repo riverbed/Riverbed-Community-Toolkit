@@ -211,7 +211,7 @@ In Tools > Add tool, you selected a tool and configured a connection. Now you wi
 
 * Apply configuration for user authentication
 
-* Edit the tool of Riverbed IQ Assist, for example the tool **“Diagnose User Endpoint”**
+* Edit the tool of Riverbed IQ Assist, for example the tool **“Self-Service: Find My User Endpoint”**
 * In the **Inputs** section, click **+ Add input**
 * Add each of the following, set **Fill using** to **Custom value** and select the corresponding system value from the list:
 
