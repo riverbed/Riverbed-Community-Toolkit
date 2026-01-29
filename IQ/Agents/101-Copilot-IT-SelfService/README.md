@@ -278,76 +278,11 @@ To make the agent available to users in Microsoft Teams:
 6. From the Teams client, search for the published agent by name, add it to a chat, and run a few of the same test prompts used in Copilot Studio to confirm behavior.
 
 After verifying that the agent works as expected in Teams, communicate availability and basic usage examples to your end users.
+
 ## Frequently Asked Questions (FAQ)
 
-### How to set the additional details?
+*work in progress*
 
-Use **Additional details** to give Copilot more context about when and how a tool should be used and what information it should pass to Riverbed IQ Assist.
-
-At a high level:
-
-1. In **Microsoft Copilot Studio**, open your agent and go to **Tools**.
-2. Select the tool you created for a Riverbed IQ Assist skill.
-3. Locate the **Additional details** / **Description** or equivalent configuration field.
-4. Describe:
-   - What the tool does (for example, *"Checks my device health using Riverbed IQ Assist"*).
-   - When the agent should use it (for example, *"Use when the user reports device performance, Wi‑Fi, or application slowness issues."*).
-   - Any important parameters the tool expects (for example, *"Always include the user's primary device ID if available."*).
-5. Save and republish the agent.
-
-Good additional details help the Copilot orchestration choose the right Riverbed tools and populate them with the right arguments.
-
-### How to add user authentication to the Tools?
-
-Tools that access user‑specific data or perform remediation on behalf of a user should run under the identity of the signed‑in user instead of a shared service account.
-
-Typical steps are:
-
-1. In **Microsoft Copilot Studio**, open **Settings** for your Custom Connector or tool.
-2. Configure an **Authentication** method supported by both Microsoft Copilot Studio and the Riverbed Platform (for example, OAuth 2.0).
-3. Ensure the connector is configured to acquire tokens / credentials for the **current user** (not a static admin credential), where supported.
-4. Map the authenticated user’s identity (such as UPN or email) to identifiers used in Riverbed (for example, to find the user’s primary endpoint).
-5. Test with a non‑admin test user to verify:
-   - The tool only sees that user’s devices/sessions.
-   - Remediation actions are performed on the correct devices.
-
-Review your organization’s security and privacy requirements and align the connector configuration accordingly.
-
-### How to configure the Aternity EUEM connector?
-
-Configuration is typically done in two parts: enabling Aternity EUEM data in the Riverbed Platform, and exposing it to Copilot via a connector.
-
-1. In the **Riverbed Platform**:
-   - Ensure the **Aternity EUEM** module is deployed to user endpoints and is sending data.
-   - Enable any features required for Riverbed IQ Assist to query Aternity EUEM (for example, endpoint health and remediation).
-   - Create or obtain OAuth/client credentials that the Copilot connector will use.
-2. In **Microsoft Copilot Studio**:
-   - Create or edit the Custom Connector used by your Riverbed IQ Assist tools.
-   - Configure the **Base URL** and **Authentication** using the Riverbed Platform / Aternity EUEM endpoint and credentials.
-   - Expose the operations that your tools/skills need (for example, *get device details*, *start remediation*, *check remediation status*).
-3. Update your agent’s tools to use this connector and republish the agent.
-
-Refer to the official Riverbed and Aternity documentation for the exact URLs, scopes, and permissions required in your environment.
-
-### How to analyse the execution of a Skill?
-
-To understand how a Riverbed IQ Assist skill was executed and to troubleshoot issues:
-
-1. **Review the Copilot conversation**  
-   - In Copilot Studio, open **Analytics** or the conversation transcripts.
-   - Locate the user conversation where the tool/skill was invoked.
-   - Check which tool was called, with which parameters, and what response was returned.
-2. **Check tool/connector logs**  
-   - In the Custom Connector or tool configuration, verify whether any errors were returned (for example, authentication failures, invalid parameters).
-3. **Inspect Riverbed Platform / Aternity EUEM views**  
-   - Use Riverbed dashboards to see the endpoint, session, or remediation action that was triggered.
-   - Confirm that the skill targeted the expected device/user and that any remediation steps completed successfully.
-4. **Iterate on prompts and tool configuration**  
-   - If the skill is being invoked at the wrong time or with poor parameters, refine:
-     - The **Additional details** text for the tool.
-     - The tool input mappings (for example, device ID, username, ticket ID).
-
-Analysing skill execution in this way helps you validate and continuously improve your Copilot agent’s behavior.
 ## License
 
 Copyright (c) 2026 Riverbed Technology, Inc.
