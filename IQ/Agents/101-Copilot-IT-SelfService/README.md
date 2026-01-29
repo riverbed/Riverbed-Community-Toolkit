@@ -66,7 +66,7 @@ On this page you will find all the required information:
 * Resource Id URI
 
 
-For the credentials, click on **Create OAuth Client** to generate a new client. It requires a name, for example put “Riverbed IQ Assist for Copilot”. Then you will obtain the credentials:
+For the credentials, click on **Create OAuth Client** to generate a new client. It requires a name, for example put "Riverbed IQ Assist for Copilot". Then you will obtain the credentials:
 
 * Client Id
 
@@ -87,7 +87,7 @@ For more details see the FAQ: How to configure the connection in Copilot? where 
 
 * Click on **Configure**
 
-* Set a **Logo**, for example you can use the Riverbed Logo ([click to download](https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads/master/IQ/Agents/101-Copilot-IT-SelfService/assets/riverbed-icon.png))
+* Set a **Logo**, for example you can use the Riverbed logo ([follow the link and download](https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads/master/IQ/Agents/101-Copilot-IT-SelfService/assets/riverbed-icon.png))
 
 * Configure the agent Name, Description and Instruction. For example using this agent sample (*101-Copilot-IT-SelfService*):
 
@@ -146,7 +146,7 @@ https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads
 > This is the *raw link* of the [connector description](./assets/apiDefinition.swagger.json)
 
 
-* (You are now in the **“1. General”** page), set an icon for your connector, for example you can use the Riverbed Logo ([click to download](https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads/master/IQ/Agents/101-Copilot-IT-SelfService/assets/riverbed-icon.png))
+* (You are now in the **1. General** page), set an icon for your connector, for example you can use the Riverbed Logo ([follow the link and download](https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads/master/IQ/Agents/101-Copilot-IT-SelfService/assets/riverbed-icon.png))
 
 * Set the fields **Host** and **Base URL** using the connector information of your account (refer to the preparation steps):
 
@@ -155,7 +155,7 @@ https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads
 | Host: `<your Riverbed Tenant Name>.app.cloud.riverbed.com`  | Host: `yourtenant.app.cloud.riverbed.com`  
 Base URL: `/api/skills/1.0/tenants/<your Riverbed Tenant Id>` | Base URL: `/api/skills/1.0/tenants/123456-789456-123456` |
 
-* Go to the **“2. Security”** page and configure the following using the connector information of your account (see Preparation):
+* Go to the **2. Security** page and configure the following using the connector information of your account (see Preparation):
 
 | **Configuration** | **Example** |
 | --- | --- |
@@ -176,11 +176,11 @@ Base URL: `/api/skills/1.0/tenants/<your Riverbed Tenant Id>` | Base URL: `/api/
 
 ## 4. Configure a connection for Riverbed IQ Assist skills
 
-Back to Copilot Studio > Tools > Add tool window, you can now search and find the skills of Riverbed IQ Assist that are available as Tools for your agent. You can search with the connector name, tools name prefix like “Self-Service” or the specific tool name.
+Back to Copilot Studio > Tools > Add tool window, you can now search and find the skills of Riverbed IQ Assist that are available as Tools for your agent. You can search with the connector name, tools name prefix like "Self-Service" or the specific tool name.
 
 When adding your first tool, configure the connection first.
 
-* Find and click on the tool **“Self-Service: Find My User Endpoint”** (provided by the connector **Cookbook Riverbed IQ Assist**).
+* Find and click on the tool **Self-Service: Find My User Endpoint”** (provided by the connector **Cookbook Riverbed IQ Assist**).
 * Connection: **Create new connection**
 * In Authentication Type, select **Service Principal Connection**.
 
@@ -214,7 +214,7 @@ In Tools > Add tool, you selected a tool and configured a connection. Now you wi
 
 * Apply configuration for user authentication
 
-* Edit the tool of Riverbed IQ Assist, for example the tool **“Self-Service: Find My User Endpoint”**
+* Edit the tool of Riverbed IQ Assist, for example the tool **Self-Service: Find My User Endpoint**
 * In the **Inputs** section, click **+ Add input**
 * Add each of the following, set **Fill using** to **Custom value** and select the corresponding system value from the list:
 
