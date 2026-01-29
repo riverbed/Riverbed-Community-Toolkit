@@ -136,7 +136,7 @@ Name:
 Cookbook Riverbed IQ Assist Skills
 ```
 
-URL ([raw link of the connector description](./assets/apiDefinition.swagger.json)))
+URL ([raw link of the connector description](./assets/apiDefinition.swagger.json))
 
 ```
 https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads/main/IQ/Agents/101-Copilot-IT-SelfService/apiDefinition.swagger.json
