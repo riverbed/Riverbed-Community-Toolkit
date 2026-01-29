@@ -293,8 +293,6 @@ To make the agent available to users in Microsoft Teams:
 5. Complete any required approvals in the Teams admin center, if your organization requires app approval.
 6. From the Teams client, search for the published agent by name, add it to a chat, and run a few of the same test prompts used in Copilot Studio to confirm behavior.
 
-After verifying that the agent works as expected in Teams, communicate availability and basic usage examples to your end users.
-
 ## Frequently Asked Questions (FAQ)
 
 *work in progress*
