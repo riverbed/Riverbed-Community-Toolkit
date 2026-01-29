@@ -1,0 +1,537 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Cookbook Riverbed IQ Assist Self-Service",
+    "description": "Riverbed empowers organizations to automate workflows and enhance IT operations by integrating advanced AIOps and observability. Unlock intelligent diagnostics and actionable insights to accelerate issue resolution, optimize performance, and drive greater efficiency across your service desk.",
+    "contact": {
+      "name": "Riverbed Support",
+      "url": "https://support.riverbed.com",
+      "email": "support@riverbed.com"
+    },
+    "version": "1.0"
+  },
+  "host": "app.cloud.riverbed.com",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+
+    "/selfService/skills/findUserEndpoint": {
+      "post": {
+        "tags": [
+          "Skill"
+        ],
+        "summary": "Self-Service: Find My User Endpoint",
+        "description": "Find the user endpoints or devices associated with my user based on my username, user principal name, email or display user name.",
+        "operationId": "SelfServiceFindUserEndpoint",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "required": [
+                "authenticatedUser"
+              ],
+              "type": "object",
+              "properties": {
+                "authenticatedUser": {
+                  "$ref": "#/definitions/AuthenticatedUserContext",
+                  "x-ms-visibility": "important"
+                }
+              },
+              "additionalProperties": false
+            },
+            "x-ms-visibility": "important"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The output generated from the action",
+            "schema": {
+              "$ref": "#/definitions/FindUserEndpointResponse"
+            }
+          },
+          "202": {
+            "description": "A response indicating a long running operation to be polled for status",
+            "schema": {
+              "$ref": "#/definitions/LongRunningResponse"
+            }
+          }
+        }
+      }
+    },
+    "/selfService/skills/createTicket": {
+      "post": {
+        "tags": [
+          "Skill"
+        ],
+        "summary": "Self-Service: Create a Ticket on My Behalf",
+        "description": "Create a ticket in IT Service Management system for the user's issue and return the ticket number to the user for reference",
+        "operationId": "SelfServiceCreateTicket",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "required": [
+                "authenticatedUser"
+              ],
+              "type": "object",
+              "properties": {
+                "authenticatedUser": {
+                  "$ref": "#/definitions/AuthenticatedUserContext",
+                  "x-ms-visibility": "important"
+                },
+                "shortDescription": {
+                  "title": "Short Description",
+                  "description": "Short description of the issue, used as the ticket title, summarizing the user's issues.",
+                  "type": "string",
+                  "x-ms-visibility": "important"
+                },
+                "description": {
+                  "title": "Description",
+                  "description": "Detailed description of the user's complaint, the issue and the context for further handling of the issue by Support. Indicate the name of any user endpoints or user's device related to the issue.",
+                  "type": "string",
+                  "x-ms-visibility": "important"
+                }
+              },
+              "additionalProperties": false
+            },
+            "x-ms-visibility": "important"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The output generated from the action",
+            "schema": {
+              "$ref": "#/definitions/CreateTicketResponse"
+            }
+          },
+          "202": {
+            "description": "A response indicating a long running operation to be polled for status",
+            "schema": {
+              "$ref": "#/definitions/LongRunningResponse"
+            }
+          }
+        }
+      }
+    },
+    "/selfService/skills/getRemediationRunStatus": {
+      "post": {
+        "tags": [
+          "Skill"
+        ],
+        "summary": "Self-Service: Get My Remediation Execution Status",
+        "description": "Get the status of a remediation run on the user's device or user endpoint.",
+        "operationId": "SelfServiceGetRemediationRunStatus",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "required": [
+                "authenticatedUser",
+                "deviceName",
+                "runReferenceId"
+              ],
+              "type": "object",
+              "properties": {
+                "authenticatedUser": {
+                  "$ref": "#/definitions/AuthenticatedUserContext",
+                  "x-ms-visibility": "important"
+                },
+                "deviceName": {
+                  "title": "User Endpoint",
+                  "description": "The name of the user endpoint or device targeted by the remediation",
+                  "type": "string",
+                  "x-ms-visibility": "important"
+                },
+                "runReferenceId": {
+                  "format": "int32",
+                  "title": "Execution Reference ID",
+                  "description": "Identifier of the execution of the remediation",
+                  "type": "integer",
+                  "x-ms-visibility": "important"
+                }
+              },
+              "additionalProperties": false
+            },
+            "x-ms-visibility": "important"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The output generated from the action",
+            "schema": {
+              "$ref": "#/definitions/GetRemediationRunStatusResponse"
+            }
+          },
+          "202": {
+            "description": "A response indicating a long running operation to be polled for status",
+            "schema": {
+              "$ref": "#/definitions/LongRunningResponse"
+            }
+          }
+        }
+      }
+    },
+    "/selfService/skills/startRemediationOnUserEndpoint": {
+      "post": {
+        "tags": [
+          "Skill"
+        ],
+        "summary": "Self-Service: Initiate Remediation for My User Endpoint",
+        "description": "Initiate a remediation on the user's device or user endpoint, and return the identifier for the remediation execution.",
+        "operationId": "SelfServiceStartRemediationOnUserEndpoint",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "required": [
+                "authenticatedUser",
+                "deviceName",
+                "remediationId"
+              ],
+              "type": "object",
+              "properties": {
+                "authenticatedUser": {
+                  "$ref": "#/definitions/AuthenticatedUserContext",
+                  "x-ms-visibility": "important"
+                },
+                "deviceName": {
+                  "title": "User Endpoint",
+                  "description": "The name of the user's device or user endpoint experiencing an issue or a problem",
+                  "type": "string",
+                  "x-ms-visibility": "important"
+                },
+                "remediationId": {
+                  "title": "Remediation Execution ID",
+                  "description": "The ID of the remediation action to start.",
+                  "type": "string",
+                  "x-ms-visibility": "important"
+                }
+              },
+              "additionalProperties": false
+            },
+            "x-ms-visibility": "important"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The output generated from the action",
+            "schema": {
+              "$ref": "#/definitions/StartEndpointRemediationResponse"
+            }
+          },
+          "202": {
+            "description": "A response indicating a long running operation to be polled for status",
+            "schema": {
+              "$ref": "#/definitions/LongRunningResponse"
+            }
+          }
+        }
+      }
+    },
+    "/selfService/skills/suggestUserEndpointRemediation": {
+      "post": {
+        "tags": [
+          "Skill"
+        ],
+        "summary": "Self-Service: Suggest User Endpoint Remediation",
+        "description": "Suggest remediations for a user device or user endpoint based on the user's issue",
+        "operationId": "SelfServiceSuggestEndpointRemediation",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "description": "This object is used to request a suggested remediation action for a device.",
+              "required": [
+                "authenticatedUser",
+                "deviceName",
+                "issue"
+              ],
+              "type": "object",
+              "properties": {
+                "authenticatedUser": {
+                  "$ref": "#/definitions/AuthenticatedUserContext",
+                  "x-ms-visibility": "important"
+                },
+                "deviceName": {
+                  "title": "User Endpoint",
+                  "description": "The name of the device that the remediation action should be applied to.",
+                  "type": "string",
+                  "x-ms-visibility": "important"
+                },
+                "issue": {
+                  "title": "Issue",
+                  "description": "The issue experienced by the user that will influence the suggested remediation action.",
+                  "type": "string",
+                  "x-ms-visibility": "important"
+                }
+              },
+              "additionalProperties": false
+            },
+            "x-ms-visibility": "important"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The output generated from the action",
+            "schema": {
+              "$ref": "#/definitions/SuggestEndpointRemediationResponse"
+            }
+          },
+          "202": {
+            "description": "A response indicating a long running operation to be polled for status",
+            "schema": {
+              "$ref": "#/definitions/LongRunningResponse"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "AuthenticatedUserContext": {
+      "required": [
+        "displayName",
+        "email",
+        "id",
+        "principalName"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "User ID",
+          "description": "A unique, stable identifier for the human user. Must be set to the System.User.Id environment variable.",
+          "type": "string",
+          "x-ms-visibility": "important"
+        },
+        "principalName": {
+          "title": "User Principal Name",
+          "description": "The user sign-in name. Must be set to the System.User.PrincipalName environment variable.",
+          "type": "string",
+          "x-ms-visibility": "important"
+        },
+        "email": {
+          "title": "User Email",
+          "description": "Contact email of the user. Must be set to the System.User.Email environment variable.",
+          "type": "string",
+          "x-ms-visibility": "important"
+        },
+        "displayName": {
+          "title": "User Display Name",
+          "description": "Human friendly name of the user. Must be set to the System.User.DisplayName environment variable.",
+          "type": "string",
+          "x-ms-visibility": "important"
+        },
+        "metadata": {
+          "title": "User Metadata",
+          "description": "Additional metadata about the user.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "x-ms-visibility": "important"
+        }
+      },
+      "additionalProperties": false
+    },
+    "CreateTicketResponse": {
+      "description": "The object contains the ticket reference number.",
+      "type": "object",
+      "properties": {
+        "errorMessage": {
+          "description": "If the request fails, then this property will be populated with error details.",
+          "type": "string",
+          "x-ms-visibility": "important"
+        },
+        "response": {
+          "title": "Ticket Reference ID",
+          "description": "Reference identifier of the ticket created for IT Service Management",
+          "type": "string",
+          "x-ms-visibility": "important"
+        }
+      },
+      "additionalProperties": false
+    },
+    "DiagnoseEndpointResponse": {
+      "description": "The object contains a diagnosis related to a problem on a device.",
+      "type": "object",
+      "properties": {
+        "errorMessage": {
+          "description": "If the request fails, then this property will be populated with error details.",
+          "type": "string",
+          "x-ms-visibility": "important"
+        },
+        "response": {
+          "title": "User Endpoint Diagnosis",
+          "description": "User Endpoint diagnosis",
+          "type": "string",
+          "x-ms-visibility": "important"
+        }
+      },
+      "additionalProperties": false
+    },
+    "FindUserEndpointResponse": {
+      "description": "The object contains the device name, hostname, or endpoint name.",
+      "type": "object",
+      "properties": {
+        "errorMessage": {
+          "description": "If the request fails, then this property will be populated with error details.",
+          "type": "string",
+          "x-ms-visibility": "important"
+        },
+        "response": {
+          "title": "User Endpoint",
+          "description": "Names of the user endpoints or user devices associated with my user",
+          "type": "string",
+          "x-ms-visibility": "important"
+        }
+      },
+      "additionalProperties": false
+    },
+    "GetRemediationRunStatusResponse": {
+      "description": "The object contains the current status of the remediation run.",
+      "type": "object",
+      "properties": {
+        "errorMessage": {
+          "description": "If the request fails, then this property will be populated with error details.",
+          "type": "string",
+          "x-ms-visibility": "important"
+        },
+        "response": {
+          "title": "Remediation Execution Status",
+          "description": "Status of the remediation execution",
+          "type": "string",
+          "x-ms-visibility": "important"
+        }
+      },
+      "additionalProperties": false
+    },
+    "LongRunningResponse": {
+      "type": "object",
+      "properties": {
+        "operationId": {
+          "type": "string",
+          "x-ms-visibility": "important"
+        },
+        "location": {
+          "format": "uri",
+          "type": "string",
+          "x-ms-visibility": "important"
+        },
+        "retryAfter": {
+          "format": "date-time",
+          "type": "string",
+          "x-ms-visibility": "important"
+        }
+      },
+      "additionalProperties": false
+    },
+    "SkillOutput": {
+      "description": "This object is used to return the output of a skill.",
+      "type": "object",
+      "properties": {
+        "errorMessage": {
+          "description": "If the request fails, then this property will be populated with error details.",
+          "type": "string",
+          "x-ms-visibility": "important"
+        },
+        "response": {
+          "description": "The result from the tool, action, or skill invocation.",
+          "type": "string",
+          "x-ms-visibility": "important"
+        }
+      },
+      "additionalProperties": false
+    },    
+    "StartEndpointRemediationResponse": {
+      "description": "The object contains reference to the remediation run.",
+      "type": "object",
+      "properties": {
+        "errorMessage": {
+          "description": "If the request fails, then this property will be populated with error details.",
+          "type": "string",
+          "x-ms-visibility": "important"
+        },
+        "response": {
+          "title": "Remediation Execution ID",
+          "description": "Remediation execution ID",
+          "type": "string",
+          "x-ms-visibility": "important"
+        }
+      },
+      "additionalProperties": false
+    },
+    "SuggestEndpointRemediationResponse": {
+      "description": "The object contains a list of remediation actions that are suggested for the device.",
+      "type": "object",
+      "properties": {
+        "errorMessage": {
+          "description": "If the request fails, then this property will be populated with error details.",
+          "type": "string",
+          "x-ms-visibility": "important"
+        },
+        "response": {
+          "title": "Remediation recommendations",
+          "description": "Remediation recommendations",
+          "type": "string",
+          "x-ms-visibility": "important"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "x-ms-connector-metadata": [
+    {
+      "propertyName": "Website",
+      "propertyValue": "https://www.riverbed.com"
+    },
+    {
+      "propertyName": "Privacy policy",
+      "propertyValue": "https://www.riverbed.com/privacy"
+    },
+    {
+      "propertyName": "Categories",
+      "propertyValue": "AI;IT Operations"
+    }
+  ]
+}  
