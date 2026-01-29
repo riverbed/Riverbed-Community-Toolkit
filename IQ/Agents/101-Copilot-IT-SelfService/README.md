@@ -172,7 +172,7 @@ Base URL: `/api/skills/1.0/tenants/<your Riverbed Tenant Id>` | Base URL: `/api/
 
 * Check the box **Enable Service Principal Support** 
 
-* Set the value `0000` for **Client ID**, and `****` for the **Client Secret**
+* Set the value `0000` for **Client ID**, and `****` for the **Client Secret**. These are only placeholder values and not actual credentials.
 
 * Configure the following properties using the connector information of your account (refer to **Preparing Riverbed IQ Assist** > **5. Get the info and credentials for the Copilot Agent**):
 
