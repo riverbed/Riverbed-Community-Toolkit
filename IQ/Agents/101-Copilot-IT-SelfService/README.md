@@ -15,7 +15,7 @@ For FAQs, troubleshooting tips, and links to cookbooks or Copilot Agent samples 
 
 | Prerequisites | Description |
 |--------------|-------------|
-| Microsoft Copilot Studio | An account is required, it can be trial account. | 
+| Microsoft Copilot Studio | An account is required, it can be a trial account. | 
 | Riverbed Unified Agent and modules | Unified agent modules must be deployed on your user endpoints (e.g., laptop, VDI, desktop). To use Riverbed IQ Assist skills for user endpoint remediation, you need the Aternity EUEM module and must enable the remediation feature (see Aternity documentation: Getting Started with Remediation). Other modules, such as NPM+, Unified Communication (UC), and Intel WiFi, are optional. | 
 | Riverbed Platform | Enable the Riverbed IQ Assist feature and configure the required connectors and integrations, including Riverbed IQ Assist and Aternity EUEM. Obtain OAuth information and generate credentials to connect in Microsoft Copilot Studio | 
 
