@@ -11,7 +11,7 @@ This folder contains cookbooks and samples to be used when building Agents and R
 ## Agents
 
 | Agent | Description | Tags | Last update |
-| --- | --- | --- | --- | --- |
+| --- | --- | --- | --- |
 | Copilot IT Self-Service | [More details](Agents/101-Copilot-IT-SelfService) | Microsoft Copilot | Jan. 2026 |
 
 
