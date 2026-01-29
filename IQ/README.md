@@ -1,8 +1,6 @@
-# Riverbed-Community-Toolkit - IQ Automation
+# Riverbed-Community-Toolkit - IQ Ops
 
-This folder contains samples of Runbooks for Automation and AIOps in the Riverbed Platform.
-
-You can download the Runbook files from the tables below and import them into your Riverbed IQ account. 
+This folder contains cookbooks and samples to be used when building Agents and Runbooks for Automation with the Riverbed Platform.
 
 > [!NOTE]
 > * To use runbooks below you need active licenses of the Riverbed Products. Please visit the website of Riverbed for more information about the [Riverbed Platform](https://www.riverbed.com/platform)
@@ -10,13 +8,22 @@ You can download the Runbook files from the tables below and import them into yo
 
 ## Quick start
 
-1. Choose a runbook in the table below. There are different runbook types: Incident Runbooks, Lifecyle Runbook, On-Demand Runbooks, External Runbooks or Subflows
+## Agents
 
-2. Follow the download link and hit "Download raw file" to get the runbook file (.json).
+| Agent | Description | Tags | Last update |
+| --- | --- | --- | --- |
+| Copilot IT Self-Service | [More details](Agents/101-Copilot-IT-SelfService) | Microsoft Copilot | Jan. 2026 |
 
-3. In Riverbed IQ, open the Menu, go to Automation, select the runbook type and import the runbook
 
 ## Automation runbooks
+
+You can download the Runbook files from the tables below and import them into your Riverbed IQ account. 
+
+1. Choose a runbook in the table below. There are different runbook types: Incident Runbooks, Lifecyle Runbook, On-Demand Runbooks, External Runbooks or Subflows
+
+2. Follow the download link and click **Download raw file** to get the runbook file (.json).
+
+3. In **Riverbed IQ Ops**, open the Menu, go to Automation, select the runbook type and import the runbook
 
 ### External Runbooks
 
@@ -57,6 +64,6 @@ Other Runbooks for other Runbooks types are in preparation.
 
 ### License
 
-Copyright (c) 2025 Riverbed Technology, Inc.
+Copyright (c) 2025 - 2026 Riverbed Technology, Inc.
 
 The contents provided here are licensed under the terms and conditions of the MIT License accompanying the software ("License"). The scripts are distributed "AS IS" as set forth in the License. The script also include certain third party code. All such third party code is also distributed "AS IS" and is licensed by the respective copyright holders under the applicable terms and conditions (including, without limitation, warranty and liability disclaimers) identified in the license notices accompanying the software.
