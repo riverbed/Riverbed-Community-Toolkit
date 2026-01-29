@@ -65,14 +65,21 @@ On this page you will find all the required information:
 
 * Resource Id URI
 
+> [!NOTE]
+> Riverbed Tenant Name is the prefix of the URL of the Riverbed console. For example, in the URL `https://your_tenant.riverbed.cloud` the Riverbed Tenant Name is **your_tenant**
+>
+> On this page the **Riverbed Tenant Id** is labeled **Tenant Id**. For example `123456-789456-123456`
+>
+> **Directory Id** is the *GUID* between the domain and the /oauth2/ in the Access Token URI. For example, in the following **Access Token URI** `https://login.microsoftonline.com/987654-987654-987654/oauth2/v2.0/token`, the **Directory Id** is `987654-987654-987654`
+>
+> To obtain the **Resource Id URI**, take the first portion of the API Scope (i.e. remove /.default from the API Scope). For example, if the **API Scope** is `api://987654-654321-321654/.default` then the **Resource Id URI** is `api://987654-654321-321654`
+
 
 For the credentials, click on **Create OAuth Client** to generate a new client. It requires a name, for example put "Riverbed IQ Assist for Copilot". Then you will obtain the credentials:
 
 * Client Id
 
 * Client Secret
-
-For more details see the FAQ: How to configure the connection in Copilot? where are the info?
 
 
 ## Setting Up the Copilot Agent
@@ -169,7 +176,7 @@ Base URL: `/api/skills/1.0/tenants/<your Riverbed Tenant Id>` | Base URL: `/api/
 | --- | --- |
 | Client ID: `****` | Client ID: `****`
 | Client Secret: `****` | Client Secret: `****` |
-| Resource URL: `<your Resource URI>` | Resource URL: `api://987654-654321-321654`
+| Resource URL: `<your Resource Id URI>` | Resource URL: `api://987654-654321-321654`
 | Scope: `<your API Scope>` | Scope: `api://987654-654321-321654/.default`
 
 * Leave the other fields as is (Authorization URL `https://login.microsoftonline.com`, Tenant ID: `common`, Enable on behalf-of-login: `false`)
@@ -219,15 +226,17 @@ In Tools > Add tool, you selected a tool and configured a connection. Now you wi
 * Apply configuration for user authentication
 
 * Edit the tool of Riverbed IQ Assist, for example the tool **Self-Service: Find My User Endpoint**
-* In the **Inputs** section, click **+ Add input**
-* Add each of the following, set **Fill using** to **Custom value** and select the corresponding system value from the list:
 
-| Input | Description | Value |
-| --- | --- | --- |
-| **User ID** | A unique, stable identifier for the human user. Must be set to the System.User.Id environment variable. | `User.Id` |
-| **User Principal Name** | The user sign-in name. Must be set to the System.User.PrincipalName environment variable. | `User.PrincipalName` |
-| **User Email** | Contact email of the user. Must be set to the System.User.Email environment variable. | `User.Email` |
-| **User Display Name** | Human friendly name of the user. Must be set to the System.User.DisplayName environment variable. | `User.DisplayName` |
+* Scroll down to the **Inputs** section
+
+* For each of the inputs listed below, set the **Fill using** field to **Custom value**. Then, in the **Value** field, select"Select variable" and choose the corresponding system variable from the list:
+
+| Input | Select this system variable as the Value |
+| --- | --- |
+| **User ID** | `User.Id` |
+| **User Principal Name** | `User.PrincipalName` |
+| **User Email** | `User.Email` |
+| **User Display Name** | `User.DisplayName` |
 
 * Refer to the specific configuration of the tool in the paragraph below
 * Click **Save**
