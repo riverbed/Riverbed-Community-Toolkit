@@ -193,19 +193,19 @@ Back to Copilot Studio > Tools > Add tool window, you can now search and find th
 
 When adding your first tool, configure the connection first.
 
-* Find and click on the tool **Self-Service: Find My User Endpoint”** (provided by the connector **Cookbook Riverbed IQ Assist**).
-* Connection: **Create new connection**
-* In Authentication Type, select **Service Principal Connection**.
+* Find and click on the tool **Self-Service: Find My User Endpoint** (the tools provided by the connector **Cookbook Riverbed IQ Assist**).
+
+* Expand Connection and click on **Create new connection**
+
+* In Authentication Type, select **Service Principal Connection**
+
+* Configure the properties using the Client ID, Client Secret and Directory ID of your Riverbed account (refer to **Preparing Riverbed IQ Assist** > **5. Get the info and credentials for the Copilot Agent**):
 
 | **Configuration** | **Example** |
 | --- | --- |
-| Authentication Type: **Service Principal Connection**  | Authentication Type: **Service Principal Connection**  
 | Client ID: `<your OAUTH Client ID>` | Client ID: `123456-456789-987654-654321`
 | Client Secret: `<your OAUTH Client Secret>` | Client Secret: `******************************`
 | Tenant: `<your Directory ID (not your Riverbed Tenant ID)>` | Tenant: `987654-987654-987654`
-
-> [!NOTE]
-> For more details about the Client ID, Client Secret and Directory Id, refer to **Preparing Riverbed IQ Assist** > **5. Get the info and credentials for the Copilot Agent**
 
 * Click **Create**.
 
