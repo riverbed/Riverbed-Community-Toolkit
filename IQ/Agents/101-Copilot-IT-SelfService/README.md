@@ -155,20 +155,24 @@ https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads
 | Host: `<your Riverbed Tenant Name>.app.cloud.riverbed.com`  | Host: `yourtenant.app.cloud.riverbed.com`  
 Base URL: `/api/skills/1.0/tenants/<your Riverbed Tenant Id>` | Base URL: `/api/skills/1.0/tenants/123456-789456-123456` |
 
-* Go to the **2. Security** page and configure the following using the connector information of your account (see Preparation):
+* Go to the **2. Security** page
+
+* Select the Authentication Type: **OAuth 2.0**
+
+* Select the Identity Provider: **Azure Active Directory**
+
+* Check the box **Enable Service Principal Support** 
+
+* Configure the following using the connector information of your account (see Preparation):
 
 | **Configuration** | **Example** |
 | --- | --- |
-| Authentication Type: **OAuth 2.0**  | Authentication Type: **OAuth 2.0** 
-| Identity Provider: **Azure Active Directory**  | Identity Provider: **Azure Active Directory**
-|  Check the box **Enable Service Principal Support**  | Check the box **Enable Service Principal Support**  
 | Client ID: `****` | Client ID: `****`
 | Client Secret: `****` | Client Secret: `****` |
 | Resource URL: `<your Resource URI>` | Resource URL: `api://987654-654321-321654`
 | Scope: `<your API Scope>` | Scope: `api://987654-654321-321654/.default`
 
-> [!NOTE]
-> Leave the other fields as is (Authorization URL `https://login.microsoftonline.com`, Tenant ID: `common`, Enable on behalf-of-login: `false`)
+* Leave the other fields as is (Authorization URL `https://login.microsoftonline.com`, Tenant ID: `common`, Enable on behalf-of-login: `false`)
 
 * Click on **Create connector** (at the top):
 
