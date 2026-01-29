@@ -227,7 +227,7 @@ In Tools > Add tool, you selected a tool and configured a connection. Now you wi
 
 * Scroll down to the **Inputs** section
 
-* For each of the inputs listed below, set the **Fill using** field to **Custom value**. Then, in the **Value** field, select "Select variable" and choose the corresponding system variable from the list:
+* For each of the inputs listed below, set the **Fill using** field to **Custom value**. Then, in the **Value** field, select **Select variable** and choose the corresponding system variable from the list:
 
 | Input | Select this system variable as the Value |
 | --- | --- |
