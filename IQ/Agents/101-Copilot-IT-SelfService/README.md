@@ -146,7 +146,7 @@ https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads
 > This is the *raw link* of the [connector description](./assets/apiDefinition.swagger.json)
 
 
-* (You are now in the **“1. General”** page), set an icon for your connector, for example you can use the Riverbed Logo ([logo link](./assets/riverbed-icon.png))
+* (You are now in the **“1. General”** page), set an icon for your connector, for example you can use the Riverbed Logo ([click to download](https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads/master/IQ/Agents/101-Copilot-IT-SelfService/assets/riverbed-icon.png))
 
 * Set the fields **Host** and **Base URL** using the connector information of your account (refer to the preparation steps):
 
