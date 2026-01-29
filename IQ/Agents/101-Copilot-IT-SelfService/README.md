@@ -215,8 +215,6 @@ In Tools > Add tool, you selected a tool and configured a connection. Now you wi
 
 * Click on **Add and configure**
 
-* Apply the common configuration for each tool
-
 * Expand **Additional Details**
 
 * Set **When this tool may be used** to **Agent may use this tool at any time**
@@ -247,7 +245,7 @@ You created an Employee Self Service Copilot Agent to share with employees. You 
 
 ### 1. Add more tools
 
-Go to the **Tools** tab and add the following **Self-Service** tools:
+Go to the **Tools** tab and add more **Self-Service** tools, for example:
 
 * **Self-Service: Find My User Endpoint**
 * **Self-Service: Suggest User Endpoint Remediation**
@@ -257,10 +255,7 @@ Go to the **Tools** tab and add the following **Self-Service** tools:
 
 ### 2. Apply common configuration to the tools
 
-Edit each tool:
-
-* Set additional details (see FAQ: How to set the additional details?)
-* Set user authentication configuration (see FAQ: How to add user authentication to the Tools?)
+For each tool, follow the same **Additional Details** and **Inputs** configuration steps described in **"5. Add a tool using the connection for Riverbed IQ Assist skills"** in the previous section.
 
 ## Testing the conversational Agent
 
