@@ -1,5 +1,7 @@
 # Riverbed IQ Assist for Copilot - Cookbook Self-Service 101
 
+:alarm_clock: 30 minutes
+
 ## Introduction
 
 This community cookbook offers step-by-step instructions to integrate Riverbed IQ Assist with a Microsoft Copilot Agent.
@@ -162,10 +164,8 @@ Base URL: `/api/skills/1.0/tenants/<your Riverbed Tenant Id>` | Base URL: `/api/
 | Resource URL: `<your Resource URI>` | Resource URL: `api://987654-654321-321654`
 | Scope: `<your API Scope>` | Scope: `api://987654-654321-321654/.default`
 
-> Leave the following other fields as is:
-> Authorization URL: https://login.microsoftonline.com  
-> Tenant ID: `common`  
-> Enable on behalf-of-login: `false`
+> [!NOTE]
+> Leave the other fields as is (Authorization URL `https://login.microsoftonline.com`, Tenant ID: `common`, Enable on behalf-of-login: `false`)
 
 * Click on **Create connector** (at the top):
 
@@ -188,7 +188,7 @@ When adding your first tool, configure the connection first.
 | Client Secret: `<your OAUTH Client Secret>` | Client Secret: `******************************`
 | Tenant: `<your Directory ID (not your Riverbed Tenant ID)>` | Tenant: `987654-987654-987654`
 
-> [Notes]
+> [!NOTE]
 > In the Riverbed Console > API Access, the value labelled **Directory Id** must be used in the field **Tenant**. |  
 
 * Click **Create**.
