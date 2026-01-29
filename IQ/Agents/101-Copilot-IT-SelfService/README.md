@@ -155,7 +155,7 @@ https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads
 
 * (You are now in the **1. General** page), set an icon for your connector, for example you can use the Riverbed logo ([follow the link and download](https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads/master/IQ/Agents/101-Copilot-IT-SelfService/assets/riverbed-icon.png))
 
-* Set the fields **Host** and **Base URL** using the connector information of your account (refer to Preparing Riverbed IQ Assist):
+* Set the fields **Host** and **Base URL** using the connector information of your account (refer to **Preparing Riverbed IQ Assist** > **5. Get the info and credentials for the Copilot Agent**):
 
 | **Configuration** | **Example** |
 | --- | --- |
@@ -170,12 +170,12 @@ Base URL: `/api/skills/1.0/tenants/<your Riverbed Tenant Id>` | Base URL: `/api/
 
 * Check the box **Enable Service Principal Support** 
 
-* Configure the following using the connector information of your account (see Preparation):
+* Set the value `0000` for **Client ID**, and `****` for the **Client Secret**
+
+* Configure the following properties using the connector information of your account (refer to **Preparing Riverbed IQ Assist** > **5. Get the info and credentials for the Copilot Agent**):
 
 | **Configuration** | **Example** |
 | --- | --- |
-| Client ID: `****` | Client ID: `****`
-| Client Secret: `****` | Client Secret: `****` |
 | Resource URL: `<your Resource Id URI>` | Resource URL: `api://987654-654321-321654`
 | Scope: `<your API Scope>` | Scope: `api://987654-654321-321654/.default`
 
@@ -203,7 +203,7 @@ When adding your first tool, configure the connection first.
 | Tenant: `<your Directory ID (not your Riverbed Tenant ID)>` | Tenant: `987654-987654-987654`
 
 > [!NOTE]
-> In the Riverbed Console > API Access, the value labelled **Directory Id** must be used in the field **Tenant**. |  
+> For more details about the Client ID, Client Secret and Directory Id, refer to **Preparing Riverbed IQ Assist** > **5. Get the info and credentials for the Copilot Agent**
 
 * Click **Create**.
 
