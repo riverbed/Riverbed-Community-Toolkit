@@ -98,7 +98,7 @@
                 },
                 "shortDescription": {
                   "title": "Short Description",
-                  "description": "Short description of the issue, used as a the ticket title, summarizing the user's issues.",
+                  "description": "Short description of the issue, used as the ticket title, summarizing the user's issues.",
                   "type": "string",
                   "x-ms-visibility": "important"
                 },
