@@ -172,8 +172,7 @@ Base URL: `/api/skills/1.0/tenants/<your Riverbed Tenant Id>` | Base URL: `/api/
 | Resource URL: `<your Resource URI>` | Resource URL: `api://987654-654321-321654`
 | Scope: `<your API Scope>` | Scope: `api://987654-654321-321654/.default`
 
-> [!NOTE]
-> Leave the other fields as is (Authorization URL `https://login.microsoftonline.com`, Tenant ID: `common`, Enable on behalf-of-login: `false`)
+* Leave the other fields as is (Authorization URL `https://login.microsoftonline.com`, Tenant ID: `common`, Enable on behalf-of-login: `false`)
 
 * Click on **Create connector** (at the top):
 
