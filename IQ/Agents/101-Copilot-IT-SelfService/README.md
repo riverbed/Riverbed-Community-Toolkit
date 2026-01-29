@@ -158,7 +158,7 @@ Base URL: `/api/skills/1.0/tenants/<your Riverbed Tenant Id>` | Base URL: `/api/
 | Identity Provider: **Azure Active Directory**  | Identity Provider: **Azure Active Directory**
 |  Check the box **Enable Service Principal Support**  | Check the box **Enable Service Principal Support**  
 | Client ID: `****` | Client ID: `****`
-| Client Secret: `****` | | Client Secret: `****`
+| Client Secret: `****` | Client Secret: `****` |
 | Resource URL: `<your Resource URI>` | Resource URL: `api://987654-654321-321654`
 | Scope: `<your API Scope>` | Scope: `api://987654-654321-321654/.default`
 
