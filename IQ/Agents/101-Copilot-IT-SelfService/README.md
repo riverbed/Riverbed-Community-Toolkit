@@ -23,7 +23,7 @@ For FAQs, troubleshooting tips, and links to cookbooks or Copilot Agent samples 
 
 ### 1. Access IQ Ops as Admin
 
-Open the Riverbed console with a user having the Platform Admin role, and navigate in **IQ Ops**
+Open the Riverbed console with a user having the Platform Admin role, and navigate to **IQ Ops**
 
 For example: `https://your_tenant.riverbed.cloud`
 
