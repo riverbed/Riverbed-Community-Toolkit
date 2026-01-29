@@ -66,13 +66,13 @@ On this page you will find all the required information:
 * Resource Id URI
 
 > [!NOTE]
-> Riverbed Tenant Name is the prefix of the URL of the Riverbed console. For example, in the URL `https://your_tenant.riverbed.cloud` the Riverbed Tenant Name is **your_tenant**
+> **Riverbed Tenant Name** is the prefix of the URL of the Riverbed console. For example, in the URL `https://your_tenant.riverbed.cloud` the **Riverbed Tenant Name** is **your_tenant**
 >
 > On this page the **Riverbed Tenant Id** is labeled **Tenant Id**. For example `123456-789456-123456`
 >
 > **Directory Id** is the *GUID* between the domain and the /oauth2/ in the Access Token URI. For example, in the following **Access Token URI** `https://login.microsoftonline.com/987654-987654-987654/oauth2/v2.0/token`, the **Directory Id** is `987654-987654-987654`
 >
-> To obtain the **Resource Id URI**, take the first portion of the API Scope (i.e. remove /.default from the API Scope). For example, if the **API Scope** is `api://987654-654321-321654/.default` then the **Resource Id URI** is `api://987654-654321-321654`
+> To obtain the **Resource Id URI**, take the first portion of the **API Scope** (i.e. remove /.default from the API Scope). For example, if the **API Scope** is `api://987654-654321-321654/.default` then the **Resource Id URI** is `api://987654-654321-321654`
 
 
 For the credentials, click on **Create OAuth Client** to generate a new client. It requires a name, for example put "Riverbed IQ Assist for Copilot". Then you will obtain the credentials:
@@ -155,7 +155,7 @@ https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads
 
 * (You are now in the **1. General** page), set an icon for your connector, for example you can use the Riverbed logo ([follow the link and download](https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads/master/IQ/Agents/101-Copilot-IT-SelfService/assets/riverbed-icon.png))
 
-* Set the fields **Host** and **Base URL** using the connector information of your account (refer to Preparation Riverbed IQ Steps):
+* Set the fields **Host** and **Base URL** using the connector information of your account (refer to Preparing Riverbed IQ Assist):
 
 | **Configuration** | **Example** |
 | --- | --- |
