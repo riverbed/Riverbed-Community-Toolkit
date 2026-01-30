@@ -334,7 +334,7 @@ Riverbed IQ Ops tracks each skill execution. To find them:
 
 </details>
 
-### How to solve issue with the tool Self-Service: Find My User Endpoint?
+### How to solve an issue with the tool Self-Service: Find My User Endpoint?
 
 The Self-Service: Find My User Endpoint tool looks for devices or endpoints the user has recently used (within the past few days).
 A `Device Not Found` result can occur when the tool cannot match the authenticated user to any recent device.
