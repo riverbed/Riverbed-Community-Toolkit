@@ -320,13 +320,21 @@ To make the agent available to users in Microsoft Teams:
 
 ## Frequently Asked Questions (FAQ)
 
-### How to fix errors in copilot
+### How to fix errors in Copilot?
 
-In case of "connectorRequestFailureThe connector returned an HTTP error with code 405", it is usually a problem in the configuration of the connector. For example, a typo in the Host property.
+1. Error: `connectorRequestFailureThe connector returned an HTTP error with code 405`
+A 405 error typically indicates a minor configuration issue in the connector—most often a simple mistake such as a typo in the Host property.
 
-In Copilot Studio, navigate to Tools (menu) and select the connector to review and update it.
+How to fix it:
+* In Copilot Studio, open the Tools menu.
+* Select the connector in question.
+* Review the configuration details carefully and correct any errors (e.g., Host, Path, Authentication settings).
+* Save and test the connector again.
 
+2. Error: `connectorRequestFailureThe connector returned an HTTP error with code 403. Inner Error: User is not authorized to access this resource with an explicity deny identity-based policy.`
+A 403 error usually means the connector configuration is pointing to a resource the caller does not have permission to access. 
 
+The simplest solution is often to delete the connector and recreate it. Refer to **Preparing Riverbed IQ Assist** > , **3. Create a connector for Riverbed IQ Assist skills**
 
 ## License
 
