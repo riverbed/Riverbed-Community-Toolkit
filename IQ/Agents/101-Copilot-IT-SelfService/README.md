@@ -13,7 +13,7 @@ This Employee IT Self-Service agent uses Riverbed Platform’s AI Ops and Observ
 After setting up the agent, you’ll learn to customize and extend it with additional tools for advanced scenarios.
 
 > [!NOTE]
-> For tips see the FAQ section at the end of this guide.
+> For tips see the FAQ section at the end of this cookbook
 
 
 | Prerequisites | Description |
