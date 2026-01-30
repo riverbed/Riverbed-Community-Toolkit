@@ -27,7 +27,7 @@ For tips, and links to cookbooks or Copilot Agent samples for Riverbed IQ Assist
 
 Open the Riverbed console with a user having the Platform Admin role, and navigate to **IQ Ops**
 
-For example: `https://your_tenant.riverbed.cloud`
+For example: `https://your_tenant.cloud.riverbed.com`
 
 ### 2. Enable Riverbed IQ Assist
 
@@ -66,7 +66,7 @@ On this page you will find all the required information:
 * Resource Id URI
 
 > [!NOTE]
-> **Riverbed Tenant Name** is the prefix of the URL of the Riverbed console. For example, in the URL `https://your_tenant.riverbed.cloud` the **Riverbed Tenant Name** is **your_tenant**
+> **Riverbed Tenant Name** is the prefix of the URL of the Riverbed console. For example, in the URL `https://your_tenant.cloud.riverbed.com` the **Riverbed Tenant Name** is **your_tenant**
 >
 > On this page the **Riverbed Tenant Id** is labeled **Tenant Id**. For example `123456-789456-123456`
 >
@@ -135,15 +135,15 @@ Responses should be concise, well-structured, and easy to understand, avoiding t
 * Go to Tools and click **+ Add a Tool.**
 * Expand the **Create new** section and click **Custom connector**. A new tab opens (in Power Apps > Custom Connectors).
 * At the top right, in the list **+ New custom connector**, select **Import an OpenAPI from URL**
-* Fill the Name and the URL of the customer connector definition:
+* Fill the **Connector name** and the **URL** of the customer connector definition:
 
-Name:
+Connector name:
 
 ```
 Cookbook Riverbed IQ Assist
 ```
 
-URL
+URL:
 
 ```
 https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads/master/IQ/Agents/101-Copilot-IT-SelfService/assets/apiDefinition.swagger.json
@@ -151,6 +151,8 @@ https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads
 
 > [!NOTE]
 > This is the *raw link* of the [connector description](./assets/apiDefinition.swagger.json)
+
+* Click on **Import** and then click **Continue**
 
 
 * (You are now in the **1. General** page), Download the Riverbed logo ([follow the link and download](https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads/master/IQ/Agents/101-Copilot-IT-SelfService/assets/riverbed-icon.png)) 
@@ -161,8 +163,13 @@ https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads
 
 | **Configuration** | **Example** |
 | --- | --- |
-| Host: `<your Riverbed Tenant Name>.app.cloud.riverbed.com`  | Host: `yourtenant.app.cloud.riverbed.com`  
+| Host: `<your Riverbed Tenant Name>.app.cloud.riverbed.com`  | Host: `your_tenant.app.cloud.riverbed.com`  
 Base URL: `/api/skills/1.0/tenants/<your Riverbed Tenant Id>` | Base URL: `/api/skills/1.0/tenants/123456-789456-123456` |
+
+<details>
+<summary>Click here to see a screenshot</summary>
+![alt additional details](assets/screenshot_connector_general.png)
+</details>
 
 * Go to the **2. Security** page
 
@@ -182,6 +189,11 @@ Base URL: `/api/skills/1.0/tenants/<your Riverbed Tenant Id>` | Base URL: `/api/
 | Scope: `<your API Scope>` | Scope: `api://987654-654321-321654/.default`
 
 * Leave the other fields as is (**Authorization URL** `https://login.microsoftonline.com`, **Tenant ID**: `common`, **Enable on behalf-of-login**: `false`)
+
+<details>
+<summary>Click here to see a screenshot</summary>
+![alt additional details](assets/screenshot_connector_security.png)
+</details>
 
 * Click on **Create connector** (at the top):
 
@@ -207,6 +219,11 @@ When adding your first tool, configure the connection first.
 | Client Secret: `<your OAUTH Client Secret>` | Client Secret: `******************************`
 | Tenant: `<your Directory ID (not your Riverbed Tenant ID)>` | Tenant: `987654-987654-987654`
 
+<details>
+<summary>Click here to see a screenshot</summary>
+![alt additional details](assets/screenshot_connection.png)
+</details>
+
 * Click **Create**.
 
 The connection is now created.
@@ -223,13 +240,14 @@ In Tools > Add tool, you selected a tool and configured a connection. Now you wi
 
 * Set **Credentials to use** to **Maker-provided credentials**
 
-* Apply configuration for user authentication
-
-* Edit the tool of Riverbed IQ Assist, for example the tool **Self-Service: Find My User Endpoint**
+<details>
+<summary>Click here to see a screenshot</summary>
+![alt additional details](assets/screenshot_tool_additional_details.png)
+</details>
 
 * Scroll down to the **Inputs** section
 
-* For each of the inputs listed below, set the **Fill using** field to **Custom value**. Then, in the **Value** field, select **Select variable** and choose the corresponding system variable from the list:
+* For each of the inputs listed below, set the **Fill using** field to **Custom value**. Then, in the **Value** field, select **Select variable** (click the 3-dots button on the right), select **System**, search and choose the corresponding system variable in the list:
 
 | Input | Select this system variable as the Value |
 | --- | --- |
@@ -238,7 +256,11 @@ In Tools > Add tool, you selected a tool and configured a connection. Now you wi
 | **User Email** | `User.Email` |
 | **User Display Name** | `User.DisplayName` |
 
-* Refer to the specific configuration of the tool in the paragraph below
+<details>
+<summary>Click here to see a screenshot</summary>
+![alt additional details](assets/screenshot_tool_inputs.png)
+</details>
+
 * Click **Save**
 
 ## Customize the Agent – Advanced
@@ -263,19 +285,15 @@ For each tool, follow the same **Additional Details** and **Inputs** configurati
 
 Once the tools are configured, test the agent end-to-end in Microsoft Copilot Studio:
 
-1. In Copilot Studio, open your Employee IT Self-Service agent.
-2. Use the **Test** pane to start a new conversation.
-3. Try typical user prompts, for example:
+1. Use the **Test** pane to start a new conversation.
+2. Try typical user prompts, for example:
    * "Find my laptop"  
-   * "Check if there are any issues with my device"  
-   * "Start remediation on my endpoint"  
-4. Confirm that the agent:
+   * "Check if there are any issues with my device"   
+3. Confirm that the agent:
    * Identifies the user and their endpoint correctly.
    * Invokes the appropriate Riverbed IQ Assist tools.
    * Returns clear status messages and next steps to the user.
 5. Review any errors in the tool invocation logs or Copilot Studio trace output and adjust tool configuration (authentication, parameters, or additional details) as needed.
-
-When you are satisfied with the behavior in the test pane, proceed to deploy the agent to Microsoft Teams.
 
 ## Deploying the Agent to Teams
 
