@@ -320,6 +320,21 @@ To make the agent available to users in Microsoft Teams:
 
 ## Frequently Asked Questions (FAQ)
 
+### How to analyse the execution of a Skill in Riverbed IQ Ops? 
+
+Riverbed IQ Ops tracks each skill execution. To find them:
+
+* Open IQ Ops > Automation > Runbook Analyses
+
+* Use the search to find the execution of interest
+
+<details>
+<summary>Click here to see an example screenshot</summary>
+
+![alt Tool Inputs](assets/screenshot_iq_ops_runbook_analyses.png)
+
+</details>
+
 ### How to fix connectorRequestFailure in Copilot?
 
 #### The connector returned an HTTP error with code 405
