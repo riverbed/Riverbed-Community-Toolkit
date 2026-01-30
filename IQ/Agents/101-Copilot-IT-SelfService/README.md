@@ -319,7 +319,7 @@ To make the agent available to users in Microsoft Teams:
 
 ## Frequently Asked Questions (FAQ)
 
-### How to analyse the execution of a Skill in Riverbed IQ Ops? 
+### How to analyze the execution of a Skill in Riverbed IQ Ops? 
 
 Riverbed IQ Ops tracks each skill execution. To find them:
 
