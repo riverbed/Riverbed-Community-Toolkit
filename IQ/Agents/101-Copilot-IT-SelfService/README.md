@@ -302,7 +302,7 @@ Once the tools are configured, test the agent end-to-end in Microsoft Copilot St
    * Identifies the user and their endpoint correctly.
    * Invokes the appropriate Riverbed IQ Assist tools.
    * Returns clear status messages and next steps to the user.
-5. Review any errors in the tool invocation logs or Copilot Studio trace output and adjust tool configuration (authentication, parameters, or additional details) as needed.
+4. Review any errors in the tool invocation logs or Copilot Studio trace output and adjust tool configuration (authentication, parameters, or additional details) as needed.
 
 ## Deploying the Agent to Teams
 
@@ -330,7 +330,7 @@ Riverbed IQ Ops tracks each skill execution. To find them:
 <details>
 <summary>Click here to see an example screenshot</summary>
 
-![alt Tool Inputs](assets/screenshot_iq_ops_runbook_analyses.png)
+![alt IQ Ops Runbook Analyses](assets/screenshot_iq_ops_runbook_analyses.png)
 
 </details>
 
