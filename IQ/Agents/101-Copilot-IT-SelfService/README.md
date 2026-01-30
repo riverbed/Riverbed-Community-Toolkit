@@ -169,7 +169,7 @@ Base URL: `/api/skills/1.0/tenants/<your Riverbed Tenant Id>` | Base URL: `/api/
 <details>
 <summary>Click here to see an example screenshot</summary>
 
-![alt additional details](assets/screenshot_connector_general.png)
+![alt Connector General](assets/screenshot_connector_general.png)
 
 </details>
 
@@ -195,7 +195,7 @@ Base URL: `/api/skills/1.0/tenants/<your Riverbed Tenant Id>` | Base URL: `/api/
 <details>
 <summary>Click here to see an example screenshot</summary>
 
-![alt additional details](assets/screenshot_connector_security.png)
+![alt Connector Security](assets/screenshot_connector_security.png)
 
 </details>
 
@@ -226,7 +226,7 @@ When adding your first tool, configure the connection first.
 <details>
 <summary>Click here to see an example screenshot</summary>
 
-![alt additional details](assets/screenshot_connection.png)
+![alt Connection](assets/screenshot_connection.png)
 
 </details>
 
@@ -249,7 +249,7 @@ In Tools > Add tool, you selected a tool and configured a connection. Now you wi
 <details>
 <summary>Click here to see an example screenshot</summary>
 
-![alt additional details](assets/screenshot_tool_additional_details.png)
+![alt Tool Additional details](assets/screenshot_tool_additional_details.png)
 
 </details>
 
@@ -267,7 +267,7 @@ In Tools > Add tool, you selected a tool and configured a connection. Now you wi
 <details>
 <summary>Click here to see an example screenshot</summary>
 
-![alt additional details](assets/screenshot_tool_inputs.png)
+![alt Tool Inputs](assets/screenshot_tool_inputs.png)
 
 </details>
 
