@@ -320,9 +320,9 @@ To make the agent available to users in Microsoft Teams:
 
 ## Frequently Asked Questions (FAQ)
 
-### How to fix errors in Copilot?
+### How to fix connectorRequestFailure in Copilot?
 
-#### Error: connectorRequestFailure The connector returned an HTTP error with code 405
+#### The connector returned an HTTP error with code 405
 
 A 405 error typically indicates a minor configuration issue in the connector—most often a simple mistake such as a typo in the Host property.
 
@@ -333,7 +333,7 @@ How to fix it:
 * Review the configuration details carefully and correct any errors (e.g., Host, Path, Authentication settings).
 * Save and test the connector again.
 
-#### Error: connectorRequestFailure The connector returned an HTTP error with code 403. Inner Error: User is not authorized to access this resource with an explicity deny identity-based policy.
+#### The connector returned an HTTP error with code 403. Inner Error: User is not authorized to access this resource with an explicity deny identity-based policy.
 
 A 403 error usually means the connector configuration is pointing to a resource the caller does not have permission to access. 
 
