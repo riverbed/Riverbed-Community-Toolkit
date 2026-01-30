@@ -339,7 +339,7 @@ A 403 error usually means the connector configuration is pointing to a resource 
 
 How to fix it:
 
-* The simplest solution is often to delete the connector and recreate it. Refer to **Preparing Riverbed IQ Assist** > , **3. Create a connector for Riverbed IQ Assist skills**
+* The simplest solution is often to delete the connector and recreate it. Refer to **Preparing Riverbed IQ Assist** > **3. Create a connector for Riverbed IQ Assist skills**
 
 ## License
 
