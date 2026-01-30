@@ -334,6 +334,14 @@ Riverbed IQ Ops tracks each skill execution. To find them:
 
 </details>
 
+### How to solve issue with the tool Self-Service: Find My User Endpoint?
+
+The Self-Service: Find My User Endpoint tool looks for devices or endpoints the user has recently used (within the past few days).
+A `Device Not Found` result can occur when the tool cannot match the authenticated user to any recent device.
+
+Common cause:
+The user's verified identity (for example, their authenticated email address) does not match the user's identity associated with the device it is checking.
+
 ### How to fix connectorRequestFailure in Copilot?
 
 #### The connector returned an HTTP error with code 405
