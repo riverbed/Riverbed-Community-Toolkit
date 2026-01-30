@@ -333,7 +333,7 @@ How to fix it:
 * Review the configuration details carefully and correct any errors (e.g., Host, Path, Authentication settings).
 * Save and test the connector again.
 
-#### The connector returned an HTTP error with code 403. Inner Error: User is not authorized to access this resource with an explicity deny identity-based policy.
+#### The connector returned an HTTP error with code 403. Inner Error: User is not authorized to access this resource with an explicitly deny identity-based policy.
 
 A 403 error usually means the connector configuration is pointing to a resource the caller does not have permission to access. 
 
