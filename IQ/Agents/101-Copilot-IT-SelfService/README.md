@@ -170,7 +170,7 @@ https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads
 <summary>Click here to see an example screenshot</summary>
 
 ![alt Connector General](assets/screenshot_connector_general.png)
-![alt text](image.png)
+
 </details>
 
 * Go to the **2. Security** page
