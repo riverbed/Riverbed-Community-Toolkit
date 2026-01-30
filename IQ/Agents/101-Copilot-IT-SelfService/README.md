@@ -135,7 +135,7 @@ Responses should be concise, well-structured, and easy to understand, avoiding t
 * Go to Tools and click **+ Add a Tool.**
 * Expand the **Create new** section and click **Custom connector**. A new tab opens (in Power Apps > Custom Connectors).
 * At the top right, in the list **+ New custom connector**, select **Import an OpenAPI from URL**
-* Fill the **Connector name** and the **URL** of the customer connector definition:
+* Fill the **Connector name** and the **URL** of the custom connector definition:
 
 Connector name:
 
@@ -163,8 +163,8 @@ https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads
 
 | **Configuration** | **Example** |
 | --- | --- |
-| Host: `<your Riverbed Tenant Name>.app.cloud.riverbed.com`  | Host: `your_tenant.app.cloud.riverbed.com`  
-Base URL: `/api/skills/1.0/tenants/<your Riverbed Tenant Id>` | Base URL: `/api/skills/1.0/tenants/123456-789456-123456` |
+| Host: `<your Riverbed Tenant Name>.app.cloud.riverbed.com`  | Host: `your_tenant.app.cloud.riverbed.com` | 
+| Base URL: `/api/skills/1.0/tenants/<your Riverbed Tenant Id>` | Base URL: `/api/skills/1.0/tenants/123456-789456-123456` |
 
 <details>
 <summary>Click here to see an example screenshot</summary>
@@ -255,7 +255,7 @@ In Tools > Add tool, you selected a tool and configured a connection. Now you wi
 
 * Scroll down to the **Inputs** section
 
-* For each of the inputs listed below, set the **Fill using** field to **Custom value**. Then, in the **Value** field, select **Select variable** (click the 3-dots button on the right), select **System**, search and choose the corresponding system variable in the list:
+* For each of the inputs listed below, set the **Fill using** field to **Custom value**. Then, in the **Value** field, select **Select variable** (click the 3-dots button on the right), select **System**, search, and choose the corresponding system variable in the list:
 
 | Input | Select this system variable as the Value |
 | --- | --- |
