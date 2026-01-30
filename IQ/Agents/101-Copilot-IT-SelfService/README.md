@@ -1,6 +1,6 @@
 # Riverbed IQ Assist for Copilot - Cookbook Self-Service 101
 
-:alarm_clock: 30 minutes
+:alarm_clock: Approximately 30 minutes
 
 ## Introduction
 
