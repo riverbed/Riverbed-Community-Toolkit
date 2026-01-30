@@ -170,7 +170,7 @@ Base URL: `/api/skills/1.0/tenants/<your Riverbed Tenant Id>` | Base URL: `/api/
 <summary>Click here to see an example screenshot</summary>
 
 ![alt Connector General](assets/screenshot_connector_general.png)
-
+![alt text](image.png)
 </details>
 
 * Go to the **2. Security** page
@@ -320,7 +320,13 @@ To make the agent available to users in Microsoft Teams:
 
 ## Frequently Asked Questions (FAQ)
 
-*work in progress*
+### How to fix errors in copilot
+
+In case of "connectorRequestFailureThe connector returned an HTTP error with code 405", it is usually a problem in the configuration of the connector. For example, a typo in the Host property.
+
+In Copilot Studio, navigate to Tools (menu) and select the connector to review and update it.
+
+
 
 ## License
 
