@@ -258,7 +258,7 @@ In Tools > Add tool, you selected a tool and configured a connection. Now you wi
 
 <details>
 <summary>Click here to see a screenshot</summary>
-![alt additional details](assets/screenshot_tool_inputs.png)
+![alt additional details](./assets/screenshot_tool_inputs.png)
 </details>
 
 * Click **Save**
