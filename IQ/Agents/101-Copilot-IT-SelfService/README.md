@@ -327,6 +327,7 @@ To make the agent available to users in Microsoft Teams:
 A 405 error typically indicates a minor configuration issue in the connector—most often a simple mistake such as a typo in the Host property.
 
 How to fix it:
+
 * In Copilot Studio, open the Tools menu.
 * Select the connector in question.
 * Review the configuration details carefully and correct any errors (e.g., Host, Path, Authentication settings).
@@ -336,7 +337,9 @@ How to fix it:
 
 A 403 error usually means the connector configuration is pointing to a resource the caller does not have permission to access. 
 
-The simplest solution is often to delete the connector and recreate it. Refer to **Preparing Riverbed IQ Assist** > , **3. Create a connector for Riverbed IQ Assist skills**
+How to fix it:
+
+* The simplest solution is often to delete the connector and recreate it. Refer to **Preparing Riverbed IQ Assist** > , **3. Create a connector for Riverbed IQ Assist skills**
 
 ## License
 
