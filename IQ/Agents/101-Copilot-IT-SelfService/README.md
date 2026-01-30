@@ -322,7 +322,8 @@ To make the agent available to users in Microsoft Teams:
 
 ### How to fix errors in Copilot?
 
-1. Error: `connectorRequestFailureThe connector returned an HTTP error with code 405`
+#### Error: connectorRequestFailure The connector returned an HTTP error with code 405
+
 A 405 error typically indicates a minor configuration issue in the connector—most often a simple mistake such as a typo in the Host property.
 
 How to fix it:
@@ -331,7 +332,8 @@ How to fix it:
 * Review the configuration details carefully and correct any errors (e.g., Host, Path, Authentication settings).
 * Save and test the connector again.
 
-2. Error: `connectorRequestFailureThe connector returned an HTTP error with code 403. Inner Error: User is not authorized to access this resource with an explicity deny identity-based policy.`
+#### Error: connectorRequestFailure The connector returned an HTTP error with code 403. Inner Error: User is not authorized to access this resource with an explicity deny identity-based policy.
+
 A 403 error usually means the connector configuration is pointing to a resource the caller does not have permission to access. 
 
 The simplest solution is often to delete the connector and recreate it. Refer to **Preparing Riverbed IQ Assist** > , **3. Create a connector for Riverbed IQ Assist skills**
