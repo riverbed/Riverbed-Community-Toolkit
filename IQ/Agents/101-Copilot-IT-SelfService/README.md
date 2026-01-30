@@ -12,15 +12,13 @@ This Employee IT Self-Service agent uses Riverbed Platform’s AI Ops and Observ
 
 After setting up the agent, you’ll learn to customize and extend it with additional tools for advanced scenarios.
 
-> [!NOTE]
-> For tips see the FAQ section at the end of this cookbook
-
-
 | Prerequisites | Description |
 |--------------|-------------|
 | Microsoft Copilot Studio | An account is required, it can be a trial account. | 
 | Riverbed Unified Agent and modules | Unified agent modules must be deployed on your user endpoints (e.g., laptop, VDI, desktop). To use Riverbed IQ Assist skills for user endpoint remediation, you need the Aternity EUEM module and must enable the remediation feature (see Aternity documentation: Getting Started with Remediation). Other modules, such as NPM+, Unified Communication (UC), and Intel WiFi, are optional. | 
 | Riverbed Platform | Enable the Riverbed IQ Assist feature and configure the required connectors and integrations, including Riverbed IQ Assist and Aternity EUEM. Obtain OAuth information and generate credentials to connect in Microsoft Copilot Studio | 
+
+> :grey_question: For tips see the FAQ section at the end of this guide.
 
 ## Preparing Riverbed IQ Assist
 
