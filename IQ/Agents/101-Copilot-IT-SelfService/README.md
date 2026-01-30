@@ -168,7 +168,9 @@ Base URL: `/api/skills/1.0/tenants/<your Riverbed Tenant Id>` | Base URL: `/api/
 
 <details>
 <summary>Click here to see a screenshot</summary>
+
 ![alt additional details](assets/screenshot_connector_general.png)
+
 </details>
 
 * Go to the **2. Security** page
@@ -192,7 +194,9 @@ Base URL: `/api/skills/1.0/tenants/<your Riverbed Tenant Id>` | Base URL: `/api/
 
 <details>
 <summary>Click here to see a screenshot</summary>
+
 ![alt additional details](assets/screenshot_connector_security.png)
+
 </details>
 
 * Click on **Create connector** (at the top):
@@ -221,7 +225,9 @@ When adding your first tool, configure the connection first.
 
 <details>
 <summary>Click here to see a screenshot</summary>
+
 ![alt additional details](assets/screenshot_connection.png)
+
 </details>
 
 * Click **Create**.
@@ -242,7 +248,9 @@ In Tools > Add tool, you selected a tool and configured a connection. Now you wi
 
 <details>
 <summary>Click here to see a screenshot</summary>
+
 ![alt additional details](assets/screenshot_tool_additional_details.png)
+
 </details>
 
 * Scroll down to the **Inputs** section
@@ -258,7 +266,9 @@ In Tools > Add tool, you selected a tool and configured a connection. Now you wi
 
 <details>
 <summary>Click here to see a screenshot</summary>
-![alt additional details](./assets/screenshot_tool_inputs.png)
+
+![alt additional details](assets/screenshot_tool_inputs.png)
+
 </details>
 
 * Click **Save**
