@@ -167,7 +167,7 @@ https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads
 Base URL: `/api/skills/1.0/tenants/<your Riverbed Tenant Id>` | Base URL: `/api/skills/1.0/tenants/123456-789456-123456` |
 
 <details>
-<summary>Click here to see a screenshot</summary>
+<summary>Click here to see an example screenshot</summary>
 
 ![alt additional details](assets/screenshot_connector_general.png)
 
@@ -193,7 +193,7 @@ Base URL: `/api/skills/1.0/tenants/<your Riverbed Tenant Id>` | Base URL: `/api/
 * Leave the other fields as is (**Authorization URL** `https://login.microsoftonline.com`, **Tenant ID**: `common`, **Enable on behalf-of-login**: `false`)
 
 <details>
-<summary>Click here to see a screenshot</summary>
+<summary>Click here to see an example screenshot</summary>
 
 ![alt additional details](assets/screenshot_connector_security.png)
 
@@ -224,7 +224,7 @@ When adding your first tool, configure the connection first.
 | Tenant: `<your Directory ID (not your Riverbed Tenant ID)>` | Tenant: `987654-987654-987654`
 
 <details>
-<summary>Click here to see a screenshot</summary>
+<summary>Click here to see an example screenshot</summary>
 
 ![alt additional details](assets/screenshot_connection.png)
 
@@ -247,7 +247,7 @@ In Tools > Add tool, you selected a tool and configured a connection. Now you wi
 * Set **Credentials to use** to **Maker-provided credentials**
 
 <details>
-<summary>Click here to see a screenshot</summary>
+<summary>Click here to see an example screenshot</summary>
 
 ![alt additional details](assets/screenshot_tool_additional_details.png)
 
@@ -265,7 +265,7 @@ In Tools > Add tool, you selected a tool and configured a connection. Now you wi
 | **User Display Name** | `User.DisplayName` |
 
 <details>
-<summary>Click here to see a screenshot</summary>
+<summary>Click here to see an example screenshot</summary>
 
 ![alt additional details](assets/screenshot_tool_inputs.png)
 
