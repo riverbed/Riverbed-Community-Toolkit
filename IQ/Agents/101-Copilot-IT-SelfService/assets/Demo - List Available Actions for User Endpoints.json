@@ -1,0 +1,203 @@
+{
+    "runbook": {
+        "id": "d7b45e54-78a4-45c5-a425-91a5830a77a2",
+        "createdTime": "1764875759.040464200",
+        "lastUpdatedTime": "1764875883.600505000",
+        "factoryResourceName": null,
+        "isFactory": false,
+        "name": "Demo - List Available Actions for User Endpoints",
+        "description": "Extract the list of actions/remediations for User Endpoints that are available in Aternity EUEM\nversion 2509-gb",
+        "isReady": false,
+        "triggerType": "on_demand_input",
+        "runtimeVariables": {
+            "primitiveVariables": [
+                {
+                    "type": "string",
+                    "defaultValue": "my-demo",
+                    "name": "runtime.Aternity_EUEM_ENV",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": "3",
+                    "name": "runtime.Aternity_EUEM_ACCOUNT_ID",
+                    "isReadonly": false
+                },
+                {
+                    "type": "json",
+                    "defaultValue": null,
+                    "name": "runtime.Remediations",
+                    "isReadonly": false
+                }
+            ],
+            "structuredVariables": []
+        },
+        "subflowVariables": null,
+        "nodes": [
+            {
+                "id": "4dfe5eef-6122-4aa1-a25b-be0eee7596ef",
+                "isIntegrationSubflowNode": false,
+                "type": "on_demand_input",
+                "label": "Input",
+                "description": "",
+                "properties": {
+                    "x": 213,
+                    "y": 300,
+                    "triggerType": "on_demand_input",
+                    "debug": false,
+                    "outputDataFormat": "summary",
+                    "synthKeys": [],
+                    "inputVariables": [],
+                    "outputVariables": []
+                },
+                "wires": [
+                    [
+                        "003b9e6e-553e-42fd-9cf3-ff8a04d6d8ce"
+                    ]
+                ]
+            },
+            {
+                "id": "003b9e6e-553e-42fd-9cf3-ff8a04d6d8ce",
+                "isIntegrationSubflowNode": false,
+                "type": "http",
+                "label": "Aternity: Get available Remediations",
+                "description": "",
+                "properties": {
+                    "x": 449.87557119695725,
+                    "y": 223.87873427633713,
+                    "syncCall": {
+                        "request": {
+                            "authenticationProfileId": "6701eda4-14c0-414a-8985-57b1855419a7",
+                            "edgeDeviceId": "",
+                            "httpVerbTemplate": "GET",
+                            "endpointTemplate": "https://{{variables[\"runtime.Aternity_EUEM_ENV\"]}}-odata.aternity.com/aternity.odata/latest/REMEDIATION_ACTIONS_INVENTORY?$filter=ACCOUNT_ID eq {{variables[\"runtime.Aternity_EUEM_ACCOUNT_ID\"]}} &$select=ACTION_REFERENCE_ID,ACTION_DESCRIPTION,ACTION_NAME,IS_SUPPORTED_MACOS,IS_SUPPORTED_WINDOWS,SECURITY_TAGS,SCRIPT_EXECUTION_PRIVILEGE,IS_USER_CONFIRMATION_REQUIRED",
+                            "headers": {
+                                "contentType": "application/json",
+                                "accept": "application/json"
+                            }
+                        }
+                    },
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "eacd7126-6af3-4510-8658-10231d127cf6"
+                    ]
+                ]
+            },
+            {
+                "id": "eacd7126-6af3-4510-8658-10231d127cf6",
+                "isIntegrationSubflowNode": false,
+                "type": "transform",
+                "label": "Transform",
+                "description": "",
+                "properties": {
+                    "x": 666,
+                    "y": 300,
+                    "outputDataFormat": "summary",
+                    "useVariableDefinition": "",
+                    "transformTemplate": "{% assign response = node_input.output.data[0].keys['http_response.body'] %}\n\n{\n\"data\": [\n{% for item in response['value'] %}\n  {% unless forloop.first %},{% endunless %}\n  {\n     \"keys\": {\n       \"ACTION_DESCRIPTION\": {{ item.ACTION_DESCRIPTION | json}},\n       \"ACTION_NAME\": {{ item.ACTION_NAME | json}},\n       \"ACTION_REFERENCE_ID\": {{ item.ACTION_REFERENCE_ID |json }},\n       \"SECURITY_TAGS\": \"{{ item.SECURITY_TAGS }}\",\n       \"IS_SUPPORTED_WINDOWS\": \"{{ item.IS_SUPPORTED_WINDOWS }}\",\n       \"IS_SUPPORTED_MACOS\": \"{{ item.IS_SUPPORTED_MACOS }}\",\n       \"IS_USER_CONFIRMATION_REQUIRED\": \"{{ item.IS_USER_CONFIRMATION_REQUIRED }}\",\n       \"SCRIPT_EXECUTION_PRIVILEGE\": \"{{ item.SCRIPT_EXECUTION_PRIVILEGE }}\"\n    },\n    \"data\": { }\n  }\n{% endfor %}\n],\n\"info\": {\n  \"keys\": [\n   {\n                \"id\": \"ACTION_DESCRIPTION\",\n                \"label\": \"ACTION_DESCRIPTION\",\n                \"type\": \"string\",\n                \"unit\": \"\"\n            },\n            {\n                \"id\": \"ACTION_NAME\",\n                \"label\": \"ACTION_NAME\",\n                \"type\": \"string\",\n                \"unit\": \"\"\n            },\n            {\n                \"id\": \"ACTION_REFERENCE_ID\",\n                \"label\": \"ACTION_REFERENCE_ID\",\n                \"type\": \"string\",\n                \"unit\": \"\"\n            },\n            {\n                \"id\": \"SECURITY_TAGS\",\n                \"label\": \"SECURITY_TAGS\",\n                \"type\": \"string\",\n                \"unit\": \"\"\n            },\n            {\n                \"id\": \"IS_SUPPORTED_MACOS\",\n                \"label\": \"IS_SUPPORTED_MACOS\",\n                \"type\": \"string\",\n                \"unit\": \"\"\n            },\n            {\n                \"id\": \"IS_SUPPORTED_WINDOWS\",\n                \"label\": \"IS_SUPPORTED_WINDOWS\",\n                \"type\": \"string\",\n                \"unit\": \"\"\n            },\n            {\n                \"id\": \"IS_USER_CONFIRMATION_REQUIRED\",\n                \"label\": \"IS_USER_CONFIRMATION_REQUIRED\",\n                \"type\": \"string\",\n                \"unit\": \"\"\n            },\n            {\n                \"id\": \"SCRIPT_EXECUTION_PRIVILEGE\",\n                \"label\": \"SCRIPT_EXECUTION_PRIVILEGE\",\n                \"type\": \"string\",\n                \"unit\": \"\"\n            }\n        ],\n        \"metrics\": []\n    }\n}",
+                    "synthMetrics": [],
+                    "synthKeys": [
+                        {
+                            "id": "ACTION_DESCRIPTION",
+                            "label": "ACTION_DESCRIPTION",
+                            "type": "string",
+                            "unit": ""
+                        },
+                        {
+                            "id": "ACTION_NAME",
+                            "label": "ACTION_NAME",
+                            "type": "string",
+                            "unit": ""
+                        },
+                        {
+                            "id": "ACTION_REFERENCE_ID",
+                            "label": "ACTION_REFERENCE_ID",
+                            "type": "string",
+                            "unit": ""
+                        },
+                        {
+                            "id": "SECURITY_TAGS",
+                            "label": "SECURITY_TAGS",
+                            "type": "string",
+                            "unit": ""
+                        },
+                        {
+                            "id": "IS_SUPPORTED_MACOS",
+                            "label": "IS_SUPPORTED_MACOS",
+                            "type": "string",
+                            "unit": ""
+                        },
+                        {
+                            "id": "IS_SUPPORTED_WINDOWS",
+                            "label": "IS_SUPPORTED_WINDOWS",
+                            "type": "string",
+                            "unit": ""
+                        },
+                        {
+                            "id": "IS_USER_CONFIRMATION_REQUIRED",
+                            "label": "IS_USER_CONFIRMATION_REQUIRED",
+                            "type": "string",
+                            "unit": ""
+                        },
+                        {
+                            "id": "SCRIPT_EXECUTION_PRIVILEGE",
+                            "label": "SCRIPT_EXECUTION_PRIVILEGE",
+                            "type": "string",
+                            "unit": ""
+                        }
+                    ],
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "7f7834bf-1a4f-4989-b8a5-ab3d39b0ca5a"
+                    ]
+                ]
+            },
+            {
+                "id": "7f7834bf-1a4f-4989-b8a5-ab3d39b0ca5a",
+                "isIntegrationSubflowNode": false,
+                "type": "rvbd_ui_table",
+                "label": "Table",
+                "description": "",
+                "properties": {
+                    "x": 938,
+                    "y": 300,
+                    "title": "Remediations",
+                    "row": "1",
+                    "notesPosition": "left",
+                    "notes": "<p class=\"editor-paragraph\"><br></p>",
+                    "sortColumn": "ACTION_NAME",
+                    "sortOrder": "asc",
+                    "columns": [
+                        "ACTION_REFERENCE_ID",
+                        "ACTION_NAME",
+                        "ACTION_DESCRIPTION",
+                        "SECURITY_TAGS"
+                    ],
+                    "includeAllColumns": false,
+                    "flipTable": false,
+                    "showBarsForColumnValues": false,
+                    "isBreakDownTable": false,
+                    "showFilterBar": false,
+                    "debug": false
+                },
+                "wires": []
+            }
+        ],
+        "lastUpdatedUser": "Runbook Export",
+        "createdByUser": "Runbook Export",
+        "eTag": "W/\"datetime'2025-12-04T19%3A18%3A03.5999437Z'\"",
+        "variant": "on_demand",
+        "seriesId": "d7b45e54-78a4-45c5-a425-91a5830a77a2",
+        "version": "1.0",
+        "otherVersions": null,
+        "isScheduled": false,
+        "isValidated": true,
+        "isProprietary": false
+    },
+    "dependencies": [],
+    "token": "NfH0rwzSF63wXyuEI+AWcgAoA/KnsN6Jt+PeYeuoEi4="
+}

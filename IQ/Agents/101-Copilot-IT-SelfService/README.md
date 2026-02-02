@@ -384,6 +384,19 @@ If needeed restart my device
 </details>
 
 <details>
+<summary>How to find the identifier of a User Endpoint action?</summary>
+
+In Riverbed IQ Ops, you can run the On-Demand Runbook to get the list of User Endpoint actions with identifier.
+
+* Download the runbook file: [link](assets/Demo%20-%20List%20Available%20Actions%20for%20User%20Endpoints.json)
+
+* Go to IQ Ops > Automatio, click on **Import** 
+
+* Run the runbook
+
+</details>
+
+<details>
 <summary>How to analyze the execution of a Skill in Riverbed IQ Ops? </summary>
 
 Riverbed IQ Ops tracks each skill execution. To find them:
