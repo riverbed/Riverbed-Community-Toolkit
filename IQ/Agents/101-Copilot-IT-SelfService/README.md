@@ -319,7 +319,70 @@ To make the agent available to users in Microsoft Teams:
 
 ## Frequently Asked Questions (FAQ)
 
-### How to analyze the execution of a Skill in Riverbed IQ Ops? 
+<details>
+<summary>How to solve an issue with the tool Self-Service: Find My User Endpoint?</summary>
+
+The Self-Service: Find My User Endpoint tool looks for devices or endpoints the user has recently used (within the past few days).
+A `Device Not Found` result can occur when the tool cannot match the authenticated user to any recent device.
+
+Common cause:
+The user's verified identity (for example, their authenticated email address) does not match the user's identity associated with the device it is checking.
+
+</details>
+
+<details>
+<summary>How to add a Tool to run a specific Action on the User Endpoint?</summary>
+
+Riverbed IQ Assist provides a generic skill called **Initiate User Endpoint Remediation**. You can configure it to run a specific action script registered in Aternity, such as **Restart Computer**, when adding a new tool. You need the reference identifier of the action (see How to find the remediation identifier in Aternity using the API).
+
+For example, the **Restart Computer** action for Windows endpoints might have the following reference identifier in your tenant (Reference ID): `1111-222-333-4444`
+
+To configure the tool of the Copilot Agent,
+
+* Edit your agent in Microsoft Copilot Studio.
+
+* Open the **Tools** tab.
+
+* Click **+ Add a tool**
+
+* Enter `Initiate User Endpoint Remediation` in the search bar, and select the tool
+
+* Click **Add and configure**
+
+* On the tool edition page, change the name and description.
+
+Name:
+
+```
+Restart User Endpoint with user confirmation
+```
+
+Description:
+
+```
+Trigger a restart of a user endpoint or device (Windows), requiring end-user confirmation (popup)
+```
+
+* In the Inputs section, change the **remediationId**
+
+Set Fill using to Custom Value
+
+Set the value to the identifier (e.g., `1111-222-333-4444` for the *Restart Computer* action in the examlpe above)
+
+* Click on **Save** and **Publish**
+
+* Test the new tool
+
+Example:
+
+```
+If needeed restart my device
+```
+
+</details>
+
+<details>
+<summary>How to analyze the execution of a Skill in Riverbed IQ Ops? </summary>
 
 Riverbed IQ Ops tracks each skill execution. To find them:
 
@@ -334,15 +397,10 @@ Riverbed IQ Ops tracks each skill execution. To find them:
 
 </details>
 
-### How to solve an issue with the tool Self-Service: Find My User Endpoint?
+</details>
 
-The Self-Service: Find My User Endpoint tool looks for devices or endpoints the user has recently used (within the past few days).
-A `Device Not Found` result can occur when the tool cannot match the authenticated user to any recent device.
-
-Common cause:
-The user's verified identity (for example, their authenticated email address) does not match the user's identity associated with the device it is checking.
-
-### How to fix connectorRequestFailure in Copilot?
+<details>
+<summary>How to fix connectorRequestFailure in Copilot?</summary>
 
 #### The connector returned an HTTP error with code 405
 
@@ -362,6 +420,8 @@ A 403 error usually means the connector configuration is pointing to a resource 
 How to fix it:
 
 * The simplest solution is often to delete the connector and recreate it. Refer to **Preparing Riverbed IQ Assist** > **3. Create a connector for Riverbed IQ Assist skills**
+
+</details>
 
 ## License
 
