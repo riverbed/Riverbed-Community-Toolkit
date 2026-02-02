@@ -388,9 +388,11 @@ If needeed restart my device
 
 In Riverbed IQ Ops, you can run the On-Demand Runbook to get the list of User Endpoint actions with identifier.
 
-* Download the runbook file: [link](assets/Demo%20-%20List%20Available%20Actions%20for%20User%20Endpoints.json)
+* Follow the [link](assets/Demo%20-%20List%20Available%20Actions%20for%20User%20Endpoints.json)
 
-* Go to IQ Ops > Automatio, click on **Import** 
+* Click **Download raw file** (download icon at the top right corner)
+
+* Go to IQ Ops > Automation, click on **Import** 
 
 * Run the runbook
 
