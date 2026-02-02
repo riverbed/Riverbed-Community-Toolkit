@@ -281,10 +281,12 @@ You created an Employee Self Service Copilot Agent to share with employees. You 
 Go to the **Tools** tab and add more **Self-Service** tools, for example:
 
 * **Self-Service: Find My User Endpoint**
-* **Self-Service: Suggest User Endpoint Remediation**
 * **Self-Service: Initiate Remediation for My User Endpoint**
 * **Self-Service: Get My Remediation Run Status**
 * **Self-Service: Create a Ticket on My Behalf**
+
+> [!NOTE] 
+> Additional skills are coming soon, including Self‑Service: Diagnose User Endpoint, Self‑Service: Suggest User Endpoint Remediation, and more.
 
 ### 2. Apply common configuration to the tools
 
