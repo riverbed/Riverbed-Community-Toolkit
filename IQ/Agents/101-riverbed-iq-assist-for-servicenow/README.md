@@ -4,13 +4,30 @@
 
 ## Introduction
 
-This cookbook contains the step-by-step instructions to integrate Riverbed IQ Assist with ServiceNow, and enable it for Incident, Problem and Alert managers.
+This cookbook contains the step-by-step instructions to integrate Riverbed IQ Assist with ServiceNow, enabling AI-powered IT service management capabilities for Incident, Problem, and Alert managers.
 
-After setting up the app in ServiceNow, you’ll learn how to customize and extend it with additional Skills.
+**What you'll accomplish:**
+- Automate incident diagnosis and enrichment
+- Enable intelligent troubleshooting from ServiceNow tickets
+- Leverage Riverbed's observability data directly in your ITSM workflows
+
+After setting up the app in ServiceNow, you'll learn how to customize and extend it with additional Skills.
+
 
 | Prerequisites | Description |
 |---------------|-------------|
-| ServiceNow Tenant | A tenant is required and you need admin access | 
+| ServiceNow Tenant | A ServiceNow instance with admin access |
+| Riverbed Platform | Active Riverbed tenant with Platform Admin role access |
+| Data Sources | At least one configured data source (e.g., Aternity, NPM+) |
+
+
+## Table of Contents
+- [Preparation in the Riverbed Console](#preparation-in-the-riverbed-console)
+- [Installation in ServiceNow](#installation-in-servicenow)
+- [Configuration in Riverbed Console](#configuration-in-riverbed-console)
+- [Finalize configuration in ServiceNow](#finalize-configuration-in-servicenow)
+- [FAQ](#frequently-asked-questions-faq)
+
 
 ## Preparation in the Riverbed Console
 
@@ -22,7 +39,7 @@ For example: `https://your_tenant.cloud.riverbed.com`
 
 ### 2. Enable Riverbed IQ Assist
 
-* Go IQ Ops > Management > **Riverbed IQ Assist Configuration**
+* Go to IQ Ops > Management > **Riverbed IQ Assist Configuration**
 
 * Review and click on opt-in to enable the feature
 
@@ -116,7 +133,7 @@ For example: `https://your_tenant.cloud.riverbed.com`
 
 * Configure the Basic Details
 
-    * ServiceNow Server: Use the host of your ServiceNow instance, for example it is `your_servicenow_instance` in the following ServiceNow console URL `https://your_servicenow_instance.service-now.com` 
+    * ServiceNow Server: Use the host of your ServiceNow instance, for example, it is `your_servicenow_instance` in the following ServiceNow console URL `https://your_servicenow_instance.service-now.com` 
 
     * Check the box **Use with Riverbed IQ Assist App**
 
@@ -135,15 +152,21 @@ For example: `https://your_tenant.cloud.riverbed.com`
 
 The "Quick Start" skill can be be used for incident management and IT Service Desk assistance use-cases. When triggered from ServiceNow, the runbook diagnoses the end-user endpoint and enrich the incident ticket with diagnosis.
 
-* Download the [runbook file](../../Automation/External%20Runbooks/100-riverbed-iq-assist-for-servicenow-incident-quickstart/Riverbed%20IQ%20Assist%20for%20ServiceNow%20-%20Incident%20-%20Quick%20Start.json)
+**Steps:**
 
-* Go to IQ Ops > Automation, import the runbook in the External Runbooks. And toggle "Allow Automation" on.
+1. **Import the Runbook**
+   - Download the [runbook file](../../Automation/External%20Runbooks/100-riverbed-iq-assist-for-servicenow-incident-quickstart/Riverbed%20IQ%20Assist%20for%20ServiceNow%20-%20Incident%20-%20Quick%20Start.json)
+   - Go to IQ Ops > Automation
+   - Import the runbook in External Runbooks
+   - Toggle "Allow Automation" on
 
-* Go to Automation Management, click on **Add Automation for external trigger**
+2. **Add Automation Trigger**
+   - Go to Automation Management
+   - Click **Add Automation for external trigger**
+   - Select Trigger: **Webhook**
 
-* Select the Trigger: **Webhook** 
-
-* In "Set conditions", add the following condition
+3. **Set Conditions**
+   Configure the following URL parameters:
 
 | URL Parameter | Condition | Value | 
 | --- | --- | --- |
@@ -155,7 +178,7 @@ The "Quick Start" skill can be be used for incident management and IT Service De
 | skill |  equals |  default | 
 
 > [!NOTE]
-> For the URL Parameter **instance** , use the name of your ServiceNow instance. It is the hsot prefix with in the URL the ServiceNow console. For example, The instance is `your_servicenow_instance` with this URL `https://your_servicenow_instance.service-now.com`
+> For the URL Parameter **instance** , use the name of your ServiceNow instance. It is the host prefix with in the URL the ServiceNow console. For example, The instance is `your_servicenow_instance` with this URL `https://your_servicenow_instance.service-now.com`
 
 
 ## Finalize configuration in ServiceNow
@@ -189,7 +212,40 @@ The "Quick Start" skill can be be used for incident management and IT Service De
 > [!NOTE]
 > Need help? Contact your Riverbed Solution Engineer or [Riverbed Support](https://support.riverbed.com/)
 
+
+## Testing Your Integration
+
+After completing the setup, verify the integration:
+
+1. **Test from ServiceNow**
+   - Create a test incident in ServiceNow
+   - Trigger the Riverbed IQ Assist action
+   - Verify the incident is enriched with diagnostic data
+
+
+<details>
+<summary>Click here to see an example screenshot</summary>
+
+![alt text](../../Automation/External%20Runbooks/100-riverbed-iq-assist-for-servicenow-incident-quickstart/100-riverbed-iq-assist-for-servicenow-incident-quickstart.png)
+
+</details>
+
+
+2. **Check Logs**
+   - In Riverbed Console: IQ Ops > Automation > Automation Analysis history
+   - In ServiceNow: All > Riverbed IQ Assist > Logs
+
+
 ## Frequently Asked Questions (FAQ)
+
+### What data sources are supported?
+Riverbed IQ Assist supports multiple data sources including Aternity EUEM, NPM+, AppResponse, APM, NetIM, and others.
+
+### How long does installation take?
+Plan for approximately 45 minutes for initial setup, plus additional time for skill customization.
+
+### Can I customize the diagnostic workflow?
+Yes! See the advanced skills configuration below.
 
 ### How to configure skills? (ADVANCED)
 
@@ -199,3 +255,20 @@ You can find and grab samples from the [Riverbed Community Toolkit repository](h
 
 > [!NOTE]
 > Need help designing or validating skills? Contact your Riverbed Solution Engineer.
+
+
+## Troubleshooting
+
+**Common Issues:**
+
+| Issue | Solution |
+|-------|----------|
+| Webhook not triggering | Verify URL parameters match exactly |
+| No data in incidents | Confirm data sources are enabled and connector is active |
+| Authentication errors | Regenerate OAuth credentials and update in both systems |
+
+## License
+
+Copyright (c) 2026 Riverbed Technology, Inc.
+
+The contents provided here are licensed under the terms and conditions of the MIT License accompanying the software ("License"). The scripts are distributed "AS IS" as set forth in the License. The script also include certain third party code. All such third party code is also distributed "AS IS" and is licensed by the respective copyright holders under the applicable terms and conditions (including, without limitation, warranty and liability disclaimers) identified in the license notices accompanying the software.
