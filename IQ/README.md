@@ -8,11 +8,12 @@ This folder contains cookbooks and samples to be used when building Agents and R
 
 ## Quick start
 
-## Agents
+## Agents cookbooks with Riverbed IQ Assist
 
 | Agent | Description | Tags | Last update |
 | --- | --- | --- | --- |
 | Copilot IT Self-Service | [More details](Agents/101-Copilot-IT-SelfService) | Microsoft Copilot | Jan. 2026 |
+| Riverbed IQ Assist for ServiceNow | [More details](Agents/101-riverbed-iq-assist-for-servicenow) | ServiceNow, SOW | Feb. 2026 |
 
 
 ## Automation runbooks
