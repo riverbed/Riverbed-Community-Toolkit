@@ -185,13 +185,13 @@ The "Quick Start" skill can be be used for incident management and IT Service De
 
 * Go to IQ Ops > Management > API Access
 
-* Grab **Base URI** and **Tenant Id** to compose the **Skills Webhook URL** a follow: <Base URI> + `/api/automation/1.0/tenants/` + <Tenant Id> + `/webhooks?service=riverbed_iq_assist&connector_type=servicenow&version=latest&instance=` + <ServiceNow instance>
+* Grab **Base URI** and **Tenant Id** to compose the **Skills Webhook URL** a follow: **Base URI** + `/api/automation/1.0/tenants/` + **Tenant Id + `/webhooks?service=riverbed_iq_assist&connector_type=servicenow&version=latest&instance=` + **ServiceNow instance**
 
 | | Example |
 | -- | -- |
-| Base URI | `https://your_env.app.riverbed.cloud.com` |
-| Tenant Id | `123456` |
-| ServiceNow instance | `your_servicenow_instance` |
+| **Base URI** | `https://your_env.app.riverbed.cloud.com` |
+| **Tenant Id** | `123456` |
+| **ServiceNow instance** | `your_servicenow_instance` |
 | **Skills Webhook URL** | `https://your_env.app.riverbed.cloud.com/api/automation/1.0/tenants/123456/webhooks?service=riverbed_iq_assist&connector_type=servicenow&version=latest&instance=your_servicenow_instance`
 
 * Grab the **Access Token URI** and **API Scope**, compose the **Skills Webhook URL**:
@@ -272,3 +272,4 @@ You can find and grab samples from the [Riverbed Community Toolkit repository](h
 Copyright (c) 2026 Riverbed Technology, Inc.
 
 The contents provided here are licensed under the terms and conditions of the MIT License accompanying the software ("License"). The scripts are distributed "AS IS" as set forth in the License. The script also include certain third party code. All such third party code is also distributed "AS IS" and is licensed by the respective copyright holders under the applicable terms and conditions (including, without limitation, warranty and liability disclaimers) identified in the license notices accompanying the software.
+
