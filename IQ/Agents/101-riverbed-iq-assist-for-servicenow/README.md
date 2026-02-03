@@ -183,8 +183,6 @@ The "Quick Start" skill can be used for incident management and IT Service Desk 
 
 ## Finalize configuration in ServiceNow
 
-<!-- Configure the webhook URL that ServiceNow will use to trigger Skills in the Riverbed Platform -->
-
 * Go to IQ Ops > Management > API Access
 
 * Grab **Base URI** and **Tenant Id** to compose the **Skills Webhook URL** as follows: **Base URI** + `/api/automation/1.0/tenants/` + **Tenant Id** + `/webhooks?service=riverbed_iq_assist&connector_type=servicenow&version=latest&instance=` + **ServiceNow instance**
@@ -194,9 +192,7 @@ The "Quick Start" skill can be used for incident management and IT Service Desk 
 | **Base URI** | `https://your_env.app.riverbed.cloud.com` |
 | **Tenant Id** | `123456` |
 | **ServiceNow instance** | `your_servicenow_instance` |
-| **Skills Webhook URL** | `https://your_env.app.riverbed.cloud.com/api/automation/1.0/tenants/123456/webhooks?service=riverbed_iq_assist&connector_type=servicenow&version=latest&instance=your_servicenow_instance`
-
-<!-- Configure OAuth authentication to allow ServiceNow to securely call the Riverbed Platform -->
+| **Skills Webhook URL** | `https://your_env.app.riverbed.cloud.com/api/automation/1.0/tenants/123456/webhooks?service=riverbed_iq_assist&connector_type=servicenow&version=latest&instance=your_servicenow_instance` |
 
 * Grab the **Access Token URI** and **API Scope** from the API Access page:
 
@@ -208,8 +204,6 @@ The "Quick Start" skill can be used for incident management and IT Service Desk 
 * Click on **Create OAuth Client** to generate a new client. It requires a name, for example "Riverbed IQ Assist for ServiceNow".
 
 * Obtain the generated credentials: **Client Id** and **Client Secret**
-
-<!-- Copy all the configuration details above to complete the setup in ServiceNow -->
 
 * Go to ServiceNow > All > Riverbed IQ Assist > Configuration. 
 
