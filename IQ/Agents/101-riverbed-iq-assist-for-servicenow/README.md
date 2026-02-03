@@ -185,7 +185,7 @@ The "Quick Start" skill can be be used for incident management and IT Service De
 
 * Go to IQ Ops > Management > API Access
 
-* Grab **Base URI** and **Tenant Id** to compose the **Skills Webhook URL** a follow: **Base URI** + `/api/automation/1.0/tenants/` + **Tenant Id + `/webhooks?service=riverbed_iq_assist&connector_type=servicenow&version=latest&instance=` + **ServiceNow instance**
+* Grab **Base URI** and **Tenant Id** to compose the **Skills Webhook URL** a follow: **Base URI** + `/api/automation/1.0/tenants/` + **Tenant Id** + `/webhooks?service=riverbed_iq_assist&connector_type=servicenow&version=latest&instance=` + **ServiceNow instance**
 
 | | Example |
 | -- | -- |
