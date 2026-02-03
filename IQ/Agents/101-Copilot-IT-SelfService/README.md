@@ -386,15 +386,17 @@ If needeed restart my device
 <details>
 <summary>How to find the identifier of a User Endpoint action?</summary>
 
-In Riverbed IQ Ops, you can run the On-Demand Runbook to get the list of User Endpoint actions with identifier.
+In Riverbed IQ Ops, you can run an On-Demand Runbook to get the list of User Endpoint actions with their identifiers.
 
-* Follow the [link](assets/Demo%20-%20List%20Available%20Actions%20for%20User%20Endpoints.json)
+* Follow the [link](assets/Demo%20-%20List%20Available%20Actions%20for%20User%20Endpoints.json) to the runbook file
 
 * Click **Download raw file** (download icon at the top right corner)
 
-* Go to IQ Ops > Automation, click on **Import** 
+* In IQ Ops, go to **Automation** and click **Import** 
 
-* Run the runbook
+* Import the downloaded runbook file
+
+* Run the runbook to see the list of available actions with their ACTION_REFERENCE_ID values
 
 </details>
 
