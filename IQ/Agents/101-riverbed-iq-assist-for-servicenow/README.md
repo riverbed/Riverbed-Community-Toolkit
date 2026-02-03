@@ -150,7 +150,7 @@ For example: `https://your_tenant.cloud.riverbed.com`
 
 ### 3. Configure the "Quick Start" skill
 
-The "Quick Start" skill can be be used for incident management and IT Service Desk assistance use-cases. When triggered from ServiceNow, the runbook diagnoses the end-user endpoint and enrich the incident ticket with diagnosis.
+The "Quick Start" skill can be used for incident management and IT Service Desk assistance use-cases. When triggered from ServiceNow, the runbook diagnoses the end-user endpoint and enriches the incident ticket with diagnosis.
 
 **Steps:**
 
@@ -178,14 +178,16 @@ The "Quick Start" skill can be be used for incident management and IT Service De
 | skill |  equals |  default | 
 
 > [!NOTE]
-> For the URL Parameter **instance** , use the name of your ServiceNow instance. It is the host prefix with in the URL the ServiceNow console. For example, The instance is `your_servicenow_instance` with this URL `https://your_servicenow_instance.service-now.com`
+> For the URL Parameter **instance**, use the name of your ServiceNow instance. It is the host prefix in the ServiceNow console URL. For example, the instance is `your_servicenow_instance` in this URL: `https://your_servicenow_instance.service-now.com`
 
 
 ## Finalize configuration in ServiceNow
 
+<!-- Configure the webhook URL that ServiceNow will use to trigger Skills in the Riverbed Platform -->
+
 * Go to IQ Ops > Management > API Access
 
-* Grab **Base URI** and **Tenant Id** to compose the **Skills Webhook URL** a follow: **Base URI** + `/api/automation/1.0/tenants/` + **Tenant Id** + `/webhooks?service=riverbed_iq_assist&connector_type=servicenow&version=latest&instance=` + **ServiceNow instance**
+* Grab **Base URI** and **Tenant Id** to compose the **Skills Webhook URL** as follows: **Base URI** + `/api/automation/1.0/tenants/` + **Tenant Id** + `/webhooks?service=riverbed_iq_assist&connector_type=servicenow&version=latest&instance=` + **ServiceNow instance**
 
 | | Example |
 | -- | -- |
@@ -194,20 +196,24 @@ The "Quick Start" skill can be be used for incident management and IT Service De
 | **ServiceNow instance** | `your_servicenow_instance` |
 | **Skills Webhook URL** | `https://your_env.app.riverbed.cloud.com/api/automation/1.0/tenants/123456/webhooks?service=riverbed_iq_assist&connector_type=servicenow&version=latest&instance=your_servicenow_instance`
 
-* Grab the **Access Token URI** and **API Scope**, compose the **Skills Webhook URL**:
+<!-- Configure OAuth authentication to allow ServiceNow to securely call the Riverbed Platform -->
+
+* Grab the **Access Token URI** and **API Scope** from the API Access page:
 
 | **Configuration** | **Example** |
 | --- | --- |
 | **Access Token URI** |`https://login.microsoftonline.com/987654-987654-987654/oauth2/v2.0/token`
 | **API Scope** | `api://987654-654321-321654/.default`
 
-* Click on **Create OAuth Client** to generate a new client. It requires a name, for example put "Riverbed IQ Assist for Copilot". 
+* Click on **Create OAuth Client** to generate a new client. It requires a name, for example "Riverbed IQ Assist for ServiceNow".
 
 * Obtain the generated credentials: **Client Id** and **Client Secret**
 
+<!-- Copy all the configuration details above to complete the setup in ServiceNow -->
+
 * Go to ServiceNow > All > Riverbed IQ Assist > Configuration. 
 
-* Configure the application (reference: IQ Assist for ServiceNow app - Installation Guide, section 3. Configuration):
+* Configure the application with the credentials and URLs obtained above (reference: IQ Assist for ServiceNow app - Installation Guide, section 3. Configuration):
 
 > [!NOTE]
 > Need help? Contact your Riverbed Solution Engineer or [Riverbed Support](https://support.riverbed.com/)
