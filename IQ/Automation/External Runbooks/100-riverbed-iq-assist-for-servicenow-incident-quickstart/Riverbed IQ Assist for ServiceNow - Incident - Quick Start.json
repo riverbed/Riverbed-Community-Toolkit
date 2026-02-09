@@ -2,7 +2,7 @@
     "runbook": {
         "id": "db8e0fd0-8ea7-4433-98bd-d93ada11d815",
         "createdTime": "1760697733.241103000",
-        "lastUpdatedTime": "1760955393.199825600",
+        "lastUpdatedTime": "1766084041.554468500",
         "factoryResourceName": null,
         "isFactory": false,
         "name": "Riverbed IQ Assist for ServiceNow - Incident - Quick Start",
@@ -99,7 +99,7 @@
                 "properties": {
                     "x": 50,
                     "y": 430,
-                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Riverbed IQ Assist for ServiceNow</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Runbook for Incident in ServiceNow: Quick Start for diagnosing the user endpoint.</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">version: 2025-10-20-1</span></p>",
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Riverbed IQ Assist for ServiceNow</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Runbook for Incident in ServiceNow: Quick Start for diagnosing the user endpoint.</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">version: 2025-11-05-1</span></p>",
                     "debug": false
                 },
                 "wires": []
@@ -366,7 +366,7 @@
                     "x": 1812.8601058869017,
                     "y": 620,
                     "debug": false,
-                    "configurationId": "63ff53ff-b315-4915-bb88-2c7abf9ec24f",
+                    "configurationId": "e9b45beb-6ba5-47b0-9da2-f0c9eefd555e",
                     "in": [
                         {
                             "inner": "subflow.Findings_HEALTH",
@@ -420,6 +420,60 @@
                         },
                         {
                             "inner": "subflow.Format",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Endpoint_Name",
+                            "outer": "runtime.User_Endpoint_Name",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Chart_CPU_MEM",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Chart_IO_DISK_QUEUE_LENGTH",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Chart_IO_RATE_RW",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Chart_WIFI_Signal_Strength",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Chart_WIFI_Transmission_Speed",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Chart_NPM_Traffic",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Chart_NPM_RTCC",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Layout",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Show_Endpoint",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Show_Metrics",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Footer",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Widget_Width",
                             "outer": ""
                         }
                     ],
@@ -592,7 +646,7 @@
         ],
         "lastUpdatedUser": "Runbook Export",
         "createdByUser": "Runbook Export",
-        "eTag": "W/\"datetime'2025-10-20T10%3A16%3A33.2102759Z'\"",
+        "eTag": "\"1c902a57-f44a-4e2a-bee4-ea26c648ff92\"",
         "variant": "incident",
         "seriesId": "db8e0fd0-8ea7-4433-98bd-d93ada11d815",
         "version": "1.0",
@@ -623,11 +677,11 @@
             "sourcePackageId": "Aternity"
         },
         {
-            "id": "63ff53ff-b315-4915-bb88-2c7abf9ec24f",
+            "id": "e9b45beb-6ba5-47b0-9da2-f0c9eefd555e",
             "type": "subflow",
             "name": "Skill: Generate Insight",
             "globalId": "RiverbedIQAssist::Generate_Insight",
-            "originalVersion": "1.0.2",
+            "originalVersion": "4.0.0",
             "nodeLabel": "Skill: Generate Insight",
             "sourceLocation": "integrationLibrary",
             "sourcePackageId": "RiverbedIQAssist"
@@ -643,5 +697,5 @@
             "sourcePackageId": "ServiceNow"
         }
     ],
-    "token": "qlPOQXeijL8ywAA8x/FUijjx+q8HKw04rct/Ffpo6eg="
+    "token": "6T8hMvUXkGDOahjfxuJYsEKRnCirDfYojkQ/H7fuaSY="
 }
