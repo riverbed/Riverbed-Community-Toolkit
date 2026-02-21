@@ -78,7 +78,7 @@ On this page you will find all the required information:
    * **Scope**
 
 * Connection
-   ** **Tenant**
+   * **Tenant**
 
 For the credentials, follow the link to open the **API Access** page and click on **Create OAuth Client** to generate a new client. Enter a name (for example, `Riverbed IQ Assist for Copilot`), select an expiration period, then click **Create**. Then you will obtain the credentials:
 
