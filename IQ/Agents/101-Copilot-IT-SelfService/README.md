@@ -80,7 +80,9 @@ Collect all required information for the next configuration steps from this page
 * Connection
    * **Tenant**
 
-For credentials, follow the link to open the **API Access** page, then click **Create OAuth Client** to generate a new client. Enter a name (for example, `Riverbed IQ Assist for Copilot`), select an expiration period, and click **Create**. Collect the generated credentials:
+For credentials, follow the link to open the **API Access** page, then click **Create OAuth Client** to generate a new client. 
+
+* Enter a name (for example, `Riverbed IQ Assist for Copilot`), select an expiration period, and click **Create**. Collect the generated credentials:
 
    * **Client Id**
 
