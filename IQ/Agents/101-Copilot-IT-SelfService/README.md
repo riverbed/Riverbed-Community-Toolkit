@@ -27,7 +27,7 @@ After setting up the agent, you’ll learn to customize and extend it with addit
    - [2. Enable Riverbed IQ Assist](#2-enable-riverbed-iq-assist)
    - [3. Install Integrations](#3-install-integrations)
    - [4. Check Data Store](#4-check-data-store)
-   - [5. Get the info and credentials for the Copilot Agent](#5-get-the-info-and-credentials-for-the-copilot-agent)
+   - [5. Gather details for the connector](#5-gather-details-for-the-connector)
 - [Setting Up the Copilot Agent](#setting-up-the-copilot-agent)
 - [Customize the Agent – Advanced](#customize-the-agent--advanced)
 - [Testing the conversational Agent](#testing-the-conversational-agent)
@@ -63,38 +63,28 @@ Go to IQ Ops > **Management**
 
 In the hamburger menu, open **Edges & Data Sources** and enable your data sources (e.g. Aternity SAAS, NPM+)
 
-### 5. Get the info and credentials for the Copilot Agent
+### 5. Gather details for the connector
 
-Go to IQ Ops > **Management**, in the hamburger menu, open **API Access**
+Go to IQ Ops > **Management** > **Riverbed IQ Assist Configuration**, then select the **RIVERBED IQ ASSIST FOR COPILOT** tab.
 
 On this page you will find all the required information:
 
-* Riverbed Tenant Name
+* General Information
+   * **Host**
+   * **Base URL**
 
-* Riverbed Tenant Id
+* Security
+   * **Resource URL**
+   * **Scope**
 
-* Directory Id
+* Connection
+   ** **Tenant**
 
-* API Scope
+For the credentials, follow the link to open the **API Access** page and click on **Create OAuth Client** to generate a new client. Enter a name (for example, `Riverbed IQ Assist for Copilot`), select an expiration period, then click **Create**. Then you will obtain the credentials:
 
-* Resource Id URI
+   * **Client Id**
 
-> [!NOTE]
-> **Riverbed Tenant Name** is the prefix of the URL of the Riverbed console. For example, in the URL `https://your_tenant.cloud.riverbed.com` the **Riverbed Tenant Name** is **your_tenant**
->
-> On this page the **Riverbed Tenant Id** is labeled **Tenant Id**. For example `123456-789456-123456`
->
-> **Directory Id** is the *GUID* between the domain and the /oauth2/ in the Access Token URI. For example, in the following **Access Token URI** `https://login.microsoftonline.com/987654-987654-987654/oauth2/v2.0/token`, the **Directory Id** is `987654-987654-987654`
->
-> To obtain the **Resource Id URI**, take the first portion of the **API Scope** (i.e. remove /.default from the API Scope). For example, if the **API Scope** is `api://987654-654321-321654/.default` then the **Resource Id URI** is `api://987654-654321-321654`
-
-
-For the credentials, click on **Create OAuth Client** to generate a new client. It requires a name, for example put "Riverbed IQ Assist for Copilot". Then you will obtain the credentials:
-
-* Client Id
-
-* Client Secret
-
+   * **Client Secret**
 
 ## Setting Up the Copilot Agent
 
@@ -173,12 +163,7 @@ https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads
 
 * Set the icon of the connector with the Riverbed logo
 
-* Set the fields **Host** and **Base URL** using the information of your Riverbed tenant (refer to **Preparing Riverbed IQ Assist** > **5. Get the info and credentials for the Copilot Agent**):
-
-| **Configuration** | **Example** |
-| --- | --- |
-| Host: `<your Riverbed Tenant Name>.app.cloud.riverbed.com`  | Host: `your_tenant.app.cloud.riverbed.com` | 
-| Base URL: `/api/skills/1.0/tenants/<your Riverbed Tenant Id>` | Base URL: `/api/skills/1.0/tenants/123456-789456-123456` |
+* Set the fields **Host** and **Base URL** using the information of your Riverbed tenant (refer to **Preparing Riverbed IQ Assist** > **Gather details for the connector**):
 
 <details>
 <summary>Click here to see an example screenshot</summary>
@@ -197,12 +182,10 @@ https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads
 
 * Set the value `0000` for **Client ID**, and `****` for the **Client Secret**. These are only placeholder values and not actual credentials.
 
-* Configure the following properties using the connector information of your account (refer to **Preparing Riverbed IQ Assist** > **5. Get the info and credentials for the Copilot Agent**):
+* Configure the following Security properties using the connector information of your account (refer to **Preparing Riverbed IQ Assist** > **5. Gather details for the connector**):
 
-| **Configuration** | **Example** |
-| --- | --- |
-| Resource URL: `<your Resource Id URI>` | Resource URL: `api://987654-654321-321654`
-| Scope: `<your API Scope>` | Scope: `api://987654-654321-321654/.default`
+   * **Resource URL**
+   * **Scope**
 
 * Leave the other fields as is (**Authorization URL** `https://login.microsoftonline.com`, **Tenant ID**: `common`, **Enable on behalf-of-login**: `false`)
 
@@ -229,13 +212,11 @@ When adding your first tool, configure the connection first.
 
 * In Authentication Type, select **Service Principal Connection**
 
-* Configure the properties using the Client ID, Client Secret and Directory ID of your Riverbed account (refer to **Preparing Riverbed IQ Assist** > **5. Get the info and credentials for the Copilot Agent**):
+* Configure the Connection properties of your account (refer to **Preparing Riverbed IQ Assist** > **5. Gather details for the connector**):
 
-| **Configuration** | **Example** |
-| --- | --- |
-| Client ID: `<your OAUTH Client ID>` | Client ID: `123456-456789-987654-654321`
-| Client Secret: `<your OAUTH Client Secret>` | Client Secret: `******************************`
-| Tenant: `<your Directory ID (not your Riverbed Tenant ID)>` | Tenant: `987654-987654-987654`
+   * **Client ID**
+   * **Client Secret**
+   * **Tenant**
 
 <details>
 <summary>Click here to see an example screenshot</summary>
