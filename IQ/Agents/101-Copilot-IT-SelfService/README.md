@@ -8,7 +8,7 @@ This community cookbook offers step-by-step instructions to integrate Riverbed I
 
 You will learn to create an agent using Microsoft Copilot Studio and add Riverbed IQ Assist skills as tools via a Custom Connector.
 
-This Employee IT Self-Service agent uses Riverbed Platform’s AI Ops and Observability to identify user endpoints and devices, and assist with diagnostics and remediation.
+This Employee IT Self-Service agent uses Riverbed Platform's AI Ops and Observability to identify user endpoints and devices, and assist with diagnostics and remediation.
 
 After setting up the agent, you’ll learn to customize and extend it with additional tools for advanced scenarios.
 
@@ -19,6 +19,21 @@ After setting up the agent, you’ll learn to customize and extend it with addit
 | Riverbed Platform | Enable the Riverbed IQ Assist feature and configure the required connectors and integrations, including Riverbed IQ Assist and Aternity EUEM. Obtain OAuth information and generate credentials to connect in Microsoft Copilot Studio | 
 
 > :grey_question: For tips see the FAQ section at the end of this guide.
+
+## Table of Contents
+
+- [Preparing Riverbed IQ Assist](#preparing-riverbed-iq-assist)
+   - [1. Access IQ Ops as Admin](#1-access-iq-ops-as-admin)
+   - [2. Enable Riverbed IQ Assist](#2-enable-riverbed-iq-assist)
+   - [3. Install Integrations](#3-install-integrations)
+   - [4. Check Data Store](#4-check-data-store)
+   - [5. Get the info and credentials for the Copilot Agent](#5-get-the-info-and-credentials-for-the-copilot-agent)
+- [Setting Up the Copilot Agent](#setting-up-the-copilot-agent)
+- [Customize the Agent – Advanced](#customize-the-agent--advanced)
+- [Testing the conversational Agent](#testing-the-conversational-agent)
+- [Deploying the Agent to Teams](#deploying-the-agent-to-teams)
+- [Frequently Asked Questions (FAQ)](#frequently-asked-questions-faq)
+
 
 ## Preparing Riverbed IQ Assist
 
