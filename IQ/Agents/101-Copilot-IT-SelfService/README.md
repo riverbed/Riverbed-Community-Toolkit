@@ -39,9 +39,7 @@ After setting up the agent, you’ll learn to customize and extend it with addit
 
 ### 1. Access IQ Ops as Admin
 
-Open the Riverbed console with a user having the Platform Admin role, and navigate to **IQ Ops**
-
-For example: `https://your_tenant.cloud.riverbed.com`
+Open the Riverbed console using an account with the Platform Admin role, then navigate to **IQ Ops**. For example: `https://your_tenant.cloud.riverbed.com`
 
 ### 2. Enable Riverbed IQ Assist
 
@@ -65,25 +63,25 @@ In the hamburger menu, open **Edges & Data Sources** and enable your data source
 
 ### 5. Gather details for the connector
 
-* Go to IQ Ops > **Management** > **Riverbed IQ Assist Configuration**, then select the **RIVERBED IQ ASSIST FOR COPILOT** tab.
+Go to IQ Ops > **Management** > **Riverbed IQ Assist Configuration**, then select the **RIVERBED IQ ASSIST FOR COPILOT** tab.
 
-* Collect all required information for the next configuration steps from this page:
+Collect all required information for the next configuration steps from this page:
 
-   * General Information: **Host** and **Base URL**
+* General Information: **Host** and **Base URL**
 
-   * Security: **Resource URL** and **Scope**
+* Security: **Resource URL** and **Scope**
 
-   * Connection: **Tenant**
+* Connection: **Tenant**
 
-* For credentials, follow the link to open the **API Access** page, then click **Create OAuth Client** to generate a new client. 
+For credentials, follow the link to open the **API Access** page, then click **Create OAuth Client** to generate a new client. 
 
-* Enter a name (for example, `Riverbed IQ Assist for Copilot`), select an expiration period, and click **Create**. 
+Enter a name (for example, `Riverbed IQ Assist for Copilot`), select an expiration period, and click **Create**. 
 
-* Collect the generated credentials:
+Collect the generated credentials:
 
-   * **Client Id**
+* **Client Id**
 
-   * **Client Secret**
+* **Client Secret**
 
 ## Setting Up the Copilot Agent
 
