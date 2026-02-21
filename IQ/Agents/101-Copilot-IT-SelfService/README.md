@@ -43,7 +43,7 @@ Open the Riverbed console using an account with the Platform Admin role, then na
 
 ### 2. Enable Riverbed IQ Assist
 
-Go IQ Ops > Administration > **Riverbed IQ Assist Configuration**, and click on opt-in to enable the feature.
+Go IQ Ops > **Management** > **Riverbed IQ Assist Configuration**, and click on opt-in to enable the feature.
 
 ### 3. Install Integrations
 
