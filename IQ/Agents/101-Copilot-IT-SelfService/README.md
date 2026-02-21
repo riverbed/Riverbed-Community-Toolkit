@@ -67,7 +67,7 @@ In the hamburger menu, open **Edges & Data Sources** and enable your data source
 
 Go to IQ Ops > **Management** > **Riverbed IQ Assist Configuration**, then select the **RIVERBED IQ ASSIST FOR COPILOT** tab.
 
-On this page you will find all the required information:
+Collect all required information for the next configuration steps from this page:
 
 * General Information
    * **Host**
@@ -80,7 +80,7 @@ On this page you will find all the required information:
 * Connection
    * **Tenant**
 
-For the credentials, follow the link to open the **API Access** page and click on **Create OAuth Client** to generate a new client. Enter a name (for example, `Riverbed IQ Assist for Copilot`), select an expiration period, then click **Create**. Then you will obtain the credentials:
+For credentials, follow the link to open the **API Access** page, then click **Create OAuth Client** to generate a new client. Enter a name (for example, `Riverbed IQ Assist for Copilot`), select an expiration period, and click **Create**. Collect the generated credentials:
 
    * **Client Id**
 
