@@ -22,11 +22,17 @@ After setting up the app in ServiceNow, you'll learn how to customize and extend
 
 
 ## Table of Contents
+
 - [Preparation in the Riverbed Console](#preparation-in-the-riverbed-console)
+   - [1. Access the console as Admin](#1-access-the-console-as-admin)
+   - [2. Enable Riverbed IQ Assist](#2-enable-riverbed-iq-assist)
+   - [3. Enable Riverbed Data-Sources](#3-enable-riverbed-data-sources)
 - [Installation in ServiceNow](#installation-in-servicenow)
 - [Configuration in Riverbed Console](#configuration-in-riverbed-console)
 - [Finalize configuration in ServiceNow](#finalize-configuration-in-servicenow)
-- [FAQ](#frequently-asked-questions-faq)
+- [Testing Your Integration](#testing-your-integration)
+- [Frequently Asked Questions (FAQ)](#frequently-asked-questions-faq)
+- [Troubleshooting](#troubleshooting)
 
 
 ## Preparation in the Riverbed Console
