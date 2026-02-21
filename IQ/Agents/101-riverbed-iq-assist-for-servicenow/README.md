@@ -45,11 +45,11 @@ For example: `https://your_tenant.cloud.riverbed.com`
 
 ### 2. Enable Riverbed IQ Assist
 
-* Go to IQ Ops > Management > **Riverbed IQ Assist Configuration**
+* Go to IQ Ops > **Management** > **Riverbed IQ Assist Configuration**
 
 * Review and click on opt-in to enable the feature
 
-* Go to IQ Ops > Integrations Library 
+* Go to IQ Ops > **Integrations Library**
 
 * Find Riverbed IQ Assist, install the integration and configure a connector that you can name Riverbed IQ Assist
 
@@ -72,7 +72,7 @@ For example: `https://your_tenant.cloud.riverbed.com`
 <details>
 <summary>Click here for more details about Aternity connector</summary>
 
-* Go to IQ Ops > Integrations Library
+* Go to IQ Ops > **Integrations Library**
 
 * Install Aternity EUEM integration
 
@@ -109,15 +109,15 @@ For example: `https://your_tenant.cloud.riverbed.com`
 
 * Open the page of the certified application **Riverbed IQ Assist** 
 
-* With your ServiceNow admin team follow the **Installation Guide** provided in the **Links and documents** section. The guide contains the step-by-step process for the preparation of the ServiceNow instance and configuration of Riverbed IQ Assist for ServiceNow application (scoped application).
+* With your ServiceNow admin team, follow the **Installation Guide** provided in the **Links and documents** section. The guide contains the step-by-step process for the preparation of the ServiceNow instance and configuration of Riverbed IQ Assist for ServiceNow application (scoped application).
 
-    * Install the application
+   * Install the application.
 
-    * Create a user in ServiceNow for the external system connector (Riverbed Platform)
+   * Create a user for the external system connector (Riverbed Platform), for example `riverbed_iq_assist`
 
-    * Configure the application to enable connector to the Riverbed Platform
+   * Configure the application to enable the connector to the Riverbed Platform.
 
-    * Grant permissions to users in ServiceNow (using roles)
+   * Grant the appropriate roles to users in ServiceNow.
 
 * Get the details to set up the connector on the Riverbed Platform (instance name, URL and user credentials). 
 
@@ -131,7 +131,7 @@ For example: `https://your_tenant.cloud.riverbed.com`
 
 ### 2. Add a connector for ServiceNow
 
-* Go to IQ Ops > Integrations Library
+* Go to IQ Ops > **Integrations Library**
 
 * Install ServiceNow integration
 
@@ -178,45 +178,41 @@ The "Quick Start" skill can be used for incident management and IT Service Desk 
 | --- | --- | --- |
 | service |  equals | riverbed_iq_assist | 
 | connector_type | equals |  servicenow | 
-| instance | equals |  *your_servicenow_instance* (see Notes)  | 
-| version | equals |  latest |
 | type | equals |  incident |
 | skill |  equals |  default | 
 
-> [!NOTE]
-> For the URL Parameter **instance**, use the name of your ServiceNow instance. It is the host prefix in the ServiceNow console URL. For example, the instance is `your_servicenow_instance` in this URL: `https://your_servicenow_instance.service-now.com`
-
-
 ## Finalize configuration in ServiceNow
 
-* Go to IQ Ops > Management > API Access
+### 1. Gather details in IQ
 
-* Grab **Base URI** and **Tenant Id** to compose the **Skills Webhook URL** as follows: **Base URI** + `/api/automation/1.0/tenants/` + **Tenant Id** + `/webhooks?service=riverbed_iq_assist&connector_type=servicenow&version=latest&instance=` + **ServiceNow instance**
+* Go to IQ Ops > **Management** > **Riverbed IQ Assist Configuration**, then select the **RIVERBED IQ ASSIST FOR SERVICENOW** tab.
 
-| | Example |
-| -- | -- |
-| **Base URI** | `https://your_env.app.riverbed.cloud.com` |
-| **Tenant Id** | `123456` |
-| **ServiceNow instance** | `your_servicenow_instance` |
-| **Skills Webhook URL** | `https://your_env.app.riverbed.cloud.com/api/automation/1.0/tenants/123456/webhooks?service=riverbed_iq_assist&connector_type=servicenow&version=latest&instance=your_servicenow_instance` |
+* Collect the following configuration details:
 
-* Grab the **Access Token URI** and **API Scope** from the API Access page:
+   * **Skills Webhook URL**
+   * **Tenant Id**
+   * **Scope**
+   
+* In the **Client ID** & **Client Secret** section, follow the link to open the **API Access** page.
 
-| **Configuration** | **Example** |
-| --- | --- |
-| **Access Token URI** |`https://login.microsoftonline.com/987654-987654-987654/oauth2/v2.0/token`
-| **API Scope** | `api://987654-654321-321654/.default`
+* Click **Create OAuth Client** to generate a new client. Enter a name (for example, `Riverbed IQ Assist for ServiceNow`), select an expiration period, then click **Create**.
 
-* Click on **Create OAuth Client** to generate a new client. It requires a name, for example "Riverbed IQ Assist for ServiceNow".
+* Collect the generated credentials:
 
-* Obtain the generated credentials: **Client Id** and **Client Secret**
+   * **Client Id**
+   * **Client Secret**
 
-* Go to ServiceNow > All > Riverbed IQ Assist > Configuration. 
+### 2. Configure in ServiceNow
 
-* Configure the application with the credentials and URLs obtained above (reference: IQ Assist for ServiceNow app - Installation Guide, section 3. Configuration):
+* Work with your ServiceNow admin team.
+
+* Go to ServiceNow > All > Riverbed IQ Assist > Configuration
+
+* Configure the application using the credentials and URLs collected above. For details, refer to section 3 of the Installation Guide.
 
 > [!NOTE]
 > Need help? Contact your Riverbed Solution Engineer or [Riverbed Support](https://support.riverbed.com/)
+> The Installation Guide is available in the ServiceNow Store: [Riverbed IQ Assist for ServiceNow app](https://store.servicenow.com/sn_appstore_store.do#!/store/search?q=Riverbed).
 
 
 ## Testing Your Integration
@@ -245,19 +241,24 @@ After completing the setup, verify the integration:
 ## Frequently Asked Questions (FAQ)
 
 ### What data sources are supported?
+
 Riverbed IQ Assist supports multiple data sources including Aternity EUEM, NPM+, AppResponse, APM, NetIM, and others.
 
 ### How long does installation take?
+
 Plan for approximately 45 minutes for initial setup, plus additional time for skill customization.
 
 ### Can I customize the diagnostic workflow?
+
 Yes! See the advanced skills configuration below.
 
 ### How to configure skills? (ADVANCED)
 
-Use advanced skills to tailor IQ Assist for your specific Incident, Problem, or Alert workflows.
+Use advanced skills to tailor Riverbed IQ Assist to your Incident, Problem, or Alert workflows.
 
-You can find and grab samples from the [Riverbed Community Toolkit repository](https://github.com/riverbed/Riverbed-Community-Toolkit/tree/master/IQ).
+You can find sample skill and runbook content in the [Riverbed Community Toolkit repository](https://github.com/riverbed/Riverbed-Community-Toolkit/tree/master/IQ).
+
+When designing skills, verify that the Riverbed IQ Assist ServiceNow user (for example, `riverbed_iq_assist`) has the required permissions. For incident enrichment use cases (such as the Quick Start example), this typically means read/write access to Incidents and read access to CMDB.
 
 > [!NOTE]
 > Need help designing or validating skills? Contact your Riverbed Solution Engineer.
