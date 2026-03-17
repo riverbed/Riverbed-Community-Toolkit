@@ -474,7 +474,7 @@ A 403 error usually means the connector configuration is pointing to a resource 
 
 How to fix it:
 
-* The simplest solution is often to delete the connector and recreate it (refer to [Preparing Riverbed IQ Assist > 3. Create a connector for Riverbed IQ Assist skills](#3-create-a-connector-for-riverbed-iq-assist-skills))
+* The simplest solution is often to delete the connector and recreate it (refer to [Setting Up the Copilot Agent > 3. Create a connector for Riverbed IQ Assist skills](#3-create-a-connector-for-riverbed-iq-assist-skills))
 
 </details>
 
