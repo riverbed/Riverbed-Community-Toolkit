@@ -133,34 +133,51 @@ Responses should be concise, well-structured, and easy to understand, avoiding t
 
 ### 3. Create a connector for Riverbed IQ Assist skills
 
-* Go to Tools and click **+ Add a Tool.**
-* Expand the **Create new** section and click **Custom connector**. A new tab opens (in Power Apps > Custom Connectors).
-* At the top right, in the list **+ New custom connector**, select **Import an OpenAPI from URL**
-* Fill the **Connector name** and the **URL** of the custom connector definition:
+#### 3.1 In Copilot Studio
 
-Connector name:
+1. Go to Tools and click **+ Add a Tool.**
+2. Expand the **Create new** section and click **Custom connector**. 
+
+A new tab opens "Power Apps > Custom Connectors"
+
+#### 3.2 In Power Apps > Custom Connectors
+
+1. At the top right, in the list **+ New custom connector**, select **Import an OpenAPI from URL**
+2. Add a **Connector name**, for example:
 
 ```
 Cookbook Riverbed IQ Assist
 ```
 
-URL:
+3. Paste in the **URL for the Open API**:
 
 ```
 https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads/master/IQ/Agents/101-Copilot-IT-SelfService/assets/apiDefinition.swagger.json
 ```
 
 > [!NOTE]
-> This is the *raw link* of the [connector description](./assets/apiDefinition.swagger.json)
+> This URL is the *raw link* of the [connector definition](./assets/apiDefinition.swagger.json)
 
-* Click on **Import** and then click **Continue**
+4. Click on **Import** 
 
+> [!NOTE]
+> If your environment blocks this method using **Import an OpenAPI from URL**, then hit cancel and try the following instead.
+> 1. At the top right, in the list **+ New custom connector**, select **Import an OpenAPI** (and not **Import an OpenAPI from URL**)
+> 2. Add a **Connector name**
+> 3. Open this link and download the file [connector definition](https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads/master/IQ/Agents/101-Copilot-IT-SelfService/assets/apiDefinition.swagger.json)
+> 4. Click on **Import** and select the file you just downloaded
 
-* (You are now in the **1. General** page), Download the Riverbed logo ([follow the link and download](https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads/master/IQ/Agents/101-Copilot-IT-SelfService/assets/riverbed-icon.png)) 
+5. Click on **Continue**
 
-* Set the icon of the connector with the Riverbed logo
+#### 3.3 In Power Apps > Custom Connectors >  Edit
 
-* Set the fields **Host** and **Base URL** using the information of your Riverbed tenant (refer to **Preparing Riverbed IQ Assist** > **Gather details for the connector**):
+##### in the **1. General** page
+
+1. Download the Riverbed logo ([follow the link and download](https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads/master/IQ/Agents/101-Copilot-IT-SelfService/assets/riverbed-icon.png)) 
+
+2. Set the icon of the connector with the Riverbed logo
+
+3. Set the fields **Host** and **Base URL** using the information of your Riverbed tenant (refer to **Preparing Riverbed IQ Assist** > **Gather details for the connector**):
 
 <details>
 <summary>Click here to see an example screenshot</summary>
@@ -169,22 +186,40 @@ https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads
 
 </details>
 
-* Go to the **2. Security** page
+4. Go to the **2. Security** page
 
-* Select the Authentication Type: **OAuth 2.0**
+##### in the **2. Security** page
 
-* Select the Identity Provider: **Azure Active Directory**
+1. Select the Authentication Type: **OAuth 2.0**
 
-* Check the box **Enable Service Principal Support** 
+2. Select the Identity Provider: **Azure Active Directory**
 
-* Set the value `0000` for **Client ID**, and `****` for the **Client Secret**. These are only placeholder values and not actual credentials.
+3. Check the box **Enable Service Principal Support** 
 
-* Configure the following Security properties using the connector information of your account (refer to **Preparing Riverbed IQ Assist** > **5. Gather details for the connector**):
+4. Set the following value for **Client ID**
+
+```
+0000
+```
+
+5. Set the following value for **Client Secret**
+
+```
+****
+```
+
+> [!WARNING]
+> Here we are creating a "custom connector", so be sure to fill the Client ID and Client Secret with the provided values (`0000` and `****`) and do not use your actual credentials. You will set your real credentials in the next section when creating an actual "connection".
+
+
+6. Configure the following Security properties using the connector information of your account (refer to **Preparing Riverbed IQ Assist** > **5. Gather details for the connector**):
 
    * **Resource URL**
    * **Scope**
 
-* Leave the other fields as is (**Authorization URL** `https://login.microsoftonline.com`, **Tenant ID**: `common`, **Enable on behalf-of-login**: `false`)
+7. Leave the other fields as is (**Authorization URL** `https://login.microsoftonline.com`, **Tenant ID**: `common`, **Enable on behalf-of-login**: `false`)
+
+8. Click on **Create connector** (at the top):
 
 <details>
 <summary>Click here to see an example screenshot</summary>
@@ -193,50 +228,55 @@ https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads
 
 </details>
 
-* Click on **Create connector** (at the top):
+9. When the connector is created, you can close the tab, and go back to Copilot Studio
 
-* When the connector is created, you can close the tab, and go back to Copilot Studio
+### 4. Configure a connection for Riverbed IQ Assist skills
 
-## 4. Configure a connection for Riverbed IQ Assist skills
+#### 4.1 Find a Tool
 
-Back to Copilot Studio > Tools > Add tool window, you can now search and find the skills of Riverbed IQ Assist that are available as Tools for your agent. You can search with the connector name, tools name prefix like "Self-Service" or the specific tool name.
+Back to Copilot Studio > Tools > Add tool window
 
-When adding your first tool, configure the connection first.
+The skills of Riverbed IQ Assist are now available as Tools for your agent. For example you can search the connector name (e.g. "Riverbed IQ Assist"), tools name prefix like "Self-Service" or the specific tool name (e.g. "Find My User Endpoint").
 
-* Find and click on the tool **Self-Service: Find My User Endpoint** (the tools provided by the connector **Cookbook Riverbed IQ Assist**).
+1. Find and click on the tool **Self-Service: Find My User Endpoint** 
 
-* Expand Connection and click on **Create new connection**
+2. Expand the Connection list to select a connection. 
 
-* In Authentication Type, select **Service Principal Connection**
+#### 4.2 Create a connection
 
-* Configure the Connection properties of your account (refer to **Preparing Riverbed IQ Assist** > **5. Gather details for the connector**):
+The first time, you need to create a connection.
+
+1. Click on **Create new connection**
+
+2. In Authentication Type, select **Service Principal Connection**
+
+3. Configure the Connection properties of your account (refer to [Preparing Riverbed IQ Assist > 5. Gather details for the connector](#5-gather-details-for-the-connector)):
 
    * **Client ID**
    * **Client Secret**
    * **Tenant**
 
-<details>
-<summary>Click here to see an example screenshot</summary>
+> <details>
+> <summary>Click here to see an example screenshot</summary>
+> ![alt Connection](assets/screenshot_connection.png)
+> </details>
 
-![alt Connection](assets/screenshot_connection.png)
 
-</details>
+4. Click **Create**
 
-* Click **Create**.
-
-The connection is now created.
-
-## 5. Add a tool using the connection for Riverbed IQ Assist skills
+### 5. Add a tool using the connection for Riverbed IQ Assist skills
 
 In Tools > Add tool, you selected a tool and configured a connection. Now you will configure this tool for your agent.
 
-* Click on **Add and configure**
+#### 5.1 Additional Details
 
-* Expand **Additional Details**
+1. Click on **Add and configure**
 
-* Set **When this tool may be used** to **Agent may use this tool at any time**
+2. Expand **Additional Details**
 
-* Set **Credentials to use** to **Maker-provided credentials**
+3. Set **When this tool may be used** to **Agent may use this tool at any time**
+
+4. Set **Credentials to use** to **Maker-provided credentials**
 
 <details>
 <summary>Click here to see an example screenshot</summary>
@@ -245,9 +285,11 @@ In Tools > Add tool, you selected a tool and configured a connection. Now you wi
 
 </details>
 
-* Scroll down to the **Inputs** section
+#### 5.2 Inputs
 
-* For each of the inputs listed below, set the **Fill using** field to **Custom value**. Then, in the **Value** field, select **Select variable** (click the 3-dots button on the right), select **System**, search, and choose the corresponding system variable in the list:
+1. Scroll down to the **Inputs** section
+
+2. For each of the inputs listed below, set the **Fill using** field to **Custom value**. Then, in the **Value** field, select **Select variable** (click the 3-dots button on the right), select **System**, search, and choose the corresponding system variable in the list:
 
 | Input | Select this system variable as the Value |
 | --- | --- |
@@ -263,7 +305,7 @@ In Tools > Add tool, you selected a tool and configured a connection. Now you wi
 
 </details>
 
-* Click **Save**
+3. Click **Save**
 
 ## Customize the Agent – Advanced
 
