@@ -87,17 +87,17 @@ Collect the generated credentials:
 
 ### 1. Access Microsoft Copilot Studio
 
-* Navigate to https://copilotstudio.microsoft.com/
+1. Navigate to https://copilotstudio.microsoft.com/
 
-* Go to **Agents** and click on **+ New agent**
+2. Go to **Agents** and click on **+ New agent**
 
 ### 2. Configure the Agent
 
-* Click on **Configure**
+1. Click on **Configure**
 
-* Set a **Logo**, for example you can use the Riverbed logo ([follow the link and download](https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads/master/IQ/Agents/101-Copilot-IT-SelfService/assets/riverbed-icon.png))
+2. Set a **Logo**, for example you can use the Riverbed logo ([follow the link and download](https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads/master/IQ/Agents/101-Copilot-IT-SelfService/assets/riverbed-icon.png))
 
-* Configure the agent Name, Description and Instruction. For example using this agent sample (*101-Copilot-IT-SelfService*):
+3. Configure the agent Name, Description and Instruction. For example using this agent sample (*101-Copilot-IT-SelfService*):
 
 Name:
 
@@ -105,13 +105,13 @@ Name:
 IT Self-Service Assistant
 ```
 
-Description
+Description:
 
 ```
 IT Self-Service Assistant is an IT Expert that efficiently handles common technical queries, diagnoses your user endpoints or devices (such as laptop, workstation, etc.), and guides you through resolution steps with clarity and precision.
 ```
 
-Instructions
+Instructions:
 
 ```
 1. Identify User Devices and Endpoints
@@ -128,19 +128,19 @@ Always seek explicit confirmation from the user before initiating any remediatio
 Responses should be concise, well-structured, and easy to understand, avoiding technical complexity unless necessary.
 ```
 
-* hit **Create**
+4. hit **Create**
 
 
 ### 3. Create a connector for Riverbed IQ Assist skills
 
-#### 3.1 In Copilot Studio
+#### In Copilot Studio
 
 1. Go to Tools and click **+ Add a Tool.**
 2. Expand the **Create new** section and click **Custom connector**. 
 
 A new tab opens "Power Apps > Custom Connectors"
 
-#### 3.2 In Power Apps > Custom Connectors
+#### In Power Apps > Custom Connectors
 
 1. At the top right, in the list **+ New custom connector**, select **Import an OpenAPI from URL**
 2. Add a **Connector name**, for example:
@@ -169,9 +169,9 @@ https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads
 
 5. Click on **Continue**
 
-#### 3.3 In Power Apps > Custom Connectors >  Edit
+#### In Power Apps > Custom Connectors >  Edit
 
-##### in the **1. General** page
+##### Tab "1. General"
 
 1. Download the Riverbed logo ([follow the link and download](https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads/master/IQ/Agents/101-Copilot-IT-SelfService/assets/riverbed-icon.png)) 
 
@@ -186,9 +186,9 @@ https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads
 
 </details>
 
-4. Go to the **2. Security** page
+4. Go to the **2. Security** tab
 
-##### in the **2. Security** page
+##### Tab "2. Security"
 
 1. Select the Authentication Type: **OAuth 2.0**
 
@@ -232,7 +232,7 @@ https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads
 
 ### 4. Configure a connection for Riverbed IQ Assist skills
 
-#### 4.1 Find a Tool
+#### Find a Tool
 
 Back to Copilot Studio > Tools > Add tool window
 
@@ -242,7 +242,7 @@ The skills of Riverbed IQ Assist are now available as Tools for your agent. For 
 
 2. Expand the Connection list to select a connection. 
 
-#### 4.2 Create a connection
+#### Create a connection
 
 The first time, you need to create a connection.
 
@@ -256,11 +256,12 @@ The first time, you need to create a connection.
    * **Client Secret**
    * **Tenant**
 
-> <details>
-> <summary>Click here to see an example screenshot</summary>
-> ![alt Connection](assets/screenshot_connection.png)
-> </details>
+<details>
+<summary>Click here to see an example screenshot</summary>
 
+![alt Connection](assets/screenshot_connection.png)
+
+</details>
 
 4. Click **Create**
 
@@ -268,7 +269,7 @@ The first time, you need to create a connection.
 
 In Tools > Add tool, you selected a tool and configured a connection. Now you will configure this tool for your agent.
 
-#### 5.1 Additional Details
+#### Additional Details
 
 1. Click on **Add and configure**
 
@@ -285,7 +286,7 @@ In Tools > Add tool, you selected a tool and configured a connection. Now you wi
 
 </details>
 
-#### 5.2 Inputs
+#### Inputs
 
 1. Scroll down to the **Inputs** section
 
