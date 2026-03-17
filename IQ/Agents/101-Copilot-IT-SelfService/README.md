@@ -161,7 +161,7 @@ https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads
 4. Click on **Import** 
 
 > [!NOTE]
-> If this method using **Import an OpenAPI from URL** is blocked or not allows in your environment, then try the following instead.
+> If this method using **Import an OpenAPI from URL** is blocked or not allowed in your environment, then try the following instead.
 > 1. At the top right, in the list **+ New custom connector**, select **Import an OpenAPI** (and not **Import an OpenAPI from URL**)
 > 2. Add a **Connector name**
 > 3. Open this link and download the file [connector definition](https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads/master/IQ/Agents/101-Copilot-IT-SelfService/assets/apiDefinition.swagger.json)
