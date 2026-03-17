@@ -177,7 +177,7 @@ https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads
 
 2. Set the icon of the connector with the Riverbed logo
 
-3. Set the fields **Host** and **Base URL** using the information of your Riverbed tenant (refer to **Preparing Riverbed IQ Assist** > **Gather details for the connector**):
+3. Set the fields **Host** and **Base URL** using the information of your Riverbed tenant (refer to [Preparing Riverbed IQ Assist > 5. Gather details for the connector](#5-gather-details-for-the-connector)):
 
 <details>
 <summary>Click here to see an example screenshot</summary>
@@ -212,7 +212,7 @@ https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads
 > Here we are creating a "custom connector", so be sure to fill the Client ID and Client Secret with the provided values (`0000` and `****`) and do not use your actual credentials. You will set your real credentials in the next section when creating an actual "connection".
 
 
-6. Configure the following Security properties using the connector information of your account (refer to **Preparing Riverbed IQ Assist** > **5. Gather details for the connector**):
+6. Configure the following Security properties using the connector information of your account (refer to [Preparing Riverbed IQ Assist > 5. Gather details for the connector](#5-gather-details-for-the-connector)):
 
    * **Resource URL**
    * **Scope**
@@ -474,7 +474,7 @@ A 403 error usually means the connector configuration is pointing to a resource 
 
 How to fix it:
 
-* The simplest solution is often to delete the connector and recreate it. Refer to **Preparing Riverbed IQ Assist** > **3. Create a connector for Riverbed IQ Assist skills**
+* The simplest solution is often to delete the connector and recreate it (refer to [Preparing Riverbed IQ Assist > 3. Create a connector for Riverbed IQ Assist skills](#3-create-a-connector-for-riverbed-iq-assist-skills))
 
 </details>
 
