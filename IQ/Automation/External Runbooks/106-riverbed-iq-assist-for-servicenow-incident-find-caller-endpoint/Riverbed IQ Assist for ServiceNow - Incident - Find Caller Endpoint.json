@@ -2,10 +2,10 @@
     "runbook": {
         "id": "a0063bb8-2a49-472f-8412-0b23a0e8585e",
         "createdTime": "1760964742.895353200",
-        "lastUpdatedTime": "1761549354.554637900",
+        "lastUpdatedTime": "1774425650.923534500",
         "factoryResourceName": null,
         "isFactory": false,
-        "name": "Riverbed IQ Assist for ServiceNow - Incident - Find Caller Endpoint",
+        "name": "Riverbed IQ Assist for ServiceNow - Incident - Find Caller Endpoint - 3.0",
         "description": "Triggered in the context of an Incident in ServiceNow, the runbook find the user endpoint of the caller",
         "isReady": true,
         "triggerType": "webhook",
@@ -302,7 +302,7 @@
                         }
                     ],
                     "transformTemplate": "{\n    \"runtime.ServiceNow_API_Base_URL\" : \"https://{{variables[\"runtime.ServiceNow_ENV\"]}}.service-now.com\",\n    \"runtime.ServiceNow_Incident_Sys_Id\": \"{{trigger[\"requestBody\"][\"recordID\"]}}\",\n    \"runtime.ServiceNow_User_Data\": \"{{trigger[\"requestBody\"][\"user\"]}}\",\n    \"runtime.ServiceNow_Configuration_Item\": \"{{trigger[\"requestBody\"][\"ciName\"]}}\",\n    \"runtime.ServiceNow_Configuration_Item_Sys_Id\": \"{{trigger[\"requestBody\"][\"ciID\"]}}\",\n    \"runtime.ServiceNow_Incident_Number\": \"{{trigger[\"requestBody\"][\"recordNumber\"]}}\"\n}\n",
-                    "debug": true
+                    "debug": false
                 },
                 "wires": [
                     [
@@ -319,7 +319,7 @@
                 "properties": {
                     "x": 226,
                     "y": 530,
-                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Riverbed IQ Assist for ServiceNow</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Runbook for Incident in ServiceNow: Find Caller Endpoint</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">version: 2025-10-27-1</span></p>",
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Riverbed IQ Assist for ServiceNow</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Runbook for Incident in ServiceNow: Find Caller Endpoint</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">version: 2026-03</span></p>",
                     "debug": false
                 },
                 "wires": []
@@ -491,68 +491,6 @@
                 "wires": []
             },
             {
-                "id": "e255cff3-5f49-4a5a-b9ce-089edea857ae",
-                "isIntegrationSubflowNode": false,
-                "type": "subflow",
-                "label": "Skill: Find User Endpoint",
-                "description": "Returns device name that has been recently used by an end user based on the username, display name or email address.",
-                "properties": {
-                    "x": 845,
-                    "y": 400,
-                    "debug": false,
-                    "configurationId": "14fd3e48-3549-480f-8439-2e10b18165d6",
-                    "in": [
-                        {
-                            "inner": "subflow.Aternity_Connector",
-                            "outer": "00000000-0000-0000-0000-000000000000",
-                            "method": "connector",
-                            "isUnset": false
-                        },
-                        {
-                            "inner": "subflow.Input_EmailAddress",
-                            "outer": "runtime.Caller_Email",
-                            "method": "runtime",
-                            "isUnset": false
-                        },
-                        {
-                            "inner": "subflow.Input_Username",
-                            "outer": "runtime.Caller_Username",
-                            "method": "runtime",
-                            "isUnset": false
-                        },
-                        {
-                            "inner": "subflow.Input_DisplayName",
-                            "outer": "runtime.Caller_Display_Name",
-                            "method": "runtime",
-                            "isUnset": false
-                        }
-                    ],
-                    "out": [
-                        {
-                            "inner": "subflow.Successful",
-                            "outer": "runtime.Successful",
-                            "method": "runtime"
-                        },
-                        {
-                            "inner": "subflow.Error_Message",
-                            "outer": "runtime.Error_Message",
-                            "method": "runtime"
-                        },
-                        {
-                            "inner": "subflow.Suggested_User_Device",
-                            "outer": "runtime.User_Endpoint_Name",
-                            "method": "runtime"
-                        }
-                    ]
-                },
-                "wires": [
-                    [
-                        "7678314c-3e9f-460f-b6a9-a7db4ca45834",
-                        "a5c02f53-9cc2-4ee2-8eac-55ee656fcbd2"
-                    ]
-                ]
-            },
-            {
                 "id": "e675618f-7f67-463e-a402-5816c7e8f95a",
                 "isIntegrationSubflowNode": false,
                 "type": "subflow",
@@ -632,7 +570,7 @@
                 },
                 "wires": [
                     [
-                        "e255cff3-5f49-4a5a-b9ce-089edea857ae"
+                        "5b0806ed-3043-415b-9e6b-b971adbd21d4"
                     ]
                 ]
             },
@@ -699,11 +637,73 @@
                         "7f813c4a-61c6-42cd-a0c1-64ff58292086"
                     ]
                 ]
+            },
+            {
+                "id": "5b0806ed-3043-415b-9e6b-b971adbd21d4",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow",
+                "label": "Skill: Find Recent User Endpoints",
+                "description": "Returns user endpoints that have been recently used by an end user based on the username, display name or email address.",
+                "properties": {
+                    "x": 847,
+                    "y": 400,
+                    "debug": false,
+                    "configurationId": "85268ead-6585-4928-9db2-46ab1b859abf",
+                    "in": [
+                        {
+                            "inner": "subflow.Aternity_Connector",
+                            "outer": "00000000-0000-0000-0000-000000000000",
+                            "method": "connector",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Input_EmailAddress",
+                            "outer": "runtime.Caller_Email",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Input_Username",
+                            "outer": "runtime.Caller_Username",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Input_DisplayName",
+                            "outer": "runtime.Caller_Display_Name",
+                            "method": "runtime",
+                            "isUnset": false
+                        }
+                    ],
+                    "out": [
+                        {
+                            "inner": "subflow.Successful",
+                            "outer": "runtime.Successful",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Error_Message",
+                            "outer": "runtime.Error_Message",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Suggested_User_Device",
+                            "outer": "runtime.User_Endpoint_Name",
+                            "method": "runtime"
+                        }
+                    ]
+                },
+                "wires": [
+                    [
+                        "7678314c-3e9f-460f-b6a9-a7db4ca45834",
+                        "a5c02f53-9cc2-4ee2-8eac-55ee656fcbd2"
+                    ]
+                ]
             }
         ],
         "lastUpdatedUser": "Runbook Export",
         "createdByUser": "Runbook Export",
-        "eTag": "W/\"datetime'2025-10-27T07%3A15%3A54.5620525Z'\"",
+        "eTag": "\"8da927d1-ebd0-4a60-9955-72e6edc3db05\"",
         "variant": "incident",
         "seriesId": "a0063bb8-2a49-472f-8412-0b23a0e8585e",
         "version": "1.0",
@@ -734,25 +734,25 @@
             "sourcePackageId": "ServiceNow"
         },
         {
-            "id": "14fd3e48-3549-480f-8439-2e10b18165d6",
-            "type": "subflow",
-            "name": "Skill: Find User Endpoint",
-            "globalId": "Aternity::Get_User_Devices",
-            "originalVersion": "1.0.2",
-            "nodeLabel": "Skill: Find User Endpoint",
-            "sourceLocation": "integrationLibrary",
-            "sourcePackageId": "Aternity"
-        },
-        {
             "id": "c72fa9e8-fc68-40ab-a20e-62a930940a61",
             "type": "subflow",
             "name": "ServiceNow: Get Incident Details",
             "globalId": "ServiceNow::Get_Incident_Details",
-            "originalVersion": "3.0.0",
+            "originalVersion": "3.0.1",
             "nodeLabel": "ServiceNow: Get Incident Details",
             "sourceLocation": "integrationLibrary",
             "sourcePackageId": "ServiceNow"
+        },
+        {
+            "id": "85268ead-6585-4928-9db2-46ab1b859abf",
+            "type": "subflow",
+            "name": "Skill: Find Recent User Endpoints",
+            "globalId": "Aternity::Find_Recent_User_Endpoints",
+            "originalVersion": "1.0.0",
+            "nodeLabel": "Skill: Find Recent User Endpoints",
+            "sourceLocation": "integrationLibrary",
+            "sourcePackageId": "Aternity"
         }
     ],
-    "token": "B7hJ0KlDOORXkOVXbn4bBTmVm6eeUs2+qryE2PAuyx8="
+    "token": "oVxollqByZe/nqTzAQoGZ5Pt6wBu5NmhNR7g10qokjE="
 }

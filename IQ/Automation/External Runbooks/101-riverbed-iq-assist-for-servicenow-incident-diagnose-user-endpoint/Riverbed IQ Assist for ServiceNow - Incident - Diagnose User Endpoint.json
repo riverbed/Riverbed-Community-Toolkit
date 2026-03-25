@@ -2,10 +2,10 @@
     "runbook": {
         "id": "e5f9677f-ea48-445f-81e0-38ceb5f84d1f",
         "createdTime": "1755847187.926234300",
-        "lastUpdatedTime": "1760726352.553030400",
+        "lastUpdatedTime": "1774430178.820450300",
         "factoryResourceName": null,
         "isFactory": false,
-        "name": "Riverbed IQ Assist for ServiceNow - Incident - Diagnose User Endpoint",
+        "name": "Riverbed IQ Assist for ServiceNow - Incident - Diagnose User Endpoint - 3.1",
         "description": "Triggered in the context of an Incident in ServiceNow, the runbook diagnoses the user endpoint and enriches the incident record with an Insight.",
         "isReady": true,
         "triggerType": "webhook",
@@ -81,12 +81,6 @@
                     "type": "string",
                     "defaultValue": null,
                     "name": "runtime.ServiceNow_Incident_URL",
-                    "isReadonly": false
-                },
-                {
-                    "type": "string",
-                    "defaultValue": null,
-                    "name": "runtime.Aternity_EUEM_DEVICE_NAME",
                     "isReadonly": false
                 },
                 {
@@ -190,6 +184,48 @@
                     "defaultValue": null,
                     "name": "runtime.User_Endpoint_Name",
                     "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Chart_CPU_MEM",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Chart_IO_DISK_QUEUE_LENGTH",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Chart_IO_RATE_RW",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Chart_WIFI_Signal_Strength",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Chart_WIFI_Transmission_Speed",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Chart_NPM_RTCC",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Chart_NPM_Traffic",
+                    "isReadonly": false
                 }
             ],
             "structuredVariables": []
@@ -281,7 +317,7 @@
                 "properties": {
                     "x": 466,
                     "y": 530,
-                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Riverbed IQ Assist for ServiceNow</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Runbook for Incident in ServiceNow: Diagnose the End-User endpoint</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">version: 2025-10-17-5</span></p>",
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Riverbed IQ Assist for ServiceNow</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Runbook for Incident in ServiceNow: Diagnose the End-User endpoint</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">version: 2026-03</span></p>",
                     "debug": false
                 },
                 "wires": []
@@ -391,228 +427,6 @@
                     "debug": false
                 },
                 "wires": []
-            },
-            {
-                "id": "71cb10e2-2204-4e5a-bb42-9362361fe224",
-                "isIntegrationSubflowNode": false,
-                "type": "subflow",
-                "label": "Skill: Diagnose User Endpoint",
-                "description": "Diagnose user endpoint based on health events and metrics such as CPU/memory, I/O and Wi-Fi (signal strength and transmission speed).",
-                "properties": {
-                    "x": 1781,
-                    "y": 400,
-                    "debug": false,
-                    "configurationId": "663d7c90-2b9e-4500-82eb-f4d9361140b6",
-                    "in": [
-                        {
-                            "inner": "subflow.Aternity_Connector",
-                            "outer": "00000000-0000-0000-0000-000000000000",
-                            "method": "connector",
-                            "isUnset": false
-                        },
-                        {
-                            "inner": "subflow.Device_Name",
-                            "outer": "runtime.User_Endpoint_Name",
-                            "method": "runtime",
-                            "isUnset": false
-                        }
-                    ],
-                    "out": [
-                        {
-                            "inner": "subflow.Successful",
-                            "outer": "runtime.Successful",
-                            "method": "runtime"
-                        },
-                        {
-                            "inner": "subflow.Error_Message",
-                            "outer": "runtime.Error_Message",
-                            "method": "runtime"
-                        },
-                        {
-                            "inner": "subflow.Findings_HEALTH",
-                            "outer": "runtime.Findings_HEALTH",
-                            "method": "runtime"
-                        },
-                        {
-                            "inner": "subflow.Findings_WIFI",
-                            "outer": "runtime.Findings_WIFI",
-                            "method": "runtime"
-                        },
-                        {
-                            "inner": "subflow.Findings_CPU_MEM",
-                            "outer": "runtime.Findings_CPU_MEM",
-                            "method": "runtime"
-                        },
-                        {
-                            "inner": "subflow.Findings_NPM",
-                            "outer": "runtime.Findings_NPM",
-                            "method": "runtime"
-                        },
-                        {
-                            "inner": "subflow.Findings_IO",
-                            "outer": "runtime.Findings_IO",
-                            "method": "runtime"
-                        },
-                        {
-                            "inner": "subflow.SVG_CPU_MEM",
-                            "outer": "runtime.SVG_CPU_MEM",
-                            "method": "runtime"
-                        },
-                        {
-                            "inner": "subflow.SVG_WIFI_Signal_Strength",
-                            "outer": "runtime.SVG_WIFI_Signal_Strength",
-                            "method": "runtime"
-                        },
-                        {
-                            "inner": "subflow.SVG_WIFI_Transmission_Speed",
-                            "outer": "runtime.SVG_WIFI_Transmission_Speed",
-                            "method": "runtime"
-                        },
-                        {
-                            "inner": "subflow.SVG_NPM_Traffic",
-                            "outer": "runtime.SVG_NPM_Traffic",
-                            "method": "runtime"
-                        },
-                        {
-                            "inner": "subflow.SVG_NPM_RTCC",
-                            "outer": "runtime.SVG_NPM_RTCC",
-                            "method": "runtime"
-                        },
-                        {
-                            "inner": "subflow.SVG_IO_RATE_RW",
-                            "outer": "runtime.SVG_IO_RATE_RW",
-                            "method": "runtime"
-                        },
-                        {
-                            "inner": "subflow.SVG_IO_DISK_QUEUE_LENGTH",
-                            "outer": "runtime.SVG_IO_DISK_QUEUE_LENGTH",
-                            "method": "runtime"
-                        }
-                    ]
-                },
-                "wires": [
-                    [
-                        "3e305b44-ec40-486e-8125-d3835b758f19"
-                    ]
-                ]
-            },
-            {
-                "id": "3e305b44-ec40-486e-8125-d3835b758f19",
-                "isIntegrationSubflowNode": false,
-                "type": "subflow",
-                "label": "Skill: Generate Insight",
-                "description": "Generate an HTML formatted insight with charts, that is ready to be displayed in ServiceNow or anywhere else.",
-                "properties": {
-                    "x": 2028.111737958262,
-                    "y": 403.4161911155172,
-                    "debug": false,
-                    "configurationId": "63ff53ff-b315-4915-bb88-2c7abf9ec24f",
-                    "in": [
-                        {
-                            "inner": "subflow.RiverbedIQAssist_Connector",
-                            "method": "connector"
-                        },
-                        {
-                            "inner": "subflow.Findings_HEALTH",
-                            "outer": "runtime.Findings_HEALTH",
-                            "method": "runtime",
-                            "isUnset": false
-                        },
-                        {
-                            "inner": "subflow.Findings_IO",
-                            "outer": "runtime.Findings_IO",
-                            "method": "runtime",
-                            "isUnset": false
-                        },
-                        {
-                            "inner": "subflow.Findings_WIFI",
-                            "outer": "runtime.Findings_WIFI",
-                            "method": "runtime",
-                            "isUnset": false
-                        },
-                        {
-                            "inner": "subflow.Findings_CPU_MEM",
-                            "outer": "runtime.Findings_CPU_MEM",
-                            "method": "runtime",
-                            "isUnset": false
-                        },
-                        {
-                            "inner": "subflow.Findings_NPM",
-                            "outer": "runtime.Findings_NPM",
-                            "method": "runtime",
-                            "isUnset": false
-                        },
-                        {
-                            "inner": "subflow.SVG_WIFI_Signal_Strength",
-                            "outer": "runtime.SVG_WIFI_Signal_Strength",
-                            "method": "runtime",
-                            "isUnset": false
-                        },
-                        {
-                            "inner": "subflow.SVG_CPU_MEM",
-                            "outer": "runtime.SVG_CPU_MEM",
-                            "method": "runtime",
-                            "isUnset": false
-                        },
-                        {
-                            "inner": "subflow.SVG_WIFI_Transmission_Speed",
-                            "outer": "runtime.SVG_WIFI_Transmission_Speed",
-                            "method": "runtime",
-                            "isUnset": false
-                        },
-                        {
-                            "inner": "subflow.SVG_NPM_Traffic",
-                            "outer": "runtime.SVG_NPM_Traffic",
-                            "method": "runtime",
-                            "isUnset": false
-                        },
-                        {
-                            "inner": "subflow.SVG_NPM_RTCC",
-                            "outer": "runtime.SVG_NPM_RTCC",
-                            "method": "runtime",
-                            "isUnset": false
-                        },
-                        {
-                            "inner": "subflow.SVG_IO_RATE_RW",
-                            "outer": "runtime.SVG_IO_RATE_RW",
-                            "method": "runtime",
-                            "isUnset": false
-                        },
-                        {
-                            "inner": "subflow.SVG_IO_DISK_QUEUE_LENGTH",
-                            "outer": "runtime.SVG_IO_DISK_QUEUE_LENGTH",
-                            "method": "runtime",
-                            "isUnset": false
-                        },
-                        {
-                            "inner": "subflow.Format",
-                            "outer": ""
-                        }
-                    ],
-                    "out": [
-                        {
-                            "inner": "subflow.Successful",
-                            "outer": "runtime.Successful",
-                            "method": "runtime"
-                        },
-                        {
-                            "inner": "subflow.Error_Message",
-                            "outer": "runtime.Error_Message",
-                            "method": "runtime"
-                        },
-                        {
-                            "inner": "subflow.Insight",
-                            "outer": "runtime.Insight",
-                            "method": "runtime"
-                        }
-                    ]
-                },
-                "wires": [
-                    [
-                        "adc67e85-83a9-4b87-b3a9-9675fefd59a2",
-                        "50c9dc95-de6f-40ae-b8e0-d4d1a09754f7"
-                    ]
-                ]
             },
             {
                 "id": "c8a7de19-e24c-47d1-a6f6-ce796d867f18",
@@ -743,7 +557,7 @@
                             "$node:4862cc8a-29c9-4542-9676-71542a896236.user_device"
                         ]
                     },
-                    "debug": true
+                    "debug": false
                 },
                 "wires": [
                     [
@@ -808,18 +622,287 @@
                 },
                 "wires": [
                     [
-                        "71cb10e2-2204-4e5a-bb42-9362361fe224"
+                        "27646e2e-3a89-4c68-9ba4-c5c5c4852fd6"
                     ],
                     [
                         "39b22511-8b17-4b29-8d0e-251d25683ef2",
                         "c8a7de19-e24c-47d1-a6f6-ce796d867f18"
                     ]
                 ]
+            },
+            {
+                "id": "c3fabd49-4c74-41d1-9fbc-469ad9f5eeb7",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow",
+                "label": "Skill: Generate Insight",
+                "description": "Generate an HTML formatted insight with charts.",
+                "properties": {
+                    "x": 2025,
+                    "y": 300,
+                    "debug": false,
+                    "configurationId": "e9b45beb-6ba5-47b0-9da2-f0c9eefd555e",
+                    "in": [
+                        {
+                            "inner": "subflow.Endpoint_Name",
+                            "outer": "runtime.User_Endpoint_Name",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Findings_HEALTH",
+                            "outer": "runtime.Findings_HEALTH",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Findings_CPU_MEM",
+                            "outer": "runtime.Findings_CPU_MEM",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Findings_IO",
+                            "outer": "runtime.Findings_IO",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Findings_WIFI",
+                            "outer": "runtime.Findings_WIFI",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Findings_NPM",
+                            "outer": "runtime.Findings_NPM",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Chart_CPU_MEM",
+                            "outer": "runtime.Chart_CPU_MEM",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Chart_IO_DISK_QUEUE_LENGTH",
+                            "outer": "runtime.Chart_IO_DISK_QUEUE_LENGTH",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Chart_IO_RATE_RW",
+                            "outer": "runtime.Chart_IO_RATE_RW",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Chart_WIFI_Signal_Strength",
+                            "outer": "runtime.Chart_WIFI_Signal_Strength",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Chart_WIFI_Transmission_Speed",
+                            "outer": "runtime.Chart_WIFI_Transmission_Speed",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Chart_NPM_Traffic",
+                            "outer": "runtime.Chart_NPM_Traffic",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Chart_NPM_RTCC",
+                            "outer": "runtime.Chart_NPM_RTCC",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Layout",
+                            "outer": "Full",
+                            "method": "static"
+                        },
+                        {
+                            "inner": "subflow.Show_Endpoint",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Show_Metrics",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Footer",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Widget_Width",
+                            "outer": ""
+                        }
+                    ],
+                    "out": [
+                        {
+                            "inner": "subflow.Successful",
+                            "outer": "runtime.Successful",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Error_Message",
+                            "outer": "runtime.Error_Message",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Insight",
+                            "outer": "runtime.Insight",
+                            "method": "runtime"
+                        }
+                    ]
+                },
+                "wires": [
+                    [
+                        "adc67e85-83a9-4b87-b3a9-9675fefd59a2",
+                        "50c9dc95-de6f-40ae-b8e0-d4d1a09754f7"
+                    ]
+                ]
+            },
+            {
+                "id": "27646e2e-3a89-4c68-9ba4-c5c5c4852fd6",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow",
+                "label": "Skill: Diagnose User Endpoint",
+                "description": "Diagnose user endpoint based on health events and metrics such as CPU/memory, I/O and Wi-Fi (signal strength and transmission speed).",
+                "properties": {
+                    "x": 1789,
+                    "y": 300,
+                    "debug": false,
+                    "configurationId": "036ecfa5-e3ad-4776-94d1-46a93cb2e783",
+                    "in": [
+                        {
+                            "inner": "subflow.Aternity_Connector",
+                            "outer": "00000000-0000-0000-0000-000000000000",
+                            "method": "connector",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Endpoint_Name",
+                            "outer": "runtime.User_Endpoint_Name",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Analyze_Health",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Analyze_CPU_and_Memory",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Analyze_Disk",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Analyze_WiFi",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Analyze_Network",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Chart_Format",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Generate_Charts",
+                            "outer": ""
+                        }
+                    ],
+                    "out": [
+                        {
+                            "inner": "subflow.Successful",
+                            "outer": "runtime.Successful",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Error_Message",
+                            "outer": "runtime.Error_Message",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Findings_HEALTH",
+                            "outer": "runtime.Findings_HEALTH",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Findings_CPU_MEM",
+                            "outer": "runtime.Findings_CPU_MEM",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Findings_IO",
+                            "outer": "runtime.Findings_IO",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Findings_WIFI",
+                            "outer": "runtime.Findings_WIFI",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Findings_NPM",
+                            "outer": "runtime.Findings_NPM",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Chart_CPU_MEM",
+                            "outer": "runtime.Chart_CPU_MEM",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Chart_IO_DISK_QUEUE_LENGTH",
+                            "outer": "runtime.Chart_IO_DISK_QUEUE_LENGTH",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Chart_IO_RATE_RW",
+                            "outer": "runtime.Chart_IO_RATE_RW",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Chart_WIFI_Signal_Strength",
+                            "outer": "runtime.Chart_WIFI_Signal_Strength",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Chart_WIFI_Transmission_Speed",
+                            "outer": "runtime.Chart_WIFI_Transmission_Speed",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Chart_NPM_RTCC",
+                            "outer": "runtime.Chart_NPM_RTCC",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Chart_NPM_Traffic",
+                            "outer": "runtime.Chart_NPM_Traffic",
+                            "method": "runtime"
+                        }
+                    ]
+                },
+                "wires": [
+                    [
+                        "c3fabd49-4c74-41d1-9fbc-469ad9f5eeb7"
+                    ]
+                ]
             }
         ],
         "lastUpdatedUser": "Runbook Export",
         "createdByUser": "Runbook Export",
-        "eTag": "W/\"datetime'2025-10-17T18%3A39%3A12.5649761Z'\"",
+        "eTag": "\"f6ac0c9b-6742-4c9b-8b81-b1aba0603171\"",
         "variant": "incident",
         "seriesId": "e5f9677f-ea48-445f-81e0-38ceb5f84d1f",
         "version": "1.0",
@@ -840,26 +923,6 @@
             "sourcePackageId": "ServiceNow"
         },
         {
-            "id": "663d7c90-2b9e-4500-82eb-f4d9361140b6",
-            "type": "subflow",
-            "name": "Skill: Diagnose User Endpoint",
-            "globalId": "Aternity::Diagnose_User_Endpoint",
-            "originalVersion": "1.0.1",
-            "nodeLabel": "Skill: Diagnose User Endpoint",
-            "sourceLocation": "integrationLibrary",
-            "sourcePackageId": "Aternity"
-        },
-        {
-            "id": "63ff53ff-b315-4915-bb88-2c7abf9ec24f",
-            "type": "subflow",
-            "name": "Skill: Generate Insight",
-            "globalId": "RiverbedIQAssist::Generate_Insight",
-            "originalVersion": "1.0.2",
-            "nodeLabel": "Skill: Generate Insight",
-            "sourceLocation": "integrationLibrary",
-            "sourcePackageId": "RiverbedIQAssist"
-        },
-        {
             "id": "f4c88032-d05f-4d27-ad96-a1f844c66ba5",
             "type": "subflow",
             "name": "ServiceNow: Post Comment",
@@ -878,7 +941,27 @@
             "nodeLabel": "Fetch User Endpoint (Aternity EUEM)",
             "sourceLocation": "integrationLibrary",
             "sourcePackageId": "Aternity"
+        },
+        {
+            "id": "e9b45beb-6ba5-47b0-9da2-f0c9eefd555e",
+            "type": "subflow",
+            "name": "Skill: Generate Insight",
+            "globalId": "RiverbedIQAssist::Generate_Insight",
+            "originalVersion": "4.0.1",
+            "nodeLabel": "Skill: Generate Insight",
+            "sourceLocation": "integrationLibrary",
+            "sourcePackageId": "RiverbedIQAssist"
+        },
+        {
+            "id": "036ecfa5-e3ad-4776-94d1-46a93cb2e783",
+            "type": "subflow",
+            "name": "Skill: Diagnose User Endpoint",
+            "globalId": "Aternity::Diagnose_User_Endpoint",
+            "originalVersion": "4.0.2",
+            "nodeLabel": "Skill: Diagnose User Endpoint",
+            "sourceLocation": "integrationLibrary",
+            "sourcePackageId": "Aternity"
         }
     ],
-    "token": "3rFeGdmsRjCGbBH4gUAg7lL/zaC81L1wtkPpVcXVHwQ="
+    "token": "6AjD5kBkmmO2jozz5krJQVUuQurzaMZeEcm59vNmGuA="
 }
