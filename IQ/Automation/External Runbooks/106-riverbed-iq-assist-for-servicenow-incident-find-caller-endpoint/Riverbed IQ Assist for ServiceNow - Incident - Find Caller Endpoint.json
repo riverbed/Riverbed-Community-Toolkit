@@ -2,10 +2,10 @@
     "runbook": {
         "id": "a0063bb8-2a49-472f-8412-0b23a0e8585e",
         "createdTime": "1760964742.895353200",
-        "lastUpdatedTime": "1761549354.554637900",
+        "lastUpdatedTime": "1775057710.895670400",
         "factoryResourceName": null,
         "isFactory": false,
-        "name": "Riverbed IQ Assist for ServiceNow - Incident - Find Caller Endpoint",
+        "name": "Riverbed IQ Assist for ServiceNow - Incident - Find Caller Endpoint - 4.1",
         "description": "Triggered in the context of an Incident in ServiceNow, the runbook find the user endpoint of the caller",
         "isReady": true,
         "triggerType": "webhook",
@@ -232,6 +232,30 @@
                     "defaultValue": null,
                     "name": "runtime.Suggested_User_Device",
                     "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Caller_ID_Reference",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.CMDB_CI_Reference",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Problem_ID_Reference",
+                    "isReadonly": false
+                },
+                {
+                    "type": "json",
+                    "defaultValue": null,
+                    "name": "runtime.Raw_API_Response",
+                    "isReadonly": false
                 }
             ],
             "structuredVariables": []
@@ -302,11 +326,11 @@
                         }
                     ],
                     "transformTemplate": "{\n    \"runtime.ServiceNow_API_Base_URL\" : \"https://{{variables[\"runtime.ServiceNow_ENV\"]}}.service-now.com\",\n    \"runtime.ServiceNow_Incident_Sys_Id\": \"{{trigger[\"requestBody\"][\"recordID\"]}}\",\n    \"runtime.ServiceNow_User_Data\": \"{{trigger[\"requestBody\"][\"user\"]}}\",\n    \"runtime.ServiceNow_Configuration_Item\": \"{{trigger[\"requestBody\"][\"ciName\"]}}\",\n    \"runtime.ServiceNow_Configuration_Item_Sys_Id\": \"{{trigger[\"requestBody\"][\"ciID\"]}}\",\n    \"runtime.ServiceNow_Incident_Number\": \"{{trigger[\"requestBody\"][\"recordNumber\"]}}\"\n}\n",
-                    "debug": true
+                    "debug": false
                 },
                 "wires": [
                     [
-                        "e675618f-7f67-463e-a402-5816c7e8f95a"
+                        "304009cc-1f28-447a-9a5d-e05df17d60c2"
                     ]
                 ]
             },
@@ -319,7 +343,7 @@
                 "properties": {
                     "x": 226,
                     "y": 530,
-                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Riverbed IQ Assist for ServiceNow</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Runbook for Incident in ServiceNow: Find Caller Endpoint</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">version: 2025-10-27-1</span></p>",
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Riverbed IQ Assist for ServiceNow</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Runbook for Incident in ServiceNow: Find Caller Endpoint</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">version: 2026-0</span><span style=\"white-space: pre-wrap;\">4</span></p>",
                     "debug": false
                 },
                 "wires": []
@@ -491,152 +515,6 @@
                 "wires": []
             },
             {
-                "id": "e255cff3-5f49-4a5a-b9ce-089edea857ae",
-                "isIntegrationSubflowNode": false,
-                "type": "subflow",
-                "label": "Skill: Find User Endpoint",
-                "description": "Returns device name that has been recently used by an end user based on the username, display name or email address.",
-                "properties": {
-                    "x": 845,
-                    "y": 400,
-                    "debug": false,
-                    "configurationId": "14fd3e48-3549-480f-8439-2e10b18165d6",
-                    "in": [
-                        {
-                            "inner": "subflow.Aternity_Connector",
-                            "outer": "00000000-0000-0000-0000-000000000000",
-                            "method": "connector",
-                            "isUnset": false
-                        },
-                        {
-                            "inner": "subflow.Input_EmailAddress",
-                            "outer": "runtime.Caller_Email",
-                            "method": "runtime",
-                            "isUnset": false
-                        },
-                        {
-                            "inner": "subflow.Input_Username",
-                            "outer": "runtime.Caller_Username",
-                            "method": "runtime",
-                            "isUnset": false
-                        },
-                        {
-                            "inner": "subflow.Input_DisplayName",
-                            "outer": "runtime.Caller_Display_Name",
-                            "method": "runtime",
-                            "isUnset": false
-                        }
-                    ],
-                    "out": [
-                        {
-                            "inner": "subflow.Successful",
-                            "outer": "runtime.Successful",
-                            "method": "runtime"
-                        },
-                        {
-                            "inner": "subflow.Error_Message",
-                            "outer": "runtime.Error_Message",
-                            "method": "runtime"
-                        },
-                        {
-                            "inner": "subflow.Suggested_User_Device",
-                            "outer": "runtime.User_Endpoint_Name",
-                            "method": "runtime"
-                        }
-                    ]
-                },
-                "wires": [
-                    [
-                        "7678314c-3e9f-460f-b6a9-a7db4ca45834",
-                        "a5c02f53-9cc2-4ee2-8eac-55ee656fcbd2"
-                    ]
-                ]
-            },
-            {
-                "id": "e675618f-7f67-463e-a402-5816c7e8f95a",
-                "isIntegrationSubflowNode": false,
-                "type": "subflow",
-                "label": "ServiceNow: Get Incident Details",
-                "description": "Returns details of a ServiceNow incident given a sys ID or an incident number.",
-                "properties": {
-                    "x": 640,
-                    "y": 400,
-                    "debug": false,
-                    "configurationId": "c72fa9e8-fc68-40ab-a20e-62a930940a61",
-                    "in": [
-                        {
-                            "inner": "subflow.ServiceNow_Connector",
-                            "outer": "00000000-0000-0000-0000-000000000000",
-                            "method": "connector",
-                            "isUnset": false
-                        },
-                        {
-                            "inner": "subflow.Incident_Identifier_Type",
-                            "outer": "sys_id",
-                            "method": "static",
-                            "isUnset": false
-                        },
-                        {
-                            "inner": "subflow.Incident_Identifier",
-                            "outer": "runtime.ServiceNow_Incident_Sys_Id",
-                            "method": "runtime",
-                            "isUnset": false
-                        },
-                        {
-                            "inner": "subflow.Custom_Fields",
-                            "outer": ""
-                        }
-                    ],
-                    "out": [
-                        {
-                            "inner": "subflow.Successful",
-                            "outer": "runtime.Successful",
-                            "method": "runtime"
-                        },
-                        {
-                            "inner": "subflow.Error_Message",
-                            "outer": "runtime.Error_Message",
-                            "method": "runtime"
-                        },
-                        {
-                            "inner": "subflow.CMDB_CI",
-                            "outer": "runtime.CMDB_CI",
-                            "method": "runtime"
-                        },
-                        {
-                            "inner": "subflow.Problem_ID",
-                            "outer": "runtime.Problem_ID",
-                            "method": "runtime"
-                        },
-                        {
-                            "inner": "subflow.Caller_ID",
-                            "outer": "runtime.Caller_ID",
-                            "method": "runtime"
-                        },
-                        {
-                            "inner": "subflow.Caller_Username",
-                            "outer": "runtime.Caller_Username",
-                            "method": "runtime"
-                        },
-                        {
-                            "inner": "subflow.Caller_Display_Name",
-                            "outer": "runtime.Caller_Display_Name",
-                            "method": "runtime"
-                        },
-                        {
-                            "inner": "subflow.Caller_Email",
-                            "outer": "runtime.Caller_Email",
-                            "method": "runtime"
-                        }
-                    ]
-                },
-                "wires": [
-                    [
-                        "e255cff3-5f49-4a5a-b9ce-089edea857ae"
-                    ]
-                ]
-            },
-            {
                 "id": "7678314c-3e9f-460f-b6a9-a7db4ca45834",
                 "isIntegrationSubflowNode": false,
                 "type": "decision",
@@ -699,11 +577,250 @@
                         "7f813c4a-61c6-42cd-a0c1-64ff58292086"
                     ]
                 ]
+            },
+            {
+                "id": "5b0806ed-3043-415b-9e6b-b971adbd21d4",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow",
+                "label": "Skill: Find Recent User Endpoints",
+                "description": "Returns user endpoints that have been recently used by an end user based on the username, display name or email address.",
+                "properties": {
+                    "x": 847,
+                    "y": 400,
+                    "debug": false,
+                    "configurationId": "85268ead-6585-4928-9db2-46ab1b859abf",
+                    "in": [
+                        {
+                            "inner": "subflow.Aternity_Connector",
+                            "outer": "00000000-0000-0000-0000-000000000000",
+                            "method": "connector",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Input_EmailAddress",
+                            "outer": "runtime.Caller_Email",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Input_Username",
+                            "outer": "runtime.Caller_Username",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Input_DisplayName",
+                            "outer": "runtime.Caller_Display_Name",
+                            "method": "runtime",
+                            "isUnset": false
+                        }
+                    ],
+                    "out": [
+                        {
+                            "inner": "subflow.Successful",
+                            "outer": "runtime.Successful",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Error_Message",
+                            "outer": "runtime.Error_Message",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Suggested_User_Device",
+                            "outer": "runtime.User_Endpoint_Name",
+                            "method": "runtime"
+                        }
+                    ]
+                },
+                "wires": [
+                    [
+                        "a5c02f53-9cc2-4ee2-8eac-55ee656fcbd2",
+                        "7678314c-3e9f-460f-b6a9-a7db4ca45834"
+                    ]
+                ]
+            },
+            {
+                "id": "304009cc-1f28-447a-9a5d-e05df17d60c2",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow",
+                "label": "ServiceNow: Get Incident Details",
+                "description": "Returns details for a ServiceNow incident identified by either a sys_id or an incident number using the ServiceNow Table API.",
+                "properties": {
+                    "x": 634,
+                    "y": 400,
+                    "debug": false,
+                    "configurationId": "66426b74-ba28-4ba5-98a9-3bd09b8aa223",
+                    "in": [
+                        {
+                            "inner": "subflow.ServiceNow_Connector",
+                            "outer": "00000000-0000-0000-0000-000000000000",
+                            "method": "connector",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Incident_Identifier_Type",
+                            "outer": "sys_id",
+                            "method": "static",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Incident_Identifier",
+                            "outer": "runtime.ServiceNow_Incident_Sys_Id",
+                            "method": "runtime",
+                            "isUnset": false
+                        }
+                    ],
+                    "out": [
+                        {
+                            "inner": "subflow.Successful",
+                            "outer": "runtime.Successful",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Error_Message",
+                            "outer": "runtime.Error_Message",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Caller_ID_Reference",
+                            "outer": "runtime.Caller_ID_Reference",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.CMDB_CI_Reference",
+                            "outer": "runtime.CMDB_CI_Reference",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Problem_ID_Reference",
+                            "outer": "runtime.Problem_ID_Reference",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Raw_API_Response",
+                            "outer": "runtime.Raw_API_Response",
+                            "method": "runtime"
+                        }
+                    ]
+                },
+                "wires": [
+                    [
+                        "4fffe513-2d24-425e-a550-b836b26a1419"
+                    ]
+                ]
+            },
+            {
+                "id": "0db36a08-6a26-41d3-af72-d342189f433e",
+                "isIntegrationSubflowNode": false,
+                "type": "set_primitive_variables",
+                "label": "Extract Caller Information for ServiceNow User record",
+                "description": "",
+                "properties": {
+                    "x": 833,
+                    "y": 180,
+                    "variables": [
+                        {
+                            "name": "runtime.Caller_Display_Name"
+                        },
+                        {
+                            "name": "runtime.Caller_Email"
+                        },
+                        {
+                            "name": "runtime.Caller_Username"
+                        }
+                    ],
+                    "transformTemplate": "\n{\n    \"runtime.Caller_Display_Name\": \"{{node_input.output[\"data\"][0].keys[\"Name\"]}}\",\n    \"runtime.Caller_Email\": \"{{node_input.output[\"data\"][0].keys[\"Email\"]}}\",\n    \"runtime.Caller_Username\": \"{{node_input.output[\"data\"][0].keys[\"User_Name\"]}}\"\n}",
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "5b0806ed-3043-415b-9e6b-b971adbd21d4"
+                    ]
+                ]
+            },
+            {
+                "id": "f4c4c87a-ef56-4bd1-934e-036415a63afe",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow",
+                "label": "ServiceNow: Get User Details",
+                "description": "Returns user details from ServiceNow using the Table API for a user identified by sys_id, email, user_name, or employee_number.",
+                "properties": {
+                    "x": 598,
+                    "y": 200,
+                    "debug": false,
+                    "configurationId": "66e19adb-4904-4ebf-b7de-4dc82d77c9f3",
+                    "in": [
+                        {
+                            "inner": "subflow.ServiceNow_Connector",
+                            "outer": "00000000-0000-0000-0000-000000000000",
+                            "method": "connector",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.User_Identifier_Type",
+                            "outer": "sys_id",
+                            "method": "static",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.User_Identifier",
+                            "outer": "runtime.Caller_ID",
+                            "method": "runtime",
+                            "isUnset": false
+                        }
+                    ],
+                    "out": [
+                        {
+                            "inner": "subflow.Successful",
+                            "outer": "runtime.Successful",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Error_Message",
+                            "outer": "runtime.Error_Message",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Raw_API_Response",
+                            "outer": "runtime.Raw_API_Response",
+                            "method": "runtime"
+                        }
+                    ]
+                },
+                "wires": [
+                    [
+                        "0db36a08-6a26-41d3-af72-d342189f433e"
+                    ]
+                ]
+            },
+            {
+                "id": "4fffe513-2d24-425e-a550-b836b26a1419",
+                "isIntegrationSubflowNode": false,
+                "type": "set_primitive_variables",
+                "label": "Extract Caller ID from ServiceNow Record",
+                "description": "",
+                "properties": {
+                    "x": 364,
+                    "y": 180,
+                    "variables": [
+                        {
+                            "name": "runtime.Caller_ID"
+                        }
+                    ],
+                    "transformTemplate": "{\n\"runtime.Caller_ID\": \"{{ variables[\"runtime.Raw_API_Response\"][\"result\"][0][\"caller_id\"][\"value\"] }}\"\n}",
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "f4c4c87a-ef56-4bd1-934e-036415a63afe"
+                    ]
+                ]
             }
         ],
         "lastUpdatedUser": "Runbook Export",
         "createdByUser": "Runbook Export",
-        "eTag": "W/\"datetime'2025-10-27T07%3A15%3A54.5620525Z'\"",
+        "eTag": "\"30b5086f-0006-4ac8-9a93-32ed7fee35d9\"",
         "variant": "incident",
         "seriesId": "a0063bb8-2a49-472f-8412-0b23a0e8585e",
         "version": "1.0",
@@ -734,25 +851,35 @@
             "sourcePackageId": "ServiceNow"
         },
         {
-            "id": "14fd3e48-3549-480f-8439-2e10b18165d6",
+            "id": "85268ead-6585-4928-9db2-46ab1b859abf",
             "type": "subflow",
-            "name": "Skill: Find User Endpoint",
-            "globalId": "Aternity::Get_User_Devices",
-            "originalVersion": "1.0.2",
-            "nodeLabel": "Skill: Find User Endpoint",
+            "name": "Skill: Find Recent User Endpoints",
+            "globalId": "Aternity::Find_Recent_User_Endpoints",
+            "originalVersion": "1.0.0",
+            "nodeLabel": "Skill: Find Recent User Endpoints",
             "sourceLocation": "integrationLibrary",
             "sourcePackageId": "Aternity"
         },
         {
-            "id": "c72fa9e8-fc68-40ab-a20e-62a930940a61",
+            "id": "66426b74-ba28-4ba5-98a9-3bd09b8aa223",
             "type": "subflow",
             "name": "ServiceNow: Get Incident Details",
             "globalId": "ServiceNow::Get_Incident_Details",
-            "originalVersion": "3.0.0",
+            "originalVersion": "4.0.0",
             "nodeLabel": "ServiceNow: Get Incident Details",
+            "sourceLocation": "integrationLibrary",
+            "sourcePackageId": "ServiceNow"
+        },
+        {
+            "id": "66e19adb-4904-4ebf-b7de-4dc82d77c9f3",
+            "type": "subflow",
+            "name": "ServiceNow: Get User Details",
+            "globalId": "ServiceNow::Get_User",
+            "originalVersion": "2.0.0",
+            "nodeLabel": "ServiceNow: Get User Details",
             "sourceLocation": "integrationLibrary",
             "sourcePackageId": "ServiceNow"
         }
     ],
-    "token": "B7hJ0KlDOORXkOVXbn4bBTmVm6eeUs2+qryE2PAuyx8="
+    "token": "8h8I7ZrGU+3NmMHv2FuT3Xby7L/+orCU+HQbLGop9k0="
 }
