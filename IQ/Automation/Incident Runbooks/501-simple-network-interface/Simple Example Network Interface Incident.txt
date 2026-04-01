@@ -1,7 +1,7 @@
 {
     "id": "6190ae81-f8cc-4796-b9ce-bfef26aaf693",
-    "name": "EXAMPLE - Interface Incident Runbook - 1",
-    "description": "",
+    "name": "Simple Example Network Interface Incident",
+    "description": "Runbook for network-interface incidents. Triggered by a network_interface event, it queries interface status or traffic data (depending on the primary indicator) and renders UI visualizations—no remediation steps.",
     "variant": "incident",
     "triggerType": "network_interface",
     "nodes": [

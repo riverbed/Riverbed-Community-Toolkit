@@ -1,7 +1,7 @@
 {
     "id": "1d170dda-391e-4fb1-9430-e4e7edf16680",
-    "name": "Webhook Runbook - Simple Example",
-    "description": "DEMO - DO NOT MODIFY",
+    "name": "Simple Example Aternity ISD",
+    "description": "External runbook that ingests SDA alerts via HTTP, maps requestBody fields into runtime variables, picks a remediation action based on alert_name (e.g., \"Low Disk Space\" → \"Empty Recycle Bin1\"), and shows summary/detail tables in the IQ UI. Marked demo (DO NOT MODIFY); templates contain a few typos (e.g., \"alersubnett_id\") that can break some mappings.",
     "variant": "incident",
     "triggerType": "webhook",
     "nodes": [
