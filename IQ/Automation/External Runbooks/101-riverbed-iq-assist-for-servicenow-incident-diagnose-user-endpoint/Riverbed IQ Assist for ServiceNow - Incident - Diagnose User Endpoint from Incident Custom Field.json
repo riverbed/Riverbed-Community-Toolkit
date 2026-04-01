@@ -1,11 +1,11 @@
 {
     "runbook": {
-        "id": "80b501f3-c3d5-4ac9-809d-c5402df634a0",
-        "createdTime": "1774005275.696159400",
-        "lastUpdatedTime": "1774266582.430124100",
+        "id": "6a16423f-72ea-4a14-835f-bec9866641b1",
+        "createdTime": "1775028893.058087600",
+        "lastUpdatedTime": "1775055282.225586700",
         "factoryResourceName": null,
         "isFactory": false,
-        "name": "Riverbed IQ Assist for ServiceNow - Incident - Diagnose User Endpoint from Incident Custom Field - 3.4",
+        "name": "Riverbed IQ Assist for ServiceNow - Incident - Diagnose User Endpoint from Incident Custom Field - 4.0",
         "description": "Triggered from an Incident in ServiceNow, the runbook diagnoses the user endpoint and enriches the incident record with an Insight.\nThe name of the user endpoint is fetched from a Custom Field of the incident record in ServiceNow.\n\nUpdate: 2026-03",
         "isReady": true,
         "triggerType": "webhook",
@@ -223,12 +223,6 @@
                 },
                 {
                     "type": "string",
-                    "defaultValue": "x_atern_incident_user_device",
-                    "name": "runtime.ServiceNow_Incident_Custom_Fields",
-                    "isReadonly": false
-                },
-                {
-                    "type": "string",
                     "defaultValue": "",
                     "name": "runtime.CMDB_CI",
                     "isReadonly": false
@@ -280,6 +274,30 @@
                     "defaultValue": null,
                     "name": "runtime.Chart_NPM_Traffic",
                     "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Caller_ID_Reference",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.CMDB_CI_Reference",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Problem_ID_Reference",
+                    "isReadonly": false
+                },
+                {
+                    "type": "json",
+                    "defaultValue": null,
+                    "name": "runtime.Raw_API_Response",
+                    "isReadonly": false
                 }
             ],
             "structuredVariables": []
@@ -327,7 +345,7 @@
                 "label": "ServiceNow: Post Comment",
                 "description": "Add a comment or work notes to a ServiceNow incident or problem.\nIf it fails to be added, an error message will be returned.",
                 "properties": {
-                    "x": 2307,
+                    "x": 2611.8063273885386,
                     "y": 235,
                     "debug": false,
                     "configurationId": "f4c88032-d05f-4d27-ad96-a1f844c66ba5",
@@ -391,7 +409,7 @@
                 "label": "Post to ServiceNow?",
                 "description": "",
                 "properties": {
-                    "x": 2057,
+                    "x": 2361.8063273885386,
                     "y": 235,
                     "dataType": "SUMMARY",
                     "outputs": [
@@ -431,7 +449,7 @@
                 "label": "Display: Insight",
                 "description": "",
                 "properties": {
-                    "x": 2057,
+                    "x": 2361.8063273885386,
                     "y": 335,
                     "title": "Insight",
                     "row": "10",
@@ -461,7 +479,7 @@
                 "label": "Skill: Diagnose User Endpoint",
                 "description": "",
                 "properties": {
-                    "x": 1557,
+                    "x": 1861.8063273885384,
                     "y": 285,
                     "debug": false,
                     "configurationId": "036ecfa5-e3ad-4776-94d1-46a93cb2e783",
@@ -598,7 +616,7 @@
                 "label": "Skill: Generate Insight",
                 "description": "",
                 "properties": {
-                    "x": 1807,
+                    "x": 2111.806327388538,
                     "y": 285,
                     "debug": false,
                     "configurationId": "e9b45beb-6ba5-47b0-9da2-f0c9eefd555e",
@@ -769,92 +787,8 @@
                 },
                 "wires": [
                     [
-                        "ae0b7763-ceac-46d7-9bcd-f1b184a4c7de",
-                        "b755d3f2-5c1d-4e98-a9d9-bb3d0c651bee"
-                    ]
-                ]
-            },
-            {
-                "id": "ae0b7763-ceac-46d7-9bcd-f1b184a4c7de",
-                "isIntegrationSubflowNode": false,
-                "type": "subflow",
-                "label": "ServiceNow: Get Incident Details",
-                "description": "",
-                "properties": {
-                    "x": 861,
-                    "y": 285,
-                    "debug": false,
-                    "configurationId": "c72fa9e8-fc68-40ab-a20e-62a930940a61",
-                    "in": [
-                        {
-                            "inner": "subflow.ServiceNow_Connector",
-                            "outer": "00000000-0000-0000-0000-000000000000",
-                            "method": "connector"
-                        },
-                        {
-                            "inner": "subflow.Incident_Identifier_Type",
-                            "outer": "sys_id",
-                            "method": "static",
-                            "isUnset": false
-                        },
-                        {
-                            "inner": "subflow.Incident_Identifier",
-                            "outer": "runtime.ServiceNow_Incident_Sys_Id",
-                            "method": "runtime",
-                            "isUnset": false
-                        },
-                        {
-                            "inner": "subflow.Custom_Fields",
-                            "outer": "runtime.ServiceNow_Incident_Custom_Fields",
-                            "method": "runtime"
-                        }
-                    ],
-                    "out": [
-                        {
-                            "inner": "subflow.Successful",
-                            "outer": "runtime.Successful",
-                            "method": "runtime"
-                        },
-                        {
-                            "inner": "subflow.Error_Message",
-                            "outer": "runtime.Error_Message",
-                            "method": "runtime"
-                        },
-                        {
-                            "inner": "subflow.CMDB_CI",
-                            "outer": "runtime.CMDB_CI",
-                            "method": "runtime"
-                        },
-                        {
-                            "inner": "subflow.Problem_ID",
-                            "outer": "runtime.Problem_ID",
-                            "method": "runtime"
-                        },
-                        {
-                            "inner": "subflow.Caller_ID",
-                            "outer": "runtime.Caller_ID",
-                            "method": "runtime"
-                        },
-                        {
-                            "inner": "subflow.Caller_Username",
-                            "outer": "runtime.Caller_Username",
-                            "method": "runtime"
-                        },
-                        {
-                            "inner": "subflow.Caller_Display_Name",
-                            "outer": "runtime.Caller_Display_Name",
-                            "method": "runtime"
-                        },
-                        {
-                            "inner": "subflow.Caller_Email",
-                            "outer": "runtime.Caller_Email",
-                            "method": "runtime"
-                        }
-                    ]
-                },
-                "wires": [
-                    [
-                        "dd5b6942-0f91-4720-9064-c56a7ec125c0"
+                        "b755d3f2-5c1d-4e98-a9d9-bb3d0c651bee",
+                        "347d2354-191d-4afe-804f-85e05e62529a"
                     ]
                 ]
             },
@@ -865,20 +799,19 @@
                 "label": "Extract User Endpoint Name from Custom Field in ServiceNow",
                 "description": "",
                 "properties": {
-                    "x": 1317,
-                    "y": 225,
+                    "x": 1083.8063273885384,
+                    "y": 265,
                     "variables": [
                         {
                             "name": "runtime.User_Endpoint_Name"
                         }
                     ],
-                    "transformTemplate": "{\n\"runtime.User_Endpoint_Name\": \"{{node_input.output[\"data\"][0].keys[\"Custom1\"]}}\"\n}",
+                    "transformTemplate": "{\n\"runtime.User_Endpoint_Name\": \"{{ variables[\"runtime.Raw_API_Response\"][\"result\"][0][\"x_atern_incident_user_device\"][\"value\"] }}\"\n}",
                     "debug": false
                 },
                 "wires": [
                     [
-                        "5d9d59fb-08da-483d-92be-7eb654406800",
-                        "c9a5a16c-e55f-4911-8d1a-6f6e75b2d02a"
+                        "dd5b6942-0f91-4720-9064-c56a7ec125c0"
                     ]
                 ]
             },
@@ -903,7 +836,7 @@
                 "label": "Found?",
                 "description": "",
                 "properties": {
-                    "x": 1082,
+                    "x": 1335,
                     "y": 290,
                     "dataType": "SUMMARY",
                     "outputs": [
@@ -911,15 +844,15 @@
                             "id": "o06715",
                             "passedData": "MATCHED",
                             "expression": {
-                                "id": "o1251",
+                                "id": "o4389",
                                 "type": "block",
                                 "operation": "AND",
                                 "conditions": [
                                     {
                                         "type": "condition",
-                                        "id": "c-1774002361081",
-                                        "category": "input.key",
-                                        "key": "$DATA.KEYS.Custom1",
+                                        "id": "c-1775054740364",
+                                        "category": "variable",
+                                        "key": "$VARIABLE.runtime.User_Endpoint_Name",
                                         "op": "REGEX",
                                         "value": ".+"
                                     }
@@ -935,7 +868,8 @@
                 },
                 "wires": [
                     [
-                        "95372126-72e2-46bd-875a-4d089347d9a2"
+                        "5d9d59fb-08da-483d-92be-7eb654406800",
+                        "c9a5a16c-e55f-4911-8d1a-6f6e75b2d02a"
                     ],
                     [
                         "fb79fa0e-f049-401b-81b8-f83ab3156aed",
@@ -950,7 +884,7 @@
                 "label": "Display User Endpoint",
                 "description": "",
                 "properties": {
-                    "x": 1559,
+                    "x": 1863.8063273885384,
                     "y": 110,
                     "template": "<p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">User Endpoint: </span><b style=\"white-space: pre-wrap;\"><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">{{variables[\"runtime.User_Endpoint_Name\"]}} </strong></b><span style=\"white-space: pre-wrap;\">(Custom Field in incident record in ServiceNow)</span></p>",
                     "debug": false
@@ -964,7 +898,7 @@
                 "label": "Display Not Found",
                 "description": "",
                 "properties": {
-                    "x": 1333,
+                    "x": 1637.8063273885384,
                     "y": 410,
                     "template": "<p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">User Endpoint: </span><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">NOT FOUND. </strong></b><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Check the Custom Field in the incident record in ServiceNow</strong></b></p>",
                     "debug": false
@@ -978,7 +912,7 @@
                 "label": "ServiceNow: Post Comment Not Found",
                 "description": "Add a comment or work notes to a ServiceNow incident or problem.\nIf it fails to be added, an error message will be returned.",
                 "properties": {
-                    "x": 1329,
+                    "x": 1633.8063273885384,
                     "y": 495,
                     "debug": false,
                     "configurationId": "f4c88032-d05f-4d27-ad96-a1f844c66ba5",
@@ -1033,13 +967,83 @@
                     ]
                 },
                 "wires": []
+            },
+            {
+                "id": "347d2354-191d-4afe-804f-85e05e62529a",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow",
+                "label": "ServiceNow: Get Incident Details",
+                "description": "Returns details for a ServiceNow incident identified by either a sys_id or an incident number using the ServiceNow Table API.",
+                "properties": {
+                    "x": 874,
+                    "y": 280,
+                    "debug": false,
+                    "configurationId": "66426b74-ba28-4ba5-98a9-3bd09b8aa223",
+                    "in": [
+                        {
+                            "inner": "subflow.ServiceNow_Connector",
+                            "outer": "00000000-0000-0000-0000-000000000000",
+                            "method": "connector",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Incident_Identifier_Type",
+                            "outer": "sys_id",
+                            "method": "static",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Incident_Identifier",
+                            "outer": "runtime.ServiceNow_Incident_Sys_Id",
+                            "method": "runtime",
+                            "isUnset": false
+                        }
+                    ],
+                    "out": [
+                        {
+                            "inner": "subflow.Successful",
+                            "outer": "runtime.Successful",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Error_Message",
+                            "outer": "runtime.Error_Message",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Caller_ID_Reference",
+                            "outer": "runtime.Caller_ID_Reference",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.CMDB_CI_Reference",
+                            "outer": "runtime.CMDB_CI_Reference",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Problem_ID_Reference",
+                            "outer": "runtime.Problem_ID_Reference",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Raw_API_Response",
+                            "outer": "runtime.Raw_API_Response",
+                            "method": "runtime"
+                        }
+                    ]
+                },
+                "wires": [
+                    [
+                        "95372126-72e2-46bd-875a-4d089347d9a2"
+                    ]
+                ]
             }
         ],
         "lastUpdatedUser": "Runbook Export",
         "createdByUser": "Runbook Export",
-        "eTag": "\"f6b68f19-1055-4579-9c05-750e87f3f25d\"",
+        "eTag": "\"e49163c8-02b8-4341-b246-1e7599a5bd39\"",
         "variant": "incident",
-        "seriesId": "80b501f3-c3d5-4ac9-809d-c5402df634a0",
+        "seriesId": "6a16423f-72ea-4a14-835f-bec9866641b1",
         "version": "1.0",
         "otherVersions": null,
         "isScheduled": false,
@@ -1078,16 +1082,6 @@
             "sourcePackageId": "RiverbedIQAssist"
         },
         {
-            "id": "c72fa9e8-fc68-40ab-a20e-62a930940a61",
-            "type": "subflow",
-            "name": "ServiceNow: Get Incident Details",
-            "globalId": "ServiceNow::Get_Incident_Details",
-            "originalVersion": "3.0.1",
-            "nodeLabel": "ServiceNow: Get Incident Details",
-            "sourceLocation": "integrationLibrary",
-            "sourcePackageId": "ServiceNow"
-        },
-        {
             "id": "f4c88032-d05f-4d27-ad96-a1f844c66ba5",
             "type": "subflow",
             "name": "ServiceNow: Post Comment",
@@ -1096,7 +1090,17 @@
             "nodeLabel": "ServiceNow: Post Comment Not Found",
             "sourceLocation": "integrationLibrary",
             "sourcePackageId": "ServiceNow"
+        },
+        {
+            "id": "66426b74-ba28-4ba5-98a9-3bd09b8aa223",
+            "type": "subflow",
+            "name": "ServiceNow: Get Incident Details",
+            "globalId": "ServiceNow::Get_Incident_Details",
+            "originalVersion": "4.0.0",
+            "nodeLabel": "ServiceNow: Get Incident Details",
+            "sourceLocation": "integrationLibrary",
+            "sourcePackageId": "ServiceNow"
         }
     ],
-    "token": "2emAo1O8qL4x2z3PzoBUZUwWT9/LKJfmLa/ndMTz6KY="
+    "token": "14UNf5FSI0iivlOl9HpaS3+iiSyCIu9eIIObJYqEPEI="
 }
