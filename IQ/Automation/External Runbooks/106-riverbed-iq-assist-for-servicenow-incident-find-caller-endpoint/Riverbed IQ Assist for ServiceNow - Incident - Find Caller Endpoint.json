@@ -2,10 +2,10 @@
     "runbook": {
         "id": "a0063bb8-2a49-472f-8412-0b23a0e8585e",
         "createdTime": "1760964742.895353200",
-        "lastUpdatedTime": "1775057710.895670400",
+        "lastUpdatedTime": "1775113413.371289700",
         "factoryResourceName": null,
         "isFactory": false,
-        "name": "Riverbed IQ Assist for ServiceNow - Incident - Find Caller Endpoint - 4.1",
+        "name": "Riverbed IQ Assist for ServiceNow - Incident - Find Caller Endpoint - 4.2",
         "description": "Triggered in the context of an Incident in ServiceNow, the runbook find the user endpoint of the caller",
         "isReady": true,
         "triggerType": "webhook",
@@ -714,7 +714,7 @@
                 "id": "0db36a08-6a26-41d3-af72-d342189f433e",
                 "isIntegrationSubflowNode": false,
                 "type": "set_primitive_variables",
-                "label": "Extract Caller Information for ServiceNow User record",
+                "label": "Extract Caller Information from ServiceNow User record",
                 "description": "",
                 "properties": {
                     "x": 833,
@@ -820,7 +820,7 @@
         ],
         "lastUpdatedUser": "Runbook Export",
         "createdByUser": "Runbook Export",
-        "eTag": "\"30b5086f-0006-4ac8-9a93-32ed7fee35d9\"",
+        "eTag": "\"6cd644d0-6223-4063-9669-96c0d46b416e\"",
         "variant": "incident",
         "seriesId": "a0063bb8-2a49-472f-8412-0b23a0e8585e",
         "version": "1.0",
@@ -881,5 +881,5 @@
             "sourcePackageId": "ServiceNow"
         }
     ],
-    "token": "8h8I7ZrGU+3NmMHv2FuT3Xby7L/+orCU+HQbLGop9k0="
+    "token": "AASQdE5RsXnI4uBwkSROR17ZiztivtchsVBy/UB6exM="
 }

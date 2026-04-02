@@ -2,10 +2,10 @@
     "runbook": {
         "id": "25ec2bb3-fc1a-49e3-a9d0-05544ee50dea",
         "createdTime": "1760882179.402161200",
-        "lastUpdatedTime": "1774427400.359050000",
+        "lastUpdatedTime": "1775113468.229495000",
         "factoryResourceName": null,
         "isFactory": false,
-        "name": "Riverbed IQ Assist for ServiceNow - Incident - Caller Endpoint Diagnostic - 3.1",
+        "name": "Riverbed IQ Assist for ServiceNow - Incident - Caller Endpoint Diagnostic - 4.1",
         "description": "Triggered in the context of an Incident in ServiceNow, the runbook find the user endpoint of the caller, diagnose, and enriches the incident record with an Insight.",
         "isReady": true,
         "triggerType": "webhook",
@@ -274,6 +274,36 @@
                     "defaultValue": null,
                     "name": "runtime.Chart_NPM_Traffic",
                     "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Caller_ID_Reference",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.CMDB_CI_Reference",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Problem_ID_Reference",
+                    "isReadonly": false
+                },
+                {
+                    "type": "json",
+                    "defaultValue": null,
+                    "name": "runtime.Raw_API_Response",
+                    "isReadonly": false
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.DEBUG",
+                    "isReadonly": false
                 }
             ],
             "structuredVariables": []
@@ -361,7 +391,7 @@
                 "properties": {
                     "x": 226,
                     "y": 530,
-                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Riverbed IQ Assist for ServiceNow</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Runbook for Incident in ServiceNow: Caller Endpoint Diagnostic</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">version: 2026-03</span></p>",
+                    "comment": "<p dir=\"ltr\" class=\"editor-paragraph\"><b><strong style=\"white-space: pre-wrap;\" class=\"editor-text-bold\">Riverbed IQ Assist for ServiceNow</strong></b></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Runbook for Incident in ServiceNow: Caller Endpoint Diagnostic</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">version: 2026-0</span><span style=\"white-space: pre-wrap;\">4</span></p>",
                     "debug": false
                 },
                 "wires": []
@@ -619,7 +649,7 @@
                     "x": 640,
                     "y": 400,
                     "debug": false,
-                    "configurationId": "c72fa9e8-fc68-40ab-a20e-62a930940a61",
+                    "configurationId": "66426b74-ba28-4ba5-98a9-3bd09b8aa223",
                     "in": [
                         {
                             "inner": "subflow.ServiceNow_Connector",
@@ -684,12 +714,32 @@
                             "inner": "subflow.Caller_Email",
                             "outer": "runtime.Caller_Email",
                             "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Caller_ID_Reference",
+                            "outer": "runtime.Caller_ID_Reference",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.CMDB_CI_Reference",
+                            "outer": "runtime.CMDB_CI_Reference",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Problem_ID_Reference",
+                            "outer": "runtime.Problem_ID_Reference",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Raw_API_Response",
+                            "outer": "runtime.Raw_API_Response",
+                            "method": "runtime"
                         }
                     ]
                 },
                 "wires": [
                     [
-                        "631f4c15-3883-4f45-80dc-37bad6639dcb"
+                        "473b738b-cd0e-4988-8587-662176a9fcc4"
                     ]
                 ]
             },
@@ -1066,11 +1116,118 @@
                         "dcbbfc04-7840-4cab-9556-235c7a753381"
                     ]
                 ]
+            },
+            {
+                "id": "473b738b-cd0e-4988-8587-662176a9fcc4",
+                "isIntegrationSubflowNode": false,
+                "type": "set_primitive_variables",
+                "label": "Extract Caller ID from ServiceNow Record",
+                "description": "",
+                "properties": {
+                    "x": 519,
+                    "y": 145,
+                    "variables": [
+                        {
+                            "name": "runtime.Caller_ID"
+                        }
+                    ],
+                    "transformTemplate": "{\n\"runtime.Caller_ID\": \"{{ variables[\"runtime.Raw_API_Response\"][\"result\"][0][\"caller_id\"][\"value\"] }}\"\n}",
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "33172ea4-a405-4ffe-a30d-a8d7be840b15"
+                    ]
+                ]
+            },
+            {
+                "id": "33172ea4-a405-4ffe-a30d-a8d7be840b15",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow",
+                "label": "ServiceNow: Get User Details",
+                "description": "Returns user details from ServiceNow using the Table API for a user identified by sys_id, email, user_name, or employee_number.",
+                "properties": {
+                    "x": 623,
+                    "y": 225,
+                    "debug": false,
+                    "configurationId": "66e19adb-4904-4ebf-b7de-4dc82d77c9f3",
+                    "in": [
+                        {
+                            "inner": "subflow.ServiceNow_Connector",
+                            "outer": "00000000-0000-0000-0000-000000000000",
+                            "method": "connector",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.User_Identifier_Type",
+                            "outer": "sys_id",
+                            "method": "static",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.User_Identifier",
+                            "outer": "runtime.Caller_ID",
+                            "method": "runtime",
+                            "isUnset": false
+                        }
+                    ],
+                    "out": [
+                        {
+                            "inner": "subflow.Successful",
+                            "outer": "runtime.Successful",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Error_Message",
+                            "outer": "runtime.Error_Message",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Raw_API_Response",
+                            "outer": "runtime.Raw_API_Response",
+                            "method": "runtime"
+                        }
+                    ]
+                },
+                "wires": [
+                    [
+                        "0845bc7e-9e9d-4298-9c2d-58e07a6272f4"
+                    ]
+                ]
+            },
+            {
+                "id": "0845bc7e-9e9d-4298-9c2d-58e07a6272f4",
+                "isIntegrationSubflowNode": false,
+                "type": "set_primitive_variables",
+                "label": "Extract Caller Information from ServiceNow User record",
+                "description": "",
+                "properties": {
+                    "x": 932,
+                    "y": 145,
+                    "variables": [
+                        {
+                            "name": "runtime.Caller_Display_Name"
+                        },
+                        {
+                            "name": "runtime.Caller_Email"
+                        },
+                        {
+                            "name": "runtime.Caller_Username"
+                        }
+                    ],
+                    "transformTemplate": "\n{\n    \"runtime.Caller_Display_Name\": \"{{node_input.output[\"data\"][0].keys[\"Name\"]}}\",\n    \"runtime.Caller_Email\": \"{{node_input.output[\"data\"][0].keys[\"Email\"]}}\",\n    \"runtime.Caller_Username\": \"{{node_input.output[\"data\"][0].keys[\"User_Name\"]}}\"\n}",
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "631f4c15-3883-4f45-80dc-37bad6639dcb"
+                    ]
+                ]
             }
         ],
         "lastUpdatedUser": "Runbook Export",
         "createdByUser": "Runbook Export",
-        "eTag": "\"6081d7ee-95dd-4831-8188-2fbbf75e1b63\"",
+        "eTag": "\"7e4f7444-173b-4d97-9edb-173ce7e17169\"",
         "variant": "incident",
         "seriesId": "25ec2bb3-fc1a-49e3-a9d0-05544ee50dea",
         "version": "1.0",
@@ -1111,11 +1268,11 @@
             "sourcePackageId": "Aternity"
         },
         {
-            "id": "c72fa9e8-fc68-40ab-a20e-62a930940a61",
+            "id": "66426b74-ba28-4ba5-98a9-3bd09b8aa223",
             "type": "subflow",
             "name": "ServiceNow: Get Incident Details",
             "globalId": "ServiceNow::Get_Incident_Details",
-            "originalVersion": "3.0.1",
+            "originalVersion": "4.0.0",
             "nodeLabel": "ServiceNow: Get Incident Details",
             "sourceLocation": "integrationLibrary",
             "sourcePackageId": "ServiceNow"
@@ -1149,7 +1306,17 @@
             "nodeLabel": "Skill: Generate Insight",
             "sourceLocation": "integrationLibrary",
             "sourcePackageId": "RiverbedIQAssist"
+        },
+        {
+            "id": "66e19adb-4904-4ebf-b7de-4dc82d77c9f3",
+            "type": "subflow",
+            "name": "ServiceNow: Get User Details",
+            "globalId": "ServiceNow::Get_User",
+            "originalVersion": "2.0.0",
+            "nodeLabel": "ServiceNow: Get User Details",
+            "sourceLocation": "integrationLibrary",
+            "sourcePackageId": "ServiceNow"
         }
     ],
-    "token": "PR1ngN6wxJIaJDuKRjqcRiKYB4UADMVJ9S9/NS5UuGY="
+    "token": "eP7jRYoctedkJeDRUT+aBGi38xe6A85rd3XLSPs4H2U="
 }
