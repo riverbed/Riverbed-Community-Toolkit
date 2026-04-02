@@ -1,0 +1,708 @@
+{
+    "id": "1d170dda-391e-4fb1-9430-e4e7edf16680",
+    "name": "Simple Example Aternity ISD",
+    "description": "External runbook that ingests SDA alerts via HTTP, maps requestBody fields into runtime variables, picks a remediation action based on alert_name (e.g., \"Low Disk Space\" → \"Empty Recycle Bin1\"), and shows summary/detail tables in the IQ UI. Marked demo (DO NOT MODIFY); templates contain a few typos (e.g., \"alersubnett_id\") that can break some mappings.",
+    "variant": "incident",
+    "triggerType": "webhook",
+    "nodes": [
+        {
+            "id": "ecf650ae-a9f1-40eb-8e41-477bbfcdabee",
+            "type": "trigger",
+            "label": "SDA Alert",
+            "wires": [
+                [
+                    "43520e9b-f4e1-4db6-9067-720f7bda3791"
+                ]
+            ],
+            "description": "",
+            "properties": {
+                "x": 112,
+                "y": 50,
+                "triggerType": "webhook",
+                "timeReference": "RUNBOOK_EXECUTION",
+                "timeOffset": 900,
+                "debug": false
+            }
+        },
+        {
+            "id": "43520e9b-f4e1-4db6-9067-720f7bda3791",
+            "type": "set_primitive_variables",
+            "label": "Store webhook payload",
+            "wires": [
+                [
+                    "2e80c97d-df52-4c04-ba57-12872e3adf78",
+                    "1fe7afde-4c2c-4ddc-abf8-2f89b635f8bc"
+                ]
+            ],
+            "description": "",
+            "properties": {
+                "x": 376,
+                "y": 130,
+                "variables": [
+                    {
+                        "name": "runtime.alert_id"
+                    },
+                    {
+                        "name": "runtime.alert_name"
+                    },
+                    {
+                        "name": "runtime.alert_event_name"
+                    },
+                    {
+                        "name": "runtime.urgency"
+                    },
+                    {
+                        "name": "runtime.impact"
+                    },
+                    {
+                        "name": "runtime.category"
+                    },
+                    {
+                        "name": "runtime.identifier"
+                    },
+                    {
+                        "name": "runtime.device_name"
+                    },
+                    {
+                        "name": "runtime.device_type"
+                    },
+                    {
+                        "name": "runtime.device_manufacturer"
+                    },
+                    {
+                        "name": "runtime.device_model"
+                    },
+                    {
+                        "name": "runtime.device_memory"
+                    },
+                    {
+                        "name": "runtime.device_cpu_cores"
+                    },
+                    {
+                        "name": "runtime.device_cpu_frequency"
+                    },
+                    {
+                        "name": "runtime.device_last_booted"
+                    },
+                    {
+                        "name": "runtime.device_last_booted_epoch"
+                    },
+                    {
+                        "name": "runtime.username"
+                    },
+                    {
+                        "name": "runtime.user_domain"
+                    },
+                    {
+                        "name": "runtime.user_department"
+                    },
+                    {
+                        "name": "runtime.user_email_address"
+                    },
+                    {
+                        "name": "runtime.user_title"
+                    },
+                    {
+                        "name": "runtime.os_name"
+                    },
+                    {
+                        "name": "runtime.business_location"
+                    },
+                    {
+                        "name": "runtime.subnet"
+                    },
+                    {
+                        "name": "runtime.custom_attribute_1"
+                    },
+                    {
+                        "name": "runtime.custom_attribute_2"
+                    },
+                    {
+                        "name": "runtime.custom_attribute_3"
+                    },
+                    {
+                        "name": "runtime.custom_attribute_4"
+                    },
+                    {
+                        "name": "runtime.custom_attribute_5"
+                    },
+                    {
+                        "name": "runtime.custom_attribute_6"
+                    },
+                    {
+                        "name": "runtime.last_event_details"
+                    },
+                    {
+                        "name": "runtime.alert_timestamp_epoch"
+                    }
+                ],
+                "transformTemplate": "{% assign body = trigger['requestBody'] %}\n\n{\n    \"runtime.alert_id\": {{ body[\"alert_id\"] }},\n    \"runtime.alert_name\": \"{{ body[\"alert_name\"] }}\",\n    \"runtime.alert_event_name\": \"{{ body[\"alert_event_name\"] }}\",\n    \"runtime.alert_timestamp\": \"{{ body[\"alert_timestamp\"] }}\",\n    \"runtime.alert_timestamp_epoch\": {{ body[\"alert_timestamp_epoch\"] }},\n    \"runtime.urgency\": \"{{ body[\"urgency\"] }},\",\n    \"runtime.impact\": \"{{ body[\"impact\"] }},\",\n    \"runtime.category\": \"{{ body[\"category\"] }}\",\n    \"runtime.identifier\": \"{{ body[\"identifier\"] }},\",\n    \"runtime.last_event_details\": \"{{ body[\"last_event_details\"] }},\",\n    \"runtime.last_event_timestamp\": \"{{ body[\"last_event_timestamp\"] }},\",\n    \"runtime.last_event_timestamp_epoch\": {{ body[\"last_event_timestamp_epoch\"] }},\n    \"runtime.device_name\": \"{{ body[\"device_name\"] }}\",\n    \"runtime.device_type\": \"{{ body[\"device_type\"] }}\",\n    \"runtime.device_manufacturer\": \"{{ body[\"device_manufacturer\"] }}\",\n    \"runtime.device_model\": \"{{ body[\"device_model\"] }}\",\n    \"runtime.device_memory\": \"{{ body[\"device_memory\"] }}\",\n    \"runtime.device_cpu_cores\": \"{{ body[\"device_cpu_cores\"] }}\",\n    \"runtime.device_cpu_frequency\": \"{{ body[\"device_cpu_frequency\"] }}\",\n    \"runtime.device_last_booted\": \"{{ body[\"device_last_booted\"] }}\",\n    \"runtime.device_last_booted_epoch\": {{ body[\"device_last_booted_epoch\"] }},\n    \"runtime.username\": \"{{ body[\"username\"] }}\",\n    \"runtime.user_domain\": \"{{ body[\"user_domain\"] }}\",\n    \"runtime.user_department\": \"{{ body[\"user_department\"] }}\",\n    \"runtime.user_email_address\": \"{{ body[\"user_email_address\"] }}\",\n    \"runtime.user_title\": \"{{ body[\"user_title\"] }}\",\n    \"runtime.os_name\": \"{{ body[\"os_name\"] }}\",\n    \"runtime.business_location\": \"{{ body[\"business_location\"] }}\",\n    \"runtime.subnet\": \"{{ body[\"alersubnett_id\"] }}\",\n    \"runtime.custom_attribute_1\": \"{{ body[\"custom_attribute_1\"] }}\",\n    \"runtime.custom_attribute_2\": \"{{ body[\"custom_attribute_2\"] }}\",\n    \"runtime.custom_attribute_3\": \"{{ body[\"custom_attribute_3\"] }}\",\n    \"runtime.custom_attribute_4\": \"{{ body[\"custom_attribute_4\"] }}\",\n    \"runtime.custom_attribute_5\": \"{{ body[\"custom_attribute_5\"] }}\",\n    \"runtime.custom_attribute_6\": \"{{ body[\"custom_attribute_6\"] }}\"\n}\n",
+                "debug": true
+            }
+        },
+        {
+            "id": "8111ebc4-e650-433d-8e07-43a96c39db2d",
+            "type": "decision",
+            "label": "alert_name",
+            "wires": [
+                [
+                    "212020dd-e08e-4957-ab81-f46b809e0081"
+                ],
+                [
+                    "7815e9ec-24f2-44c4-a02b-fa125fd6bcdd"
+                ]
+            ],
+            "description": "",
+            "properties": {
+                "x": 921,
+                "y": 300,
+                "outputs": [
+                    {
+                        "id": "o19567",
+                        "passedData": "MATCHED",
+                        "expression": {
+                            "id": "o4742",
+                            "type": "block",
+                            "operation": "AND",
+                            "conditions": [
+                                {
+                                    "type": "condition",
+                                    "id": "c-1691163491635",
+                                    "category": "variable",
+                                    "key": "$VARIABLE.runtime.alert_name",
+                                    "op": "EQ",
+                                    "value": "Low Disk Space"
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        "id": "default"
+                    }
+                ],
+                "debug": true
+            }
+        },
+        {
+            "id": "1fe7afde-4c2c-4ddc-abf8-2f89b635f8bc",
+            "type": "transform",
+            "label": "Get Alert Variables",
+            "wires": [
+                [
+                    "d9fc0e46-0899-4b61-ade6-a94b18f679e5"
+                ]
+            ],
+            "description": "",
+            "properties": {
+                "x": 655,
+                "y": 210,
+                "outputDataFormat": "summary",
+                "useVariableDefinition": "",
+                "transformTemplate": "{\n    \"data\": [\n        {\n            \"keys\": {\n                \"Alert_Name\": \"{{variables[\"runtime.alert_name\"]}}\",\n                \"Date\": \"{{variables[\"runtime.alert_timestamp_epoch\"] | date: '%Y-%m-%d--%H-%M-%S'}}\",\n                \"Event_Details\": \"{{variables[\"runtime.last_event_details\"]}}\",\n                \"Category\": \"{{variables[\"runtime.category\"]}}\",\n           },\n            \"data\": {}\n        }\n    ],\n    \"info\": {\n        \"keys\": [\n            {\n                \"id\": \"Alert_Name\",\n                \"label\": \"Alert Name\",\n                \"type\": \"string\",\n                \"unit\": \"\"\n            },\n            {\n                \"id\": \"Date\",\n                \"label\": \"Date\",\n                \"type\": \"string\",\n                \"unit\": \"\"\n            },\n            {\n                \"id\": \"Event_Details\",\n                \"label\": \"Event Details\",\n                \"type\": \"string\",\n                \"unit\": \"\"\n            },\n            {\n                \"id\": \"Category\",\n                \"label\": \"Category\",\n                \"type\": \"string\",\n                \"unit\": \"\"\n            }\n        ],\n        \"metrics\": []\n    }\n}\n",
+                "synthMetrics": [],
+                "synthKeys": [
+                    {
+                        "id": "Alert_Name",
+                        "label": "Alert Name",
+                        "type": "string",
+                        "unit": ""
+                    },
+                    {
+                        "id": "Date",
+                        "label": "Date",
+                        "type": "string",
+                        "unit": ""
+                    },
+                    {
+                        "id": "Event_Details",
+                        "label": "Event Details",
+                        "type": "string",
+                        "unit": ""
+                    },
+                    {
+                        "id": "Category",
+                        "label": "Category",
+                        "type": "string",
+                        "unit": ""
+                    }
+                ],
+                "debug": true
+            }
+        },
+        {
+            "id": "d9fc0e46-0899-4b61-ade6-a94b18f679e5",
+            "type": "rvbd_ui_table",
+            "label": "Display Alert Summary",
+            "wires": [],
+            "description": "",
+            "properties": {
+                "x": 919,
+                "y": 210,
+                "title": "SDA Alert Summary",
+                "row": "1",
+                "notesPosition": "left",
+                "notes": "",
+                "sortColumn": "Alert_Name",
+                "sortOrder": "asc",
+                "columns": [
+                    "Alert_Name",
+                    "Event_Details",
+                    "Category",
+                    "Date"
+                ],
+                "flipTable": false,
+                "debug": false
+            }
+        },
+        {
+            "id": "2e80c97d-df52-4c04-ba57-12872e3adf78",
+            "type": "set_primitive_variables",
+            "label": "Set actionName",
+            "wires": [
+                [
+                    "8111ebc4-e650-433d-8e07-43a96c39db2d"
+                ]
+            ],
+            "description": "",
+            "properties": {
+                "x": 659,
+                "y": 300,
+                "variables": [
+                    {
+                        "name": "runtime.actionName"
+                    }
+                ],
+                "transformTemplate": "{% assign alert_name = variables[\"runtime.alert_name\"]  %}\n\n{\n    {% if alert_name == \"Low Disk Space\" %}\n        \"runtime.actionName\": \"Empty Recycle Bin1\"\n    {% elsif alert_name == \"Weak WiFi\" %}\n        \"runtime.actionName\": \"weakWifiAction\"\n    {% else %}\n        \"runtime.actionName\": \"noActionName\"\n    {% endif %}\n}",
+                "debug": true
+            }
+        },
+        {
+            "id": "7b2a6ad1-cc10-4edd-83d3-d24bb84c3fcb",
+            "type": "comment",
+            "label": "Comment",
+            "wires": [],
+            "description": "",
+            "properties": {
+                "x": 57.99999999999994,
+                "y": 120,
+                "comment": "<p><strong>\"SDA Alert\"</strong></p>\n<p>[Triggering Entity: Webhook]&nbsp;</p>\n<p>External entity calls Riverbed IQ Webhook and passes the following HTTP Request Body for processing:</p>\n<p>{</p>\n<p>&nbsp;&nbsp;\"alert_id\": 1,</p>\n<p>&nbsp;&nbsp;\"alert_name\": \"Low Disk Space\",</p>\n<p>&nbsp;&nbsp;\"alert_event_name\": \"Low Disk Space\",</p>\n<p>&nbsp;&nbsp;\"alert_timestamp\": \"2023-07-25T12:47:51.8-04:00\",</p>\n<p>&nbsp;&nbsp;\"alert_timestamp_epoch\": 1690303671,</p>\n<p>&nbsp;&nbsp;\"urgency\": \"Low\",</p>\n<p>&nbsp;&nbsp;\"impact\": \"Low\",</p>\n<p>&nbsp;&nbsp;\"category\": \"Hardware\",</p>\n<p>&nbsp;&nbsp;\"identifier\": \"C:\",</p>\n<p>&nbsp;&nbsp;\"last_event_details\": \"Drive: C:\\nFree MB: 499MB\\nPercent Free Space: 4%\",</p>\n<p>&nbsp;&nbsp;\"last_event_timestamp\": \"2023-07-25T12:44:51.8-04:00\",</p>\n<p>&nbsp;&nbsp;\"last_event_timestamp_epoch\": 1690303491,</p>\n<p>&nbsp;&nbsp;\"device_name\": \"rvbd-nocpc01\",</p>\n<p>&nbsp;&nbsp;\"device_type\": \"Desktop\",</p>\n<p>&nbsp;&nbsp;\"device_manufacturer\": \"VMware, Inc.\",</p>\n<p>&nbsp;&nbsp;\"device_model\": \"VMware, Inc\",</p>\n<p>&nbsp;&nbsp;\"device_memory\": \"8GB\",</p>\n<p>&nbsp;&nbsp;\"device_cpu_cores\": \"1\",</p>\n<p>&nbsp;&nbsp;\"device_cpu_frequency\": \"2GHz to 2.5GHz\",</p>\n<p>&nbsp;&nbsp;\"device_last_booted\": \"2023-07-23T12:49:51.8-04:00\",</p>\n<p>&nbsp;&nbsp;\"device_last_booted_epoch\": 1690130991,</p>\n<p>&nbsp;&nbsp;\"username\": \"rvbdnoc\",</p>\n<p>&nbsp;&nbsp;\"user_domain\": \"NBTTECH\",</p>\n<p>&nbsp;&nbsp;\"user_department\": \"Sales-SE Aternity\",</p>\n<p>&nbsp;&nbsp;\"user_email_address\": \"Jaspreet.Sandhu@riverbed.com\",</p>\n<p>&nbsp;&nbsp;\"user_title\": \"Senior Solutions Engineer\",</p>\n<p>&nbsp;&nbsp;\"os_name\": \"MS Windows 10\",</p>\n<p>&nbsp;&nbsp;\"subnet\": \"192.168.176.0/24\",</p>\n<p>&nbsp;&nbsp;\"business_location\": \"Off-Site\",</p>\n<p>&nbsp;&nbsp;\"custom_attribute_1\": \"\",</p>\n<p>&nbsp;&nbsp;\"custom_attribute_2\": \"\",</p>\n<p>&nbsp;&nbsp;\"custom_attribute_3\": \"\",</p>\n<p>&nbsp;&nbsp;\"custom_attribute_4\": \"\",</p>\n<p>&nbsp;&nbsp;\"custom_attribute_5\": \"\",</p>\n<p>&nbsp;&nbsp;\"custom_attribute_6\": \"\"</p>\n<p>}</p>",
+                "debug": false
+            },
+            "env": []
+        },
+        {
+            "id": "212020dd-e08e-4957-ab81-f46b809e0081",
+            "type": "transform",
+            "label": "Get Alert Detail and Remediation Action",
+            "wires": [
+                [
+                    "9e92cccc-ea95-4e00-9a04-ac7cd63d2c53"
+                ]
+            ],
+            "description": "",
+            "properties": {
+                "x": 1220,
+                "y": 300,
+                "outputDataFormat": "summary",
+                "useVariableDefinition": "",
+                "transformTemplate": "{\n    \"data\": [\n        {\n            \"keys\": {\n                \"Alert_Name\": \"{{variables[\"runtime.alert_name\"]}}\",\n                \"Alert_Event_Name\": \"{{variables[\"runtime.alert_event_name\"]}}\",\n                \"Date\": \"{{variables[\"runtime.alert_timestamp_epoch\"] | date: '%Y-%m-%d--%H-%M-%S'}}\",\n                \"Event_Details\": \"{{variables[\"runtime.last_event_details\"]}}\",\n                \"Category\": \"{{variables[\"runtime.category\"]}}\",\n                \"Device_Type\": \"{{variables[\"runtime.device_type\"]}}\",\n                \"Device_Manufacturer\": \"{{variables[\"runtime.device_manufacturer\"]}}\",\n                \"Device_Model\": \"{{variables[\"runtime.device_model\"]}}\",\n                \"Username\": \"{{variables[\"runtime.username\"]}}\",\n                \"Action_Name\": \"{{variables[\"runtime.actionName\"]}}\",\n           },\n            \"data\": {}\n        }\n    ],\n    \"info\": {\n        \"keys\": [\n            {\n                \"id\": \"Alert_Name\",\n                \"label\": \"Alert Name\",\n                \"type\": \"string\",\n                \"unit\": \"\"\n            },\n           {\n                \"id\": \"Alert_Event_Name\",\n                \"label\": \"Alert Event Name\",\n                \"type\": \"string\",\n                \"unit\": \"\"\n            },\n            {\n                \"id\": \"Date\",\n                \"label\": \"Date\",\n                \"type\": \"string\",\n                \"unit\": \"\"\n            },\n            {\n                \"id\": \"Event_Details\",\n                \"label\": \"Event Details\",\n                \"type\": \"string\",\n                \"unit\": \"\"\n            },\n            {\n                \"id\": \"Category\",\n                \"label\": \"Category\",\n                \"type\": \"string\",\n                \"unit\": \"\"\n            },\n            {\n                \"id\": \"Device_Type\",\n                \"label\": \"Device Type\",\n                \"type\": \"string\",\n                \"unit\": \"\"\n            },\n            {\n                \"id\": \"Device_Manufacturer\",\n                \"label\": \"Device Manufacturer\",\n                \"type\": \"string\",\n                \"unit\": \"\"\n            },\n            {\n                \"id\": \"Device_Model\",\n                \"label\": \"Device Model\",\n                \"type\": \"string\",\n                \"unit\": \"\"\n            },\n            {\n                \"id\": \"Username\",\n                \"label\": \"Username\",\n                \"type\": \"string\",\n                \"unit\": \"\"\n            },\n            {\n                \"id\": \"Action_Name\",\n                \"label\": \"Action Name\",\n                \"type\": \"string\",\n                \"unit\": \"\"\n            }\n        ],\n        \"metrics\": []\n    }\n}",
+                "synthMetrics": [],
+                "synthKeys": [
+                    {
+                        "id": "Alert_Name",
+                        "label": "Alert Name",
+                        "type": "string",
+                        "unit": ""
+                    },
+                    {
+                        "id": "Username",
+                        "label": "Username",
+                        "type": "string",
+                        "unit": ""
+                    },
+                    {
+                        "id": "Action_Name",
+                        "label": "Action Name",
+                        "type": "string",
+                        "unit": ""
+                    }
+                ],
+                "debug": true
+            }
+        },
+        {
+            "id": "9e92cccc-ea95-4e00-9a04-ac7cd63d2c53",
+            "type": "rvbd_ui_table",
+            "label": "Display Alert and Remediation Detail",
+            "wires": [],
+            "description": "",
+            "properties": {
+                "x": 1503,
+                "y": 300,
+                "title": "SDA Alert and Remediation Detail",
+                "row": "1",
+                "notesPosition": "left",
+                "notes": "",
+                "sortColumn": "SDA_Alert_Name",
+                "sortOrder": "asc",
+                "columns": [
+                    "Alert_Name",
+                    "Username",
+                    "Action_Name"
+                ],
+                "includeAllColumns": false,
+                "flipTable": false,
+                "debug": false
+            }
+        },
+        {
+            "id": "21cba746-34e0-4f7a-bbea-79daaf072058",
+            "type": "comment",
+            "label": "Store Request Data-elements into Variables",
+            "wires": [],
+            "description": "",
+            "properties": {
+                "x": 322,
+                "y": 210,
+                "comment": "<p><strong>\"Store webhook payload\"</strong></p>\n<p>[Variables: Set Primitive Variable]&nbsp;</p>\n<p>Convert the information supplied in the HTTP-Request Body into a native Runbook format:&nbsp;</p>\n<ol>\n  <li>Define the <strong>Liquid Template</strong> to map HTTP Request Data-elements to Variables, e.g.&nbsp;\n    <ol>\n      <li>\"alert_id\":1 =&gt; Runtime.variable.alert-id</li>\n    </ol>\n  </li>\n  <li>Define pre-requisite Variables: (one for each Request-data element)\n    <ol>\n      <li>Scope: Runbook execution</li>\n      <li>Variable Name</li>\n    </ol>\n  </li>\n  <li><strong>Reference Liquid Template:&nbsp;</strong></li>\n</ol>\n<p>{% assign body = trigger['requestBody'] %}</p>\n<p><br></p>\n<p>{</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"runtime.alert_id\": {{ body[\"alert_id\"] }},</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"runtime.alert_name\": \"{{ body[\"alert_name\"] }}\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"runtime.alert_event_name\": \"{{ body[\"alert_event_name\"] }}\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"runtime.alert_timestamp\": \"{{ body[\"alert_timestamp\"] }}\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"runtime.alert_timestamp_epoch\": {{ body[\"alert_timestamp_epoch\"] }},</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"runtime.urgency\": \"{{ body[\"urgency\"] }},\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"runtime.impact\": \"{{ body[\"impact\"] }},\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"runtime.category\": \"{{ body[\"category\"] }}\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"runtime.identifier\": \"{{ body[\"identifier\"] }},\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"runtime.last_event_details\": \"{{ body[\"last_event_details\"] }},\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"runtime.last_event_timestamp\": \"{{ body[\"last_event_timestamp\"] }},\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"runtime.last_event_timestamp_epoch\": {{ body[\"last_event_timestamp_epoch\"] }},</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"runtime.device_name\": \"{{ body[\"device_name\"] }}\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"runtime.device_type\": \"{{ body[\"device_type\"] }}\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"runtime.device_manufacturer\": \"{{ body[\"device_manufacturer\"] }}\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"runtime.device_model\": \"{{ body[\"device_model\"] }}\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"runtime.device_memory\": \"{{ body[\"device_memory\"] }}\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"runtime.device_cpu_cores\": \"{{ body[\"device_cpu_cores\"] }}\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"runtime.device_cpu_frequency\": \"{{ body[\"device_cpu_frequency\"] }}\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"runtime.device_last_booted\": \"{{ body[\"device_last_booted\"] }}\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"runtime.device_last_booted_epoch\": {{ body[\"device_last_booted_epoch\"] }},</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"runtime.username\": \"{{ body[\"username\"] }}\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"runtime.user_domain\": \"{{ body[\"user_domain\"] }}\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"runtime.user_department\": \"{{ body[\"user_department\"] }}\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"runtime.user_email_address\": \"{{ body[\"user_email_address\"] }}\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"runtime.user_title\": \"{{ body[\"user_title\"] }}\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"runtime.os_name\": \"{{ body[\"os_name\"] }}\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"runtime.business_location\": \"{{ body[\"business_location\"] }}\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"runtime.subnet\": \"{{ body[\"alersubnett_id\"] }}\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"runtime.custom_attribute_1\": \"{{ body[\"custom_attribute_1\"] }}\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"runtime.custom_attribute_2\": \"{{ body[\"custom_attribute_2\"] }}\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"runtime.custom_attribute_3\": \"{{ body[\"custom_attribute_3\"] }}\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"runtime.custom_attribute_4\": \"{{ body[\"custom_attribute_4\"] }}\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"runtime.custom_attribute_5\": \"{{ body[\"custom_attribute_5\"] }}\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"runtime.custom_attribute_6\": \"{{ body[\"custom_attribute_6\"] }}\"</p>\n<p>}</p>",
+                "debug": false
+            },
+            "env": []
+        },
+        {
+            "id": "7815e9ec-24f2-44c4-a02b-fa125fd6bcdd",
+            "type": "rvbd_ui_text",
+            "label": "Display Unknown Alert",
+            "wires": [],
+            "description": "",
+            "properties": {
+                "x": 1226,
+                "y": 410,
+                "title": "Unknown Alert Encountered",
+                "row": "1",
+                "notes": "<p>No matching logic for \"{{variables[\"runtime.alert_name\"]}}\"</p>",
+                "debug": false
+            }
+        },
+        {
+            "id": "53f97713-f928-4687-9315-ccac8b430220",
+            "type": "comment",
+            "label": "Comment 1",
+            "wires": [],
+            "description": "",
+            "properties": {
+                "x": 872,
+                "y": -60,
+                "comment": "<p><strong>\"Display Alert Summary\"</strong></p>\n<p>[Visualizations: Table]&nbsp;</p>\n<p>Surface summary information about the SDA Alert that triggered this specific Runbook execution as a table with the following columns:</p>\n<ol>\n  <li>[Alert Name]</li>\n  <li>[Event Details]</li>\n  <li>[Category]</li>\n  <li>[Date]</li>\n</ol>",
+                "debug": false
+            },
+            "env": []
+        },
+        {
+            "id": "81b80891-524b-439e-9ad2-8d9320525fe1",
+            "type": "comment",
+            "label": "Comment 2",
+            "wires": [],
+            "description": "",
+            "properties": {
+                "x": 600,
+                "y": -1320,
+                "comment": "<p><strong>\"Get Alert Variables\"</strong></p>\n<p>[Functions: Transform]</p>\n<p>Transforms Variables into JSON-format for consumption by subtending Nodes:</p>\n<ol>\n  <li>Define the <strong>Liquid Template</strong> to convert Variables into JSON-format.</li>\n  <li>Define the Output Data Properties: (one for each desired information element)</li>\n  <li><strong>Reference Liquid Template:&nbsp;</strong></li>\n</ol>\n<p>{</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"data\": [</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"keys\": {</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"Alert_Name\": \"{{variables[\"runtime.alert_name\"]}}\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"Date\": \"{{variables[\"runtime.alert_timestamp_epoch\"] | date: '%Y-%m-%d--%H-%M-%S'}}\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"Event_Details\": \"{{variables[\"runtime.last_event_details\"]}}\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"Category\": \"{{variables[\"runtime.category\"]}}\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"data\": {}</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;],</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"info\": {</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"keys\": [</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"id\": \"Alert_Name\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"label\": \"Alert Name\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"type\": \"string\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"unit\": \"\"</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"id\": \"Date\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"label\": \"Date\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"type\": \"string\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"unit\": \"\"</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"id\": \"Event_Details\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"label\": \"Event Details\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"type\": \"string\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"unit\": \"\"</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"id\": \"Category\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"label\": \"Category\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"type\": \"string\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"unit\": \"\"</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;],</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"metrics\": []</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;}</p>\n<p>}</p>",
+                "debug": false
+            },
+            "env": []
+        },
+        {
+            "id": "a8179027-7fc3-444d-baee-00d074da56d3",
+            "type": "comment",
+            "label": "Comment 3",
+            "wires": [],
+            "description": "",
+            "properties": {
+                "x": 599,
+                "y": 365.00000000000006,
+                "comment": "<p><strong>\"Set actionName\"</strong></p>\n<p>[Variables: Set Primitive Variable]&nbsp;</p>\n<p>Map the supplied [Alert Name] to known Remediation [Action Name] and store the mapping in a Runbook Variable</p>\n<ol>\n  <li>Define the <strong>Liquid Template</strong> to map an associated Remediation based on received [Alert Name], e.g.&nbsp;\n    <ol>\n      <li>[Alert Name: \"Low Disk Space\"] =&gt; [Runtime.variable.actionName: \"Empty Recycle Bin1\"</li>\n    </ol>\n  </li>\n  <li>Define pre-requisite Variables:&nbsp;\n    <ol>\n      <li>Scope: Runbook execution</li>\n      <li>Variable Name: [runtime.actionName]</li>\n    </ol>\n  </li>\n  <li><strong>Reference Liquid Template:&nbsp;</strong></li>\n</ol>\n<p>{% assign alert_name = variables[\"runtime.alert_name\"] &nbsp;%}</p>\n<p><br></p>\n<p>{</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;{% if alert_name == \"Low Disk Space\" %}</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"runtime.actionName\": \"Empty Recycle Bin1\"</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;{% elsif alert_name == \"Weak WiFi\" %}</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"runtime.actionName\": \"weakWifiAction\"</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;{% else %}</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"runtime.actionName\": \"noActionName\"</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;{% endif %}</p>\n<p>}</p>",
+                "debug": false
+            }
+        },
+        {
+            "id": "a7259b42-23b8-49ca-bb3e-baf275e5bd34",
+            "type": "comment",
+            "label": "Comment 4",
+            "wires": [],
+            "description": "",
+            "properties": {
+                "x": 873,
+                "y": 399.99999999999994,
+                "comment": "<p><strong>\"alert_name\"</strong></p>\n<p>[Logic: Decision Branch]&nbsp;</p>\n<p>At times there is a need for an automation to “pivot” execution-path based on information that has been gathered. The [Logic: Decision Branch] Runbook Node provides a mechanism to specify path of execution based upon some test/condition.&nbsp;</p>\n<p>For this Runbook, the [Logic: Decision Branch] Node is configured to determine two paths of execution:&nbsp;</p>\n<ul>\n  <li><strong>Branch-1: </strong>The sub-path that is executed when [alert_name: “Low Disk Space”].&nbsp;</li>\n  <li><strong>Branch-2: </strong>(Default) The sub-path that is executed when an unknown [alert_name] is received (i.e. [alert_name.NOT.“Low Disk Space”]&nbsp;</li>\n</ul>",
+                "debug": false
+            },
+            "env": []
+        },
+        {
+            "id": "178396df-503b-4d9f-bc81-bc4cf81037dc",
+            "type": "comment",
+            "label": "Comment 5",
+            "wires": [],
+            "description": "",
+            "properties": {
+                "x": 1439,
+                "y": 25,
+                "comment": "<p><strong>\"Display Alert and Remediation Detail\"</strong></p>\n<p>[Visualizations: Table]&nbsp;</p>\n<p>Surface detailed information about the supplied Alert and associated Remediation as a table with the following columns:</p>\n<ol>\n  <li>[Alert Name]</li>\n  <li>[Username]</li>\n  <li>[Action Name]</li>\n</ol>",
+                "debug": false
+            },
+            "env": []
+        },
+        {
+            "id": "1e70c976-e180-4684-946d-10590487e6a1",
+            "type": "comment",
+            "label": "Comment 6",
+            "wires": [],
+            "description": "",
+            "properties": {
+                "x": 1179,
+                "y": 490,
+                "comment": "<p><strong>\"Display Alert Summary\"</strong></p>\n<p>[Visualizations: Table]&nbsp;</p>\n<p>Surface summary information about the SDA Alert that triggered this specific Runbook execution as a table with the following columns:</p>\n<ol>\n  <li>[Alert Name]</li>\n  <li>[Event Details]</li>\n  <li>[Category]</li>\n  <li>[Date]</li>\n</ol>",
+                "debug": false
+            }
+        },
+        {
+            "id": "25beddc6-5a97-4624-ba1c-f160fca9d5d1",
+            "type": "comment",
+            "label": "Comment 7",
+            "wires": [],
+            "description": "",
+            "properties": {
+                "x": 1155,
+                "y": -2540,
+                "comment": "<p><strong>\"Get Alert Detail and Remediation Action\"</strong></p>\n<p>[Functions: Transform]</p>\n<p>Transforms Variables into JSON-format for consumption by subtending Nodes:</p>\n<ol>\n  <li>Define the <strong>Liquid Template</strong> to convert Variables into JSON-format.</li>\n  <li>Define the Output Data Properties: (one for each desired information element)</li>\n  <li><strong>Reference Liquid Template:&nbsp;</strong></li>\n</ol>\n<p>{</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"data\": [</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"keys\": {</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"Alert_Name\": \"{{variables[\"runtime.alert_name\"]}}\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"Alert_Event_Name\": \"{{variables[\"runtime.alert_event_name\"]}}\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"Date\": \"{{variables[\"runtime.alert_timestamp_epoch\"] | date: '%Y-%m-%d--%H-%M-%S'}}\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"Event_Details\": \"{{variables[\"runtime.last_event_details\"]}}\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"Category\": \"{{variables[\"runtime.category\"]}}\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"Device_Type\": \"{{variables[\"runtime.device_type\"]}}\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"Device_Manufacturer\": \"{{variables[\"runtime.device_manufacturer\"]}}\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"Device_Model\": \"{{variables[\"runtime.device_model\"]}}\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"Username\": \"{{variables[\"runtime.username\"]}}\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"Action_Name\": \"{{variables[\"runtime.actionName\"]}}\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"data\": {}</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;],</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;\"info\": {</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"keys\": [</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"id\": \"Alert_Name\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"label\": \"Alert Name\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"type\": \"string\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"unit\": \"\"</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"id\": \"Alert_Event_Name\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"label\": \"Alert Event Name\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"type\": \"string\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"unit\": \"\"</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"id\": \"Date\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"label\": \"Date\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"type\": \"string\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"unit\": \"\"</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"id\": \"Event_Details\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"label\": \"Event Details\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"type\": \"string\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"unit\": \"\"</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"id\": \"Category\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"label\": \"Category\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"type\": \"string\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"unit\": \"\"</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"id\": \"Device_Type\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"label\": \"Device Type\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"type\": \"string\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"unit\": \"\"</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"id\": \"Device_Manufacturer\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"label\": \"Device Manufacturer\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"type\": \"string\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"unit\": \"\"</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"id\": \"Device_Model\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"label\": \"Device Model\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"type\": \"string\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"unit\": \"\"</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"id\": \"Username\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"label\": \"Username\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"type\": \"string\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"unit\": \"\"</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;},</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"id\": \"Action_Name\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"label\": \"Action Name\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"type\": \"string\",</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"unit\": \"\"</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;],</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\"metrics\": []</p>\n<p>&nbsp;&nbsp;&nbsp;&nbsp;}</p>\n<p>}</p>",
+                "debug": false
+            },
+            "env": []
+        }
+    ],
+    "configs": [],
+    "runtimeVariables": {
+        "primitiveVariables": [
+            {
+                "type": "integer",
+                "defaultValue": "0",
+                "name": "runtime.alert_id",
+                "isReadonly": false
+            },
+            {
+                "type": "string",
+                "defaultValue": null,
+                "name": "runtime.alert_name",
+                "isReadonly": false
+            },
+            {
+                "type": "string",
+                "defaultValue": null,
+                "name": "runtime.alert_event_name",
+                "isReadonly": false
+            },
+            {
+                "type": "string",
+                "defaultValue": null,
+                "name": "runtime.alert_timestamp",
+                "isReadonly": false
+            },
+            {
+                "type": "timestamp",
+                "defaultValue": null,
+                "name": "runtime.alert_timestamp_epoch",
+                "isReadonly": false
+            },
+            {
+                "type": "string",
+                "defaultValue": null,
+                "name": "runtime.urgency",
+                "isReadonly": false
+            },
+            {
+                "type": "string",
+                "defaultValue": null,
+                "name": "runtime.impact",
+                "isReadonly": false
+            },
+            {
+                "type": "string",
+                "defaultValue": null,
+                "name": "runtime.category",
+                "isReadonly": false
+            },
+            {
+                "type": "string",
+                "defaultValue": null,
+                "name": "runtime.identifier",
+                "isReadonly": false
+            },
+            {
+                "type": "string",
+                "defaultValue": null,
+                "name": "runtime.last_event_details",
+                "isReadonly": false
+            },
+            {
+                "type": "string",
+                "defaultValue": null,
+                "name": "runtime.last_event_timestamp",
+                "isReadonly": false
+            },
+            {
+                "type": "timestamp",
+                "defaultValue": null,
+                "name": "runtime.last_event_timestamp_epoch",
+                "isReadonly": false
+            },
+            {
+                "type": "string",
+                "defaultValue": null,
+                "name": "runtime.device_name",
+                "isReadonly": false
+            },
+            {
+                "type": "string",
+                "defaultValue": null,
+                "name": "runtime.device_type",
+                "isReadonly": false
+            },
+            {
+                "type": "string",
+                "defaultValue": null,
+                "name": "runtime.device_manufacturer",
+                "isReadonly": false
+            },
+            {
+                "type": "string",
+                "defaultValue": null,
+                "name": "runtime.device_model",
+                "isReadonly": false
+            },
+            {
+                "type": "string",
+                "defaultValue": null,
+                "name": "runtime.device_memory",
+                "isReadonly": false
+            },
+            {
+                "type": "string",
+                "defaultValue": null,
+                "name": "runtime.device_cpu_cores",
+                "isReadonly": false
+            },
+            {
+                "type": "string",
+                "defaultValue": null,
+                "name": "runtime.device_cpu_frequency",
+                "isReadonly": false
+            },
+            {
+                "type": "string",
+                "defaultValue": null,
+                "name": "runtime.device_last_booted",
+                "isReadonly": false
+            },
+            {
+                "type": "timestamp",
+                "defaultValue": null,
+                "name": "runtime.device_last_booted_epoch",
+                "isReadonly": false
+            },
+            {
+                "type": "string",
+                "defaultValue": null,
+                "name": "runtime.username",
+                "isReadonly": false
+            },
+            {
+                "type": "string",
+                "defaultValue": null,
+                "name": "runtime.user_domain",
+                "isReadonly": false
+            },
+            {
+                "type": "string",
+                "defaultValue": null,
+                "name": "runtime.user_department",
+                "isReadonly": false
+            },
+            {
+                "type": "string",
+                "defaultValue": null,
+                "name": "runtime.user_email_address",
+                "isReadonly": false
+            },
+            {
+                "type": "string",
+                "defaultValue": null,
+                "name": "runtime.user_title",
+                "isReadonly": false
+            },
+            {
+                "type": "string",
+                "defaultValue": null,
+                "name": "runtime.os_name",
+                "isReadonly": false
+            },
+            {
+                "type": "string",
+                "defaultValue": null,
+                "name": "runtime.subnet",
+                "isReadonly": false
+            },
+            {
+                "type": "string",
+                "defaultValue": null,
+                "name": "runtime.business_location",
+                "isReadonly": false
+            },
+            {
+                "type": "string",
+                "defaultValue": null,
+                "name": "runtime.custom_attribute_1",
+                "isReadonly": false
+            },
+            {
+                "type": "string",
+                "defaultValue": null,
+                "name": "runtime.custom_attribute_2",
+                "isReadonly": false
+            },
+            {
+                "type": "string",
+                "defaultValue": null,
+                "name": "runtime.custom_attribute_3",
+                "isReadonly": false
+            },
+            {
+                "type": "string",
+                "defaultValue": null,
+                "name": "runtime.custom_attribute_4",
+                "isReadonly": false
+            },
+            {
+                "type": "string",
+                "defaultValue": null,
+                "name": "runtime.custom_attribute_5",
+                "isReadonly": false
+            },
+            {
+                "type": "string",
+                "defaultValue": null,
+                "name": "runtime.custom_attribute_6",
+                "isReadonly": false
+            },
+            {
+                "type": "string",
+                "defaultValue": null,
+                "name": "runtime.actionName",
+                "isReadonly": false
+            }
+        ],
+        "structuredVariables": []
+    },
+    "isReady": false,
+    "isFactory": false
+}
