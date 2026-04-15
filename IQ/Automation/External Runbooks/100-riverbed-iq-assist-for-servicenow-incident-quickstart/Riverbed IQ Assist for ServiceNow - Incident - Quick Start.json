@@ -2,11 +2,11 @@
     "runbook": {
         "id": "db8e0fd0-8ea7-4433-98bd-d93ada11d815",
         "createdTime": "1760697733.241103000",
-        "lastUpdatedTime": "1766084041.554468500",
+        "lastUpdatedTime": "1776247704.091394500",
         "factoryResourceName": null,
         "isFactory": false,
         "name": "Riverbed IQ Assist for ServiceNow - Incident - Quick Start",
-        "description": "This quick start runbook can be used as-is for Incidents assistance with Riverbed IQ Assist for ServiceNow. When triggered from ServiceNow, the runbook diagnoses the end-user endpoint and updates the incident ticket.",
+        "description": "This quick start runbook can be used as-is for Incidents assistance with Riverbed IQ Assist for ServiceNow. When triggered from ServiceNow, the runbook diagnoses the end-user endpoint and updates the incident ticket.\nversion: 2.0 (2026-04)",
         "isReady": true,
         "triggerType": "webhook",
         "runtimeVariables": {
@@ -312,6 +312,10 @@
                 "wires": [
                     [
                         "671f7895-3254-470d-93ce-9a6abde17192"
+                    ],
+                    [
+                        "613b773f-eec6-4f9f-98db-38b98fb1b9d5",
+                        "9637fdb0-a47f-4cb9-8fca-28d16deb7d39"
                     ]
                 ]
             },
@@ -574,8 +578,8 @@
                 "label": "ServiceNow: Post Data Not Found",
                 "description": "",
                 "properties": {
-                    "x": 1410.4006906480286,
-                    "y": 905,
+                    "x": 1415.4006906480286,
+                    "y": 865,
                     "debug": false,
                     "configurationId": "f4c88032-d05f-4d27-ad96-a1f844c66ba5",
                     "in": [
@@ -642,11 +646,87 @@
                     "debug": false
                 },
                 "wires": []
+            },
+            {
+                "id": "613b773f-eec6-4f9f-98db-38b98fb1b9d5",
+                "isIntegrationSubflowNode": false,
+                "type": "rvbd_ui_text",
+                "label": "Display Error User Endpoint",
+                "description": "",
+                "properties": {
+                    "x": 1179,
+                    "y": 765,
+                    "title": "Error message",
+                    "row": "1",
+                    "notes": "<p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Cannot find the User Endpoint </span><span style=\"white-space: pre-wrap;\">in the Data Store.</span></p><p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">Please check the name of the User Endpoint is correct  (</span><span style=\"white-space: pre-wrap;\">{{variables[\"runtime.User_Endpoint_Name\"]}}) </span><span style=\"white-space: pre-wrap;\">or else check the data sources are enabled in the Data Store configuration (Menu &gt; IQ Ops &gt; Management &gt; Data Sources)</span></p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "9637fdb0-a47f-4cb9-8fca-28d16deb7d39",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow",
+                "label": "ServiceNow: Post User Endpoint Not Found",
+                "description": "",
+                "properties": {
+                    "x": 1183.4006906480286,
+                    "y": 870,
+                    "debug": false,
+                    "configurationId": "f4c88032-d05f-4d27-ad96-a1f844c66ba5",
+                    "in": [
+                        {
+                            "inner": "subflow.Connector",
+                            "outer": "00000000-0000-0000-0000-000000000000",
+                            "method": "connector"
+                        },
+                        {
+                            "inner": "subflow.Record_Type",
+                            "outer": "incident",
+                            "method": "static",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Sys_Id",
+                            "outer": "runtime.ServiceNow_Incident_Sys_Id",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Content",
+                            "outer": "User Endpoint not found. Please check the CI contains the name of the User Endpoint",
+                            "method": "static",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Visibility",
+                            "outer": "work_notes",
+                            "method": "static",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Format",
+                            "outer": "html",
+                            "method": "static"
+                        }
+                    ],
+                    "out": [
+                        {
+                            "inner": "subflow.Successful",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Error_Message",
+                            "outer": ""
+                        }
+                    ]
+                },
+                "wires": []
             }
         ],
         "lastUpdatedUser": "Runbook Export",
         "createdByUser": "Runbook Export",
-        "eTag": "\"1c902a57-f44a-4e2a-bee4-ea26c648ff92\"",
+        "eTag": "\"f3e98027-8187-4437-a325-c34c3d3c7791\"",
         "variant": "incident",
         "seriesId": "db8e0fd0-8ea7-4433-98bd-d93ada11d815",
         "version": "1.0",
@@ -681,7 +761,7 @@
             "type": "subflow",
             "name": "Skill: Generate Insight",
             "globalId": "RiverbedIQAssist::Generate_Insight",
-            "originalVersion": "4.0.0",
+            "originalVersion": "4.0.1",
             "nodeLabel": "Skill: Generate Insight",
             "sourceLocation": "integrationLibrary",
             "sourcePackageId": "RiverbedIQAssist"
@@ -695,7 +775,17 @@
             "nodeLabel": "ServiceNow: Post Data Not Found",
             "sourceLocation": "integrationLibrary",
             "sourcePackageId": "ServiceNow"
+        },
+        {
+            "id": "f4c88032-d05f-4d27-ad96-a1f844c66ba5",
+            "type": "subflow",
+            "name": "ServiceNow: Post Comment",
+            "globalId": "ServiceNow::Post_Comment",
+            "originalVersion": "1.0.4",
+            "nodeLabel": "ServiceNow: Post User Endpoint Not Found",
+            "sourceLocation": "integrationLibrary",
+            "sourcePackageId": "ServiceNow"
         }
     ],
-    "token": "6T8hMvUXkGDOahjfxuJYsEKRnCirDfYojkQ/H7fuaSY="
+    "token": "RNOcVEcf+xBP9VGULcoKiXOhscqXXdbZiRCMuEmg1hc="
 }
