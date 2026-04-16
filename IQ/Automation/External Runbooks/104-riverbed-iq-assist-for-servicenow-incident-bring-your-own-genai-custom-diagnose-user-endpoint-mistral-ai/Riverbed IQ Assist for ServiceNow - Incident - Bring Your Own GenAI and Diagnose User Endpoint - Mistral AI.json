@@ -2,11 +2,11 @@
     "runbook": {
         "id": "50fd9889-2721-4b27-9b9b-0cfa20be1b69",
         "createdTime": "1760083595.725231700",
-        "lastUpdatedTime": "1760726410.431438900",
+        "lastUpdatedTime": "1776270097.059938500",
         "factoryResourceName": null,
         "isFactory": false,
-        "name": "Riverbed IQ Assist for ServiceNow - Incident - Bring Your Own GenAI and Diagnose User Endpoint - Mistral AI",
-        "description": "This quick start runbook can be used as-is for Incidents assistance with Riverbed IQ Assist for ServiceNow. When triggered from ServiceNow, the runbook diagnoses the end-user endpoint using your own GenAI (leveraging integration with your own Mistral AI) and updates the incident ticket.",
+        "name": "Riverbed IQ Assist for ServiceNow - Incident - Bring Your Own GenAI and Diagnose User Endpoint - Mistral AI - 2.0",
+        "description": "This quick start runbook can be used as-is for Incidents assistance with Riverbed IQ Assist for ServiceNow. When triggered from ServiceNow, the runbook diagnoses the end-user endpoint using your own GenAI (leveraging integration with your own Mistral AI) and updates the incident ticket.\nversion: 2.0 (2026-04)",
         "isReady": true,
         "triggerType": "webhook",
         "runtimeVariables": {
@@ -169,7 +169,7 @@
                         }
                     ],
                     "transformTemplate": "{\n\"runtime.ServiceNow_Incident_Sys_Id\": \"{{trigger[\"requestBody\"][\"recordID\"]}}\",\n\"runtime.ServiceNow_Configuration_Item\": \"{{trigger[\"requestBody\"][\"ciName\"]}}\",\n\"runtime.ServiceNow_Configuration_Item_Sys_Id\": \"{{trigger[\"requestBody\"][\"ciID\"]}}\",\n\"runtime.ServiceNow_Incident_Number\": \"{{trigger[\"requestBody\"][\"recordNumber\"]}}\",\n\"runtime.User_Endpoint_Name\": \"{{trigger[\"requestBody\"][\"ciName\"]}}\"\n}",
-                    "debug": true
+                    "debug": false
                 },
                 "wires": [
                     [
@@ -193,7 +193,7 @@
                         }
                     ],
                     "transformTemplate": "{%- assign html = node_input.output.data[0].keys['choices'][0]['message']['content'][1]['text'] | replace: '```html', \"\" | replace: '```', \"\" | replace: '\\n', \"\" | replace: '\\\"', \"&quot;\" -%}\n{\n\"runtime.Insight\": \"{{ html }}\"\n}",
-                    "debug": true
+                    "debug": false
                 },
                 "wires": [
                     [
@@ -411,7 +411,7 @@
                         }
                     ],
                     "transformTemplate": "{%- assign data = node_input.output.data -%}\n{%- assign message = \"\" -%}\n{%- capture message -%}\nYou use your knowledge to help troubleshooting IT issues.\n\n1. Diagnose any issue based on the following health events of a user IT device (laptop, workstation, etc.)\n\n2. Summarize the issues\n\n3. Display the result in HTML format. Your response should strictly adhere to the structure below, with no additional commentary or explanation outside the HTML format, as shown in this example :\n'''\n<strong>Prioritised Issues:</strong>\n<ol>\n<li>Problem A<p>As a result this is causing [explain impact]</p><p><b>Next steps:</b> [suggest how to solve]</p></li>\n<li>Problem B<p>As a result this is causing [explain impact]</p><p><b>Next steps:</b> [suggest how to solve]</p></li>\n<li>Problem C<p>As a result this is causing [explain impact]</p><p><b>Next steps:</b> [suggest how to solve]</p></li>\n</ol>\n<p><small>AI-generated content</small></p>\n'''\n\n{% for event in data %}\n---\nEvent: {{ event['keys']['health_event_name'] }}\nSeverity: {{ event['keys']['health_event_severity'] }}\nTimestamp: {{ event['keys']['health_event_last_timestamp'] }}\nCategory: {{ event['keys']['health_event_category'] }}\nComponent: {{ event['keys']['health_event_component'] }}\nComponent Type: {{ event['keys']['health_event_component_type'] }}\nDetails: {{ event['keys']['health_event_details'] }}\n{% endfor %}\n{% endcapture %}\n\n{\n    \"runtime.GenAI_Message\": \"{{ message }}\"\n}",
-                    "debug": true
+                    "debug": false
                 },
                 "wires": [
                     [
@@ -553,6 +553,10 @@
                 "wires": [
                     [
                         "a224848a-f7cb-4eea-a69a-ad8425523fdc"
+                    ],
+                    [
+                        "d4cdb498-0eae-4aa8-a0ba-76e96ef17cd4",
+                        "d8c3de9d-f198-46b3-983f-169d9bab82c9"
                     ]
                 ]
             },
@@ -695,11 +699,87 @@
                     ]
                 },
                 "wires": []
+            },
+            {
+                "id": "d4cdb498-0eae-4aa8-a0ba-76e96ef17cd4",
+                "isIntegrationSubflowNode": false,
+                "type": "rvbd_ui_text",
+                "label": "Display Error User Endpoint",
+                "description": "",
+                "properties": {
+                    "x": 1262,
+                    "y": 509.99999999999994,
+                    "title": "Error message",
+                    "row": "1",
+                    "notes": "<p dir=\"ltr\" class=\"editor-paragraph\"><span style=\"white-space: pre-wrap;\">No User Endpoint found</span></p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "d8c3de9d-f198-46b3-983f-169d9bab82c9",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow",
+                "label": "ServiceNow: Post User Endpoint Not Found",
+                "description": "",
+                "properties": {
+                    "x": 1260.4006906480286,
+                    "y": 615,
+                    "debug": false,
+                    "configurationId": "f4c88032-d05f-4d27-ad96-a1f844c66ba5",
+                    "in": [
+                        {
+                            "inner": "subflow.Connector",
+                            "outer": "00000000-0000-0000-0000-000000000000",
+                            "method": "connector"
+                        },
+                        {
+                            "inner": "subflow.Record_Type",
+                            "outer": "incident",
+                            "method": "static",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Sys_Id",
+                            "outer": "runtime.ServiceNow_Incident_Sys_Id",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Content",
+                            "outer": "User Endpoint not found. Please check the CI contains the name of the User Endpoint",
+                            "method": "static",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Visibility",
+                            "outer": "work_notes",
+                            "method": "static",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Format",
+                            "outer": "html",
+                            "method": "static"
+                        }
+                    ],
+                    "out": [
+                        {
+                            "inner": "subflow.Successful",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Error_Message",
+                            "outer": ""
+                        }
+                    ]
+                },
+                "wires": []
             }
         ],
         "lastUpdatedUser": "Runbook Export",
         "createdByUser": "Runbook Export",
-        "eTag": "W/\"datetime'2025-10-17T18%3A40%3A10.4479045Z'\"",
+        "eTag": "\"cfa06966-3380-4bce-9540-5f59ae82b5a1\"",
         "variant": "incident",
         "seriesId": "50fd9889-2721-4b27-9b9b-0cfa20be1b69",
         "version": "1.0",
@@ -748,7 +828,17 @@
             "nodeLabel": "ServiceNow: Post Data Not Found",
             "sourceLocation": "integrationLibrary",
             "sourcePackageId": "ServiceNow"
+        },
+        {
+            "id": "f4c88032-d05f-4d27-ad96-a1f844c66ba5",
+            "type": "subflow",
+            "name": "ServiceNow: Post Comment",
+            "globalId": "ServiceNow::Post_Comment",
+            "originalVersion": "1.0.4",
+            "nodeLabel": "ServiceNow: Post User Endpoint Not Found",
+            "sourceLocation": "integrationLibrary",
+            "sourcePackageId": "ServiceNow"
         }
     ],
-    "token": "HaR+ID0BJoVyYuCJuYSWll/p7715RuHvamP7yXKFR4E="
+    "token": "7vhffY2t2z65VTL21M2xk42zvLFtc301yqCU8n9u7Co="
 }
