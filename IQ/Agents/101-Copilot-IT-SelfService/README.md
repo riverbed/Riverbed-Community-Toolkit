@@ -145,7 +145,7 @@ Responses should be concise, well-structured, and easy to understand, avoiding t
 5. hit **Save**  
 
 
-### 3. Create a connector for Riverbed IQ Assist skills
+### 4. Create a connector for Riverbed IQ Assist skills
 
 #### In Copilot Studio
 
