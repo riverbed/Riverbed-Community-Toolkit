@@ -498,7 +498,7 @@ How to fix it:
 #### The connector returned an HTTP error with code 401: Azure AD JWT not present
 
 A 401 error usually indicates that the connector or connection is misconfigured in Copilot, causing the Azure AD JWT not to be passed correctly to the backend. Common causes include: 
-*A typo in the connector URL or path
+* A typo in the connector URL or path
 * An incorrect tenant value in the connection, for example: using by mistake the *Tenant Id* from *IQ Ops > Management > API Access* (The correct **Tenant** is shown under **IQ Ops** > **Management** > **Riverbed IQ Assist Configuration** > **Riverbed IQ Assist for Copilot** tab)
 
 How to fix it:
