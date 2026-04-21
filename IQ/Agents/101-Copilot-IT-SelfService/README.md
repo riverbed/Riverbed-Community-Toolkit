@@ -83,27 +83,41 @@ Collect the generated credentials:
 
 * **Client Secret**
 
-## Setting Up the Copilot Agent
+## Setting Up the Copilot Agent in Microsoft Copilot Studio
 
-### 1. Access Microsoft Copilot Studio
+### 1. Create a Solution for your agent
 
-1. Navigate to https://copilotstudio.microsoft.com/
+1. Navigate to https://copilotstudio.microsoft.com/, and in the menu, in the Explore section, open **Solutions** 
 
-2. Go to **Agents** and click on **+ New agent**
+2. Click on **+ New Solution**
 
-### 2. Configure the Agent
+3. Fill in the solution details; for example, Display Name: `IT Self-Service Assistant`, Name: `ITSelfServiceAssistant`, Publisher: `YourCorp` (or create a new publisher), then click **Create**
 
-1. Click on **Configure**
+4. Close the tab
 
-2. Set a **Logo**, for example you can use the Riverbed logo ([follow the link and download](https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads/master/IQ/Agents/101-Copilot-IT-SelfService/assets/riverbed-icon.png))
+### 2. Create an agent
 
-3. Configure the agent Name, Description and Instruction. For example using this agent sample (*101-Copilot-IT-SelfService*):
+1. Navigate to https://copilotstudio.microsoft.com/, and in the menu, open **Agents**
 
-Name:
+2. click the arrow expand the button *+ Create blank agent* and click on **Advanced Create**
+
+3. Set the Language for your agent (e.g. English), and select the solution (e.g. `IT Self-Service Assistant`), and click on  **Confirm and create**
+
+4. Wait for Copilot Studio to finish setting things up
+
+### 3. Configure the Agent
+
+1. Click on **Edit**
+
+2. Configure the agent Name
 
 ```
 IT Self-Service Assistant
 ```
+
+3. Set a **Logo**, for example you can use the Riverbed logo ([follow the link and download](https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads/master/IQ/Agents/101-Copilot-IT-SelfService/assets/riverbed-icon.png))
+
+4. Configure the agent Description and Instructions. For example using this agent sample (*101-Copilot-IT-SelfService*):
 
 Description:
 
@@ -128,21 +142,23 @@ Always seek explicit confirmation from the user before initiating any remediatio
 Responses should be concise, well-structured, and easy to understand, avoiding technical complexity unless necessary.
 ```
 
-4. hit **Create**
+5. hit **Save**  
 
 
-### 3. Create a connector for Riverbed IQ Assist skills
+### 4. Create a connector for Riverbed IQ Assist skills
 
 #### In Copilot Studio
 
-1. Go to Tools and click **+ Add a Tool.**
-2. Expand the **Create new** section and click **Custom connector**. 
+1. Go to Tools and click **+ Add a Tool**
+
+2. Expand the **Create new** section and click **Custom connector**.
 
 A new tab opens "Power Apps > Custom Connectors"
 
 #### In Power Apps > Custom Connectors
 
 1. At the top right, in the list **+ New custom connector**, select **Import an OpenAPI from URL**
+
 2. Add a **Connector name**, for example:
 
 ```
@@ -244,7 +260,7 @@ The skills of Riverbed IQ Assist are now available as Tools for your agent. For 
 
 #### Create a connection
 
-The first time, you need to create a connection.
+The first time you add a tool from the connector, you need to create a connection.
 
 1. Click on **Create new connection**
 
@@ -267,17 +283,19 @@ The first time, you need to create a connection.
 
 ### 5. Add a tool using the connection for Riverbed IQ Assist skills
 
-In Tools > Add tool, you selected a tool and configured a connection. Now you will configure this tool for your agent.
+#### Configure the tool
 
-#### Additional Details
+In Tools > Add tool, you selected a tool and configured a connection. Now you will configure this tool for your agent.
 
 1. Click on **Add and configure**
 
-2. Expand **Additional Details**
+#### Additional Details
 
-3. Set **When this tool may be used** to **Agent may use this tool at any time**
+1. Expand **Additional Details**
 
-4. Set **Credentials to use** to **Maker-provided credentials**
+2. Set **When this tool may be used** to **Agent may use this tool at any time**
+
+3. Set **Credentials to use** to **Maker-provided credentials**
 
 <details>
 <summary>Click here to see an example screenshot</summary>
@@ -306,11 +324,11 @@ In Tools > Add tool, you selected a tool and configured a connection. Now you wi
 
 </details>
 
-3. Click **Save**
+3. Click **Save** (at the top)
 
 ## Customize the Agent – Advanced
 
-You created an Employee Self Service Copilot Agent to share with employees. You can extend and customize it by adding tools from the Riverbed IQ Assist skill set.
+You created an Employee Self Service Copilot Agent to share with employees. Optionally you can extend and customize it by adding tools from the Riverbed IQ Assist skill set.
 
 ### 1. Add more tools
 
@@ -475,6 +493,18 @@ A 403 error usually means the connector configuration is pointing to a resource 
 How to fix it:
 
 * The simplest solution is often to delete the connector and recreate it (refer to [Setting Up the Copilot Agent > 3. Create a connector for Riverbed IQ Assist skills](#3-create-a-connector-for-riverbed-iq-assist-skills))
+
+
+#### The connector returned an HTTP error with code 401: Azure AD JWT not present
+
+A 401 error usually indicates that the connector or connection is misconfigured in Copilot, causing the Azure AD JWT not to be passed correctly to the backend. Common causes include: 
+* A typo in the connector URL or path
+* An incorrect tenant value in the connection, for example: using by mistake the *Tenant Id* from *IQ Ops > Management > API Access* (The correct **Tenant** is shown under **IQ Ops** > **Management** > **Riverbed IQ Assist Configuration** > **Riverbed IQ Assist for Copilot** tab)
+
+How to fix it:
+
+* The simplest solution is often to delete the connector and recreate it (refer to [Setting Up the Copilot Agent > 3. Create a connector for Riverbed IQ Assist skills](#3-create-a-connector-for-riverbed-iq-assist-skills))
+
 
 </details>
 
