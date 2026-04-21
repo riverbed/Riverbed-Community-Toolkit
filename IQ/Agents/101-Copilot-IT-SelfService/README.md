@@ -91,7 +91,7 @@ Collect the generated credentials:
 
 2. Click on **+ New Solution**
 
-3. Fill the solution details, e.g Display Name: `IT Self-Service Assistant`, Name: `ITSelfServiceAssistant`, Publisher: `YourCorp` (or create a new publisher) and click on  **Create**
+3. Fill in the solution details; for example, Display Name: `IT Self-Service Assistant`, Name: `ITSelfServiceAssistant`, Publisher: `YourCorp` (or create a new publisher), then click **Create**
 
 4. Close the tab
 
