@@ -103,7 +103,7 @@ Collect the generated credentials:
 
 3. Set the Language for your agent (e.g. English), and select the solution (e.g. `IT Self-Service Assistant`), and click on  **Confirm and create**
 
-4. Wait Copilot Studio setting things up
+4. Wait for Copilot Studio to finish setting things up
 
 ### 3. Configure the Agent
 
