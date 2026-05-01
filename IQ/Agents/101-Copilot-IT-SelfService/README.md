@@ -149,7 +149,7 @@ Responses should be concise, well-structured, and easy to understand, avoiding t
 
 #### In Copilot Studio
 
-1. Go to Tools and click **+ Add a Tool**
+1. Open the **Tools** tab (at the top) and click **+ Add a Tool**
 
 2. Expand the **Create new** section and click **Custom connector**.
 
@@ -246,11 +246,14 @@ https://raw.githubusercontent.com/riverbed/Riverbed-Community-Toolkit/refs/heads
 
 9. When the connector is created, you can close the tab, and go back to Copilot Studio
 
-### 4. Configure a connection for Riverbed IQ Assist skills
+### 5. Configure a connection for Riverbed IQ Assist skills
 
 #### Find a Tool
 
-Back to Copilot Studio > Tools > Add tool window
+Back to Copilot Studio where you started adding a tool to your agent.
+
+> [!NOTE]
+> If you closed the page, navigate to https://copilotstudio.microsoft.com/. In the **Agents** menu, select your agent to open its configuration. Then open the Tools tab (at the top) and click **+ Add a Tool**.
 
 The skills of Riverbed IQ Assist are now available as Tools for your agent. For example you can search the connector name (e.g. "Riverbed IQ Assist"), tools name prefix like "Self-Service" or the specific tool name (e.g. "Find My User Endpoint").
 
@@ -281,7 +284,7 @@ The first time you add a tool from the connector, you need to create a connectio
 
 4. Click **Create**
 
-### 5. Add a tool using the connection for Riverbed IQ Assist skills
+### 6. Add a tool using the connection for Riverbed IQ Assist skills
 
 #### Configure the tool
 
