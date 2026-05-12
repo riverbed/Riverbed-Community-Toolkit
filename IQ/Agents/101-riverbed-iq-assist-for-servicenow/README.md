@@ -294,7 +294,7 @@ When adding news skills, the steps in Riverbed IQ are similar to the steps descr
 | service |  equals | **riverbed_iq_assist** |
 | connector_type | equals |  **servicenow** |
 | type | equals |  **incident** , **problem** or **alert** |
-| skill |  equals |  *identifier of your choice* | skill_custom_diagnose_user_endpoint |
+| skill |  equals |  *identifier of your choice:* skill_custom_diagnose_user_endpoint |
 
 > Note:
 > * The type of workflow is *incident*, *problem* or *alert*
