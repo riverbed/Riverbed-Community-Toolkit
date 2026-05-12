@@ -298,7 +298,7 @@ When adding news skills, the steps in Riverbed IQ are similar to the steps descr
 
 > Note:
 > * The type of workflow is *incident*, *problem* or *alert*
-> * The identifier must use lowercase and underscore. For example: `skill_custom_diagnose_user_endpoint`
+> * The identifier must use lowercase and underscore. For example: `skill_custom_diagnose_user_endpoint`, `skill_custom_find_caller_endpoints`
 
 #### Step 3: Configure the Skills Selector in ServiceNow
 
