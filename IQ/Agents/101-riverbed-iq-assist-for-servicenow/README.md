@@ -267,7 +267,7 @@ Using the skill selector allows to tailor Riverbed IQ Assist to your Incident, P
 > Need help designing or validating skills? Contact your Riverbed Solution Engineer.
 
 <details>
-<summary>Click here to see the steps</summary>
+<summary>Click here to see the steps for advanced users</summary>
 
 When adding news skills, the steps in Riverbed IQ are similar to the steps described in the section [configure quick start skill](#3-configure-the-quick-start-skill) where you configured a single default skill. Then the Skills Selector can be set in the configuration of the app in ServiceNow.
 
