@@ -278,7 +278,7 @@ When adding news skills, the steps in Riverbed IQ are similar to the steps descr
 2. Import, edit, or create runbooks
 3. Enable **Allow Automation**
 
-> [!NOTE]
+> Note:
 > * You can find sample skill and runbooks content in the [Riverbed Community Toolkit repository](https://github.com/riverbed/Riverbed-Community-Toolkit/tree/master/IQ).
 > * When designing skills, verify that the Riverbed IQ Assist ServiceNow user (for example, `riverbed_iq_assist`) has the required permissions. For incident enrichment use cases (such as the Quick Start example), this typically means read/write access to Incidents and read access to CMDB.
 
@@ -296,10 +296,9 @@ When adding news skills, the steps in Riverbed IQ are similar to the steps descr
 | type | equals |  **incident** , **problem** or **alert** |
 | skill |  equals |  *identifier of your choice* | skill_custom_diagnose_user_endpoint |
 
-> [!NOTE]
->
-> The type of workflow is *incident*, *problem* or *alert*
-> The identifier must use lowercase and underscore. For example: `skill_custom_diagnose_user_endpoint`
+> Note:
+> * The type of workflow is *incident*, *problem* or *alert*
+> * The identifier must use lowercase and underscore. For example: `skill_custom_diagnose_user_endpoint`
 
 #### Step 3: Configure the Skills Selector in ServiceNow
 
@@ -324,10 +323,10 @@ For example, with two skills:
 }
 ```
 
-> [!NOTE]
+> Note:
 > **Rules for skills configuration**
-> Each value must be unique
-> A value named **default** is required
+> * Each value must be unique
+> * A value named **default** is required
 
 #### Step 4: Validate in ServiceNow (example Incident)
 
