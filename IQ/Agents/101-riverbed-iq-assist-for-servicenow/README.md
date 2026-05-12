@@ -45,7 +45,7 @@ For example: `https://your_tenant.cloud.riverbed.com`
 
 ### 2. Enable Riverbed IQ Assist
 
-* Go to IQ Ops > **Management** > **Riverbed IQ Assist Configuration**
+* Go to IQ Ops > **Management** > menu > **Riverbed IQ Assist Configuration**
 
 * Review and click on opt-in to enable the feature
 
@@ -62,7 +62,7 @@ For example: `https://your_tenant.cloud.riverbed.com`
 
 ### 3. Enable Riverbed Data-Sources
 
-* Go to IQ Ops > **Management** > **Edges & Data Sources** 
+* Go to IQ Ops > **Management** > menu > **Edges & Data Sources** 
 
 * Enable your data sources (e.g. Aternity SAAS, NPM+)
 
@@ -162,12 +162,12 @@ The "Quick Start" skill can be used for incident management and IT Service Desk 
 
 1. **Import the Runbook**
    - Download the [runbook file](../../Automation/External%20Runbooks/100-riverbed-iq-assist-for-servicenow-incident-quickstart/Riverbed%20IQ%20Assist%20for%20ServiceNow%20-%20Incident%20-%20Quick%20Start.json)
-   - Go to IQ Ops > Automation
+   - Go to IQ Ops > Automation > menu > **External Runbooks**
    - Import the runbook in External Runbooks
    - Toggle "Allow Automation" on
 
 2. **Add Automation Trigger**
-   - Go to Automation Management
+   - Go to IQ Ops > Automation > menu > **Automation Management**
    - Click **Add Automation for external trigger**
    - Select Trigger: **Webhook**
 
@@ -185,7 +185,7 @@ The "Quick Start" skill can be used for incident management and IT Service Desk 
 
 ### 1. Gather details in IQ
 
-* Go to IQ Ops > **Management** > **Riverbed IQ Assist Configuration**, then select the **RIVERBED IQ ASSIST FOR SERVICENOW** tab.
+* Go to IQ Ops > **Management** > menu > **Riverbed IQ Assist Configuration**, then select the **RIVERBED IQ ASSIST FOR SERVICENOW** tab.
 
 * Collect the following configuration details:
 
@@ -211,6 +211,7 @@ The "Quick Start" skill can be used for incident management and IT Service Desk 
 * Configure the application using the credentials and URLs collected above. For details, refer to section 3 of the Installation Guide.
 
 > [!NOTE]
+>
 > Need help? Contact your Riverbed Solution Engineer or [Riverbed Support](https://support.riverbed.com/)
 > The Installation Guide is available in the ServiceNow Store: [Riverbed IQ Assist for ServiceNow app](https://store.servicenow.com/sn_appstore_store.do#!/store/search?q=Riverbed).
 
@@ -252,27 +253,126 @@ Plan for approximately 45 minutes for initial setup, plus additional time for sk
 
 Yes! See the advanced skills configuration below.
 
-### How to configure skills? (ADVANCED)
+### How to configure skills with the Skills Selector? (ADVANCED)
 
-Use advanced skills to tailor Riverbed IQ Assist to your Incident, Problem, or Alert workflows.
+The Skills Selector enables ServiceNow operators to choose from multiple pre-configured skills when launching Riverbed IQ Assist from an incident, problem or alert. Instead of running a single default runbook, the selector presents a drop-down list of available skills, each mapped to a specific automation runbook in Riverbed IQ, so that the IT staff in ServiceNow can pick the most relevant action for the situation at hand.
 
-You can find sample skill and runbook content in the [Riverbed Community Toolkit repository](https://github.com/riverbed/Riverbed-Community-Toolkit/tree/master/IQ).
+Using the skill selector allows you to tailor Riverbed IQ Assist to your Incident, Problem, or Alert workflows.
 
-When designing skills, verify that the Riverbed IQ Assist ServiceNow user (for example, `riverbed_iq_assist`) has the required permissions. For incident enrichment use cases (such as the Quick Start example), this typically means read/write access to Incidents and read access to CMDB.
+> [!WARNING]
+> Skills Selector is intended for teams already comfortable with Riverbed IQ runbooks, webhook trigger conditions, and ServiceNow property configuration. If this is your first deployment, complete the default Quick Start skill first, then return to this section.
 
 > [!NOTE]
+>
 > Need help designing or validating skills? Contact your Riverbed Solution Engineer.
 
+<details>
+<summary>Click here to see the steps for advanced users</summary>
+
+When adding new skills, the steps in Riverbed IQ are similar to the steps described in the section [configure quick start skill](#3-configure-the-quick-start-skill) where you configured a single default skill. Then the Skills Selector can be set in the configuration of the app in ServiceNow.
+
+
+#### Step 1: Configure skills in IQ
+
+1. Go to IQ Ops > Automation > menu > **External Runbooks**
+2. Import, edit, or create runbooks
+3. Enable **Allow Automation**
+
+> Note:
+> * You can find sample skill and runbooks content in the [Riverbed Community Toolkit repository](https://github.com/riverbed/Riverbed-Community-Toolkit/tree/master/IQ).
+> * When designing skills, verify that the Riverbed IQ Assist ServiceNow user (for example, `riverbed_iq_assist`) has the required permissions. For incident enrichment use cases (such as the Quick Start example), this typically means read/write access to Incidents and read access to CMDB.
+
+#### Step 2: Add Automation Trigger
+
+1. Go to IQ Ops > Automation > menu > **Automation Management**
+2. Click **Add Automation for external trigger**
+3. In **Select Trigger** set **Webhook**
+4. In **Set Conditions**, add the following:
+
+| URL Parameter | Condition | Value example |
+| --- | --- | --- |
+| service |  equals | **riverbed_iq_assist** |
+| connector_type | equals |  **servicenow** |
+| type | equals |  **incident** , **problem** or **alert** |
+| skill |  equals |  *identifier of your choice:* skill_custom_diagnose_user_endpoint |
+
+> Note:
+> * The type of workflow is *incident*, *problem* or *alert*
+> * The identifier must use lowercase and underscore. For example: `skill_custom_diagnose_user_endpoint`, `skill_custom_find_caller_endpoints`, etc.
+
+#### Step 3: Configure the Skills Selector in ServiceNow
+
+1. Open ServiceNow > All > Riverbed IQ Assist > Configuration.
+2. Edit the relevant property, for example the incident skills property  `x_rivt2_iq_assist1.skills_incident`
+3. Set JSON value with unique items and include default as mandatory. 
+
+For example, with two skills:
+
+```json
+{
+  "items": [
+    {
+      "displayValue": "Diagnose User Endpoint",
+      "value": "default"
+    },
+    {
+      "displayValue": "Custom Diagnose User Endpoint",
+      "value": "skill_custom_diagnose_user_endpoint"
+    }
+  ]
+}
+```
+
+> Note:
+> **Rules for skills configuration**
+> * Each value must be unique
+> * A value named **default** is required
+
+#### Step 4: Validate in ServiceNow (example Incident)
+
+1. In ServiceNow, open Service Operations Workspace
+2. Open an incident
+3. Click the "Riverbed IQ Assist" button
+4. Verify that the skill selector drop-down appears and shows all configured skills
+5. Select the newly added skill and confirm it triggers the correct runbook
+
+#### Step 5: Adding More Skills
+
+   - Repeat steps 1 to 4 for each additional skill.
+   - For example, a three-skill configuration would look like:
+
+```json
+{
+  "items" : [
+    {
+      "displayValue" : "Diagnose User Endpoint",
+      "value" : "default"
+    },
+    {
+      "displayValue" : "Custom Diagnose User Endpoint",
+      "value" : "skill_custom_diagnose_user_endpoint"
+    },
+    {
+      "displayValue" : "Custom Find Caller Endpoints",
+      "value" : "skill_custom_find_caller_endpoints"
+    }
+  ]
+}
+```
+
+</details>
 
 ## Troubleshooting
 
 **Common Issues:**
 
-| Issue | Solution |
-|-------|----------|
-| Webhook not triggering | Verify URL parameters match exactly |
-| No data in incidents | Confirm data sources are enabled and connector is active |
-| Authentication errors | Regenerate OAuth credentials and update in both systems |
+| Issue | Likely Cause | Verify | Fix |
+|---|---|---|---|
+| No enrichment data in incidents | Data source disabled or connector inactive | Check data source status and connector health | Enable data source and re-test connector |
+| Authentication errors | Expired or mismatched OAuth values | Validate client, scope, and token issuance in both systems | Regenerate OAuth client and update both sides |
+| Webhook not triggering (advanced) | URL conditions do not match | Compare trigger conditions and actual request parameters | Correct service, connector_type, type, and skill values |
+| ServiceNow logs show 422 | Skill mapping missing or invalid | Check skill exists in trigger and ServiceNow selector config | Add or correct skill configuration |
+| Skill selector not visible | Not using Service Operations Workspace | Confirm UI context in ServiceNow | Use Service Operations Workspace (not classic view) |
 
 ## License
 
