@@ -185,7 +185,7 @@ The "Quick Start" skill can be used for incident management and IT Service Desk 
 
 ### 1. Gather details in IQ
 
-* Go to IQ Ops > **Management** > Menu > **Riverbed IQ Assist Configuration**, then select the **RIVERBED IQ ASSIST FOR SERVICENOW** tab.
+* Go to IQ Ops > **Management** > menu > **Riverbed IQ Assist Configuration**, then select the **RIVERBED IQ ASSIST FOR SERVICENOW** tab.
 
 * Collect the following configuration details:
 
