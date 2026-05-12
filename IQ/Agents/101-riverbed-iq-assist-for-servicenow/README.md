@@ -45,7 +45,7 @@ For example: `https://your_tenant.cloud.riverbed.com`
 
 ### 2. Enable Riverbed IQ Assist
 
-* Go to IQ Ops > **Management** > **Riverbed IQ Assist Configuration**
+* Go to IQ Ops > **Management** > menu > **Riverbed IQ Assist Configuration**
 
 * Review and click on opt-in to enable the feature
 
@@ -62,7 +62,7 @@ For example: `https://your_tenant.cloud.riverbed.com`
 
 ### 3. Enable Riverbed Data-Sources
 
-* Go to IQ Ops > **Management** > **Edges & Data Sources** 
+* Go to IQ Ops > **Management** > menu > **Edges & Data Sources** 
 
 * Enable your data sources (e.g. Aternity SAAS, NPM+)
 
@@ -162,12 +162,12 @@ The "Quick Start" skill can be used for incident management and IT Service Desk 
 
 1. **Import the Runbook**
    - Download the [runbook file](../../Automation/External%20Runbooks/100-riverbed-iq-assist-for-servicenow-incident-quickstart/Riverbed%20IQ%20Assist%20for%20ServiceNow%20-%20Incident%20-%20Quick%20Start.json)
-   - Go to IQ Ops > Automation > Menu > **External Runbooks**
+   - Go to IQ Ops > Automation > menu > **External Runbooks**
    - Import the runbook in External Runbooks
    - Toggle "Allow Automation" on
 
 2. **Add Automation Trigger**
-   - Go to IQ Ops > Automation > Menu > **Automation Management**
+   - Go to IQ Ops > Automation > menu > **Automation Management**
    - Click **Add Automation for external trigger**
    - Select Trigger: **Webhook**
 
