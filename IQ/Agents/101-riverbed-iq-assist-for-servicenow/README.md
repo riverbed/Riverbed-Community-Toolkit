@@ -257,7 +257,7 @@ Yes! See the advanced skills configuration below.
 
 The Skills Selector enables ServiceNow operators to choose from multiple pre-configured skills when launching Riverbed IQ Assist from an incident, problem or alert. Instead of running a single default runbook, the selector presents a drop-down list of available skills, each mapped to a specific automation runbook in Riverbed IQ, so that the IT staff in ServiceNow can pick the most relevant action for the situation at hand.
 
-Using the skill selector allows to tailor Riverbed IQ Assist to your Incident, Problem, or Alert workflows.
+Using the skill selector allows you to tailor Riverbed IQ Assist to your Incident, Problem, or Alert workflows.
 
 > [!WARNING]
 > Skills Selector is intended for teams already comfortable with Riverbed IQ runbooks, webhook trigger conditions, and ServiceNow property configuration. If this is your first deployment, complete the default Quick Start skill first, then return to this section.
@@ -269,10 +269,10 @@ Using the skill selector allows to tailor Riverbed IQ Assist to your Incident, P
 <details>
 <summary>Click here to see the steps for advanced users</summary>
 
-When adding news skills, the steps in Riverbed IQ are similar to the steps described in the section [configure quick start skill](#3-configure-the-quick-start-skill) where you configured a single default skill. Then the Skills Selector can be set in the configuration of the app in ServiceNow.
+When adding new skills, the steps in Riverbed IQ are similar to the steps described in the section [configure quick start skill](#3-configure-the-quick-start-skill) where you configured a single default skill. Then the Skills Selector can be set in the configuration of the app in ServiceNow.
 
 
-####  Step 1: Configure skills in IQ
+#### Step 1: Configure skills in IQ
 
 1. Go to IQ Ops > Automation > menu > **External Runbooks**
 2. Import, edit, or create runbooks
