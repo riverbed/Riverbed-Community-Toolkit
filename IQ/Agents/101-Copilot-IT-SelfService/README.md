@@ -502,11 +502,35 @@ How to fix it:
 
 A 401 error usually indicates that the connector or connection is misconfigured in Copilot, causing the Azure AD JWT not to be passed correctly to the backend. Common causes include: 
 * A typo in the connector URL or path
-* An incorrect tenant value in the connection, for example: using by mistake the *Tenant Id* from *IQ Ops > Management > API Access* (The correct **Tenant** is shown under **IQ Ops** > **Management** > **Riverbed IQ Assist Configuration** > **Riverbed IQ Assist for Copilot** tab)
+* An incorrect tenant value in the connection
+   - A common mistake is using the *Tenant Id* from *IQ Ops > Management > API Access*
+   - The correct **Tenant** is shown under **IQ Ops** > **Management** > **Riverbed IQ Assist Configuration** > **Riverbed IQ Assist for Copilot**
+* A cross-tenant policy blocking (see the 400 error section below)
 
 How to fix it:
 
-* The simplest solution is often to delete the connector and recreate it (refer to [Setting Up the Copilot Agent > 3. Create a connector for Riverbed IQ Assist skills](#3-create-a-connector-for-riverbed-iq-assist-skills))
+* Delete and recreate the connector. This is often the fastest fix.
+   - See [Setting Up the Copilot Agent > 3. Create a connector for Riverbed IQ Assist skills](#3-create-a-connector-for-riverbed-iq-assist-skills)
+* If the error persists, also follow the steps in the ["connector returned an HTTP error with code 400"](#the-connector-returned-an-http-error-with-code-400-inner-error-sign-in-with-azure-active-directory-account-due-to-a-tenant-isolation-policy)
+
+
+#### The connector returned an HTTP error with code 400. Inner Error: Sign-in with Azure Active Directory account due to a tenant isolation policy.
+
+This 400 error occurs when a tenant isolation policy blocks authentication to the Riverbed Platform.
+
+In Power Platform, the Restrict cross-tenant connections option is disabled by default.  
+If it is enabled, you must add an outbound exception for the Riverbed IQ Assist connector/connection tenant.
+
+How to fix it:
+
+1. In IQ Ops, find the Tenant of the Riverbed IQ Assist connection. The same used as at the previous [configure connection step](#5-configure-a-connection-for-riverbed-iq-assist-skills)))
+   - You can find the **Tenant** value in: IQ Ops > Management > menu > Riverbed IQ Assist config page > RIVERBED IQ ASSIST FOR COPILOT
+   - Example: 987654-987654-987654 
+2. Open the Tenant Isolation policy page in Power Platform
+   - https://admin.powerplatform.microsoft.com/security/idaccessmanagement?feature=TenantIsolation
+3. Add an **OUTBOUND** exception for the Tenant
+   - Example `987654-987654-987654`
+   - Screenshot: ![Power Platform tenant isolation outbound exception example](assets/screenshot-powerplatform-tenantisolation-exception.png)
 
 
 </details>
