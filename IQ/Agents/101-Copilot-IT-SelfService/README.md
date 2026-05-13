@@ -510,7 +510,7 @@ A 401 error usually indicates that the connector or connection is misconfigured 
 How to fix it:
 
 * Delete and recreate the connector. This is often the fastest fix.
-   - See [Setting Up the Copilot Agent > 3. Create a connector for Riverbed IQ Assist skills](#3-create-a-connector-for-riverbed-iq-assist-skills))
+   - See [Setting Up the Copilot Agent > 3. Create a connector for Riverbed IQ Assist skills](#3-create-a-connector-for-riverbed-iq-assist-skills)
 * If the error persists, also follow the steps in the ["connector returned an HTTP error with code 400"](#the-connector-returned-an-http-error-with-code-400-inner-error-sign-in-with-azure-active-directory-account-due-to-a-tenant-isolation-policy)
 
 
