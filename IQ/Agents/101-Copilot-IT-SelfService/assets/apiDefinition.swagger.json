@@ -8,7 +8,7 @@
       "url": "https://support.riverbed.com",
       "email": "support@riverbed.com"
     },
-    "version": "1.0"
+    "version": "1.1"
   },
   "host": "app.cloud.riverbed.com",
   "schemes": [
@@ -326,7 +326,65 @@
           }
         }
       }
-    }
+    },
+   "/selfService/skills/diagnoseUserEndpoint": {
+      "post": {
+        "tags": [
+          "Skill"
+        ],
+        "summary": "Self-Service: Diagnose My User Endpoint",
+        "description": "Diagnose issues on my user endpoint or user device",
+        "operationId": "SelfServiceDiagnoseUserEndpoint",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "required": [
+                "authenticatedUser",
+                "deviceName"
+              ],
+              "type": "object",
+              "properties": {
+                "authenticatedUser": {
+                  "$ref": "#/definitions/AuthenticatedUserContext",
+                  "x-ms-visibility": "important"
+                },
+                "deviceName": {
+                  "title": "User Endpoint",
+                  "description": "The name of the user's device or user endpoint experiencing an issue or a problem",
+                  "type": "string",
+                  "x-ms-visibility": "important"
+                }
+              },
+              "additionalProperties": false
+            },
+            "x-ms-visibility": "important"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The output generated from the action",
+            "schema": {
+              "$ref": "#/definitions/DiagnoseEndpointResponse"
+            }
+          },
+          "202": {
+            "description": "A response indicating a long running operation to be polled for status",
+            "schema": {
+              "$ref": "#/definitions/LongRunningResponse"
+            }
+          }
+        }
+      }
+    }    
   },
   "definitions": {
     "AuthenticatedUserContext": {
