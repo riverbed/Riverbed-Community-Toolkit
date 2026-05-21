@@ -338,7 +338,7 @@ You created an Employee Self Service Copilot Agent to share with employees. Opti
 Go to the **Tools** tab and add more **Self-Service** tools, for example:
 
 * **Self-Service: Find My User Endpoint**
-* **Self‑Service: Diagnose User Endpoint**
+* **Self‑Service: Diagnose My User Endpoint**
 * **Self-Service: Initiate Remediation for My User Endpoint**
 * **Self-Service: Get My Remediation Run Status**
 * **Self-Service: Create a Ticket on My Behalf**
