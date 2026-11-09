@@ -1,0 +1,496 @@
+{
+    "runbook": {
+        "id": "caaef271-3455-4f15-9371-83292c237cf2",
+        "createdTime": "1794246144.238222900",
+        "lastUpdatedTime": "1794246144.238222900",
+        "factoryResourceName": null,
+        "isFactory": false,
+        "name": "Create_Ticket",
+        "description": "Creates a ServiceNow incident on demand. Call this tool when a confirmed issue requires a ServiceNow ticket. Returns the ticket number and creation status.",
+        "isReady": true,
+        "triggerType": "on_demand_input",
+        "runtimeVariables": {
+            "primitiveVariables": [
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Title",
+                    "isReadonly": false,
+                    "description": "Short title/subject of the ServiceNow incident"
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Description",
+                    "isReadonly": false,
+                    "description": "Full description of the issue to include in the incident body"
+                },
+                {
+                    "type": "string",
+                    "defaultValue": "Q",
+                    "name": "runtime.CurrentUser",
+                    "isReadonly": false,
+                    "description": "Full name of the user or agent creating the ticket"
+                },
+                {
+                    "type": "boolean",
+                    "defaultValue": null,
+                    "name": "runtime.Successful",
+                    "isReadonly": false,
+                    "description": "Mapped from subflow.Successful — true if ServiceNow created the incident"
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Error_Message",
+                    "isReadonly": false,
+                    "description": "Mapped from subflow.Error_Message on failure"
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Ticket_Number",
+                    "isReadonly": false,
+                    "description": "ServiceNow incident number returned on success (e.g. INC0012345)"
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.mcp_status",
+                    "isReadonly": false,
+                    "description": "MCP normalised status: success or failure"
+                },
+                {
+                    "type": "json",
+                    "defaultValue": null,
+                    "name": "runtime.mcp_response",
+                    "isReadonly": false,
+                    "description": "MCP normalised JSON response object"
+                },
+                {
+                    "type": "json",
+                    "defaultValue": null,
+                    "name": "runtime.Raw_API_Response",
+                    "isReadonly": false
+                }
+            ],
+            "structuredVariables": []
+        },
+        "subflowVariables": null,
+        "nodes": [
+            {
+                "id": "on-demand-input",
+                "isIntegrationSubflowNode": false,
+                "type": "on_demand_input",
+                "label": "Input",
+                "description": "Accepts Title, Description, and CurrentUser as required inputs for ServiceNow incident creation.",
+                "properties": {
+                    "x": 50.00000977776963,
+                    "y": 161,
+                    "triggerType": "on_demand_input",
+                    "debug": false,
+                    "outputDataFormat": "summary",
+                    "synthKeys": [],
+                    "inputVariables": [
+                        "runtime.Title",
+                        "runtime.Description",
+                        "runtime.CurrentUser"
+                    ],
+                    "inputOrOutputValuesDescriptions": [
+                        {
+                            "valueName": "runtime.Title",
+                            "description": "Short title of the ticket / incident. Must be set and should be concise.",
+                            "required": true,
+                            "advanced": false,
+                            "validateWithRegex": "",
+                            "valueType": "any"
+                        },
+                        {
+                            "valueName": "runtime.Description",
+                            "description": "Full description of the issue. Must be set.",
+                            "required": true,
+                            "advanced": false,
+                            "validateWithRegex": "",
+                            "valueType": "any"
+                        },
+                        {
+                            "valueName": "runtime.CurrentUser",
+                            "description": "Full name of the user or agent calling this tool. Defaults to Q if not supplied.",
+                            "required": false,
+                            "advanced": false,
+                            "validateWithRegex": "",
+                            "valueType": "any"
+                        }
+                    ],
+                    "staticInputValuesLists": {
+                        "runtime.Title": [],
+                        "runtime.Description": [],
+                        "runtime.CurrentUser": []
+                    },
+                    "outputVariables": []
+                },
+                "wires": [
+                    [
+                        "validate-inputs"
+                    ]
+                ]
+            },
+            {
+                "id": "validate-inputs",
+                "isIntegrationSubflowNode": false,
+                "type": "decision",
+                "label": "Validate Required Inputs",
+                "description": "Checks that Title and Description are non-blank before attempting ticket creation.",
+                "properties": {
+                    "x": 300.00008686555674,
+                    "y": 159,
+                    "dataType": "SUMMARY",
+                    "outputs": [
+                        {
+                            "id": "valid",
+                            "label": "Valid",
+                            "passedData": "MATCHED",
+                            "expression": {
+                                "id": "o6906",
+                                "type": "block",
+                                "operation": "AND",
+                                "conditions": [
+                                    {
+                                        "type": "condition",
+                                        "id": "03366",
+                                        "category": "variable",
+                                        "key": "$VARIABLE.runtime.Title",
+                                        "op": "REGEX",
+                                        "value": "\\S"
+                                    },
+                                    {
+                                        "type": "condition",
+                                        "id": "19763",
+                                        "category": "variable",
+                                        "key": "$VARIABLE.runtime.Description",
+                                        "op": "REGEX",
+                                        "value": "\\S"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": "default"
+                        }
+                    ],
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "create-snow-incident"
+                    ],
+                    [
+                        "set-validation-failure"
+                    ]
+                ]
+            },
+            {
+                "id": "create-snow-incident",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow",
+                "label": "ServiceNow: Create Incident",
+                "description": "Creates a new ServiceNow incident using short description, description, caller, urgency, and impact fields. Returns the incident number and Sys ID.",
+                "properties": {
+                    "x": 550.0002045783687,
+                    "y": 105,
+                    "debug": false,
+                    "configurationId": "seriesId:ServiceNow::Create_Incident;version:4",
+                    "in": [
+                        {
+                            "inner": "subflow.ServiceNow_Connector",
+                            "outer": "00000000-0000-0000-0000-000000000000",
+                            "method": "connector"
+                        },
+                        {
+                            "inner": "subflow.Caller",
+                            "outer": "runtime.CurrentUser",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Short_Description",
+                            "outer": "runtime.Title",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Description",
+                            "outer": "runtime.Description",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Urgency",
+                            "outer": "2",
+                            "method": "static",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Impact",
+                            "outer": "2",
+                            "method": "static",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Category",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Subcategory",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.CMDB_CI",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Location",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Additional_Fields",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Scripted_API",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.State",
+                            "outer": ""
+                        }
+                    ],
+                    "out": [
+                        {
+                            "inner": "subflow.Successful",
+                            "outer": "runtime.Successful",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Error_Message",
+                            "outer": "runtime.Error_Message",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Number",
+                            "outer": "runtime.Ticket_Number",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Sys_Id",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Raw_API_Response",
+                            "outer": "runtime.mcp_response",
+                            "method": "runtime"
+                        }
+                    ]
+                },
+                "wires": [
+                    [
+                        "check-subflow-result"
+                    ]
+                ]
+            },
+            {
+                "id": "check-subflow-result",
+                "isIntegrationSubflowNode": false,
+                "type": "decision",
+                "label": "Check Subflow Result",
+                "description": "Branches on runtime.Successful to separate ticket-created success from ServiceNow API failure.",
+                "properties": {
+                    "x": 800.0002302097566,
+                    "y": 103,
+                    "dataType": "SUMMARY",
+                    "outputs": [
+                        {
+                            "id": "succeeded",
+                            "label": "Succeeded",
+                            "passedData": "MATCHED",
+                            "expression": {
+                                "id": "o5539",
+                                "type": "block",
+                                "operation": "AND",
+                                "conditions": [
+                                    {
+                                        "type": "condition",
+                                        "id": "02495",
+                                        "category": "variable",
+                                        "key": "$VARIABLE.runtime.Successful",
+                                        "op": "EQ",
+                                        "value": "true"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": "default"
+                        }
+                    ],
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "set-success"
+                    ],
+                    [
+                        "set-action-failure"
+                    ]
+                ]
+            },
+            {
+                "id": "set-success",
+                "isIntegrationSubflowNode": false,
+                "type": "set_primitive_variables",
+                "label": "Set Success Response",
+                "description": "Sets mcp_status=success and mcp_response with the created ticket number.",
+                "properties": {
+                    "x": 1050.0007697615883,
+                    "y": 50,
+                    "variables": [
+                        {
+                            "name": "runtime.mcp_status"
+                        },
+                        {
+                            "name": "runtime.mcp_response"
+                        }
+                    ],
+                    "transformTemplate": "{\n  \"runtime.mcp_status\": \"success\",\n  \"runtime.mcp_response\": {\n    \"ticket_number\": {{ variables['runtime.Ticket_Number'] | json }},\n    \"message\": {{ variables['runtime.Ticket_Number'] | prepend: 'ServiceNow incident created successfully: ' | json }}\n  }\n}",
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "insight-success"
+                    ]
+                ]
+            },
+            {
+                "id": "insight-success",
+                "isIntegrationSubflowNode": false,
+                "type": "insight",
+                "label": "Debug: Success",
+                "description": "Debug insight showing mcp_status and mcp_response on the success path.",
+                "properties": {
+                    "x": 1300.000133210239,
+                    "y": 50,
+                    "template": "<p class=\"editor-paragraph\" dir=\"ltr\"><b><strong class=\"editor-text-bold\" style=\"white-space: pre-wrap;\">MCP Tool Debug Output</strong></b></p><p class=\"editor-paragraph\" dir=\"ltr\"><b><strong class=\"editor-text-bold\" style=\"white-space: pre-wrap;\">Status:</strong></b><span style=\"white-space: pre-wrap;\"> {{variables['runtime.mcp_status']}}</span></p><p class=\"editor-paragraph\" dir=\"ltr\"><b><strong class=\"editor-text-bold\" style=\"white-space: pre-wrap;\">Response:</strong></b><span style=\"white-space: pre-wrap;\"> {{variables['runtime.mcp_response']}}</span></p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "set-action-failure",
+                "isIntegrationSubflowNode": false,
+                "type": "set_primitive_variables",
+                "label": "Set Action Failure Response",
+                "description": "Sets mcp_status=failure and mcp_response with the ServiceNow error message.",
+                "properties": {
+                    "x": 1050.0001436270823,
+                    "y": 160,
+                    "variables": [
+                        {
+                            "name": "runtime.mcp_status"
+                        },
+                        {
+                            "name": "runtime.mcp_response"
+                        }
+                    ],
+                    "transformTemplate": "{\n  \"runtime.mcp_status\": \"failure\",\n  \"runtime.mcp_response\": {\n    \"message\": {{ variables['runtime.Error_Message'] | json }}\n  }\n}",
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "insight-action-failure"
+                    ]
+                ]
+            },
+            {
+                "id": "insight-action-failure",
+                "isIntegrationSubflowNode": false,
+                "type": "insight",
+                "label": "Debug: Action Failure",
+                "description": "Debug insight showing mcp_status and mcp_response on the ServiceNow action failure path.",
+                "properties": {
+                    "x": 1300.0005244956,
+                    "y": 160,
+                    "template": "<p class=\"editor-paragraph\" dir=\"ltr\"><b><strong class=\"editor-text-bold\" style=\"white-space: pre-wrap;\">MCP Tool Debug Output</strong></b></p><p class=\"editor-paragraph\" dir=\"ltr\"><b><strong class=\"editor-text-bold\" style=\"white-space: pre-wrap;\">Status:</strong></b><span style=\"white-space: pre-wrap;\"> {{variables['runtime.mcp_status']}}</span></p><p class=\"editor-paragraph\" dir=\"ltr\"><b><strong class=\"editor-text-bold\" style=\"white-space: pre-wrap;\">Response:</strong></b><span style=\"white-space: pre-wrap;\"> {{variables['runtime.mcp_response']}}</span></p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "set-validation-failure",
+                "isIntegrationSubflowNode": false,
+                "type": "set_primitive_variables",
+                "label": "Set Validation Failure Response",
+                "description": "Sets mcp_status=failure and enumerates exactly which required fields are missing.",
+                "properties": {
+                    "x": 550.0000696673966,
+                    "y": 217,
+                    "variables": [
+                        {
+                            "name": "runtime.mcp_status"
+                        },
+                        {
+                            "name": "runtime.mcp_response"
+                        }
+                    ],
+                    "transformTemplate": "{% assign missing = \"\" %}{% assign sep = \"\" %}{% unless variables['runtime.Title'] and variables['runtime.Title'] != \"\" %}{% assign missing = missing | append: sep | append: \"Title\" %}{% assign sep = \", \" %}{% endunless %}{% unless variables['runtime.Description'] and variables['runtime.Description'] != \"\" %}{% assign missing = missing | append: sep | append: \"Description\" %}{% assign sep = \", \" %}{% endunless %}\n{\n  \"runtime.mcp_status\": \"failure\",\n  \"runtime.mcp_response\": {\n    \"message\": {{ missing | prepend: 'The following required properties are not set: ' | append: '. Please set these and try again.' | json }}\n  }\n}",
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "insight-validation-failure"
+                    ]
+                ]
+            },
+            {
+                "id": "insight-validation-failure",
+                "isIntegrationSubflowNode": false,
+                "type": "insight",
+                "label": "Debug: Validation Failure",
+                "description": "Debug insight showing mcp_status and mcp_response on the validation failure path.",
+                "properties": {
+                    "x": 800.0005259396733,
+                    "y": 217,
+                    "template": "<p class=\"editor-paragraph\" dir=\"ltr\"><b><strong class=\"editor-text-bold\" style=\"white-space: pre-wrap;\">MCP Tool Debug Output</strong></b></p><p class=\"editor-paragraph\" dir=\"ltr\"><b><strong class=\"editor-text-bold\" style=\"white-space: pre-wrap;\">Status:</strong></b><span style=\"white-space: pre-wrap;\"> {{variables['runtime.mcp_status']}}</span></p><p class=\"editor-paragraph\" dir=\"ltr\"><b><strong class=\"editor-text-bold\" style=\"white-space: pre-wrap;\">Response:</strong></b><span style=\"white-space: pre-wrap;\"> {{variables['runtime.mcp_response']}}</span></p>",
+                    "debug": false
+                },
+                "wires": []
+            }
+        ],
+        "lastUpdatedUser": "Runbook Export",
+        "createdByUser": "Runbook Export",
+        "eTag": "\"be281c3f-d80e-43fd-ae79-9b6bf5da564a\"",
+        "variant": "on_demand",
+        "seriesId": "caaef271-3455-4f15-9371-83292c237cf2",
+        "version": "1.0",
+        "otherVersions": null,
+        "isScheduled": false,
+        "isLocked": false,
+        "isValidated": true,
+        "isProprietary": false,
+        "isTool": true,
+        "toolName": "Create_Ticket",
+        "debugUntil": null
+    },
+    "dependencies": [
+        {
+            "id": "seriesId:ServiceNow::Create_Incident;version:4",
+            "type": "subflow",
+            "name": "ServiceNow: Create Incident",
+            "globalId": "ServiceNow::Create_Incident",
+            "originalVersion": "4.0.6",
+            "nodeLabel": "ServiceNow: Create Incident",
+            "sourceLocation": "integrationLibrary",
+            "sourcePackageId": "ServiceNow"
+        }
+    ],
+    "token": "prvFwkRQayMub8UaBPGsZbTvNyvWT4N+IK2NIPTO9TQ="
+}

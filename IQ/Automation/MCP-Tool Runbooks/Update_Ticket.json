@@ -1,0 +1,549 @@
+{
+    "runbook": {
+        "id": "bd181dc8-8eaa-4471-885f-d93bd7cbdaf4",
+        "createdTime": "1794247678.169308800",
+        "lastUpdatedTime": "1794247678.169308800",
+        "factoryResourceName": null,
+        "isFactory": false,
+        "name": "Update_Ticket",
+        "description": "Updates a ServiceNow incident with a work note. Looks up the ticket by number to resolve the sys_id, then posts the provided notes as a work note. Returns success or failure with detail.",
+        "isReady": false,
+        "triggerType": "on_demand_input",
+        "runtimeVariables": {
+            "primitiveVariables": [
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.TicketNumber",
+                    "isReadonly": false,
+                    "description": "The ServiceNow incident or ticket number to update, e.g. INC0012345"
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Notes",
+                    "isReadonly": false,
+                    "description": "The work note text to add to the ServiceNow incident"
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Sys_Id",
+                    "isReadonly": false,
+                    "description": "Internal: resolved sys_id of the ticket (populated at runtime)"
+                },
+                {
+                    "type": "string",
+                    "defaultValue": "false",
+                    "name": "runtime.mcp_status",
+                    "isReadonly": false,
+                    "description": "MCP tool output status: success or failure"
+                },
+                {
+                    "type": "json",
+                    "defaultValue": null,
+                    "name": "runtime.mcp_response",
+                    "isReadonly": false,
+                    "description": "MCP tool structured response payload"
+                },
+                {
+                    "type": "boolean",
+                    "defaultValue": "false",
+                    "name": "runtime.Successful",
+                    "isReadonly": false,
+                    "description": "Internal: result of the ServiceNow Post Comment subflow"
+                },
+                {
+                    "type": "string",
+                    "defaultValue": null,
+                    "name": "runtime.Error_Message",
+                    "isReadonly": false,
+                    "description": "Internal: error message from ServiceNow Post Comment subflow"
+                },
+                {
+                    "type": "json",
+                    "defaultValue": null,
+                    "name": "runtime.Raw_API_Response",
+                    "isReadonly": false
+                }
+            ],
+            "structuredVariables": []
+        },
+        "subflowVariables": null,
+        "nodes": [
+            {
+                "id": "85d1e0bf-d4e4-4767-948b-a9094746925d",
+                "isIntegrationSubflowNode": false,
+                "type": "on_demand_input",
+                "label": "Input",
+                "description": "Accepts TicketNumber and Notes as required inputs",
+                "properties": {
+                    "x": 50.00009110301072,
+                    "y": 160,
+                    "triggerType": "on_demand_input",
+                    "debug": false,
+                    "outputDataFormat": "summary",
+                    "synthKeys": [
+                        {
+                            "id": "TicketNumber",
+                            "label": "TicketNumber",
+                            "type": "string"
+                        },
+                        {
+                            "id": "Notes",
+                            "label": "Notes",
+                            "type": "string"
+                        }
+                    ],
+                    "inputVariables": [
+                        "runtime.TicketNumber",
+                        "runtime.Notes"
+                    ],
+                    "inputOrOutputValuesDescriptions": [
+                        {
+                            "valueName": "runtime.TicketNumber",
+                            "description": "The ServiceNow incident or ticket number to update, e.g. INC0012345",
+                            "required": true,
+                            "advanced": false,
+                            "validateWithRegex": "",
+                            "valueType": "any"
+                        },
+                        {
+                            "valueName": "runtime.Notes",
+                            "description": "The work note text to add to the ServiceNow incident",
+                            "required": true,
+                            "advanced": false,
+                            "validateWithRegex": "",
+                            "valueType": "any"
+                        }
+                    ],
+                    "staticInputValuesLists": {
+                        "runtime.TicketNumber": [],
+                        "runtime.Notes": []
+                    },
+                    "outputVariables": []
+                },
+                "wires": [
+                    [
+                        "7f17bb78-1ea3-4992-834b-b74bbbb6dcf2"
+                    ]
+                ]
+            },
+            {
+                "id": "7f17bb78-1ea3-4992-834b-b74bbbb6dcf2",
+                "isIntegrationSubflowNode": false,
+                "type": "decision",
+                "label": "Validate Required Inputs",
+                "description": "Ensures TicketNumber and Notes are both non-blank before proceeding",
+                "properties": {
+                    "x": 300.0002253853451,
+                    "y": 158,
+                    "dataType": "SUMMARY",
+                    "outputs": [
+                        {
+                            "id": "valid",
+                            "label": "Valid",
+                            "passedData": "MATCHED",
+                            "expression": {
+                                "id": "expr-validate",
+                                "type": "block",
+                                "operation": "AND",
+                                "conditions": [
+                                    {
+                                        "type": "condition",
+                                        "id": "c-validate-ticket",
+                                        "category": "variable",
+                                        "key": "$VARIABLE.runtime.TicketNumber",
+                                        "op": "REGEX",
+                                        "value": "\\S"
+                                    },
+                                    {
+                                        "type": "condition",
+                                        "id": "c-validate-notes",
+                                        "category": "variable",
+                                        "key": "$VARIABLE.runtime.Notes",
+                                        "op": "REGEX",
+                                        "value": "\\S"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": "default"
+                        }
+                    ],
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "5dd237be-44af-4631-b922-fbe9af0643a5"
+                    ],
+                    [
+                        "913c5078-9c98-4c8e-826b-1d13acb980cd"
+                    ]
+                ]
+            },
+            {
+                "id": "5dd237be-44af-4631-b922-fbe9af0643a5",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow",
+                "label": "ServiceNow: Get Incident Details",
+                "description": "Resolves the ticket number to a sys_id using the ServiceNow Table API",
+                "properties": {
+                    "x": 550.0005789519262,
+                    "y": 105,
+                    "debug": false,
+                    "configurationId": "seriesId:ServiceNow::Get_Incident_Details;version:4",
+                    "in": [
+                        {
+                            "inner": "subflow.ServiceNow_Connector",
+                            "outer": "00000000-0000-0000-0000-000000000000",
+                            "method": "connector",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Incident_Identifier_Type",
+                            "outer": "Number",
+                            "method": "static",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Incident_Identifier",
+                            "outer": "runtime.TicketNumber",
+                            "method": "runtime",
+                            "isUnset": false
+                        }
+                    ],
+                    "out": [
+                        {
+                            "inner": "subflow.Successful",
+                            "outer": "runtime.Successful",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Error_Message",
+                            "outer": "runtime.Error_Message",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Caller_ID_Reference",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.CMDB_CI_Reference",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Problem_ID_Reference",
+                            "outer": ""
+                        },
+                        {
+                            "inner": "subflow.Raw_API_Response",
+                            "outer": "runtime.mcp_response",
+                            "method": "runtime"
+                        }
+                    ]
+                },
+                "wires": [
+                    [
+                        "1f3feafd-0173-405e-bf95-f3819cffe2fb"
+                    ]
+                ]
+            },
+            {
+                "id": "1f3feafd-0173-405e-bf95-f3819cffe2fb",
+                "isIntegrationSubflowNode": false,
+                "type": "set_primitive_variables",
+                "label": "Extract Sys_Id from Incident Lookup",
+                "description": "Pulls the resolved sys_id from the Get Incident Details subflow output",
+                "properties": {
+                    "x": 800.0001627215617,
+                    "y": 105,
+                    "variables": [
+                        {
+                            "name": "runtime.Sys_Id"
+                        }
+                    ],
+                    "transformTemplate": "{\n    \"runtime.Sys_Id\": {{ node_input.output.data[0].keys['Sys_ID'] | json }}\n}",
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "6fd0ffa7-8adc-447e-bf86-92341ce6a630"
+                    ]
+                ]
+            },
+            {
+                "id": "6fd0ffa7-8adc-447e-bf86-92341ce6a630",
+                "isIntegrationSubflowNode": false,
+                "type": "subflow",
+                "label": "ServiceNow: Post Work Note",
+                "description": "Adds the provided Notes as a work_note to the resolved incident",
+                "properties": {
+                    "x": 1050.0008704532086,
+                    "y": 105,
+                    "debug": false,
+                    "configurationId": "seriesId:ServiceNow::Post_Comment;version:2",
+                    "in": [
+                        {
+                            "inner": "subflow.Connector",
+                            "outer": "00000000-0000-0000-0000-000000000000",
+                            "method": "connector",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Record_Type",
+                            "outer": "incident",
+                            "method": "static",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Sys_Id",
+                            "outer": "runtime.Sys_Id",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Content",
+                            "outer": "runtime.Notes",
+                            "method": "runtime",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Visibility",
+                            "outer": "work_notes",
+                            "method": "static",
+                            "isUnset": false
+                        },
+                        {
+                            "inner": "subflow.Format",
+                            "outer": "",
+                            "method": "static",
+                            "isUnset": true
+                        }
+                    ],
+                    "out": [
+                        {
+                            "inner": "subflow.Successful",
+                            "outer": "runtime.Successful",
+                            "method": "runtime"
+                        },
+                        {
+                            "inner": "subflow.Error_Message",
+                            "outer": "runtime.Error_Message",
+                            "method": "runtime"
+                        }
+                    ]
+                },
+                "wires": [
+                    [
+                        "post-result-decision"
+                    ]
+                ]
+            },
+            {
+                "id": "post-result-decision",
+                "isIntegrationSubflowNode": false,
+                "type": "decision",
+                "label": "Check Post Comment Result",
+                "description": "Branches on whether the work note was posted successfully",
+                "properties": {
+                    "x": 1300.0000718177453,
+                    "y": 103,
+                    "dataType": "SUMMARY",
+                    "outputs": [
+                        {
+                            "id": "succeeded",
+                            "label": "Succeeded",
+                            "passedData": "MATCHED",
+                            "expression": {
+                                "id": "o8930",
+                                "type": "block",
+                                "operation": "AND",
+                                "conditions": [
+                                    {
+                                        "type": "condition",
+                                        "id": "c-post-successful",
+                                        "category": "variable",
+                                        "key": "$VARIABLE.runtime.Successful",
+                                        "op": "EQ",
+                                        "value": "true"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": "default"
+                        }
+                    ],
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "43176544-a0fe-4b22-9173-cd35260cef35"
+                    ],
+                    [
+                        "post-failure-vars"
+                    ]
+                ]
+            },
+            {
+                "id": "43176544-a0fe-4b22-9173-cd35260cef35",
+                "isIntegrationSubflowNode": false,
+                "type": "set_primitive_variables",
+                "label": "Set Success Response",
+                "description": "Sets mcp_status and mcp_response for a successful work note post",
+                "properties": {
+                    "x": 1550.000449555879,
+                    "y": 50,
+                    "variables": [
+                        {
+                            "name": "runtime.mcp_response"
+                        },
+                        {
+                            "name": "runtime.mcp_status"
+                        }
+                    ],
+                    "transformTemplate": "{\n    \"runtime.mcp_status\": \"success\",\n    \"runtime.mcp_response\": {\n        \"message\": \"Work note successfully posted to ticket {{ variables['runtime.TicketNumber'] }}\",\n        \"ticket_number\": {{ variables['runtime.TicketNumber'] | json }},\n        \"sys_id\": {{ variables['runtime.Sys_Id'] | json }}\n    }\n}",
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "48451ab0-d780-4466-b4c1-c95764a8c32b"
+                    ]
+                ]
+            },
+            {
+                "id": "post-failure-vars",
+                "isIntegrationSubflowNode": false,
+                "type": "set_primitive_variables",
+                "label": "Set Post Failure Response",
+                "description": "Sets mcp_status and mcp_response when the work note post fails",
+                "properties": {
+                    "x": 1550.0003555720273,
+                    "y": 160,
+                    "variables": [
+                        {
+                            "name": "runtime.mcp_response"
+                        },
+                        {
+                            "name": "runtime.mcp_status"
+                        }
+                    ],
+                    "transformTemplate": "{\n    \"runtime.mcp_status\": \"failure\",\n    \"runtime.mcp_response\": {\n        \"message\": \"Failed to post work note to ticket {{ variables['runtime.TicketNumber'] }}\",\n        \"error\": {{ variables['runtime.Error_Message'] | json }},\n        \"ticket_number\": {{ variables['runtime.TicketNumber'] | json }}\n    }\n}",
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "post-failure-insight"
+                    ]
+                ]
+            },
+            {
+                "id": "913c5078-9c98-4c8e-826b-1d13acb980cd",
+                "isIntegrationSubflowNode": false,
+                "type": "set_primitive_variables",
+                "label": "Set Validation Failure Response",
+                "description": "Sets mcp_status and mcp_response when required inputs are missing",
+                "properties": {
+                    "x": 550.0009484519156,
+                    "y": 215,
+                    "variables": [
+                        {
+                            "name": "runtime.mcp_response"
+                        },
+                        {
+                            "name": "runtime.mcp_status"
+                        }
+                    ],
+                    "transformTemplate": "{% assign missing = \"\" %}{% assign sep = \"\" %}{% unless variables['runtime.TicketNumber'] and variables['runtime.TicketNumber'] != \"\" %}{% assign missing = missing | append: sep | append: \"TicketNumber\" %}{% assign sep = \", \" %}{% endunless %}{% unless variables['runtime.Notes'] and variables['runtime.Notes'] != \"\" %}{% assign missing = missing | append: sep | append: \"Notes\" %}{% assign sep = \", \" %}{% endunless %}{\n    \"runtime.mcp_status\": \"failure\",\n    \"runtime.mcp_response\": {\n        \"message\": \"The following required properties are not set: {{ missing }}. Please provide these values and try again.\"\n    }\n}",
+                    "debug": false
+                },
+                "wires": [
+                    [
+                        "7226c860-a32a-44ae-ad3e-73345c75ce0d"
+                    ]
+                ]
+            },
+            {
+                "id": "7226c860-a32a-44ae-ad3e-73345c75ce0d",
+                "isIntegrationSubflowNode": false,
+                "type": "insight",
+                "label": "Debug: Validation Failure",
+                "description": "Renders the validation failure result for debugging",
+                "properties": {
+                    "x": 800.0002578159061,
+                    "y": 215,
+                    "template": "<p class=\"editor-paragraph\" dir=\"ltr\"><b><strong class=\"editor-text-bold\" style=\"white-space: pre-wrap;\">MCP Tool Debug — Validation Failure</strong></b></p><p class=\"editor-paragraph\" dir=\"ltr\"><b><strong class=\"editor-text-bold\" style=\"white-space: pre-wrap;\">Status:</strong></b><span style=\"white-space: pre-wrap;\"> {{variables['runtime.mcp_status']}}</span></p><p class=\"editor-paragraph\" dir=\"ltr\"><b><strong class=\"editor-text-bold\" style=\"white-space: pre-wrap;\">Response:</strong></b><span style=\"white-space: pre-wrap;\"> {{variables['runtime.mcp_response'] | json}}</span></p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "post-failure-insight",
+                "isIntegrationSubflowNode": false,
+                "type": "insight",
+                "label": "Debug: Post Comment Failure",
+                "description": "Renders the post comment failure result for debugging",
+                "properties": {
+                    "x": 1800.0005130690622,
+                    "y": 160,
+                    "template": "<p class=\"editor-paragraph\" dir=\"ltr\"><b><strong class=\"editor-text-bold\" style=\"white-space: pre-wrap;\">MCP Tool Debug — Post Comment Failure</strong></b></p><p class=\"editor-paragraph\" dir=\"ltr\"><b><strong class=\"editor-text-bold\" style=\"white-space: pre-wrap;\">Status:</strong></b><span style=\"white-space: pre-wrap;\"> {{variables['runtime.mcp_status']}}</span></p><p class=\"editor-paragraph\" dir=\"ltr\"><b><strong class=\"editor-text-bold\" style=\"white-space: pre-wrap;\">Response:</strong></b><span style=\"white-space: pre-wrap;\"> {{variables['runtime.mcp_response'] | json}}</span></p>",
+                    "debug": false
+                },
+                "wires": []
+            },
+            {
+                "id": "48451ab0-d780-4466-b4c1-c95764a8c32b",
+                "isIntegrationSubflowNode": false,
+                "type": "insight",
+                "label": "Debug: Success",
+                "description": "Renders the success result for debugging",
+                "properties": {
+                    "x": 1800.0006875324443,
+                    "y": 50,
+                    "template": "<p class=\"editor-paragraph\" dir=\"ltr\"><b><strong class=\"editor-text-bold\" style=\"white-space: pre-wrap;\">MCP Tool Debug — Success</strong></b></p><p class=\"editor-paragraph\" dir=\"ltr\"><b><strong class=\"editor-text-bold\" style=\"white-space: pre-wrap;\">Status:</strong></b><span style=\"white-space: pre-wrap;\"> {{variables['runtime.mcp_status']}}</span></p><p class=\"editor-paragraph\" dir=\"ltr\"><b><strong class=\"editor-text-bold\" style=\"white-space: pre-wrap;\">Response:</strong></b><span style=\"white-space: pre-wrap;\"> {{variables['runtime.mcp_response'] | json}}</span></p>",
+                    "debug": false
+                },
+                "wires": []
+            }
+        ],
+        "lastUpdatedUser": "Runbook Export",
+        "createdByUser": "Runbook Export",
+        "eTag": "\"1f48c1fb-1fef-497d-a0f0-0c8b208fa83a\"",
+        "variant": "on_demand",
+        "seriesId": "bd181dc8-8eaa-4471-885f-d93bd7cbdaf4",
+        "version": "1.0",
+        "otherVersions": null,
+        "isScheduled": false,
+        "isLocked": false,
+        "isValidated": true,
+        "isProprietary": false,
+        "isTool": true,
+        "toolName": "Update_Ticket",
+        "debugUntil": null
+    },
+    "dependencies": [
+        {
+            "id": "seriesId:ServiceNow::Get_Incident_Details;version:4",
+            "type": "subflow",
+            "name": "ServiceNow: Get Incident Details",
+            "globalId": "ServiceNow::Get_Incident_Details",
+            "originalVersion": "4.0.0",
+            "nodeLabel": "ServiceNow: Get Incident Details",
+            "sourceLocation": "integrationLibrary",
+            "sourcePackageId": "ServiceNow"
+        },
+        {
+            "id": "seriesId:ServiceNow::Post_Comment;version:2",
+            "type": "subflow",
+            "name": "ServiceNow: Post Comment",
+            "globalId": "ServiceNow::Post_Comment",
+            "originalVersion": "2.0.0",
+            "nodeLabel": "ServiceNow: Post Work Note",
+            "sourceLocation": "integrationLibrary",
+            "sourcePackageId": "ServiceNow"
+        }
+    ],
+    "token": "DRNQFKaZi0HnlKLECWmlpg8v3/1dVV141tV8w9CvtOE="
+}
